@@ -3,6 +3,7 @@
 
 library(dplyr)
 library(taxize)
+library(stringr)
 
 sites = read.csv(list.files()[grep('Site.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
 plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
@@ -47,8 +48,8 @@ plantspp = data.frame(plantName = unique(plants$Species)) %>%
          cleanedPlantName = str_replace(cleanedPlantName, " spp$", ""),
          cleanedPlantName = str_replace(cleanedPlantName, " sp$", ""),
          cleanedPlantName = str_replace(cleanedPlantName, " sp.$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, " species$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, "?", "")
+         cleanedPlantName = str_replace(cleanedPlantName, " species$", "")#,
+         #cleanedPlantName = str_replace(cleanedPlantName, "?", "")
          ) 
 
 
