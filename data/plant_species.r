@@ -53,6 +53,7 @@ plantspp = data.frame(plantName = unique(plants$Species)) %>%
          ) 
 
 
+
 # Finding matching taxonomic entity in ITIS
 plantList = data.frame(cleanedName = unique(plantspp$cleanedPlantName[plantspp$cleanedPlantName != "NA"]), 
                        sciName = NA, 
@@ -79,6 +80,19 @@ for (i in 1:nrow(plantList)) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################################################################
 
 
 plants2 = left_join(plants, sites[, c('ID', 'Region')], by = c('SiteFK' = 'ID')) %>%
