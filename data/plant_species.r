@@ -58,13 +58,14 @@ plantspp = data.frame(plantName = unique(plants$Species)) %>%
 plantList = data.frame(cleanedName = unique(plantspp$cleanedPlantName[plantspp$cleanedPlantName != "NA"]), 
                        sciName = NA, 
                        itis_id = NA,    
-                       rank = NA)
+                       rank = NA) %>% 
+  mutate(cleanedName = as.character(cleanedName))
 
 for (i in 1:nrow(plantList)) {
   
   print(paste(i, "of", nrow(plantList), "/n"))
   
-  hierarchy = classification(plantList$cleanedName[i], db = 'itis', accepted = TRUE)[[1]]
+  hierarchy = classification("plantListClenanedName"[i], db = 'itis', accepted = TRUE)[[1]]
   
   # class is logical if taxonomic name does not match any existing names
   if (!is.null(nrow(hierarchy))) {
