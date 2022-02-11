@@ -81,6 +81,8 @@ for (i in 1:nrow(plantList)) {
 
 
 
+combined = plantListcomparison %>% filter(!cleanedName %in% cleanedPlantList$cleanedName)
+coniferList = unique(newSpeciesList[, c('cleanedName', 'isConifer')])
 
 
 
