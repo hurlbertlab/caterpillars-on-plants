@@ -97,8 +97,10 @@ for (i in 1:nrow(plantList)) {
 }
 
 
-
+#Finding new species by comparing the cleanedNames in the plantListcomparison.csv and cleanedPlantList.csv
 combined = plantListcomparison %>% filter(!cleanedName %in% cleanedPlantList$cleanedName)
+
+#Trying to find the conifers in the newSpeciesList
 coniferList = unique(newSpeciesList[, c('cleanedName', 'isConifer')])
 
 
