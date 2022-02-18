@@ -12,7 +12,7 @@ plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, 
 coniferList = unique(plants[, c('Species', 'IsConifer')])
 
 plantspp = data.frame(plantName = unique(plants$Species)) %>%
-  mutate(plantName = as.character(plantName),
+  mutate(cleanedPlantName = case_when(
          plantName == "American witch-hazel" ~ "witch-hazel",
          plantName == "American yellowwood" ~ "Kentucky yellowwood",
          plantName == "Arrowwood" ~ "Viburnum",
