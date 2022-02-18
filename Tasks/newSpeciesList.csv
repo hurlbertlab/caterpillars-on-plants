@@ -1,0 +1,106 @@
+,cleanedName,sciName,itis_id,rank,notes,isConifer
+1,White fir,"Abies amabilis, A. concolor, A.procera, etc.",NA,species,NA,1
+2,Crapemyrtle,Lagerstroemia indica,27110,species,Wild crapemyrtle vs crapemyrtle,0
+3,Ironwood,NA,NA,species,Parrotia vs. Eusideroxylon,0
+4,Maple leaf viburnum,Viburnum acerifolium,35255,species,Misspelling or unaccepted spelling so not found,0
+5,Cornus macrophylla,Cornus macrophylla,896096,species,NA,0
+6,Sumac?,NA,NA,species,user unsure,0
+7,Quihoui???,NA,NA,species,user unsure,0
+8,Olive quihoui??,NA,NA,species,user unsure,0
+9,Fraser's magnolia,Magnolia fraseri,18073,species,NA,0
+10,Prunus,Prunus,24762,genus,NA,0
+11,Yaupon,Ilex vomitoria,27986,species,NA,0
+12,Carpinus,Carpinus,19503,species,NA,0
+13,Feijoa sellowiana,Feijoa sellowiana,506165,species,not an accepted scientific name,0
+14,Olea,Olea,32989,genus,a genus?,0
+15,Osmanthus fragrans,Osmanthus fragrans,505977,species,NA,0
+16,Illicium,Illicium,18082,genus,NA,0
+17,Magnolia figo,Liriodendron chinense,895289,species,Not found but NSCU does recognize it | some websites suggest Chinese tulip tree as another common name so this scientific name,0
+18,Asimina,Asimina,18108,genus,NA,0
+19,Carolina laurel cherry,Prunus caroliniana,24771,species,Misspelling-laurelcherry,0
+20,White spruce,Picea glauca,183295,species,Multiple options given some with multiple common names,1
+21,Amelanchier alnifolia,Amelanchier alnifolia,25109,species,NA,NA
+22,Green alder,Alnus viridis,181892,species,NA,NA
+23,Buxus sempervirens,Buxus sempervirens,501097,species,NA,NA
+24,Euonymus japonicus,Euonymus japonicus,894987,species,NA,NA
+25,Nerium oleander,Nerium oleander,30184,species,NA,NA
+26,Viburnum tinus,Viburnum tinus,505680,species,NA,NA
+27,Nothoscordum gracile (onionweed),Nothoscordum gracile,503967,species,The common name was in parantheses,NA
+28,Texas sophora,Sophora affinis,26958,species,Not accepted name,NA
+29,Lombardy poplar,Populus nigra,22468,species,Misspelling-Lombardy's poplar,NA
+30,Yucca rostrata,Yucca rostrata,43150,species,NA,NA
+31,American beautyberry,Callicarpa americana,32144,species,NA,NA
+32,Carolina cherry laurel,Prunus caroliniana,24771,species,Missordering of cerry and laurel,NA
+33,Gum bumelia,Sideroxylon lanuginosum ssp. lanuginosum,524695,species,NA,NA
+34,Leatherleaf mahonia,Berberis bealei,509499,species,Not found | more commonly known as Beale's barberry,NA
+35,Stretchberry,Forestiera pubescens,32957,species,NA,NA
+36,Chinese holly,Ilex cornuta,503155,species,NA,NA
+37,Heavenly bamboo,Nandina domestica,18848,species,NA,NA
+38,Groundsel tree,Baccharis halimifolia,35682,species,Not found but known on NCSU,NA
+39,Chinese privet,Ligustrum sinense,32979,species,NA,NA
+40,Fishpole bamboo,Phyllostachys aurea,42023,species,Not found | found on NSCU,NA
+41,Japanese spindle tree,Euonymus japonicus,894987,species,Not found bc misspelling: spindletree| found on NSCU,NA
+42,Common gardenia,Gardenia volkensii,845972,species,NA,NA
+43,Tree privet,Ligustrum lucidum,503450,species,NA,NA
+44,Reeves spiraea,Spiraea catoniensis,505334,species,Not found | found on NSCU,NA
+45,Buttonwood-mangrove,Conocarpus erectus,27766,species,maybe misspelled-Button mangrove,NA
+46,Strawberry bush,Euonymus americanus,27947,species,NA,NA
+47,Winged eonymous,Euonymus alatus,27946,species,misspelled-Winged euonymus,NA
+48,Viburnum rhytidophyllum,Viburnum rhytidophyllum,505679,species,NA,NA
+49,Silver poplar,Populus alba,22451,species,not found | internet says also called silverleaf or white poplar,NA
+50,Mountain maple,Acer spicatum,28758,species,two options: Acer glabrum vs. A. spicatum |,NA
+51,Carolina laurelcherry,Prunus caroliniana,24771,species,NA,NA
+52,Bigleaf snowbell,Styrax grandifolius,505399,species,NA,NA
+53,American sweetgum,Liquidambar styraciflua,19027,species,no matches | just sweetgum?,NA
+54,Sweetbay magnolia,Magnolia virginiana,18070,species,no matches|found at NCSU and internet,NA
+55,Prunus spp. (apricot),Prunus armeniaca,24769,species,didn't register bc of common name in (),NA
+56,Prunus spp. (cherry),Prunus,24762,genus,didn't register bc of common name in (),NA
+57,Punica,Punica,27277,genus,NA,NA
+58,Camptotheca,Camptotheca,500635,species,NA,NA
+59,Viburnum awabuki,Viburnum odoratissimum,505678,species,Not found | match on NCSU | there's a variant of V. odoratissimum var. awabuki,NA
+60,Eriobotrya japonica,Eriobotrya japonica,502403,species,NA,NA
+61,Silverbell,Halesia,23863,species,NA,NA
+62,Black haw,Viburnum prunifolium,35253,species,misspelling-Blackhaw,NA
+63,Pussy willow,Salix discolor,22524,species,NA,NA
+64,Prunus spp.(plum),Prunus,24762,genus,didn't register bc of common name in (),NA
+65,Cockspur hawthorn,Crataegus crus-galli,24552,species,NA,NA
+66,Honey locust,Gleditsia triacanthos,26714,species,NA,NA
+67,Winged euonymus,Euonymus alatus,27946,species,NA,NA
+68,Prunus laurocerasus,Prunus laurocerasus,24786,species,NA,NA
+69,Japanese cherry,Prunus serrulata,506233,species,uncommon common name-japanese flowering cherry,NA
+70,Alnus crispa,Alnus viridis,181892,species,formerly known as this |,NA
+71,Rosa acicularis,Rosa acicularis,24812,species,NA,NA
+72,Rubus idaeus,Rubus idaeus,24947,species,NA,NA
+73,Lonicera involucrata,Lonicera involucrata,35297,species,NA,NA
+74,Franklin tree,Franklinia alatamaha,21384,species,two options between a genus and scientific name | looked at NCSU,NA
+75,Prunus salicina,Prunus salicina,506232,species,NA,NA
+76,Na,NA,NA,species,Unknown,NA
+77,Tilia tomentosa,Tilia tomentosa,845764,species,NA,NA
+78,Ulmus carpinifolia,Ulmus procera,19056,species,a former name/synonym,NA
+79,Pitch pine,Pinus rigida,183376,species,between couple names,NA
+80,Loblolly pine,Pinus taeda,18037,species,NA,NA
+81,Fremont cottonwood,Populus fermontii,22459,species,misspelling- Fermont's cottonwood,NA
+82,Rosa,Rosa,24807,species,NA,NA
+83,Cypress,Cupressus,183455,genus,two genus names,NA
+84,Eastern cottonwood,Populus deltoides,22445,species,NA,NA
+85,"Azalea, rhododendron",NA,NA,species,Unknown,NA
+86,Post oak,Quercus stellata,19422,species,NA,NA
+87,Shortleaf pine,Pinus echinata,183335,species,NA,NA
+88,Syringa vulgaris,Syringa vulgaris,32996,species,NA,NA
+89,Horse chestnut,Aesculus hippocastanum,28721,species,NA,NA
+90,Arizona white oak,Quercus arizonica,19292,species,NA,NA
+91,Norway spruce,Picea abies,183289,species,NA,NA
+92,Shining willow,Salix lucida,22554,species,NA,NA
+93,Myrobalan plum,Prunus cerasifera,24772,species,NA,NA
+94,European horse chestnut,Aesculus hippocastanum,28721,species,Not found but found on NCSU and the internet,NA
+95,Prunus serulata (japanese cherry blossom),Prunus serrulata,506233,species,not picked up bc common name in (),NA
+96,Prunus sargentii,Pseudophoenix sargentii ssp. Sargentii,524598,species,not found can be found on NCSU | possibly Sargent's cherry PALM,NA
+97,Amelanchier,Amelanchier,25108,species,NA,NA
+98,Staghorn sumac,Rhus typhina,28777,species,NA,NA
+99,Cottonwood and poplar,NA,NA,species,two plants in one,NA
+100,Quercus hemispherica,Quercus hemisphaerica,195108,species,misspelling in hem…,NA
+101,Prunus umbellata,Prunus umbellata,24805,species,NA,NA
+102,Ilex ambigua,Ilex ambigua,27987,species,NA,NA
+103,Hibiscus coccineus albus,Hibiscus coccineus,21625,species,"""White swamp hibiscus"" = 'Albus'",NA
+104,Quercus nuttallii,Quercus texana,195188,species,not an accepted scientific name,NA
+105,Hibiscus moscheutos,Hibiscus moscheutos,21612,species,NA,NA

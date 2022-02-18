@@ -1,0 +1,458 @@
+"","...1","cleanedName","sciName","itis_id","rank","Suggested Name","Suggested ITIS ID","Problem","Genus"
+"1",1,"American beech","Fagus grandifolia",19462,"species",NA,NA,NA,"Fagus"
+"2",2,"Birch",NA,NA,"species","Betula",19478,"lots of options but just chose the genus",NA
+"3",3,"Paper birch","Betula papyrifera",19489,"species",NA,NA,NA,"Betula"
+"4",4,"American hornbeam","Carpinus caroliniana",19504,"species",NA,NA,NA,"Carpinus"
+"5",5,"Blackgum","Nyssa sylvatica",27821,"species",NA,NA,NA,"Nyssa"
+"6",6,"White mulberry","Morus alba",19066,"species",NA,NA,NA,"Morus"
+"7",7,"Boxelder",NA,NA,"species","Acer negundo",28749,"a lot",NA
+"8",8,"Chokecherry","Prunus",24762,"species",NA,NA,NA,"Prunus"
+"9",9,"Sugar maple",NA,NA,"species","Acer saccharum",28731,"Between Acer grandidentatum (big tooth maple?) and A. saccharum (sugar maple?) | answer from USDA plant list",NA
+"10",10,"Hophornbeam","Ostrya",19508,"species",NA,NA,NA,"Ostrya"
+"11",11,"Blue beech",NA,NA,"species","Carpinus caroliniana",19504,"Unknown by ITIS | NCSU plants CES",NA
+"12",12,"Quaking aspen","Populus tremuloides",195773,"species",NA,NA,NA,"Populus"
+"13",13,"Dogwood",NA,NA,"species","Cornus",27798,"a lot of options",NA
+"14",14,"Common buckthorn","Rhamnus cathartica",28573,"species",NA,NA,NA,"Rhamnus"
+"15",15,"Pin cherry","Prunus pensylvanica",24799,"species",NA,NA,NA,"Prunus"
+"16",16,"Yellow birch","Betula alleghaniensis",19481,"species",NA,NA,NA,"Betula"
+"17",17,"Japanese maple","Acer palmatum",182136,"species",NA,NA,NA,"Acer"
+"18",18,"Honeysuckle",NA,NA,"species","Lonicera",35281,"multiple options",NA
+"19",19,"Hydrangea","Hydrangea",24194,"species",NA,NA,NA,"Hydrangea"
+"20",20,"Rhododendron","Rhododendron",23700,"species",NA,NA,NA,"Rhododendron"
+"21",21,"Weeping cherry",NA,NA,"species","Prunus cerasus",24773,"Unknown by ITIS | NCSU plants CES",NA
+"22",22,"Buckthorn","Rhamnus",28561,"species",NA,NA,NA,"Rhamnus"
+"23",23,"Serviceberry","Amelanchier",25108,"species",NA,NA,NA,"Amelanchier"
+"24",24,"Hackberry","Celtis",19039,"species",NA,NA,NA,"Celtis"
+"25",25,"Lilac",NA,NA,"species","Syringa",32994,"Tree or bush?",NA
+"26",26,"Black cherry","Prunus serotina",24764,"species",NA,NA,NA,"Prunus"
+"27",27,"Vaccineum stamineum",NA,NA,"species","Vaccinium stamineum",23615,"Misspelling",NA
+"28",28,"Hickory","Carya",19223,"species",NA,NA,NA,"Carya"
+"29",29,"White oak","Quercus alba",19290,"species",NA,NA,NA,"Quercus"
+"30",30,"Cherry and plum",NA,NA,"species","Prunus cerasifera",24772,"perhaps cherry plum?",NA
+"31",31,"Live oak","Quercus virginiana",19283,"species",NA,NA,NA,"Quercus"
+"32",32,"Norway maple","Acer platanoides",28755,"species",NA,NA,NA,"Acer"
+"33",33,"Viburnum trilobum",NA,NA,"species","Viburnum opulus var. americanum",35280,"not an accepted name by ITIS",NA
+"34",34,"Viburnum nudum","Viburnum nudum",35252,"species",NA,NA,NA,"Viburnum"
+"35",35,"Cornus stolonifera",NA,NA,"species","Cornus sericea ssp. sericea",27818,"not an accepted name by ITIS",NA
+"36",36,"Vibirnum dentatum",NA,NA,"species","Viburnum dentatum",35251,"Misspelling",NA
+"37",37,"Vaccinium","Vaccinium",23571,"species",NA,NA,NA,"Vaccinium"
+"38",38,"Rhus glabra","Rhus glabra",28782,"species",NA,NA,NA,"Rhus"
+"39",39,"Hamamelis virginiana","Hamamelis virginiana",19033,"species",NA,NA,NA,"Hamamelis"
+"40",40,"Striped maple","Acer pensylvanicum",28754,"species",NA,NA,NA,"Acer"
+"41",41,"Viburnum cassinoide",NA,NA,"species","Viburnum nudum var. cassinoides",35250,"not an accepted name by ITIS",NA
+"42",42,"Scarlet oak","Quercus coccinea",19288,"species",NA,NA,NA,"Quercus"
+"43",43,"Aesculus parviflora","Aesculus parviflora",28722,"species",NA,NA,NA,"Aesculus"
+"44",44,"Flowering dogwood","Cornus florida",27806,"species",NA,NA,NA,"Cornus"
+"45",45,"Halesia tetraptera",NA,NA,"species","Halesia carolina",502868,"not an accepted name by ITIS",NA
+"46",46,"Ginkgo","Ginkgo",183264,"species",NA,NA,NA,"Ginkgo"
+"47",47,"Malus sargentii",NA,NA,"species","Malus sieboldii",507499,"not an accepted name by ITIS",NA
+"48",48,"Aesculus hippocastanum","Aesculus hippocastanum",28721,"species",NA,NA,NA,"Aesculus"
+"49",49,"Sweetgum","Liquidambar",19026,"species",NA,NA,NA,"Liquidambar"
+"50",50,"White fir",NA,NA,"species","Abies amabilis, A. concolor, A.procera, etc.",NA,NA,NA
+"51",51,"Sourwood","Oxydendrum",23689,"species",NA,NA,NA,"Oxydendrum"
+"52",52,"Maple","Acer",28727,"species",NA,NA,NA,"Acer"
+"53",53,"Elm",NA,NA,"species","Ulmus",19048,"A lot of options but most had NA under common name",NA
+"54",54,"Red maple","Acer rubrum",28728,"species",NA,NA,NA,"Acer"
+"55",55,"Oak","Quercus",19276,"species",NA,NA,NA,"Quercus"
+"56",56,"Autumn olive","Elaeagnus umbellata",27776,"species",NA,NA,NA,"Elaeagnus"
+"57",57,"Blackhaw",NA,NA,"species","Viburnum prunifolium",35253,"Choices between blackhaw and rusty blackhaw",NA
+"58",58,"Yellow buckeye",NA,NA,"species","Aesculus flava",837871,"Misspelling? Not read by ITIS",NA
+"59",59,"American elm","Ulmus americana",19049,"species",NA,NA,NA,"Ulmus"
+"60",60,"Spicebush","Lindera",18146,"species",NA,NA,NA,"Lindera"
+"61",61,"White-cedar","Chamaecyparis thyoides",18046,"species",NA,NA,NA,"Chamaecyparis"
+"62",62,"Winged elm","Ulmus alata",19051,"species",NA,NA,NA,"Ulmus"
+"63",63,"Yellow-poplar","Liriodendron tulipifera",18086,"species",NA,NA,NA,"Liriodendron"
+"64",64,"Magnolia","Magnolia",18069,"species",NA,NA,NA,"Magnolia"
+"65",65,"Lonicera japonica","Lonicera japonica",35283,"species",NA,NA,NA,"Lonicera"
+"66",66,"Eastern redbud","Cercis canadensis",25782,"species",NA,NA,NA,"Cercis"
+"67",67,"Pear",NA,NA,"species","Pyrus",25294,"A lot of options but most had NA under common name",NA
+"68",68,"Crapemyrtle",NA,NA,"species","Lagerstroemia indica",27110,"Wild crapemyrtle vs crapemyrtle",NA
+"69",69,"Northern red oak","Quercus rubra",19408,"species",NA,NA,NA,"Quercus"
+"70",70,"Ironwood",NA,NA,"species",NA,NA,"Parrotia vs. Eusideroxylon",NA
+"71",71,"Florida maple","Acer floridanum",183691,"species",NA,NA,NA,"Acer"
+"72",72,"Umbrella magnolia","Magnolia tripetala",18077,"species",NA,NA,NA,"Magnolia"
+"73",73,"Viburnum rufidulum","Viburnum rufidulum",35274,"species",NA,NA,NA,"Viburnum"
+"74",74,"Willow oak","Quercus phellos",19282,"species",NA,NA,NA,"Quercus"
+"75",75,"Swamp chestnut oak","Quercus michauxii",19279,"species",NA,NA,NA,"Quercus"
+"76",76,"Pignut hickory","Carya glabra",19231,"species",NA,NA,NA,"Carya"
+"77",77,"Common serviceberry","Amelanchier arborea",25110,"species",NA,NA,NA,"Amelanchier"
+"78",78,"Maple leaf viburnum",NA,NA,"species","Viburnum acerifolium",35255,"Misspelling or unaccepted spelling so not found",NA
+"79",79,"Chestnut oak",NA,NA,"species","Quercus prinus",19379,"Not found in ITIS",NA
+"80",80,"American holly","Ilex opaca",27982,"species",NA,NA,NA,"Ilex"
+"81",81,"Common persimmon","Diospyros virginiana",23855,"species",NA,NA,NA,"Diospyros"
+"82",82,"American sycamore","Platanus occidentalis",19020,"species",NA,NA,NA,"Platanus"
+"83",83,"Honeylocust","Gleditsia",26711,"species",NA,NA,NA,"Gleditsia"
+"84",84,"White ash","Fraxinus americana",32931,"species",NA,NA,NA,"Fraxinus"
+"85",85,"Beaked hazel","Corylus cornuta",19507,"species",NA,NA,NA,"Corylus"
+"86",86,"Speckled alder",NA,NA,"species","Alnus incana ssp. Rugosa",181888,"Between two subspecies (tenuifolia and rugosa) | USDA says tenuifolia refers to thinleaf alder",NA
+"87",87,"White elm",NA,NA,"species","Ulmus americana",19049,"Not found in IT IS | NCSU Plants CES has it",NA
+"88",88,"Hawthorn","Crataegus",24539,"species",NA,NA,NA,"Crataegus"
+"89",89,"Alternate-leaf dogwood","Cornus alternifolia",27813,"species",NA,NA,NA,"Cornus"
+"90",90,"Redosier dogwood","Cornus sericea",501637,"species",NA,NA,NA,"Cornus"
+"91",91,"Tamarack",NA,NA,"species","Larix laricina",183412,"Between Larix laricina and L. lyallii | tamarack seems to more commonly refer to L. laricina",NA
+"92",92,"Willow","Salix",22476,"species",NA,NA,NA,"Salix"
+"93",93,"White birch",NA,NA,"species","Betula",19478,"lots of different options that are ""blank white birch"" not plain white birch",NA
+"94",94,"Balsam poplar","Populus balsamifera",22453,"species",NA,NA,NA,"Populus"
+"95",95,"Apple","Malus",25254,"species",NA,NA,NA,"Malus"
+"96",96,"Black ash","Fraxinus nigra",32945,"species",NA,NA,NA,"Fraxinus"
+"97",97,"Green ash","Fraxinus pennsylvanica",32929,"species",NA,NA,NA,"Fraxinus"
+"98",98,"American chestnut","Castanea dentata",19454,"species",NA,NA,NA,"Castanea"
+"99",99,"Sour cherry","Prunus cerasus",24773,"species",NA,NA,NA,"Prunus"
+"100",100,"American basswood","Tilia americana",21536,"species",NA,NA,NA,"Tilia"
+"101",101,"Black walnut","Juglans nigra",19254,"species",NA,NA,NA,"Juglans"
+"102",102,"Rhamnus cathartica","Rhamnus cathartica",28573,"species",NA,NA,NA,"Rhamnus"
+"103",103,"Symplocos tinctoria","Symplocos tinctoria",23878,"species",NA,NA,NA,"Symplocos"
+"104",104,"Walnut","Juglans",19248,"species",NA,NA,NA,"Juglans"
+"105",105,"Carolina hemlock","Tsuga caroliniana",183399,"species",NA,NA,NA,"Tsuga"
+"106",106,"Tatarian honeysuckle","Lonicera tatarica",35306,"species",NA,NA,NA,"Lonicera"
+"107",107,"Eastern hophornbeam","Ostrya virginiana",19511,"species",NA,NA,NA,"Ostrya"
+"108",108,"Huckleberry",NA,NA,"species","Gaylussacia",23659,"Between two genuses: Vaccinium and Gaylussacia | G. found more in eastern NA",NA
+"109",109,"Hazelnut","Corylus",19505,"species",NA,NA,NA,"Corylus"
+"110",110,"White cedar",NA,NA,"species","Chamaecyparis",18045,"Multiple common names of white cedar but only one with just a Genus",NA
+"111",111,"Bur oak","Quercus macrocarpa",19287,"species",NA,NA,NA,"Quercus"
+"112",112,"Vaccinium caesariense",NA,NA,"species","Vaccinium corymbosum",23573,"Unknown/no longer accepted name but USDA indicates New Jersey blueberry",NA
+"113",113,"Myrica cerifera",NA,NA,"species","Morella cerifera",507899,"Not accepted name",NA
+"114",114,"Ilex verticillata","Ilex verticillata",27985,"species",NA,NA,NA,"Ilex"
+"115",115,"Basswood","Tilia",21535,"species",NA,NA,NA,"Tilia"
+"116",116,"Viburnum lentago","Viburnum lentago",35266,"species",NA,NA,NA,"Viburnum"
+"117",117,"Malus siberica",NA,NA,"species","Malus baccata",25256,"Unknown by a lot but wikipedia indicates it is an old name for Malus baccata",NA
+"118",118,"Highbush blueberry","Vaccinium corymbosum",23573,"species",NA,NA,NA,"Vaccinium"
+"119",119,"Sassafras","Sassafras",18157,"species",NA,NA,NA,"Sassafras"
+"120",120,"Cornus mas","Cornus mas",565094,"species",NA,NA,NA,"Cornus"
+"121",121,"Kalopanax septemlobus","Kalopanax septemlobus",565257,"species",NA,NA,NA,"Kalopanax"
+"122",122,"Acer x freemanii","Acer X freemanii",500949,"species",NA,NA,NA,"Acer"
+"123",123,"Ulmus","Ulmus",19048,"species",NA,NA,NA,"Ulmus"
+"124",124,"Hydrangea quercifolia","Hydrangea quercifolia",24200,"species",NA,NA,NA,"Hydrangea"
+"125",125,"Black maple","Acer nigrum",182135,"species",NA,NA,NA,"Acer"
+"126",126,"Kentucky yellowwood","Cladrastis kentukea",26539,"species",NA,NA,NA,"Cladrastis"
+"127",127,"Tilia cordata","Tilia cordata",505507,"species",NA,NA,NA,"Tilia"
+"128",128,"Tilia x europaea","Tilia X europaea",21538,"species",NA,NA,NA,"Tilia"
+"129",129,"Viburnum dilatatum","Viburnum dilatatum",505677,"species",NA,NA,NA,"Viburnum"
+"130",130,"Stewartia rostrata",NA,NA,"species","Stewartia",21389,"Stewartia rostrata is found on NCSU",NA
+"131",131,"Red oak",NA,NA,"species","Quercus",19276,"blank red oak not just red oak",NA
+"132",132,"Pawpaw","Asimina",18108,"species",NA,NA,NA,"Asimina"
+"133",133,"Hazel alder","Alnus serrulata",19468,"species",NA,NA,NA,"Alnus"
+"134",134,"Ash",NA,NA,"species","Fraxinus",32928,"For some reason not on the sugggested ITIS ids",NA
+"135",135,"Fagus sylvatica","Fagus sylvatica",502590,"species",NA,NA,NA,"Fagus"
+"136",136,"Southern magnolia","Magnolia grandiflora",18074,"species",NA,NA,NA,"Magnolia"
+"137",137,"Black oak","Quercus velutina",19447,"species",NA,NA,NA,"Quercus"
+"138",138,"Chalk maple","Acer leucoderme",28761,"species",NA,NA,NA,"Acer"
+"139",139,"Slippery elm","Ulmus rubra",19050,"species",NA,NA,NA,"Ulmus"
+"140",140,"Pin oak","Quercus palustris",19281,"species",NA,NA,NA,"Quercus"
+"141",141,"Dwarf pawpaw","Asimina pygmea",18114,"species",NA,NA,NA,"Asimina"
+"142",142,"Fringetree","Chionanthus",32948,"species",NA,NA,NA,"Chionanthus"
+"143",143,"Carolina ash","Fraxinus caroliniana",32941,"species",NA,NA,NA,"Fraxinus"
+"144",144,"Tuliptree","Liriodendron",18085,"species",NA,NA,NA,"Liriodendron"
+"145",145,"American bladdernut","Staphylea trifolia",28646,"species",NA,NA,NA,"Staphylea"
+"146",146,"American hazelnut","Corylus americana",19506,"species",NA,NA,NA,"Corylus"
+"147",147,"Cucumber magnolia",NA,NA,"species","Magnolia acuminata",18071,"Name not found in ITIS | found in NCSU",NA
+"148",148,"Bitternut hickory","Carya cordiformis",19227,"species",NA,NA,NA,"Carya"
+"149",149,"Carolina silverbell","Halesia carolina",23864,"species",NA,NA,NA,"Halesia"
+"150",150,"Mockernut hickory","Carya tomentosa",19247,"species",NA,NA,NA,"Carya"
+"151",151,"Vaccinium corymbosum","Vaccinium corymbosum",23573,"species",NA,NA,NA,"Vaccinium"
+"152",152,"Scrub oak","Quercus berberidifolia",507263,"species",NA,NA,NA,"Quercus"
+"153",153,"Viburnum dentatum","Viburnum dentatum",35251,"species",NA,NA,NA,"Viburnum"
+"154",154,"Gaylussacia baccata","Gaylussacia baccata",23660,"species",NA,NA,NA,"Gaylussacia"
+"155",155,"Prunus maritima","Prunus maritima",24790,"species",NA,NA,NA,"Prunus"
+"156",156,"Morella caroliniensis","Morella caroliniensis",507898,"species",NA,NA,NA,"Morella"
+"157",157,"Baccharis halimifolia","Baccharis halimifolia",35682,"species",NA,NA,NA,"Baccharis"
+"158",158,"Alder","Betulaceae",19465,"species",NA,NA,NA,"Betulaceae"
+"159",159,"American mountain-ash","Sorbus americana",25319,"species",NA,NA,NA,"Sorbus"
+"160",160,"Forsythia","Forsythia",32961,"species",NA,NA,NA,"Forsythia"
+"161",161,"Swamp white oak","Quercus bicolor",19300,"species",NA,NA,NA,"Quercus"
+"162",162,"Southern catalpa","Catalpa bignonioides",34313,"species",NA,NA,NA,"Catalpa"
+"163",163,"Viburnum","Viburnum",35249,"species",NA,NA,NA,"Viburnum"
+"164",164,"Black gum","Nyssa sylvatica",27821,"species",NA,NA,NA,"Nyssa"
+"165",165,"Overcup oak","Quercus lyrata",19278,"species",NA,NA,NA,"Quercus"
+"166",166,"Atlantic white-cedar","Chamaecyparis thyoides",18046,"species",NA,NA,NA,"Chamaecyparis"
+"167",167,"Privet",NA,NA,"species","Ligustrum",32973,"Different options between ""privet"" Ligusticum and Ligustrum and included Ligustrum sempevirens| suggested by USDA Ligustrum",NA
+"168",168,"Siberian elm","Ulmus pumila",19057,"species",NA,NA,NA,"Ulmus"
+"169",169,"Southern red oak","Quercus falcata",19277,"species",NA,NA,NA,"Quercus"
+"170",170,"Southern sugar maple",NA,NA,"species","Acer barbatum",28759,"Not found in ITIS",NA
+"171",171,"Japanese privet","Ligustrum japonicum",503449,"species",NA,NA,NA,"Ligustrum"
+"172",172,"Buckeye","Aesculus",28714,"species",NA,NA,NA,"Aesculus"
+"173",173,"Witch hazel","Hamamelidaceae",19025,"species",NA,NA,NA,"Hamamelidaceae"
+"174",174,"Japanese apricot","Prunus mume",506231,"species",NA,NA,NA,"Prunus"
+"175",175,"Stiff dogwood","Cornus foemina",27802,"species",NA,NA,NA,"Cornus"
+"176",176,"Amur maple",NA,NA,"species","Acer",28727,"Between Acer ginnala vs A. japonicum | what's the difference??",NA
+"177",177,"Japanese snowbell","Styrax japonicus",505974,"species",NA,NA,NA,"Styrax"
+"178",178,"Cornelian-cherry dogwood",NA,NA,"species","Cornus mas",565094,"not found in ITIS | found in NCSU",NA
+"179",179,"Weeping knoss dogwood",NA,NA,"species","Cornus kousa",507498,"Misspelling? To Weeping Kousa Dogwood",NA
+"180",180,"Red buckeye","Aesculus pavia",28723,"species",NA,NA,NA,"Aesculus"
+"181",181,"Cornus macrophylla","Cornus macrophylla",896096,"species",NA,NA,NA,"Cornus"
+"182",182,"Fragrant wintersweet",NA,NA,"species","Chimonanthus praecox",NA,"not found in ITIS | found in NCSU",NA
+"183",183,"Chinese quince",NA,NA,"species","Chaenomeles sinensis",565928,"not found in IT IS and not accepted | found in NCSU",NA
+"184",184,"European spindletree","Euonymus europaeus",27949,"species",NA,NA,NA,"Euonymus"
+"185",185,"Sweet birch","Betula lenta",19487,"species",NA,NA,NA,"Betula"
+"186",186,"Yeddo euonymous",NA,NA,"species","Euonymus hamiltonianus ssp. Sieboldianus",895058,"Misspelling but also known as Euonymus yedoensis according to oldhouseweb.com",NA
+"187",187,"Beech","Fagus",19461,"species",NA,NA,NA,"Fagus"
+"188",188,"Trident maple","Acer buergerianum",837859,"species",NA,NA,NA,"Acer"
+"189",189,"Water oak","Quercus nigra",19280,"species",NA,NA,NA,"Quercus"
+"190",190,"Japanese zelkova","Zelkova serrata",505790,"species",NA,NA,NA,"Zelkova"
+"191",191,"Mountain laurel","Kalmia latifolia",23677,"species",NA,NA,NA,"Kalmia"
+"192",192,"Catawba rhododendron","Rhododendron catawbiense",23714,"species",NA,NA,NA,"Rhododendron"
+"193",193,"Eastern hemlock","Tsuga canadensis",183397,"species",NA,NA,NA,"Tsuga"
+"194",194,"Eastern white pine","Pinus strobus",183385,"species",NA,NA,NA,"Pinus"
+"195",195,"Virginia pine","Pinus virginiana",183394,"species",NA,NA,NA,"Pinus"
+"196",196,"Elderberry","Sambucus",35315,"species",NA,NA,NA,"Sambucus"
+"197",197,"Kalmia latifolia","Kalmia latifolia",23677,"species",NA,NA,NA,"Kalmia"
+"198",198,"Loebner magnolia",NA,NA,"species","Magnolia",18069,"?? Not found | a hybrid",NA
+"199",199,"Hedge maple","Acer campestre",28739,"species",NA,NA,NA,"Acer"
+"200",200,"Possumhaw","Ilex decidua",27998,"species",NA,NA,NA,"Ilex"
+"201",201,"Nutmeg hickory","Carya myristiciformis",19239,"species",NA,NA,NA,"Carya"
+"202",202,"Persian ironwood","Parrotia persica",895220,"species",NA,NA,NA,"Parrotia"
+"203",203,"Osage orange","Maclura pomifera",19102,"species",NA,NA,NA,"Maclura"
+"204",204,"Horned maple",NA,NA,"species","Acer diabolicum",837851,"Not found in IT IS | NCSU Plants CES has it",NA
+"205",205,"Redbay","Persea borbonia",18149,"species",NA,NA,NA,"Persea"
+"206",206,"Ilex vomitoria","Ilex vomitoria",27986,"species",NA,NA,NA,"Ilex"
+"207",207,"Chinese tallowtree",NA,NA,"species","Triadica sebifera",522777,"A space was needed between ""tallow"" and ""tree""",NA
+"208",208,"Morella cerifera","Morella cerifera",507899,"species",NA,NA,NA,"Morella"
+"209",209,"Callicarpa americana","Callicarpa americana",32144,"species",NA,NA,NA,"Callicarpa"
+"210",210,"Azalea","Rhododendron",23700,"species",NA,NA,NA,"Rhododendron"
+"211",211,"River birch","Betula nigra",19480,"species",NA,NA,NA,"Betula"
+"212",212,"Russian-olive","Elaeagnus angustifolia",27770,"species",NA,NA,NA,"Elaeagnus"
+"213",213,"Golden rain tree","Koelreuteria elegans",503285,"species",NA,NA,NA,"Koelreuteria"
+"214",214,"Washington hawthorn","Crataegus phaenopyrum",24593,"species",NA,NA,NA,"Crataegus"
+"215",215,"Clerya","Mulinia cleryana",80960,"species",NA,NA,NA,"Mulinia"
+"216",216,"Camellia","Camellia",500689,"species",NA,NA,NA,"Camellia"
+"217",217,"Rose of sharon","Hibiscus syriacus",21638,"species",NA,NA,NA,"Hibiscus"
+"218",218,"Merrill magnolia",NA,NA,"species","Magnolia",NA,"???a hybrid magnolia",NA
+"219",219,"Catalpa","Catalpa",34312,"species",NA,NA,NA,"Catalpa"
+"220",220,"Chinese evergreen oak",NA,NA,"species","Quercus glauca",845168,"not found | internet says these it correlates with Quercus myrsinifolia",NA
+"221",221,"Laurel oak","Quercus laurifolia",19368,"species",NA,NA,NA,"Quercus"
+"222",222,"Tulip poplar","Liriodendron tulipifera",18086,"species",NA,NA,NA,"Liriodendron"
+"223",223,"Red mulberry","Morus rubra",19070,"species",NA,NA,NA,"Morus"
+"224",224,"Hornbeam","Carpinus",19503,"species",NA,NA,NA,"Carpinus"
+"225",225,"Viburnum plicatum","Viburnum plicatum",35272,"species",NA,NA,NA,"Viburnum"
+"226",226,"Coastal azalea",NA,NA,"species","Rhododendron atlanticum",23704,"not found | also goes by dwarf azalea",NA
+"227",227,"Plumleaf azalea","Rhododendron prunifolium",23728,"species",NA,NA,NA,"Rhododendron"
+"228",228,"Piedmont azalea",NA,NA,"species","Rhododendron flammeum",23717,"Two names on IT IS| R. canescens called mountain azalea USDA",NA
+"229",229,"Florida azalea","Rhododendron austrinum",23705,"species",NA,NA,NA,"Rhododendron"
+"230",230,"Rhododendron canescens","Rhododendron canescens",23712,"species",NA,NA,NA,"Rhododendron"
+"231",231,"Rhododendron austrinum","Rhododendron austrinum",23705,"species",NA,NA,NA,"Rhododendron"
+"232",232,"Common spicebush",NA,NA,"species","Lindera benzoin",18147,"Not found | internet says Lindera benzoin",NA
+"233",233,"Cherrybark oak","Quercus pagoda",195195,"species",NA,NA,NA,"Quercus"
+"234",234,"Quercus montana","Quercus montana",19379,"species",NA,NA,NA,"Quercus"
+"235",235,"Sumac?",NA,NA,"species",NA,NA,"user unsure",NA
+"236",236,"Lindera benzoin","Lindera benzoin",18147,"species",NA,NA,NA,"Lindera"
+"237",237,"Sumac","Rhus",28772,"species",NA,NA,NA,"Rhus"
+"238",238,"Mulberry","Morus",19064,"species",NA,NA,NA,"Morus"
+"239",239,"Wineberry","Rubus phoenicolasius",25017,"species",NA,NA,NA,"Rubus"
+"240",240,"Quihoui???",NA,NA,"species",NA,NA,"user unsure",NA
+"241",241,"Olive quihoui??",NA,NA,"species",NA,NA,"user unsure",NA
+"242",242,"Japanese knotweed","Fallopia japonica",565897,"species",NA,NA,NA,"Fallopia"
+"243",243,"Northern spicebush","Lindera benzoin",18147,"species",NA,NA,NA,"Lindera"
+"244",244,"Oriental bittersweet","Celastrus orbiculatus",506068,"species",NA,NA,NA,"Celastrus"
+"245",245,"Jetbead","Rhodotypos scandens",25298,"species",NA,NA,NA,"Rhodotypos"
+"246",246,"Black mulberry","Morus nigra",19069,"species",NA,NA,NA,"Morus"
+"247",247,"Brambles","Rubus",24848,"species",NA,NA,NA,"Rubus"
+"248",248,"Multiflora rose","Rosa multiflora",24833,"species",NA,NA,NA,"Rosa"
+"249",249,"Bush honeysuckle","Diervilla",35309,"species",NA,NA,NA,"Diervilla"
+"250",250,"Ohio buckeye","Aesculus glabra",28718,"species",NA,NA,NA,"Aesculus"
+"251",251,"Acer negundo","Acer negundo",28749,"species",NA,NA,NA,"Acer"
+"252",252,"Common ninebark","Physocarpus opulifolius",25282,"species",NA,NA,NA,"Physocarpus"
+"253",253,"Ozark witch hazel",NA,NA,"species","Hamamelis vernalis",19032,"Misspelling",NA
+"254",254,"Wax myrtle","Morella cerifera",507899,"species",NA,NA,NA,"Morella"
+"255",255,"Black locust","Robinia pseudoacacia",504804,"species",NA,NA,NA,"Robinia"
+"256",256,"Amur honeysuckle","Lonicera maackii",35298,"species",NA,NA,NA,"Lonicera"
+"257",257,"Frangula alnus",NA,NA,"species","Rhamnus frangula",28579,"Not accepted name",NA
+"258",258,"Wisteria","Wisteria",27019,"species",NA,NA,NA,"Wisteria"
+"259",259,"Great rhododendron",NA,NA,"species","Rhododendron maximum",23721,"Different common name that's not commonly used? Also called great laurel",NA
+"260",260,"Fraser's magnolia","Magnolia fraseri",18073,"species",NA,NA,NA,"Magnolia"
+"261",261,"Buffalo nut","Pyrularia pubera",504705,"species",NA,NA,NA,"Pyrularia"
+"262",262,"Mountain holly","Ilex montana",28002,"species",NA,NA,NA,"Ilex"
+"263",263,"Cherry",NA,NA,"species","Prunus",24762,"lots of options but I believe just genus",NA
+"264",264,"Sycamore","Platanus",19019,"species",NA,NA,NA,"Platanus"
+"265",265,"Calycanthus","Calycanthus",18139,"species",NA,NA,NA,"Calycanthus"
+"266",266,"Mapleleaf viburnum","Viburnum acerifolium",35255,"species",NA,NA,NA,"Viburnum"
+"267",267,"Blueberry","Vaccinium",23571,"species",NA,NA,NA,"Vaccinium"
+"268",268,"Podocarpus","Podocarpus",183488,"species",NA,NA,NA,"Podocarpus"
+"269",269,"Florida forestiera",NA,NA,"species","Forestiera segregata",32959,"??? For sure Forestiera",NA
+"270",270,"California laurel","Umbellularia",18207,"species",NA,NA,NA,"Umbellularia"
+"271",271,"Tanoak","Lithocarpus",19463,"species",NA,NA,NA,"Lithocarpus"
+"272",272,"Pacific madrone","Arbutus menziesii",23627,"species",NA,NA,NA,"Arbutus"
+"273",273,"California live oak","Quercus agrifolia",19289,"species",NA,NA,NA,"Quercus"
+"274",274,"Lonicera hispidula var. vacillans","Lonicera hispidula var. vacillans",528895,"species",NA,NA,NA,"Lonicera"
+"275",275,"Common buttonbush","Cephalanthus occidentalis",34786,"species",NA,NA,NA,"Cephalanthus"
+"276",276,"Broadleaf hawthorn",NA,NA,"species","Crataegus coccinioides",24550,"not accepted name",NA
+"277",277,"Sweet crab apple","Malus coronaria",25257,"species",NA,NA,NA,"Malus"
+"278",278,"Winterberry",NA,NA,"species","Euonymus bungeanus",894990,"not accepted name",NA
+"279",279,"witch-hazel","Hamamelis virginiana",19033,"species",NA,NA,NA,"Hamamelis"
+"280",280,"Rhus typhina","Rhus typhina",28777,"species",NA,NA,NA,"Rhus"
+"281",281,"Mountain winterberry","Ilex montana",28002,"species",NA,NA,NA,"Ilex"
+"282",282,"Black birch",NA,NA,"species","Betula lenta",19487,"a not often used common name? more commonly called sweet birch",NA
+"283",283,"Fanleaf hawthorn","Crataegus flabellata",24561,"species",NA,NA,NA,"Crataegus"
+"284",284,"Callery pear","Pyrus calleryana",504706,"species",NA,NA,NA,"Pyrus"
+"285",285,"Persimmon","Diospyros",23853,"species",NA,NA,NA,"Diospyros"
+"286",286,"Malus","Malus",25254,"species",NA,NA,NA,"Malus"
+"287",287,"Virginia sweetspire","Itea virginica",24202,"species",NA,NA,NA,"Itea"
+"288",288,"Common privet",NA,NA,"species","Ligustrum vulgare",32980,"not found in IT IS maybe less common name",NA
+"289",289,"Kwanzan cherry",NA,NA,"species","Prunus",24762,"not found, seems to be a common name but no taxonomy",NA
+"290",290,"Weeping willow","Salix babylonica",837788,"species",NA,NA,NA,"Salix"
+"291",291,"Grey dogwood",NA,NA,"species","Cornus racemosa",501635,"misspelling-Gray",NA
+"292",292,"Chinese chestnut","Castanea mollissima",501318,"species",NA,NA,NA,"Castanea"
+"293",293,"European beech","Fagus sylvatica",502590,"species",NA,NA,NA,"Fagus"
+"294",294,"Kousa dogwood","Cornus kousa",507498,"species",NA,NA,NA,"Cornus"
+"295",295,"Prunus","Prunus",24762,"species",NA,NA,NA,"Prunus"
+"296",296,"Northern catalpa",NA,NA,"species","Catalpa speciosa",34315,"other suggested Castanea pumila  seems to be associated with chinquapin USDA",NA
+"297",297,"Bottlebrush buckeye","Aesculus parviflora",28722,"species",NA,NA,NA,"Aesculus"
+"298",298,"Speckled japanese aralla",NA,NA,"species","Fatsia japonica",505935,"wrong/not often used common name | more often refused to speckled web or japanese aralia",NA
+"299",299,"Fig",NA,NA,"species","Ficus",19081,"R gave unknown common names",NA
+"300",300,"Southern crab apple","Malus angustifolia",25255,"species",NA,NA,NA,"Malus"
+"301",301,"Cherry laurel","Prunus laurocerasus",24786,"species",NA,NA,NA,"Prunus"
+"302",302,"Yew","Taxaceae",194881,"species",NA,NA,NA,"Taxaceae"
+"303",303,"Bald cypress","Taxodium",18040,"species",NA,NA,NA,"Taxodium"
+"304",304,"Canyon grape","Vitis arizonica",28612,"species",NA,NA,NA,"Vitis"
+"305",305,"Sweetbay","Magnolia virginiana",18070,"species",NA,NA,NA,"Magnolia"
+"306",306,"Turkey oak","Quercus laevis",19367,"species",NA,NA,NA,"Quercus"
+"307",307,"Blackjack oak","Quercus marilandica",19374,"species",NA,NA,NA,"Quercus"
+"308",308,"Ilex glabra","Ilex glabra",27981,"species",NA,NA,NA,"Ilex"
+"309",309,"Cyrilla racemiflora","Cyrilla racemiflora",23449,"species",NA,NA,NA,"Cyrilla"
+"310",310,"Leucothoe axillaris","Leucothoe axillaris",23550,"species",NA,NA,NA,"Leucothoe"
+"311",311,"Northern white-cedar",NA,NA,"species","Thuja occidentalis",505490,"misspelling no hyphon needed",NA
+"312",312,"Spruce pine",NA,NA,"species","Pinus glabra",183342,"multiple species names given | but Pinus clausa said by USDA says sand pine",NA
+"313",313,"Prairie crab apple","Malus ioensis",25259,"species",NA,NA,NA,"Malus"
+"314",314,"Blue spruce","Picea pungens",183307,"species",NA,NA,NA,"Picea"
+"315",315,"Oregon crab apple","Malus fusca",25258,"species",NA,NA,NA,"Malus"
+"316",316,"Wafer ash",NA,NA,"species","Ptelea trifoliata",28992,"Name not found but USDA and NCSU refer to wafer-ash, etc.",NA
+"317",317,"Shumard oak",NA,NA,"species","Quercus shumardii",19417,"Two species name given also sometimes referred to as Shumard's Oak | Q. texana seems to refer more to Texas red oak and Nutall's oak",NA
+"318",318,"Silky dogwood","Cornus amomum",27799,"species",NA,NA,NA,"Cornus"
+"319",319,"Silver maple","Acer saccharinum",28757,"species",NA,NA,NA,"Acer"
+"320",320,"Roughleaf dogwood","Cornus drummondii",27807,"species",NA,NA,NA,"Cornus"
+"321",321,"Rose",NA,NA,"species","Rosa",24807,"given NA for common names and no just plain rose",NA
+"322",322,"Buxus","Buxus",28022,"species","Buxus",28022,"Found Buxus but no options given","Buxus"
+"323",323,"Oakleaf hydrangea","Hydrangea quercifolia",24200,"species",NA,NA,NA,"Hydrangea"
+"324",324,"Shellbark hickory",NA,NA,"species","Carya laciniosa",19235,"Two species recommended |USDA and NCSU recommends Caray laciniosa",NA
+"325",325,"Gray birch","Betula populifolia",19497,"species",NA,NA,NA,"Betula"
+"326",326,"Itea virginica","Itea virginica",24202,"species",NA,NA,NA,"Itea"
+"327",327,"Yaupon","Ilex vomitoria",27986,"species",NA,NA,NA,"Ilex"
+"328",328,"Shingle oak","Quercus imbricaria",19359,"species",NA,NA,NA,"Quercus"
+"329",329,"Littleleaf linden","Tilia cordata",505507,"species",NA,NA,NA,"Tilia"
+"330",330,"Rhus copallinum","Rhus copallinum",504754,"species",NA,NA,NA,"Rhus"
+"331",331,"Southern bayberry","Morella caroliniensis",507898,"species",NA,NA,NA,"Morella"
+"332",332,"Ficus",NA,NA,"species","Ficus",19081,"multiple options given some with NA",NA
+"333",333,"Carpinus","Carpinus",19503,"species",NA,NA,NA,"Carpinus"
+"334",334,"Feijoa sellowiana",NA,NA,"species","Feijoa sellowiana",506165,"not an accepted scientific name",NA
+"335",335,"Olea",NA,NA,"species","Olea",32989,"a genus?",NA
+"336",336,"Osmanthus fragrans","Osmanthus fragrans",505977,"species",NA,NA,NA,"Osmanthus"
+"337",337,"Illicium","Illicium",18082,"species",NA,NA,NA,"Illicium"
+"338",338,"Magnolia figo",NA,NA,"species","Liriodendron chinense",895289,"Not found but NSCU does recognize it | some websites suggest Chinese tulip tree as another common name so this scientific name",NA
+"339",339,"Tungoil tree","Vernicia fordii",505662,"species",NA,NA,NA,"Vernicia"
+"340",340,"Edgeworthia chrysantha","Edgeworthia chrysantha",512730,"species",NA,NA,NA,"Edgeworthia"
+"341",341,"Asimina","Asimina",18108,"species",NA,NA,NA,"Asimina"
+"342",342,"Sugarberry",NA,NA,"species","Celtis laevigata",19042,"Given two names C. laevigata and E. anacua | NCSU gives another option and USDA gives one nomral option",NA
+"343",343,"Sweet cherry","Prunus avium",24770,"species",NA,NA,NA,"Prunus"
+"344",344,"Shagbark hickory","Carya ovata",19242,"species",NA,NA,NA,"Carya"
+"345",345,"Southern crabapple","Malus angustifolia",25255,"species",NA,NA,NA,"Malus"
+"346",346,"Eastern sweetshrub","Calycanthus floridus",18142,"species",NA,NA,NA,"Calycanthus"
+"347",347,"American plum","Prunus americana",24763,"species",NA,NA,NA,"Prunus"
+"348",348,"Peach","Prunus persica",24765,"species",NA,NA,NA,"Prunus"
+"349",349,"Euonymus alatus","Euonymus alatus",27946,"species",NA,NA,NA,"Euonymus"
+"350",350,"Red elderberry","Sambucus racemosa",35326,"species",NA,NA,NA,"Sambucus"
+"351",351,"Water tupelo","Nyssa aquatica",27824,"species",NA,NA,NA,"Nyssa"
+"352",352,"Pecan","Carya illinoinensis",19234,"species",NA,NA,NA,"Carya"
+"353",353,"Gardenia","Gardenia",35159,"species",NA,NA,NA,"Gardenia"
+"354",354,"Nandina domestica","Nandina domestica",18848,"species",NA,NA,NA,"Nandina"
+"355",355,"Ailanthus","Ailanthus",28826,"species",NA,NA,NA,"Ailanthus"
+"356",356,"Bigtooth aspen","Populus grandidentata",22463,"species",NA,NA,NA,"Populus"
+"357",357,"Quercus robur","Quercus robur",19405,"species",NA,NA,NA,"Quercus"
+"358",358,"Koelreuteria paniculata","Koelreuteria paniculata",503286,"species",NA,NA,NA,"Koelreuteria"
+"359",359,"Zelkova serrata","Zelkova serrata",505790,"species",NA,NA,NA,"Zelkova"
+"360",360,"Syringa reticulata","Syringa reticulata",507196,"species",NA,NA,NA,"Syringa"
+"361",361,"Amelanchier laevis","Amelanchier laevis",182046,"species",NA,NA,NA,"Amelanchier"
+"362",362,"Maackia amurensis","Maackia amurensis",506254,"species",NA,NA,NA,"Maackia"
+"363",363,"Monterey pine","Pinus radiata",183372,"species",NA,NA,NA,"Pinus"
+"364",364,"Heartleaf birch",NA,NA,"species","Betula cordifolia",195222,"less common name? also called Hear-leaved birch, etc.?",NA
+"365",365,"Catberry","Ilex mucronata",835359,"species",NA,NA,NA,"Ilex"
+"366",366,"Raisin","Hovenia dulcis",28554,"species",NA,NA,NA,"Hovenia"
+"367",367,"Mountain ash","Piptocarpha tetrantha",38860,"species",NA,NA,NA,"Piptocarpha"
+"368",368,"Possumhaw viburnum","Viburnum nudum",35252,"species",NA,NA,NA,"Viburnum"
+"369",369,"Black willow","Salix nigra",22484,"species",NA,NA,NA,"Salix"
+"370",370,"Carolina laurel cherry",NA,NA,"species","Prunus caroliniana",24771,"Misspelling-laurelcherry",NA
+"371",371,"White spruce",NA,NA,"species","Picea glauca",183295,"Multiple options given some with multiple common names",NA
+"372",372,"Amelanchier alnifolia","Amelanchier alnifolia",25109,"species",NA,NA,NA,"Amelanchier"
+"373",373,"Green alder","Alnus viridis",181892,"species",NA,NA,NA,"Alnus"
+"374",374,"Buxus sempervirens","Buxus sempervirens",501097,"species",NA,NA,NA,"Buxus"
+"375",375,"Euonymus japonicus","Euonymus japonicus",894987,"species",NA,NA,NA,"Euonymus"
+"376",376,"Nerium oleander","Nerium oleander",30184,"species",NA,NA,NA,"Nerium"
+"377",377,"Viburnum tinus","Viburnum tinus",505680,"species",NA,NA,NA,"Viburnum"
+"378",378,"Nothoscordum gracile (onionweed)",NA,NA,"species","Nothoscordum gracile",503967,"The common name was in parantheses",NA
+"379",379,"Texas sophora",NA,NA,"species","Sophora affinis",26958,"Not accepted name",NA
+"380",380,"Lombardy poplar",NA,NA,"species","Populus nigra",22468,"Misspelling-Lombardy's poplar",NA
+"381",381,"Yucca rostrata","Yucca rostrata",43150,"species",NA,NA,NA,"Yucca"
+"382",382,"American beautyberry","Callicarpa americana",32144,"species",NA,NA,NA,"Callicarpa"
+"383",383,"Carolina cherry laurel",NA,NA,"species","Prunus caroliniana",24771,"Missordering of cerry and laurel",NA
+"384",384,"Gum bumelia","Sideroxylon lanuginosum ssp. lanuginosum",524695,"species",NA,NA,NA,"Sideroxylon"
+"385",385,"Leatherleaf mahonia",NA,NA,"species","Berberis bealei",509499,"Not found | more commonly known as Beale's barberry",NA
+"386",386,"Stretchberry","Forestiera pubescens",32957,"species",NA,NA,NA,"Forestiera"
+"387",387,"Chinese holly","Ilex cornuta",503155,"species",NA,NA,NA,"Ilex"
+"388",388,"Heavenly bamboo","Nandina domestica",18848,"species",NA,NA,NA,"Nandina"
+"389",389,"Groundsel tree",NA,NA,"species","Baccharis halimifolia",35682,"Not found but known on NCSU",NA
+"390",390,"Chinese privet","Ligustrum sinense",32979,"species",NA,NA,NA,"Ligustrum"
+"391",391,"Fishpole bamboo",NA,NA,"species","Phyllostachys aurea",42023,"Not found | found on NSCU",NA
+"392",392,"Japanese spindle tree",NA,NA,"species","Euonymus japonicus",894987,"Not found bc misspelling: spindletree| found on NSCU",NA
+"393",393,"Common gardenia","Gardenia volkensii",845972,"species",NA,NA,NA,"Gardenia"
+"394",394,"Tree privet","Ligustrum lucidum",503450,"species",NA,NA,NA,"Ligustrum"
+"395",395,"Reeves spiraea",NA,NA,"species","Spiraea catoniensis",505334,"Not found | found on NSCU",NA
+"396",396,"Buttonwood-mangrove",NA,NA,"species","Conocarpus erectus",27766,"maybe misspelled-Button mangrove",NA
+"397",397,"Strawberry bush","Euonymus americanus",27947,"species",NA,NA,NA,"Euonymus"
+"398",398,"Winged eonymous",NA,NA,"species","Euonymus alatus",27946,"misspelled-Winged euonymus",NA
+"399",399,"Viburnum rhytidophyllum","Viburnum rhytidophyllum",505679,"species",NA,NA,NA,"Viburnum"
+"400",400,"Silver poplar",NA,NA,"species","Populus alba",22451,"not found | internet says also called silverleaf or white poplar",NA
+"401",401,"Mountain maple",NA,NA,"species","Acer spicatum",28758,"two options: Acer glabrum vs. A. spicatum |",NA
+"402",402,"Carolina laurelcherry","Prunus caroliniana",24771,"species",NA,NA,NA,"Prunus"
+"403",403,"Bigleaf snowbell","Styrax grandifolius",505399,"species",NA,NA,NA,"Styrax"
+"404",404,"American sweetgum",NA,NA,"species","Liquidambar styraciflua",19027,"no matches | just sweetgum?",NA
+"405",405,"Sweetbay magnolia",NA,NA,"species","Magnolia virginiana",18070,"no matches|found at NCSU and internet",NA
+"406",406,"Prunus spp. (apricot)",NA,NA,"species","Prunus armeniaca",24769,"didn't register bc of common name in ()",NA
+"407",407,"Prunus spp. (cherry)",NA,NA,"species","Prunus",24762,"didn't register bc of common name in ()",NA
+"408",408,"Punica","Punica",27277,"species",NA,NA,NA,"Punica"
+"409",409,"Camptotheca","Camptotheca",500635,"species",NA,NA,NA,"Camptotheca"
+"410",410,"Viburnum awabuki",NA,NA,"species","Viburnum odoratissimum",505678,"Not found | match on NCSU | there's a variant of V. odoratissimum var. awabuki",NA
+"411",411,"Eriobotrya japonica","Eriobotrya japonica",502403,"species",NA,NA,NA,"Eriobotrya"
+"412",412,"Silverbell","Halesia",23863,"species",NA,NA,NA,"Halesia"
+"413",413,"Black haw",NA,NA,"species","Viburnum prunifolium",35253,"misspelling-Blackhaw",NA
+"414",414,"Pussy willow","Salix discolor",22524,"species",NA,NA,NA,"Salix"
+"415",415,"Prunus spp.(plum)",NA,NA,"species","Prunus",24762,"didn't register bc of common name in ()",NA
+"416",416,"Cockspur hawthorn","Crataegus crus-galli",24552,"species",NA,NA,NA,"Crataegus"
+"417",417,"Honey locust","Gleditsia triacanthos",26714,"species",NA,NA,NA,"Gleditsia"
+"418",418,"Winged euonymus","Euonymus alatus",27946,"species",NA,NA,NA,"Euonymus"
+"419",419,"Prunus laurocerasus","Prunus laurocerasus",24786,"species",NA,NA,NA,"Prunus"
+"420",420,"Japanese cherry",NA,NA,"species","Prunus serrulata",506233,"uncommon common name-japanese flowering cherry",NA
+"421",421,"Alnus crispa",NA,NA,"species","Alnus viridis",181892,"formerly known as this |",NA
+"422",422,"Rosa acicularis","Rosa acicularis",24812,"species",NA,NA,NA,"Rosa"
+"423",423,"Rubus idaeus","Rubus idaeus",24947,"species",NA,NA,NA,"Rubus"
+"424",424,"Lonicera involucrata","Lonicera involucrata",35297,"species",NA,NA,NA,"Lonicera"
+"425",425,"Franklin tree",NA,NA,"species","Franklinia alatamaha",21384,"two options between a genus and scientific name | looked at NCSU",NA
+"426",426,"Crepe myrtle",NA,NA,"species","Lagerstroemia",27109,"should not be spaced",NA
+"427",427,"Prunus salicina","Prunus salicina",506232,"species",NA,NA,NA,"Prunus"
+"428",428,"Na",NA,NA,"species",NA,NA,"Unknown",NA
+"429",429,"Tilia tomentosa","Tilia tomentosa",845764,"species",NA,NA,NA,"Tilia"
+"430",430,"Ulmus carpinifolia",NA,NA,"species","Ulmus procera",19056,"a former name/synonym",NA
+"431",431,"Pitch pine",NA,NA,"species","Pinus rigida",183376,"between couple names",NA
+"432",432,"Loblolly pine","Pinus taeda",18037,"species",NA,NA,NA,"Pinus"
+"433",433,"Fremont cottonwood",NA,NA,"species","Populus fermontii",22459,"misspelling- Fermont's cottonwood",NA
+"434",434,"Rosa","Rosa",24807,"species",NA,NA,NA,"Rosa"
+"435",435,"Cypress",NA,NA,"species","Cupressus",183455,"two genus names",NA
+"436",436,"Eastern cottonwood","Populus deltoides",22445,"species",NA,NA,NA,"Populus"
+"437",437,"Azalea, rhododendron",NA,NA,"species",NA,NA,"Unknown",NA
+"438",438,"Post oak","Quercus stellata",19422,"species",NA,NA,NA,"Quercus"
+"439",439,"Shortleaf pine","Pinus echinata",183335,"species",NA,NA,NA,"Pinus"
+"440",440,"Syringa vulgaris","Syringa vulgaris",32996,"species",NA,NA,NA,"Syringa"
+"441",441,"Horse chestnut","Aesculus hippocastanum",28721,"species",NA,NA,NA,"Aesculus"
+"442",442,"Arizona white oak","Quercus arizonica",19292,"species",NA,NA,NA,"Quercus"
+"443",443,"Norway spruce","Picea abies",183289,"species",NA,NA,NA,"Picea"
+"444",444,"Shining willow","Salix lucida",22554,"species",NA,NA,NA,"Salix"
+"445",445,"Myrobalan plum","Prunus cerasifera",24772,"species",NA,NA,NA,"Prunus"
+"446",446,"European horse chestnut",NA,NA,"species","Aesculus hippocastanum",28721,"Not found but found on NCSU and the internet",NA
+"447",447,"Prunus serulata (japanese cherry blossom)",NA,NA,"species","Prunus serrulata",506233,"not picked up bc common name in ()",NA
+"448",448,"Prunus sargentii",NA,NA,"species","Pseudophoenix sargentii ssp. Sargentii",524598,"not found can be found on NCSU | possibly Sargent's cherry PALM",NA
+"449",449,"Amelanchier","Amelanchier",25108,"species",NA,NA,NA,"Amelanchier"
+"450",450,"Staghorn sumac","Rhus typhina",28777,"species",NA,NA,NA,"Rhus"
+"451",451,"Cottonwood and poplar",NA,NA,"species",NA,NA,"two plants in one",NA
+"452",452,"Quercus hemispherica",NA,NA,"species","Quercus hemisphaerica",195108,"misspelling in hem…",NA
+"453",453,"Prunus umbellata","Prunus umbellata",24805,"species",NA,NA,NA,"Prunus"
+"454",454,"Ilex ambigua","Ilex ambigua",27987,"species",NA,NA,NA,"Ilex"
+"455",455,"Hibiscus coccineus albus",NA,NA,"species","Hibiscus coccineus",21625,"""White swamp hibiscus"" = 'Albus'",NA
+"456",456,"Quercus nuttallii",NA,NA,"species","Quercus texana",195188,"not an accepted scientific name",NA
+"457",457,"Hibiscus moscheutos","Hibiscus moscheutos",21612,"species",NA,NA,NA,"Hibiscus"
