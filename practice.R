@@ -7,12 +7,12 @@ library(dplyr)
 try = read_excel("TRY/TRY_flaggeddataset.xls")
 
 leaflength = try %>%
-  filter(TraitName == "Leaf length") %>%
-  #  mutate(lengthCM = case_when(
-  #    OrigUnitStr == "cm" ~ OrigValueStr,
-  #    OrigUnitStr == "mm" ~ OrigValueStr/10,
-  #    OrigUnitStr == "m" ~ OrigValueStr*100
-  #  )) %>%
+  filter(TraitName == "Leaf area (in case of compound leaves undefined if leaf or leaflet, undefined if petiole is in- or excluded)") %>%
+    mutate(lengthCM = case_when(
+      OrigUnitStr == "cm" ~ OrigValueStr,
+      OrigUnitStr == "mm" ~ OrigValueStr/10,
+      OrigUnitStr == "m" ~ OrigValueStr*100
+    )) %>%
   mutate(lengthCM = as.numeric(OrigValueStr)) %>%
   group_by(AccSpeciesName) %>%
   summarize(maxLength = max(lengthCM, na.rm = T),
