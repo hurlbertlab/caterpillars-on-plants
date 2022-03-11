@@ -6,7 +6,7 @@ library(dplyr)
 # Read in TRY trait files
 try = read_excel("TRY/TRY_flaggeddataset.xls")
 
-leaflength = try %>%
+leafarea = try %>%
   filter(TraitName == "Leaf area (in case of compound leaves undefined if leaf or leaflet, undefined if petiole is in- or excluded)") %>%
     mutate(lengthCM = case_when(
       OrigUnitStr == "cm" ~ OrigValueStr,
