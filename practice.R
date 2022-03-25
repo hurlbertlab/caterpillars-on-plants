@@ -32,8 +32,7 @@ traits = left_join(lengths, areas, by = 'AccSpeciesName') %>%
          meanLeafLength = mean.x,
          minLeafLength = min.x) %>%
   select(AccSpeciesName, maxLeafLength, meanLeafLength, minLeafLength, NewTraitName.x)
-traits = rename(traits, maxLeafArea = max.y, meanLeafArea = mean.y, minLeafArea = min.y, LeafArea = NewTraitName.y,LeafLength = NewTraitName.x)
-
+# what does select() do exactly? grabs a subset but why?
 # Example incorporating multiple trait names
 filter(TraitName %in% c("Leaf length", "Leaf length excluding petiole (leaf lamina length)"))
 
@@ -109,13 +108,15 @@ alltraits_summaries_part1 = part1_fromTRYfromplantspp %>%
 
 # Example incorporating multiple trait names
 filter(TraitName %in% c("Leaf length", "Leaf length excluding petiole"))
+
 ----------------------------------------------------------------------------------
 # Joining Part 1s and Part 2s
 combinedleaflengthtraits <-rbind(leaflengthpart1, leaflengthpart2)
 
-# Running this new combined lists through ITIS?
+#Running this new combined lists through ITIS?
+new = read.csv('Tasks/newSpeciesList.csv')
+coniferList = unique(new[, c('sciName', 'isConifer')])
 
-                        
                         
                         
                         

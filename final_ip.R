@@ -6,6 +6,7 @@ library(dplyr)
 # Read in TRY trait files
 try1 = read.csv('TRY/part1-fromTRYfromplantspp.csv')
 try2 = read.csv('TRY/part2-fromTRYfromplantspp.csv')
+masterplants = read.csv('TRY/plantspp.csv')
 
 try = rbind(try1, try2)
 
@@ -30,8 +31,13 @@ areas = filter(traitsummary, NewTraitName == "LeafArea")
 traits = left_join(lengths, areas, by = 'AccSpeciesName') %>%
   rename(maxLeafLength = max.x,
          meanLeafLength = mean.x,
-         minLeafLength = min.x)
+         minLeafLength = min.x,
+         LeafLength = NewTraitName.x,
+         maxLeafArea = max.y,
+         meanLeafArea = mean.y,
+         minLeafArea = min.y,
+         LeafArea = NewTraitName.y)
 
-# Possibly renames the columns so they're readable
-traits = rename(traits, maxLeafArea = max.y, meanLeafArea = mean.y, minLeafArea = min.y, LeafArea = NewTraitName.y,LeafLength = NewTraitName.x)
+# Possibly joining the master plant list to the trait list to see what plants are left
+whats_missing = left_join(masterplants, traits, by = 'AccSpeciesName')
 
