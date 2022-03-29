@@ -1,0 +1,471 @@
+cleanedName,sciName,itis_id,rank
+Maple,Acer,28727,genus
+Trident maple,Acer buergerianum,837859,species
+Hedge maple,Acer campestre,28739,species
+Florida maple,Acer floridanum,183691,species
+Amur maple,Acer ginnala,28741,species
+Chalk maple,Acer leucoderme,28761,species
+Bigleaf maple,Acer macrophyllum,28748,species
+Acer negundo,Acer negundo,28749,species
+Boxelder,Acer negundo,28749,species
+Black maple,Acer nigrum,182135,species
+Japanese maple,Acer palmatum,182136,species
+Striped maple,Acer pensylvanicum,28754,species
+Norway maple,Acer platanoides,28755,species
+Red maple,Acer rubrum,28728,species
+Silver maple,Acer saccharinum,28757,species
+Sugar maple,Acer saccharum,28731,species
+Acer x freemanii,Acer X freemanii,500949,species
+Horned maple,Acer diabolicum,837851,species
+Southern sugar maple,Acer saccharum,28731,species
+Buckeye,Aesculus,28714,genus
+Ohio buckeye,Aesculus glabra,28718,species
+Aesculus hippocastanum,Aesculus hippocastanum,28721,species
+Aesculus parviflora,Aesculus parviflora,28722,species
+Bottlebrush buckeye,Aesculus parviflora,28722,species
+Red buckeye,Aesculus pavia,28723,species
+Yellow buckeye,Aesculus flava,837871,species
+Ailanthus,Ailanthus,28826,genus
+Alder,Alnus,19466,genus
+Hazel alder,Alnus serrulata,19468,species
+Speckled alder,Alnus incana,19471,species
+Serviceberry,Amelanchier,25108,species
+Common serviceberry,Amelanchier arborea,25110,species
+Amelanchier laevis,Amelanchier laevis,182046,species
+Pacific madrone,Arbutus menziesii,23627,species
+Dwarf pawpaw,Asimina pygmea,18114,species
+Pawpaw,Asimina triloba,18117,species
+Baccharis halimifolia,Baccharis halimifolia,35682,species
+Birch,Betula,19478,genus
+Yellow birch,Betula alleghaniensis,19481,species
+Black birch,Betula lenta,19487,species
+Sweet birch,Betula lenta,19487,species
+White birch,Betula minor,183534,species
+River birch,Betula nigra,19480,species
+Paper birch,Betula papyrifera,19489,species
+Gray birch,Betula populifolia,19497,species
+Heartleaf birch,Betula cordifolia,195222,species
+Buxus,Buxus,28022,genus
+Callicarpa americana,Callicarpa americana,32144,species
+Calycanthus,Calycanthus,18139,species
+Eastern sweetshrub,Calycanthus floridus,18142,species
+Camellia,Camellia,500689,genus
+Hornbeam,Carpinus,19503,genus
+American hornbeam,Carpinus caroliniana,19504,species
+Blue beech,Carpinus caroliniana,19504,species
+Hickory,Carya,19223,genus
+Bitternut hickory,Carya cordiformis,19227,species
+Pignut hickory,Carya glabra,19231,species
+Pecan,Carya illinoinensis,19234,species
+Shellbark hickory,Carya laciniosa,19235,species
+Nutmeg hickory,Carya myristiciformis,19239,species
+Shagbark hickory,Carya ovata,19242,species
+Mockernut hickory,Carya tomentosa,19247,species
+American chestnut,Castanea dentata,19454,species
+Chinese chestnut,Castanea mollissima,501318,species
+Catalpa,Catalpa,34312,genus
+Southern catalpa,Catalpa bignonioides,34313,species
+Northern catalpa,Catalpa speciosa,34315,species
+Oriental bittersweet,Celastrus orbiculatus,506068,species
+Hackberry,Celtis,19039,genus
+Sugarberry,Celtis laevigata,19042,species
+Common buttonbush,Cephalanthus occidentalis,34786,species
+Eastern redbud,Cercis canadensis,25782,species
+Chinese quince,Chaenomeles sinensis,565928,species
+Atlantic white-cedar,Chamaecyparis thyoides,18046,species
+White-cedar,Chamaecyparis thyoides,18046,species
+Fragrant wintersweet,Chimonanthus praecox,NA,species
+Fringetree,Chionanthus,32948,genus
+Kentucky yellowwood,Cladrastis kentukea,26539,species
+Dogwood,Cornus,27798,genus
+Alternate-leaf dogwood,Cornus alternifolia,27813,species
+Silky dogwood,Cornus amomum,27799,species
+Roughleaf dogwood,Cornus drummondii,27807,species
+Flowering dogwood,Cornus florida,27806,species
+Stiff dogwood,Cornus foemina,27802,species
+Kousa dogwood,Cornus kousa,507498,species
+Big-leaf dogwood,Cornus macrophylla,896096,species
+Cornelian-cherry dogwood,Cornus mas,565094,species
+Cornus mas,Cornus mas,565094,species
+Cornus stolonifera,Cornus sericea,501637,species
+Redosier dogwood,Cornus sericea,501637,species
+Weeping knoss dogwood,Cornus kousa,507498,species
+Grey dogwood,Cornus racemosa,501635,species
+Hazelnut,Corylus,19505,genus
+American hazelnut,Corylus americana,19506,species
+Beaked hazel,Corylus cornuta,19507,species
+Hawthorn,Crataegus,24539,genus
+Broadleaf hawthorn,Crataegus dilatata,24555,species
+Fanleaf hawthorn,Crataegus flabellata,24561,species
+Washington hawthorn,Crataegus phaenopyrum,24593,species
+Cyrilla racemiflora,Cyrilla racemiflora,23449,species
+Bush honeysuckle,Diervilla,35309,genus
+Persimmon,Diospyros,23853,genus
+Common persimmon,Diospyros virginiana,23855,species
+Edgeworthia chrysantha,Edgeworthia chrysantha,512730,species
+Russian-olive,Elaeagnus angustifolia,27770,species
+Autumn olive,Elaeagnus umbellata,27776,species
+Euonymus alatus,Euonymus alatus,27946,species
+European spindletree,Euonymus europaeus,27949,species
+Yeddo euonymous,Euonymus hamiltonianus,894989,species
+Beech,Fagus,19461,genus
+American beech,Fagus grandifolia,19462,species
+European beech,Fagus sylvatica,502590,species
+Fagus sylvatica,Fagus sylvatica,502590,species
+Japanese knotweed,Fallopia japonica,565897,species
+Speckled japanese aralla,Fatsia japonica,505935,species
+Ficus,Ficus,19081,species
+Fig,Ficus,19081,species
+Florida forestiera,Forestiera segregata,32959,species
+Forsythia,Forsythia,32961,species
+Ash,Fraxinus,32928,species
+White ash,Fraxinus americana,32931,species
+Carolina ash,Fraxinus caroliniana,32941,species
+Black ash,Fraxinus nigra,32945,species
+Green ash,Fraxinus pennsylvanica,32929,species
+Gardenia,Gardenia,35159,genus
+Huckleberry,Gaylussacia,23659,genus
+Gaylussacia baccata,Gaylussacia baccata,23660,species
+Ginkgo,Ginkgo,183264,genus
+Honeylocust,Gleditsia,26711,genus
+Carolina silverbell,Halesia carolina,23864,species
+Halesia tetraptera,Halesia tetraptera,502868,species
+Witch hazel,Hamamelis virginiana,19033,species
+witch-hazel,Hamamelis virginiana,19033,species
+Hamamelis virginiana,Hamamelis virginiana,19033,species
+Ozark witch hazel,Hamamelis vernalis,19032,species
+Rose of sharon,Hibiscus syriacus,21638,species
+Raisin,Hovenia dulcis,28554,species
+Hydrangea,Hydrangea,24194,genus
+Hydrangea quercifolia,Hydrangea quercifolia,24200,species
+Oakleaf hydrangea,Hydrangea quercifolia,24200,species
+Possumhaw,Ilex decidua,27998,species
+Ilex glabra,Ilex glabra,27981,species
+Mountain holly,Ilex montana,28002,species
+Mountain winterberry,Ilex montana,28002,species
+Catberry,Ilex mucronata,835359,species
+American holly,Ilex opaca,27982,species
+Ilex verticillata,Ilex verticillata,27985,species
+Winterberry,Ilex verticillata,27985,species
+Ilex vomitoria,Ilex vomitoria,27986,species
+Itea virginica,Itea virginica,24202,species
+Virginia sweetspire,Itea virginica,24202,species
+Walnut,Juglans,19248,genus
+Black walnut,Juglans nigra,19254,species
+Kalmia latifolia,Kalmia latifolia,23677,species
+Mountain laurel,Kalmia latifolia,23677,species
+Kalopanax septemlobus,Kalopanax septemlobus,565257,species
+Golden rain tree,Koelreuteria elegans,503285,species
+Koelreuteria paniculata,Koelreuteria paniculata,503286,species
+Crepe myrtle,Lagerstroemia indica,27110,species
+Tamarack,Larix laricina,183412,species
+Leucothoe axillaris,Leucothoe axillaris,23550,species
+Privet,Ligustrum,32973,genus
+Japanese privet,Ligustrum japonicum,503449,species
+Common privet,Ligustrum vulgare,32980,species
+Olive quihoui,Ligustrum quihoui,32978,species
+Quihoui,Ligustrum quihoui,32978,species
+Spicebush,Lindera,18146,genus
+Common spicebush,Lindera benzoin,18147,species
+Lindera benzoin,Lindera benzoin,18147,species
+Northern spicebush,Lindera benzoin,18147,species
+Sweetgum,Liquidambar styraciflua,19027,species
+Tulip poplar,Liriodendron tulipifera,18086,species
+Tuliptree,Liriodendron tulipifera,18086,species
+Yellow-poplar,Liriodendron tulipifera,18086,species
+Tanoak,Lithocarpus densiflorus,19464,species
+Honeysuckle,Lonicera,35281,genus
+Lonicera hispidula var. vacillans,Lonicera hispidula var. vacillans,528895,species
+Lonicera japonica,Lonicera japonica,35283,species
+Amur honeysuckle,Lonicera maackii,35298,species
+Tatarian honeysuckle,Lonicera tatarica,35306,species
+Maackia amurensis,Maackia amurensis,506254,species
+Osage orange,Maclura pomifera,19102,species
+Magnolia,Magnolia,18069,genus
+Southern magnolia,Magnolia grandiflora,18074,species
+Umbrella magnolia,Magnolia tripetala,18077,species
+Sweetbay,Magnolia virginiana,18070,species
+Loebner magnolia,Magnolia X loebneri,NA,species
+Merrill magnolia,Magnolia X loebneri,NA,species
+Cucumber magnolia,Magnolia acuminata,18071,species
+Fraser magnolia,Magnolia fraseri,18073,species
+Mountain or fraser magnolia,Magnolia fraseri,18073,species
+Apple,Malus,25254,genus
+Malus,Malus,25254,genus
+Southern crab apple,Malus angustifolia,25255,species
+Southern crabapple,Malus angustifolia,25255,species
+Sweet crab apple,Malus coronaria,25257,species
+Oregon crab apple,Malus fusca,25258,species
+Prairie crab apple,Malus ioensis,25259,species
+Malus siberica,Malus baccata,25256,species
+Malus sargentii,Malus sargentii,507499,species
+Morella caroliniensis,Morella caroliniensis,507898,species
+Southern bayberry,Morella caroliniensis,507898,species
+Morella cerifera,Morella cerifera,507899,species
+Wax myrtle,Morella cerifera,507899,species
+Red bay,Morella rubra,845182,species
+Myrica cerifera,Morella cerifera,507899,species
+Mulberry,Morus,19064,genus
+White mulberry,Morus alba,19066,species
+Black mulberry,Morus nigra,19069,species
+Red mulberry,Morus rubra,19070,species
+Clerya,Mulinia cleryana,80960,species
+Arrowwood,Viburnum,35249,genus
+Arrowwood viburnum,Viburnum,35249,genus
+Nandina domestica,Nandina domestica,18848,species
+Tupelo,Nyssa,27820,genus
+Water tupelo,Nyssa aquatica,27824,species
+Black gum,Nyssa sylvatica,27821,species
+Blackgum,Nyssa sylvatica,27821,species
+Hophornbeam,Ostrya,19508,genus
+Eastern hophornbeam,Ostrya virginiana,19511,species
+Sourwood,Oxydendrum arboreum,23690,species
+Persian ironwood,Parrotia persica,895220,species
+Redbay,Persea borbonia,18149,species
+Common ninebark,Physocarpus opulifolius,25282,species
+Blue spruce,Picea pungens,183307,species
+Spruce pine,Pinus glabra,183342,species
+Monterey pine,Pinus radiata,183372,species
+Eastern white pine,Pinus strobus,183385,species
+Virginia pine,Pinus virginiana,183394,species
+Mountain ash,Piptocarpha tetrantha,38860,species
+Sycamore,Platanus,19019,genus
+American sycamore,Platanus occidentalis,19020,species
+Podocarpus,Podocarpus,183488,genus
+Balsam poplar,Populus balsamifera,22453,species
+Bigtooth aspen,Populus grandidentata,22463,species
+Quaking aspen,Populus tremuloides,195773,species
+Trembling aspen,Populus tremuloides,195773,species
+Cherry,Prunus,24762,genus
+Cherry and plum,Prunus,24762,genus
+Chokecherry,Prunus,24762,genus
+Wild cherry,Prunus,24762,genus
+American plum,Prunus americana,24763,species
+Sweet cherry,Prunus avium,24770,species
+Sour cherry,Prunus cerasus,24773,species
+Cherry laurel,Prunus laurocerasus,24786,species
+Prunus maritima,Prunus maritima,24790,species
+Japanese apricot,Prunus mume,506231,species
+Pin cherry,Prunus pensylvanica,24799,species
+Peach,Prunus persica,24765,species
+Black cherry,Prunus serotina,24764,species
+Kwanzan cherry,Prunus serrulata,506233,species
+Weeping cherry,Prunus subhirtella,565436,species
+Wafer ash,Ptelea trifoliata,28992,species
+Buffalo nut,Pyrularia pubera,504705,species
+Pear,Pyrus,25294,genus
+Callery pear,Pyrus calleryana,504706,species
+Oak,Quercus,19276,genus
+California live oak,Quercus agrifolia,19289,species
+White oak,Quercus alba,19290,species
+Swamp white oak,Quercus bicolor,19300,species
+Scarlet oak,Quercus coccinea,19288,species
+Southern red oak,Quercus falcata,19277,species
+Chinese evergreen oak,Quercus glauca,845168,species
+Scrub oak,Quercus ilicifolia,19358,species
+Shingle oak,Quercus imbricaria,19359,species
+Turkey oak,Quercus laevis,19367,species
+Laurel oak,Quercus laurifolia,19368,species
+Overcup oak,Quercus lyrata,19278,species
+Bur oak,Quercus macrocarpa,19287,species
+Blackjack oak,Quercus marilandica,19374,species
+Swamp chestnut oak,Quercus michauxii,19279,species
+Chestnut oak,Quercus montana,19379,species
+Quercus montana,Quercus montana,19379,species
+Water oak,Quercus nigra,19280,species
+Cherrybark oak,Quercus pagoda,195195,species
+Pin oak,Quercus palustris,19281,species
+Willow oak,Quercus phellos,19282,species
+Quercus robur,Quercus robur,19405,species
+Northern red oak,Quercus rubra,19408,species
+Red oak,Quercus rubra,19408,species
+Black oak,Quercus velutina,19447,species
+Live oak,Quercus virginiana,19283,species
+Shumard oak,Quercus shumardii,19417,species
+Buckthorn,Rhamnus,28561,genus
+Common buckthorn,Rhamnus cathartica,28573,species
+Rhamnus cathartica,Rhamnus cathartica,28573,species
+Frangula alnus,Rhamnus frangula,28579,species
+Azalea,Rhododendron,23700,genus
+Rhododendron,Rhododendron,23700,genus
+Florida azalea,Rhododendron austrinum,23705,species
+Rhododendron austrinum,Rhododendron austrinum,23705,species
+Rhododendron canescens,Rhododendron canescens,23712,species
+Catawba rhododendron,Rhododendron catawbiense,23714,species
+Piedmont azalea,Rhododendron flammeum,23717,species
+Plumleaf azalea,Rhododendron prunifolium,23728,species
+Coastal azalea,Rhododendron atlanticum,23704,species
+Great rhododendron,Rhododendron maximum,23721,species
+Jetbead,Rhodotypos scandens,25298,species
+Sumac,Rhus,28772,genus
+Rhus copallinum,Rhus copallinum,504754,species
+Rhus glabra,Rhus glabra,28782,species
+Rhus typhina,Rhus typhina,28777,species
+Black locust,Robinia pseudoacacia,504804,species
+Rose,Rosa,24807,genus
+Multiflora rose,Rosa multiflora,24833,species
+Brambles,Rubus,24848,genus
+Wineberry,Rubus phoenicolasius,25017,species
+Willow,Salix,22476,genus
+Weeping willow,Salix babylonica,837788,species
+Black willow,Salix nigra,22484,species
+Elderberry,Sambucus,35315,species
+Red elderberry,Sambucus racemosa,35326,species
+Sassafras,Sassafras,18157,genus
+American mountain-ash,Sorbus americana,25319,species
+American bladdernut,Staphylea trifolia,28646,species
+Stewartia rostrata,Stewartia,21389,genus
+Japanese snowbell,Styrax japonicus,505974,species
+Symplocos tinctoria,Symplocos tinctoria,23878,species
+Lilac,Syringa,32994,genus
+Syringa reticulata,Syringa reticulata,507196,species
+Bald cypress,Taxodium distichum,18041,species
+Yew,Taxus,194882,genus
+Northern white-cedar,Thuja occidentalis,505490,species
+White cedar,Thuja occidentalis,505490,species
+American basswood,Tilia americana,21536,species
+Basswood,Tilia americana,21536,species
+Littleleaf linden,Tilia cordata,505507,species
+Tilia cordata,Tilia cordata,505507,species
+Tilia x europaea,Tilia X europaea,21538,species
+Chinese tallowtree,Triadica sebifera,522777,species
+Eastern hemlock,Tsuga canadensis,183397,species
+Carolina hemlock,Tsuga caroliniana,183399,species
+Elm,Ulmus,19048,genus
+Ulmus,Ulmus,19048,genus
+Winged elm,Ulmus alata,19051,species
+American elm,Ulmus americana,19049,species
+Siberian elm,Ulmus pumila,19057,species
+Slippery elm,Ulmus rubra,19050,species
+White elm,Ulmus americana,19049,species
+California laurel,Umbellularia californica,18208,species
+Blueberry,Vaccinium,23571,genus
+Vaccinium,Vaccinium,23571,genus
+Highbush blueberry,Vaccinium corymbosum,23573,species
+Vaccinium caesariense,Vaccinium corymbosum,23573,species
+Vaccinium corymbosum,Vaccinium corymbosum,23573,species
+Vaccinum corymbosum,Vaccinium corymbosum,23573,species
+Vaccineum stamineum,Vaccinium stamineum,233615,species
+Tungoil tree,Vernicia fordii,505662,species
+Viburnum,Viburnum,35249,genus
+Mapleleaf viburnum,Viburnum acerifolium,35255,species
+Vibirnum dentatum,Viburnum dentatum,35251,species
+Viburnum dentatum,Viburnum dentatum,35251,species
+Viburnum dilatatum,Viburnum dilatatum,505677,species
+Viburnum lentago,Viburnum lentago,35266,species
+Possumhaw viburnum,Viburnum nudum,35252,species
+Viburnum nudum,Viburnum nudum,35252,species
+Viburnum plicatum,Viburnum plicatum,35272,species
+Blackhaw,Viburnum prunifolium,35253,species
+Viburnum rufidulum,Viburnum rufidulum,35274,species
+Viburnum cassinoide,Viburnum nudum,35252,species
+Viburnum trilobum,Viburnum opulus,35270,species
+Canyon grape,Vitis arizonica,28612,species
+Wisteria,Wisteria,27019,genus
+Japanese zelkova,Zelkova serrata,505790,species
+Zelkova serrata,Zelkova serrata,505790,species
+White fir,"Abies amabilis, A. concolor, A.procera, etc.",NA,species
+Crapemyrtle,Lagerstroemia indica,27110,species
+Ironwood,NA,NA,species
+Maple leaf viburnum,Viburnum acerifolium,35255,species
+Cornus macrophylla,Cornus macrophylla,896096,species
+Sumac?,NA,NA,species
+Quihoui???,NA,NA,species
+Olive quihoui??,NA,NA,species
+Fraser's magnolia,Magnolia fraseri,18073,species
+Prunus,Prunus,24762,genus
+Yaupon,Ilex vomitoria,27986,species
+Carpinus,Carpinus,19503,species
+Feijoa sellowiana,Feijoa sellowiana,506165,species
+Olea,Olea,32989,genus
+Osmanthus fragrans,Osmanthus fragrans,505977,species
+Illicium,Illicium,18082,genus
+Magnolia figo,Liriodendron chinense,895289,species
+Asimina,Asimina,18108,genus
+Carolina laurel cherry,Prunus caroliniana,24771,species
+White spruce,Picea glauca,183295,species
+Amelanchier alnifolia,Amelanchier alnifolia,25109,species
+Green alder,Alnus viridis,181892,species
+Buxus sempervirens,Buxus sempervirens,501097,species
+Euonymus japonicus,Euonymus japonicus,894987,species
+Nerium oleander,Nerium oleander,30184,species
+Viburnum tinus,Viburnum tinus,505680,species
+Nothoscordum gracile (onionweed),Nothoscordum gracile,503967,species
+Texas sophora,Sophora affinis,26958,species
+Lombardy poplar,Populus nigra,22468,species
+Yucca rostrata,Yucca rostrata,43150,species
+American beautyberry,Callicarpa americana,32144,species
+Carolina cherry laurel,Prunus caroliniana,24771,species
+Gum bumelia,Sideroxylon lanuginosum ssp. lanuginosum,524695,species
+Leatherleaf mahonia,Berberis bealei,509499,species
+Stretchberry,Forestiera pubescens,32957,species
+Chinese holly,Ilex cornuta,503155,species
+Heavenly bamboo,Nandina domestica,18848,species
+Groundsel tree,Baccharis halimifolia,35682,species
+Chinese privet,Ligustrum sinense,32979,species
+Fishpole bamboo,Phyllostachys aurea,42023,species
+Japanese spindle tree,Euonymus japonicus,894987,species
+Common gardenia,Gardenia volkensii,845972,species
+Tree privet,Ligustrum lucidum,503450,species
+Reeves spiraea,Spiraea catoniensis,505334,species
+Buttonwood-mangrove,Conocarpus erectus,27766,species
+Strawberry bush,Euonymus americanus,27947,species
+Winged eonymous,Euonymus alatus,27946,species
+Viburnum rhytidophyllum,Viburnum rhytidophyllum,505679,species
+Silver poplar,Populus alba,22451,species
+Mountain maple,Acer spicatum,28758,species
+Carolina laurelcherry,Prunus caroliniana,24771,species
+Bigleaf snowbell,Styrax grandifolius,505399,species
+American sweetgum,Liquidambar styraciflua,19027,species
+Sweetbay magnolia,Magnolia virginiana,18070,species
+Prunus spp. (apricot),Prunus armeniaca,24769,species
+Prunus spp. (cherry),Prunus,24762,genus
+Punica,Punica,27277,genus
+Camptotheca,Camptotheca,500635,species
+Viburnum awabuki,Viburnum odoratissimum,505678,species
+Eriobotrya japonica,Eriobotrya japonica,502403,species
+Silverbell,Halesia,23863,species
+Black haw,Viburnum prunifolium,35253,species
+Pussy willow,Salix discolor,22524,species
+Prunus spp.(plum),Prunus,24762,genus
+Cockspur hawthorn,Crataegus crus-galli,24552,species
+Honey locust,Gleditsia triacanthos,26714,species
+Winged euonymus,Euonymus alatus,27946,species
+Prunus laurocerasus,Prunus laurocerasus,24786,species
+Japanese cherry,Prunus serrulata,506233,species
+Alnus crispa,Alnus viridis,181892,species
+Rosa acicularis,Rosa acicularis,24812,species
+Rubus idaeus,Rubus idaeus,24947,species
+Lonicera involucrata,Lonicera involucrata,35297,species
+Franklin tree,Franklinia alatamaha,21384,species
+Prunus salicina,Prunus salicina,506232,species
+Na,NA,NA,species
+Tilia tomentosa,Tilia tomentosa,845764,species
+Ulmus carpinifolia,Ulmus procera,19056,species
+Pitch pine,Pinus rigida,183376,species
+Loblolly pine,Pinus taeda,18037,species
+Fremont cottonwood,Populus fermontii,22459,species
+Rosa,Rosa,24807,species
+Cypress,Cupressus,183455,genus
+Eastern cottonwood,Populus deltoides,22445,species
+"Azalea, rhododendron",NA,NA,species
+Post oak,Quercus stellata,19422,species
+Shortleaf pine,Pinus echinata,183335,species
+Syringa vulgaris,Syringa vulgaris,32996,species
+Horse chestnut,Aesculus hippocastanum,28721,species
+Arizona white oak,Quercus arizonica,19292,species
+Norway spruce,Picea abies,183289,species
+Shining willow,Salix lucida,22554,species
+Myrobalan plum,Prunus cerasifera,24772,species
+European horse chestnut,Aesculus hippocastanum,28721,species
+Prunus serulata (japanese cherry blossom),Prunus serrulata,506233,species
+Prunus sargentii,Pseudophoenix sargentii ssp. Sargentii,524598,species
+Amelanchier,Amelanchier,25108,species
+Staghorn sumac,Rhus typhina,28777,species
+Cottonwood and poplar,NA,NA,species
+Quercus hemispherica,Quercus hemisphaerica,195108,species
+Prunus umbellata,Prunus umbellata,24805,species
+Ilex ambigua,Ilex ambigua,27987,species
+Hibiscus coccineus albus,Hibiscus coccineus,21625,species
+Quercus nuttallii,Quercus texana,195188,species
+Hibiscus moscheutos,Hibiscus moscheutos,21612,species

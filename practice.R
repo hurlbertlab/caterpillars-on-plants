@@ -114,8 +114,13 @@ filter(TraitName %in% c("Leaf length", "Leaf length excluding petiole"))
 combinedleaflengthtraits <-rbind(leaflengthpart1, leaflengthpart2)
 
 #Running this new combined lists through ITIS?
-new = read.csv('Tasks/newSpeciesList.csv')
+new = read.csv('Tasks/cleanedListwithNewSpecies.csv')
 coniferList = unique(new[, c('sciName', 'isConifer')])
+
+
+plantList = read.csv('Tasks/plantListcopy.csv')
+newSpeciesList = read.csv('Tasks/newSpecieslist.csv')
+adddingplantsandnew <- bind_rows(plantList, newSpeciesList)   
 
                         
                         
