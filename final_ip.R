@@ -40,9 +40,23 @@ traits = left_join(lengths, areas, by = 'AccSpeciesName') %>%
          LeafArea = NewTraitName.y)
 
 # Possibly joining the master plant list to the trait list to see what plants are left
-whats_missing = left_join(masterplants, traits, by = c('sciName' = 'AccSpeciesName') 
+joined_try = left_join(
+  masterplants, 
+  traits, 
+  by = c('sciName' = 'AccSpeciesName'))
 
+joined_try %>% 
+  summarize(n_missing = sum(is.na(LeafLength)))
+
+joined_try %>% 
+  summarize(n_present = sum(!is.na(LeafLength)))
 
 #%>% 
 #  filter(!AccSpeciesName %in% 8:9)
+
+# index to view sciName where sciName is duplicated (in the list more than one time)
+joined_try$sciName[which(duplicated(joined_try$sciName))]
+
+# index to whole rows where sciName is 'Carpinus caroliniana'
+joined_try[joined_try$sciName == 'Carpinus caroliniana',]
 

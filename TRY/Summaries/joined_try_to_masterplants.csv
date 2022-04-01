@@ -1,0 +1,452 @@
+"","X.x","cleanedName","sciName","itis_id","rank","notes","X.y","LeafLength","maxLeafLength","meanLeafLength","minLeafLength","LeafArea","maxLeafArea","meanLeafArea","minLeafArea"
+"1",1,"American beech","Fagus grandifolia",19462,"species","",62,"LeafLength",162.4,91.8321875,6,"LeafArea",11265,4174.848263,563
+"2",2,"Birch","Betula",19478,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"3",3,"Paper birch","Betula papyrifera",19489,"species","",21,"LeafLength",91,50.125,5,"LeafArea",6519.513925,2981.528255,39
+"4",4,"American hornbeam","Carpinus caroliniana",19504,"species","",26,"LeafLength",84.3,60.22,3,"LeafArea",2740,1461.586667,529.6666667
+"5",5,"Blackgum","Nyssa sylvatica",27821,"species","",108,"LeafLength",80.093,50.086,5,"LeafArea",6075,2145.887963,71.305
+"6",6,"White mulberry","Morus alba",19066,"species","",104,"LeafLength",30,12.33333333,5,"LeafArea",1300,1300,1300
+"7",7,"Boxelder","Acer negundo",28749,"species","",4,"LeafLength",215,146.0833333,5,"LeafArea",20518,7116.155099,1144.9
+"8",8,"Chokecherry","Prunus",24762,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"9",9,"Sugar maple","Acer saccharum",28731,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"10",10,"Hophornbeam","Ostrya",19508,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"11",11,"Blue beech","Carpinus caroliniana",NA,"species","also called american hornbeam",26,"LeafLength",84.3,60.22,3,"LeafArea",2740,1461.586667,529.6666667
+"12",12,"Quaking aspen","Populus tremuloides",195773,"species","",130,"LeafLength",58,28.75,3,"LeafArea",6204.918376,1386.196343,89.71
+"13",13,"Dogwood","Cornus",27798,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"14",14,"Common buckthorn","Rhamnus cathartica",28573,"species","",169,"LeafLength",7,5,3,"LeafArea",3162,740.6530336,160.245614
+"15",15,"Pin cherry","Prunus pensylvanica",24799,"species","",137,"LeafLength",10,7,3,"LeafArea",3700.666667,2696.166667,1691.666667
+"16",16,"Yellow birch","Betula alleghaniensis",19481,"species","",18,"LeafLength",10,8,6,"LeafArea",4980,2090.239322,64
+"17",17,"Japanese maple","Acer palmatum",182136,"species","",5,"LeafLength",90.094,45.59233333,5,"LeafArea",5183.066,1935.7007,405.327
+"18",18,"Honeysuckle","Lonicera",35281,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"19",19,"Hydrangea","Hydrangea",24194,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"20",20,"Rhododendron","Rhododendron",23700,"species","",170,"LeafLength",40,40,40,"LeafArea",1720.666667,1133.306667,400.2
+"21",21,"Weeping cherry","Prunus subhirtella ",NA,"species","also called winter-flowering cherry",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"22",22,"Buckthorn","Rhamnus",28561,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"23",23,"Serviceberry","Amelanchier",25108,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"24",24,"Hackberry","Celtis",19039,"species","",37,"LeafLength",12,8.5,5,"LeafArea",6320,5127.777778,3480
+"25",25,"Lilac","Syringa",32994,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26",26,"Black cherry","Prunus serotina",24764,"species","",140,"LeafLength",106,64.525,5,"LeafArea",6075,2483.980303,711.3333333
+"27",27,"Vaccineum stamineum","Vaccinium stamineum ",NA,"species","mispelled",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"28",28,"Hickory","Carya",19223,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"29",29,"White oak","Quercus alba",19290,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"30",30,"Cherry and plum","Prunus",NA,"species","both",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"31",31,"Live oak","Quercus virginiana",19283,"species","",168,"LeafLength",97.7,54.12142857,1,"LeafArea",3133,1409.902105,526
+"32",32,"Norway maple","Acer platanoides",28755,"species","",7,"LeafLength",15,10,5,"LeafArea",31623,7839.102132,2119.038462
+"33",33,"Viburnum trilobum","Viburnum opulus var. americanum",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"34",34,"Viburnum nudum","Viburnum nudum",35252,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"35",35,"Cornus stolonifera","Cornus sericea ssp. Sericea",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"36",36,"Vibirnum dentatum","Viburnum dentatum",NA,"species","mispelled",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"37",37,"Vaccinium","Vaccinium",23571,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"38",38,"Rhus glabra","Rhus glabra",28782,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"39",39,"Hamamelis virginiana","Hamamelis virginiana",19033,"species","",72,"LeafLength",79.6,53.91,3.7,"LeafArea",8078,3274.175,1168
+"40",40,"Striped maple","Acer pensylvanicum",28754,"species","",6,"LeafLength",15,13.85,12.7,"LeafArea",35021.342,13308.74359,3805.38
+"41",41,"Viburnum cassinoide","Viburnum cassinoides",NA,"species","mispelled",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"42",42,"Scarlet oak","Quercus coccinea",19288,"species","",149,"LeafLength",16,8.5,1,"LeafArea",18800,12770.66667,4520
+"43",43,"Aesculus parviflora","Aesculus parviflora",28722,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"44",44,"Flowering dogwood","Cornus florida",27806,"species","",44,"LeafLength",163.5,89.3718,10,"LeafArea",11546,4301.412136,52.288
+"45",45,"Halesia tetraptera","Halesia carolina",NA,"species","not updated",71,"LeafLength",12,8.5,5,"LeafArea",4500,4500,4500
+"46",46,"Ginkgo","Ginkgo",183264,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"47",47,"Malus sargentii","Malus sieboldii",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"48",48,"Aesculus hippocastanum","Aesculus hippocastanum",28721,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"49",49,"Sweetgum","Liquidambar",19026,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"50",50,"White fir","Abies concolor",181826,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"51",51,"Sourwood","Oxydendrum",23689,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"52",52,"Maple","Acer",28727,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"53",53,"Elm","Ulmus",19048,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"54",54,"Red maple","Acer rubrum",28728,"species","",8,"LeafLength",155.5,76.29259259,5,"LeafArea",15000,3719.391556,95
+"55",55,"Oak","Quercus",19276,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"56",56,"Autumn olive","Elaeagnus umbellata",27776,"species","",57,"LeafLength",9,5.5,2,"LeafArea",1543.78,1334.39,1125
+"57",57,"Blackhaw","Viburnum prunifolium",35253,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"58",58,"Yellow buckeye","Aesculus flava",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"59",59,"American elm","Ulmus americana",19049,"species","",193,"LeafLength",15,10,4,"LeafArea",12000,2556.332006,40
+"60",60,"Spicebush","Lindera",18146,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"61",61,"White-cedar","Chamaecyparis thyoides",18046,"species","",40,"LeafLength",0.3,0.216666667,0.15,NA,NA,NA,NA
+"62",62,"Winged elm","Ulmus alata",19051,"species","",192,"LeafLength",76,50.2125,3,"LeafArea",1947,1056.111111,543
+"63",63,"Yellow-poplar","Liriodendron tulipifera",18086,"species","",90,"LeafLength",138.98,60.16944444,6.5,"LeafArea",34000,10515.46199,493
+"64",64,"Magnolia","Magnolia",18069,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"65",65,"Lonicera japonica","Lonicera japonica",35283,"species","",91,"LeafLength",8,5.75,3,"LeafArea",963,867.5,772
+"66",66,"Eastern redbud","Cercis canadensis",25782,"species","",39,"LeafLength",164.139,82.92428571,9.066,"LeafArea",19009.147,6168.978023,35.717
+"67",67,"Pear","Pyrus",25294,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"68",68,"Crapemyrtle","Lagerstroemia indica",27110,"species","",83,"LeafLength",92.192,44.03526923,2.5,"LeafArea",2728.566,1316.1668,45.001
+"69",69,"Northern red oak","Quercus rubra",19408,"species","",163,"LeafLength",153,101,12,"LeafArea",22720.76739,6393.514571,866
+"70",70,"Ironwood",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"71",71,"Florida maple","Acer floridanum",183691,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"72",72,"Umbrella magnolia","Magnolia tripetala",18077,"species","",99,"LeafLength",60,45,30,"LeafArea",32730,32730,32730
+"73",73,"Viburnum rufidulum","Viburnum rufidulum",35274,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"74",74,"Willow oak","Quercus phellos",19282,"species","",161,"LeafLength",12,8.5,5,"LeafArea",2221.333333,1335.888889,555.6666667
+"75",75,"Swamp chestnut oak","Quercus michauxii",19279,"species","",157,"LeafLength",181.6,99.28888889,6,"LeafArea",24893,9307.409357,4480
+"76",76,"Pignut hickory","Carya glabra",19231,"species","",28,"LeafLength",360,218.8888889,20,"LeafArea",54675,20110.15152,924.3333333
+"77",77,"Common serviceberry","Amelanchier arborea",25110,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"78",78,"Mapleleaf viburnum","Viburnum acerifolium",35255,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"79",79,"Chestnut oak","Quercus montana",19379,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"80",80,"American holly","Ilex opaca",27982,"species","",77,"LeafLength",91.1,48.43673214,13.92,"LeafArea",4315,1420.082563,68
+"81",81,"Common persimmon","Diospyros virginiana",23855,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"82",82,"American sycamore","Platanus occidentalis",19020,"species","",123,"LeafLength",30,17.4,8,"LeafArea",28197,19182.72727,13590
+"83",83,"Honeylocust","Gleditsia",26711,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"84",84,"White ash","Fraxinus americana",32931,"species","",67,"LeafLength",267,175.375,20,"LeafArea",54675,16453.42583,258
+"85",85,"Beaked hazel","Corylus cornuta",19507,"species","",52,"LeafLength",10,7,4,"LeafArea",3321.333333,3321.333333,3321.333333
+"86",86,"Speckled alder",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"87",87,"White elm","Ulmus americana",NA,"species","also known as American elm",193,"LeafLength",15,10,4,"LeafArea",12000,2556.332006,40
+"88",88,"Hawthorn","Crataegus",24539,"species","",53,"LeafLength",50,50,50,"LeafArea",2080,832.3444445,137
+"89",89,"Alternate-leaf dogwood","Cornus alternifolia",27813,"species","",43,"LeafLength",12,9,6,"LeafArea",6075,6075,6075
+"90",90,"Redosier dogwood","Cornus sericea",501637,"species","",50,"LeafLength",14,11.33333333,8,"LeafArea",4149.72,2615.1133,1259.08
+"91",91,"Tamarack",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"92",92,"Willow","Salix",22476,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"93",93,"White birch",NA,NA,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"94",94,"Balsam poplar","Populus balsamifera",22453,"species","",125,"LeafLength",16,11,5,"LeafArea",3162,2929.457778,2774
+"95",95,"Apple","Malus",25254,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"96",96,"Black ash","Fraxinus nigra",32945,"species","",69,"LeafLength",40,32.5,25,NA,NA,NA,NA
+"97",97,"Green ash","Fraxinus pennsylvanica",32929,"species","",70,"LeafLength",40,29,18,"LeafArea",4486.666667,3282.555556,2467
+"98",98,"American chestnut","Castanea dentata",19454,"species","",32,"LeafLength",30,19.5,9,"LeafArea",12400,8740.55,6019
+"99",99,"Sour cherry","Prunus cerasus",24773,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"100",100,"American basswood","Tilia americana",21536,"species","",186,"LeafLength",224.589,110.7785333,12.7,"LeafArea",28680,8515.992973,171.879
+"101",101,"Black walnut","Juglans nigra",19254,"species","",79,"LeafLength",60,40,20,"LeafArea",54675,19662.91667,2293.333333
+"102",102,"Rhamnus cathartica","Rhamnus cathartica",28573,"species","",169,"LeafLength",7,5,3,"LeafArea",3162,740.6530336,160.245614
+"103",103,"Symplocos tinctoria","Symplocos tinctoria",23878,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"104",104,"Walnut","Juglans",19248,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"105",105,"Carolina hemlock","Tsuga caroliniana",183399,"species","",191,"LeafLength",2.5,1.75,1,NA,NA,NA,NA
+"106",106,"Tatarian honeysuckle","Lonicera tatarica",35306,"species","",93,"LeafLength",8,5.25,2.5,NA,NA,NA,NA
+"107",107,"Eastern hophornbeam","Ostrya virginiana",19511,"species","",110,"LeafLength",110.6,61.86,5,"LeafArea",8271.867,3386.291182,772
+"108",108,"Huckleberry",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"109",109,"Hazelnut","Corylus",19505,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"110",110,"White cedar","Chamaecyparis",18045,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"111",111,"Bur oak","Quercus macrocarpa",19287,"species","",155,"LeafLength",31,14.5,5,"LeafArea",19000,10099.77778,5267
+"112",112,"Vaccinium caesariense","Vaccinium corymbosum ",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"113",113,"Myrica cerifera","Morella cerifera ",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"114",114,"Ilex verticillata","Ilex verticillata",27985,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"115",115,"Basswood","Tilia",21535,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"116",116,"Viburnum lentago","Viburnum lentago",35266,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"117",117,"Malus siberica","Malus baccata",NA,"species","not updated",102,"LeafLength",8,5.5,3,"LeafArea",1184.77,987.89,791.01
+"118",118,"Highbush blueberry","Vaccinium corymbosum",23573,"species","",196,"LeafLength",37.1,18.56666667,3,"LeafArea",2200,447.1846154,87
+"119",119,"Sassafras","Sassafras",18157,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"120",120,"Cornus mas","Cornus mas",565094,"species","",48,"LeafLength",10,7,4,"LeafArea",2844.5,1155.506667,405.8
+"121",121,"Kalopanax septemlobus","Kalopanax septemlobus",565257,"species","",81,"LeafLength",300,300,300,"LeafArea",85000,31510.05894,1800.9
+"122",122,"Acer x freemanii","Acer X freemanii",500949,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"123",123,"Ulmus","Ulmus",19048,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"124",124,"Hydrangea quercifolia","Hydrangea quercifolia",24200,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"125",125,"Black maple","Acer nigrum",182135,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"126",126,"Kentucky yellowwood","Cladrastis kentukea",26539,"species","",42,"LeafLength",40,40,40,NA,NA,NA,NA
+"127",127,"Tilia cordata","Tilia cordata",505507,"species","",187,"LeafLength",9,6,3,"LeafArea",3162,2627.1383,868.5
+"128",128,"Tilia x europaea","Tilia X europaea",21538,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"129",129,"Viburnum dilatatum","Viburnum dilatatum",505677,"species","",198,"LeafLength",50,16.2,3,"LeafArea",3254,2131.266667,700
+"130",130,"Stewartia rostrata","Stewartia",NA,"species","not sure what else",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"131",131,"Red oak",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"132",132,"Pawpaw","Asimina",18108,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"133",133,"Hazel alder","Alnus serrulata",19468,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"134",134,"Ash","Fraxinus",32928,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"135",135,"Fagus sylvatica","Fagus sylvatica",502590,"species","",63,"LeafLength",9,6.5,4,"LeafArea",7428,1964.308016,247
+"136",136,"Southern magnolia","Magnolia grandiflora",18074,"species","",98,"LeafLength",250.835,141.1367027,7.5,"LeafArea",19077,8948.786582,131.408
+"137",137,"Black oak","Quercus velutina",19447,"species","",167,"LeafLength",30,16,8,"LeafArea",27760,11045.08333,4270.333333
+"138",138,"Chalk maple","Acer leucoderme",28761,"species","",9,"LeafLength",20,15,10,NA,NA,NA,NA
+"139",139,"Slippery elm","Ulmus rubra",19050,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"140",140,"Pin oak","Quercus palustris",19281,"species","",160,"LeafLength",20,13.75,10,"LeafArea",7477,5400.666667,2650
+"141",141,"Dwarf pawpaw","Asimina pygmea",18114,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"142",142,"Fringetree","Chionanthus",32948,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"143",143,"Carolina ash","Fraxinus caroliniana",32941,"species","",68,"LeafLength",255,212.3333333,175,"LeafArea",52418,22683.25,8668
+"144",144,"Tuliptree","Liriodendron",18085,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"145",145,"American bladdernut","Staphylea trifolia",28646,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"146",146,"American hazelnut","Corylus americana",19506,"species","",51,"LeafLength",16,10.5,5,"LeafArea",6075,6075,6075
+"147",147,"Cucumber magnolia","Cucumbertree",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"148",148,"Bitternut hickory","Carya cordiformis",19227,"species","",27,"LeafLength",40,30,20,"LeafArea",6075,3891.666667,1160
+"149",149,"Carolina silverbell","Halesia carolina",23864,"species","",71,"LeafLength",12,8.5,5,"LeafArea",4500,4500,4500
+"150",150,"Mockernut hickory","Carya tomentosa",19247,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"151",151,"Vaccinium corymbosum","Vaccinium corymbosum",23573,"species","",196,"LeafLength",37.1,18.56666667,3,"LeafArea",2200,447.1846154,87
+"152",152,"Scrub oak","Quercus berberidifolia",507263,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"153",153,"Viburnum dentatum","Viburnum dentatum",35251,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"154",154,"Gaylussacia baccata","Gaylussacia baccata",23660,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"155",155,"Prunus maritima","Prunus maritima",24790,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"156",156,"Morella caroliniensis","Morella caroliniensis",507898,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"157",157,"Baccharis halimifolia","Baccharis halimifolia",35682,"species","",17,"LeafLength",8,5,2,NA,NA,NA,NA
+"158",158,"Alder","Alnus",19466,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"159",159,"American mountain-ash","Sorbus americana",25319,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"160",160,"Forsythia","Forsythia",32961,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"161",161,"Swamp white oak","Quercus bicolor",19300,"species","",148,"LeafLength",21.5,14.85,7.9,"LeafArea",6075,6075,6075
+"162",162,"Southern catalpa","Catalpa bignonioides",34313,"species","",35,"LeafLength",21,17.5,14,NA,NA,NA,NA
+"163",163,"Viburnum","Viburnum",35249,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"164",164,"Black gum","Nyssa sylvatica",27821,"species","",108,"LeafLength",80.093,50.086,5,"LeafArea",6075,2145.887963,71.305
+"165",165,"Overcup oak","Quercus lyrata",19278,"species","",154,"LeafLength",20,15.33333333,10,"LeafArea",5163,5163,5163
+"166",166,"Atlantic white-cedar","Chamaecyparis thyoides",18046,"species","",40,"LeafLength",0.3,0.216666667,0.15,NA,NA,NA,NA
+"167",167,"Privet",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"168",168,"Siberian elm","Ulmus pumila",19057,"species","",194,"LeafLength",40,10.91666667,2,"LeafArea",1125,857.3466667,700
+"169",169,"Southern red oak","Quercus falcata",19277,"species","",150,"LeafLength",203.2,104.3852333,7,"LeafArea",16205,6454.683478,272.957
+"170",170,"Southern sugar maple","Acer saccharum var. saccharum",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"171",171,"Japanese privet","Ligustrum japonicum",503449,"species","",85,"LeafLength",10,7,4,"LeafArea",675,675,675
+"172",172,"Buckeye","Aesculus",28714,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"173",173,"Witch hazel","Hamamelidaceae",19025,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"174",174,"Japanese apricot","Prunus mume",506231,"species","",136,"LeafLength",10,6.125,3.5,NA,NA,NA,NA
+"175",175,"Stiff dogwood","Cornus foemina",27802,"species","",45,"LeafLength",115.4,98.49166667,83,"LeafArea",5583,3635.916667,2494
+"176",176,"Amur maple",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"177",177,"Japanese snowbell","Styrax japonicus",505974,"species","",182,"LeafLength",50,21.33333333,4,"LeafArea",1125,941.8333333,700
+"178",178,"Cornelian-cherry dogwood","Cornus mas",NA,"species","not updated",48,"LeafLength",10,7,4,"LeafArea",2844.5,1155.506667,405.8
+"179",179,"Weeping knoss dogwood","Cornus kousa",NA,"species","not updated",46,"LeafLength",20,11.25,6,NA,NA,NA,NA
+"180",180,"Red buckeye","Aesculus pavia",28723,"species","",12,"LeafLength",170,151.3333333,135,"LeafArea",15012,10998.25,8684
+"181",181,"Cornus macrophylla","Cornus macrophylla",896096,"species","",47,"LeafLength",18,14.33333333,9,NA,NA,NA,NA
+"182",182,"Fragrant wintersweet",NA,NA,"species","unknown",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"183",183,"Chinese quince","Chaenomeles",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"184",184,"European spindletree","Euonymus europaeus",27949,"species","",60,"LeafLength",10,10,10,"LeafArea",3162,1198.988095,625
+"185",185,"Sweet birch","Betula lenta",19487,"species","",19,"LeafLength",10,7.5,5,"LeafArea",5310,3964.027778,2660.5
+"186",186,"Yeddo euonymous","Euonymus hamiltonianus ssp. sieboldianus",NA,"species","mispelled, also known as Hamilton's spindletree",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"187",187,"Beech","Fagus",19461,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"188",188,"Trident maple","Acer buergerianum",837859,"species","",2,"LeafLength",50,22,6,"LeafArea",15007.5,2079.481818,266.8
+"189",189,"Water oak","Quercus nigra",19280,"species","",158,"LeafLength",129.7,78.83621212,3,"LeafArea",6570,2551.449862,304.915
+"190",190,"Japanese zelkova","Zelkova serrata",505790,"species","",201,"LeafLength",111.717,51.1,2,"LeafArea",4127.429,1436.432696,35.101
+"191",191,"Mountain laurel","Kalmia latifolia",23677,"species","",80,"LeafLength",71.617,48.896,21.858,"LeafArea",4000,1184.589293,82.378
+"192",192,"Catawba rhododendron","Rhododendron catawbiense",23714,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"193",193,"Eastern hemlock","Tsuga canadensis",183397,"species","",190,"LeafLength",2.5,1.625,0.5,"LeafArea",48,48,48
+"194",194,"Eastern white pine","Pinus strobus",183385,"species","",120,"LeafLength",84,39.14285714,5,"LeafArea",270,198,45
+"195",195,"Virginia pine","Pinus virginiana",183394,"species","",122,"LeafLength",80.045,46.37779167,2,"LeafArea",82.128,52.5177,22.369
+"196",196,"Elderberry","Sambucus",35315,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"197",197,"Kalmia latifolia","Kalmia latifolia",23677,"species","",80,"LeafLength",71.617,48.896,21.858,"LeafArea",4000,1184.589293,82.378
+"198",198,"Loebner magnolia",NA,NA,"species","unsure",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"199",199,"Hedge maple","Acer campestre",28739,"species","",3,"LeafLength",7,5.5,4,"LeafArea",5570,3843.714286,865
+"200",200,"Possumhaw",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"201",201,"Nutmeg hickory","Carya myristiciformis",19239,"species","",30,"LeafLength",60,45,30,NA,NA,NA,NA
+"202",202,"Persian ironwood","Parrotia persica",895220,"species","",111,"LeafLength",10,8,6,NA,NA,NA,NA
+"203",203,"Osage orange","Maclura pomifera",19102,"species","",95,"LeafLength",12,8.25,4,NA,NA,NA,NA
+"204",204,"Horned maple","Acer diabolicum",NA,"species","didn't match",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"205",205,"Redbay","Persea borbonia",18149,"species","",112,"LeafLength",183,96.45,6,"LeafArea",6553,3303.887006,1018
+"206",206,"Ilex vomitoria","Ilex vomitoria",27986,"species","",78,"LeafLength",60.8,42.28333333,21.8,"LeafArea",1050,581.4066667,167
+"207",207,"Chinese tallowtree","Triadica sebifera",NA,"species","called Chinese tallow tree but that's not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"208",208,"Morella cerifera","Morella cerifera",507899,"species","",103,"LeafLength",13.3,7.38,1.1,"LeafArea",2162,816.0701754,324
+"209",209,"Callicarpa americana","Callicarpa americana",32144,"species","",24,"LeafLength",162.4,102.7833333,47.7,"LeafArea",9152,4202.116667,916
+"210",210,"Azalea","Rhododendron",23700,"species","",170,"LeafLength",40,40,40,"LeafArea",1720.666667,1133.306667,400.2
+"211",211,"River birch","Betula nigra",19480,"species","",20,"LeafLength",86.587,52.27881818,4,"LeafArea",4800,1960.450946,35.627
+"212",212,"Russian-olive","Elaeagnus angustifolia",27770,"species","",56,"LeafLength",10,5.75,2.5,"LeafArea",1120,1120,1120
+"213",213,"Golden rain tree","Koelreuteria elegans",503285,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"214",214,"Washington hawthorn","Crataegus phaenopyrum",24593,"species","",54,"LeafLength",10,7.5,5,NA,NA,NA,NA
+"215",215,"Clerya","Mulinia cleryana",80960,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"216",216,"Camellia","Camellia",500689,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"217",217,"Rose of sharon","Hibiscus syriacus",21638,"species","",73,"LeafLength",111.444,57.16683333,3,"LeafArea",5803.646,2283.628,5.75
+"218",218,"Merrill magnolia",NA,NA,"species","unsure: maybe the same cross species as loebrni",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"219",219,"Catalpa","Catalpa",34312,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"220",220,"Chinese evergreen oak","Quercus glauca",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"221",221,"Laurel oak","Quercus laurifolia",19368,"species","",153,"LeafLength",105.6,73.975,3,"LeafArea",3706,2007.368421,734.6666667
+"222",222,"Tulip poplar","Liriodendron tulipifera",18086,"species","",90,"LeafLength",138.98,60.16944444,6.5,"LeafArea",34000,10515.46199,493
+"223",223,"Red mulberry","Morus rubra",19070,"species","",106,"LeafLength",178.5,113.7461538,10,"LeafArea",16269,8551.539007,4173
+"224",224,"Hornbeam","Carpinus",19503,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"225",225,"Viburnum plicatum","Viburnum plicatum",35272,"species","",199,"LeafLength",10,7,4,NA,NA,NA,NA
+"226",226,"Coastal azalea","Rhododendron atlanticum ",NA,"species","diff name",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"227",227,"Plumleaf azalea","Rhododendron prunifolium",23728,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"228",228,"Piedmont azalea",NA,NA,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"229",229,"Florida azalea","Rhododendron austrinum",23705,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"230",230,"Rhododendron canescens","Rhododendron canescens",23712,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"231",231,"Rhododendron austrinum","Rhododendron austrinum",23705,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"232",232,"Common spicebush","Lindera benzoin",NA,"species","more commonly known as northern spicebush",88,"LeafLength",15,8.333333333,4,"LeafArea",3650,2760.416667,1560
+"233",233,"Cherrybark oak","Quercus pagoda",195195,"species","",159,"LeafLength",30,19.5,9,NA,NA,NA,NA
+"234",234,"Quercus montana","Quercus montana",19379,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"235",235,"Sumac","Rhus",28772,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"236",236,"Lindera benzoin","Lindera benzoin",18147,"species","",88,"LeafLength",15,8.333333333,4,"LeafArea",3650,2760.416667,1560
+"237",237,"Mulberry","Morus",19064,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"238",238,"Wineberry","Rubus phoenicolasius",25017,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"239",239,"Japanese knotweed","Fallopia japonica",565897,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"240",240,"Northern spicebush","Lindera benzoin",18147,"species","",88,"LeafLength",15,8.333333333,4,"LeafArea",3650,2760.416667,1560
+"241",241,"Oriental bittersweet","Celastrus orbiculatus",506068,"species","",36,"LeafLength",60,18,5,"LeafArea",5604.38035,2626.803021,137.5
+"242",242,"Jetbead","Rhodotypos scandens",25298,"species","",172,"LeafLength",11,7,4,NA,NA,NA,NA
+"243",243,"Black mulberry","Morus nigra",19069,"species","",105,"LeafLength",20,12.66666667,6,NA,NA,NA,NA
+"244",244,"Brambles","Rubus",24848,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"245",245,"Multiflora rose","Rosa multiflora",24833,"species","",177,"LeafLength",10,7.5,5,"LeafArea",119,119,119
+"246",246,"Bush honeysuckle","Diervilla",35309,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"247",247,"Ohio buckeye","Aesculus glabra",28718,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"248",248,"Acer negundo","Acer negundo",28749,"species","",4,"LeafLength",215,146.0833333,5,"LeafArea",20518,7116.155099,1144.9
+"249",249,"Common ninebark","Physocarpus opulifolius",25282,"species","",114,"LeafLength",10,6,2,"LeafArea",2150,2150,2150
+"250",250,"Ozark witch hazel","Hamamelis vernalis",NA,"species","mispelled",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"251",251,"Wax myrtle","Morella cerifera",507899,"species","",103,"LeafLength",13.3,7.38,1.1,"LeafArea",2162,816.0701754,324
+"252",252,"Black locust","Robinia pseudoacacia",504804,"species","",175,"LeafLength",50,33.33333333,20,"LeafArea",9400,1800.227778,333.5
+"253",253,"Amur honeysuckle","Lonicera maackii",35298,"species","",92,"LeafLength",60,16.8,3,"LeafArea",8004,2446.04,700
+"254",254,"Frangula alnus","Rhamnus frangula",NA,"species","not updated",66,"LeafLength",7,4.5,2,"LeafArea",5360.37,2272.326308,120.5038462
+"255",255,"Wisteria","Wisteria",27019,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"256",256,"Great rhododendron","Rhododendron maximum",NA,"species","more commonly known as great laurel",171,"LeafLength",20,15,10,"LeafArea",12000,7480.380952,2571.333333
+"257",257,"Fraser's magnolia","Magnolia fraseri",18073,"species","",97,"LeafLength",60,36.66666667,20,"LeafArea",22260,22260,22260
+"258",258,"Buffalo nut","Pyrularia pubera",504705,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"259",259,"Mountain holly","Ilex montana",28002,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"260",260,"Cherry","Prunus",24762,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"261",261,"Sycamore","Platanus",19019,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"262",262,"Calycanthus","Calycanthus",18139,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"263",263,"Blueberry","Vaccinium",23571,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"264",264,"Podocarpus","Podocarpus",183488,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"265",265,"Florida forestiera","Forestiera segregata",NA,"species","more commonly known as florida privet?",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"266",266,"California laurel","Umbellularia",18207,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"267",267,"Tanoak","Lithocarpus",19463,"species","",107,"LeafLength",12,9,6,NA,NA,NA,NA
+"268",268,"Pacific madrone","Arbutus menziesii",23627,"species","",16,"LeafLength",15.2,11.4,7.6,"LeafArea",4927.275382,4551.487296,3816.885714
+"269",269,"California live oak","Quercus agrifolia",19289,"species","",146,"LeafLength",7.5,4.5,1.5,"LeafArea",1825.49,1264.56644,836.38
+"270",270,"Lonicera hispidula var. vacillans","Lonicera hispidula var. vacillans",528895,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"271",271,"Common buttonbush","Cephalanthus occidentalis",34786,"species","",38,"LeafLength",135.8,99.99,6,"LeafArea",6075,3448.74,1169
+"272",272,"Broadleaf hawthorn","Crataegus coccinioides",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"273",273,"Sweet crab apple","Malus coronaria",25257,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"274",274,"Winterberry","Euonymus bungeanus",894990,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"275",275,"witch-hazel","Hamamelis virginiana",19033,"species","",72,"LeafLength",79.6,53.91,3.7,"LeafArea",8078,3274.175,1168
+"276",276,"Rhus typhina","Rhus typhina",28777,"species","",174,"LeafLength",50,50,50,"LeafArea",25500,2334.221739,770.27
+"277",277,"Mountain winterberry","Ilex montana",28002,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"278",278,"Black birch","Betula lenta",NA,"species","more commonly known as sweet birch",19,"LeafLength",10,7.5,5,"LeafArea",5310,3964.027778,2660.5
+"279",279,"Fanleaf hawthorn","Crataegus flabellata",24561,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"280",280,"Callery pear","Pyrus calleryana",504706,"species","",145,"LeafLength",8,6,4,NA,NA,NA,NA
+"281",281,"Persimmon","Diospyros",23853,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"282",282,"Malus","Malus",25254,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"283",283,"Virginia sweetspire","Itea virginica",24202,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"284",284,"Common privet","Ligustrum vulgare",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"285",285,"Kwanzan cherry","Prunus serrulata",NA,"species","more commonly known as japanese flowering cherry",141,"LeafLength",12,7.125,3.5,NA,NA,NA,NA
+"286",286,"Weeping willow","Salix babylonica",837788,"species","",179,"LeafLength",160,70.14239286,5,"LeafArea",1370.569,595.8798182,16.813
+"287",287,"Grey dogwood","Cornus racemosa",NA,"species","mispelled",49,"LeafLength",10,7,4,"LeafArea",1366,1366,1366
+"288",288,"Chinese chestnut","Castanea mollissima",501318,"species","",33,"LeafLength",18,13.5,9,NA,NA,NA,NA
+"289",289,"European beech","Fagus sylvatica",502590,"species","",63,"LeafLength",9,6.5,4,"LeafArea",7428,1964.308016,247
+"290",290,"Kousa dogwood","Cornus kousa",507498,"species","",46,"LeafLength",20,11.25,6,NA,NA,NA,NA
+"291",291,"Prunus","Prunus",24762,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"292",292,"Northern catalpa",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"293",293,"Bottlebrush buckeye","Aesculus parviflora",28722,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"294",294,"Speckled japanese aralla","Fatsia japonica",NA,"species","more commonly known as paperplant",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"295",295,"Fig","Ficus",19081,"species","",64,"LeafLength",11.9493,11.5011,10.6385,"LeafArea",11931.22,6857.41533,873.3333333
+"296",296,"Southern crab apple","Malus angustifolia",25255,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"297",297,"Cherry laurel","Prunus laurocerasus",24786,"species","",135,"LeafLength",25,15,5,"LeafArea",11174,5786.265913,854.7916667
+"298",298,"Yew","Taxus",194882,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"299",299,"Bald cypress","Taxodium",18040,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"300",300,"Canyon grape","Vitis arizonica",28612,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"301",301,"Sweetbay","Magnolia virginiana",18070,"species","",100,"LeafLength",279.58,157.5026923,6,"LeafArea",26864,6613.223485,2086
+"302",302,"Turkey oak","Quercus laevis",19367,"species","",152,"LeafLength",225.4,150.675,10,"LeafArea",19512,10578.8,4018
+"303",303,"Blackjack oak","Quercus marilandica",19374,"species","",156,"LeafLength",20,10.66666667,5,NA,NA,NA,NA
+"304",304,"Ilex glabra","Ilex glabra",27981,"species","",76,"LeafLength",49.6,43.15714286,35,"LeafArea",955,525.5416667,326
+"305",305,"Cyrilla racemiflora","Cyrilla racemiflora",23449,"species","",55,"LeafLength",98.6,81.88,65.8,"LeafArea",2925,1361.384318,578
+"306",306,"Leucothoe axillaris","Leucothoe axillaris",23550,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"307",307,"Northern white-cedar","Thuja occidentalis",NA,"species","mispelled: dash",185,"LeafLength",0.5,0.28,0.15,"LeafArea",10,10,10
+"308",308,"Spruce pine",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"309",309,"Prairie crab apple","Malus ioensis",25259,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"310",310,"Blue spruce","Picea pungens",183307,"species","",117,"LeafLength",3,2.25,1.5,NA,NA,NA,NA
+"311",311,"Oregon crab apple","Malus fusca",25258,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"312",312,"Wafer ash","Ptelea trifoliata",NA,"species","known as hoptree",144,"LeafLength",12,9,6,NA,NA,NA,NA
+"313",313,"Shumard oak","Quercus shumardii",NA,"species","known as Shumard's oak",164,"LeafLength",20,15,10,"LeafArea",4072,4072,4072
+"314",314,"Silky dogwood","Cornus amomum",27799,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"315",315,"Silver maple","Acer saccharinum",28757,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"316",316,"Roughleaf dogwood","Cornus drummondii",27807,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"317",317,"Rose","Rosa",24807,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"318",318,"Buxus","Buxus",28022,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"319",319,"Oakleaf hydrangea","Hydrangea quercifolia",24200,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"320",320,"Shellbark hickory",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"321",321,"Gray birch","Betula populifolia",19497,"species","",22,"LeafLength",10,6.5,3,"LeafArea",2807,1289.01,548.05
+"322",322,"Itea virginica","Itea virginica",24202,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"323",323,"Yaupon","Ilex vomitoria",27986,"species","",78,"LeafLength",60.8,42.28333333,21.8,"LeafArea",1050,581.4066667,167
+"324",324,"Shingle oak","Quercus imbricaria",19359,"species","",151,"LeafLength",20,14,8,"LeafArea",6075,6075,6075
+"325",325,"Littleleaf linden","Tilia cordata",505507,"species","",187,"LeafLength",9,6,3,"LeafArea",3162,2627.1383,868.5
+"326",326,"Rhus copallinum","Rhus copallinum",504754,"species","",173,"LeafLength",150.1,121.25,78.7,"LeafArea",6339,3477.205882,343.3333333
+"327",327,"Southern bayberry","Morella caroliniensis",507898,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"328",328,"Ficus","Ficus",19081,"species","",64,"LeafLength",11.9493,11.5011,10.6385,"LeafArea",11931.22,6857.41533,873.3333333
+"329",329,"Carpinus","Carpinus",19503,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"330",330,"Feijoa sellowiana","Acca sellowiana",NA,"species","not updated",1,"LeafLength",6.09,6.09,6.09,NA,NA,NA,NA
+"331",331,"Olea","Olea",32989,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"332",332,"Osmanthus fragrans","Osmanthus fragrans",505977,"species","",109,"LeafLength",60,20.7,7,"LeafArea",4002,1763.92,700
+"333",333,"Illicium","Illicium",18082,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"334",334,"Magnolia figo","Liriodendron chinese",NA,"species","I think? Diff common name",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"335",335,"Tungoil tree","Vernicia fordii",505662,"species","",197,"LeafLength",200,45.5,5,"LeafArea",85000,38319.31429,200.1
+"336",336,"Edgeworthia chrysantha","Edgeworthia chrysantha",512730,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"337",337,"Asimina","Asimina",18108,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"338",338,"Sugarberry","Celtis laevigata",19042,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"339",339,"Sweet cherry","Prunus avium",24770,"species","",132,"LeafLength",15,9.75,3,"LeafArea",3178,2125.428571,1340
+"340",340,"Shagbark hickory","Carya ovata",19242,"species","",31,"LeafLength",60,45,30,"LeafArea",40900,9508.64,1220
+"341",341,"Southern crabapple","Malus angustifolia",25255,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"342",342,"Eastern sweetshrub","Calycanthus floridus",18142,"species","",25,"LeafLength",119.72,69.43395,4.772,"LeafArea",4003.312,1679.656,8.224
+"343",343,"American plum","Prunus americana",24763,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"344",344,"Peach","Prunus persica",24765,"species","",138,"LeafLength",16,10.75,5,NA,NA,NA,NA
+"345",345,"Euonymus alatus","Euonymus alatus",27946,"species","",59,"LeafLength",60,22.41666667,2,"LeafArea",20010,1860.789048,678.48
+"346",346,"Red elderberry","Sambucus racemosa",35326,"species","",180,"LeafLength",25,17.5,10,"LeafArea",31623,4022.040979,335.43
+"347",347,"Water tupelo","Nyssa aquatica",27824,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"348",348,"Pecan","Carya illinoinensis",19234,"species","",29,"LeafLength",20,15,10,"LeafArea",2730,2730,2730
+"349",349,"Gardenia","Gardenia",35159,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"350",350,"Nandina domestica","Nandina domestica",18848,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"351",351,"Ailanthus","Ailanthus",28826,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"352",352,"Bigtooth aspen","Populus grandidentata",22463,"species","",128,"LeafLength",86,46.5,7,"LeafArea",5920,4197.314815,2574.333333
+"353",353,"Quercus robur","Quercus robur",19405,"species","",162,"LeafLength",20,11.625,5,"LeafArea",8411.364,2156.656704,661.9633333
+"354",354,"Koelreuteria paniculata","Koelreuteria paniculata",503286,"species","",82,"LeafLength",50,50,50,NA,NA,NA,NA
+"355",355,"Zelkova serrata","Zelkova serrata",505790,"species","",201,"LeafLength",111.717,51.1,2,"LeafArea",4127.429,1436.432696,35.101
+"356",356,"Syringa reticulata","Syringa reticulata",507196,"species","",183,"LeafLength",14,8.625,2.5,NA,NA,NA,NA
+"357",357,"Amelanchier laevis","Amelanchier laevis",182046,"species","",15,"LeafLength",10,7.5,5,"LeafArea",2440,1776.958333,980
+"358",358,"Maackia amurensis","Maackia amurensis",506254,"species","",94,"LeafLength",70,40,20,"LeafArea",14386.95,5020.1625,1125
+"359",359,"Monterey pine","Pinus radiata",183372,"species","",119,"LeafLength",20,13,8,"LeafArea",82.7907307,82.7907307,82.7907307
+"360",360,"Heartleaf birch","Betula cordifolia",NA,"species","also known as mountain white birch",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"361",361,"Catberry","Ilex mucronata",835359,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"362",362,"Raisin","Hovenia dulcis",28554,"species","",74,"LeafLength",20,12.75,7,NA,NA,NA,NA
+"363",363,"Mountain ash","Piptocarpha tetrantha",38860,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"364",364,"Possumhaw viburnum","Viburnum nudum",35252,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"365",365,"Black willow","Salix nigra",22484,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"366",366,"Carolina laurel cherry","Prunus caroliniana",NA,"species","mispelled",133,"LeafLength",85.5,71.1,58.8,"LeafArea",2176,1391.8125,695
+"367",367,"White spruce",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"368",368,"Amelanchier alnifolia","Amelanchier alnifolia",25109,"species","",14,"LeafLength",5,3.5,2,NA,NA,NA,NA
+"369",369,"Green alder","Alnus viridis",181892,"species","",13,"LeafLength",6,4.5,3,"LeafArea",3464,1862.479272,64.73563218
+"370",370,"Buxus sempervirens","Buxus sempervirens",501097,"species","",23,"LeafLength",3,2.25,1.5,"LeafArea",316,140.564899,44.09722222
+"371",371,"Euonymus japonicus","Euonymus japonicus",894987,"species","",61,"LeafLength",12,6.285714286,2,NA,NA,NA,NA
+"372",372,"Nerium oleander","Nerium oleander",30184,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"373",373,"Viburnum tinus","Viburnum tinus",505680,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"374",374,"Nothoscordum gracile","Nothoscordum gracile",503967,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"375",375,"Texas sophora","Styphnolobium affine",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"376",376,"Lombardy's poplar","Populus nigra",22468,"species","",129,"LeafLength",10,7.5,5,"LeafArea",4166.5,2672.785714,1495
+"377",377,"Yucca rostrata","Yucca rostrata",43150,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"378",378,"American beautyberry","Callicarpa americana",32144,"species","",24,"LeafLength",162.4,102.7833333,47.7,"LeafArea",9152,4202.116667,916
+"379",379,"Carolina lauralcherry","Carolina laurelcherry",NA,"species","mispelled",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"380",380,"Gum bumelia","Sideroxylon lanuginosum ssp. lanuginosum",524695,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"381",381,"Leatherleaf mahonia","Mahonia bealei",NA,"species","not updated",101,"LeafLength",519.357,279.09585,18.34,"LeafArea",33803.44,13083.9257,143.485
+"382",382,"Stretchberry","Forestiera pubescens",32957,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"383",383,"Chinese holly","Ilex cornuta",503155,"species","",75,"LeafLength",40,13,4,"LeafArea",1125,912.5,700
+"384",384,"Heavenly bamboo","Nandina domestica",18848,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"385",385,"Groundsel tree","Baccharis halimifolia",NA,"species","also known as eastern baccharis",17,"LeafLength",8,5,2,NA,NA,NA,NA
+"386",386,"Chinese privet","Ligustrum sinense",32979,"species","",87,"LeafLength",60,29.55216667,2,"LeafArea",1334,568.4884,8.075
+"387",387,"Fishpole bamboo","Phyllostachys aurea",NA,"species","also known as golden bamboo",113,"LeafLength",15,9.75,6,NA,NA,NA,NA
+"388",388,"Japanese spindletree","Euonymus japonicus",894987,"species","",61,"LeafLength",12,6.285714286,2,NA,NA,NA,NA
+"389",389,"Common gardenia","Gardenia volkensii",845972,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"390",390,"Tree privet","Ligustrum lucidum",503450,"species","",86,"LeafLength",17,11.5,6,"LeafArea",4800,2273.472667,1000.5
+"391",391,"Reeves spiraea","Spiraea prunifolia",NA,"species","bridalsreath spiraea is more common",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"392",392,"Button mangrove","Conocarpus erectus",27766,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"393",393,"Strawberry bush","Euonymus americanus",27947,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"394",394,"Winged Euonymus","Euonymus alatus",27946,"species","",59,"LeafLength",60,22.41666667,2,"LeafArea",20010,1860.789048,678.48
+"395",395,"Viburnum rhytidophyllum","Viburnum rhytidophyllum",505679,"species","",200,"LeafLength",20,14,8,NA,NA,NA,NA
+"396",396,"Silver poplar","Populus alba",NA,"species","also known as white poplar",124,"LeafLength",12,5.76,3,"LeafArea",3162,2373.108333,1276.42
+"397",397,"Mountain maple","Acer spicatum",28758,"species","",10,"LeafLength",12,9,6,"LeafArea",5570,5540,5510
+"398",398,"Carolina laurelcherry","Prunus caroliniana",24771,"species","",133,"LeafLength",85.5,71.1,58.8,"LeafArea",2176,1391.8125,695
+"399",399,"Bigleaf snowbell","Styrax grandifolius",505399,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"400",400,"American sweetgum","Liquidambar styraciflua",19027,"species","also known as sweetgum",89,"LeafLength",122.3,69,7,"LeafArea",12898,6079.827778,1674.666667
+"401",401,"Sweetbay magnolia","Magnolia virginiana",18070,"species","also known as sweetbay",100,"LeafLength",279.58,157.5026923,6,"LeafArea",26864,6613.223485,2086
+"402",402,"Prunus spp. (apricot)","Prunus",NA,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"403",403,"Prunus spp. (cherry)","Prunus",NA,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"404",404,"Punica","Punica",27277,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"405",405,"Camptotheca","Camptotheca",500635,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"406",406,"Viburnum awabuki",NA,NA,"species","not sure what else",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"407",407,"Eriobotrya japonica","Eriobotrya japonica",502403,"species","",58,"LeafLength",30,25,20,"LeafArea",9056,9056,9056
+"408",408,"Silverbell","Halesia",23863,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"409",409,"Pussy willow","Salix discolor",22524,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"410",410,"Cockspur hawthorn","Crataegus crus-galli",24552,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"411",411,"Honey locust","Gleditsia triacanthos",26714,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"412",412,"Winged euonymus","Euonymus alatus",27946,"species","",59,"LeafLength",60,22.41666667,2,"LeafArea",20010,1860.789048,678.48
+"413",413,"Prunus laurocerasus","Prunus laurocerasus",24786,"species","",135,"LeafLength",25,15,5,"LeafArea",11174,5786.265913,854.7916667
+"414",414,"Japanese flowering cherry","Prunus serrulata",506233,"species","",141,"LeafLength",12,7.125,3.5,NA,NA,NA,NA
+"415",415,"Alnus crispa","Alnus viridis ssp. Crispa",NA,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"416",416,"Rosa acicularis","Rosa acicularis",24812,"species","",176,"LeafLength",15,12,7,"LeafArea",4794.3,810.9033485,137.5
+"417",417,"Rubus idaeus","Rubus idaeus",24947,"species","",178,"LeafLength",10,7.5,5,"LeafArea",25090,4625.415641,324.52
+"418",418,"Lonicera involucrata","Lonicera involucrata",35297,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"419",419,"Franklin tree","Franklinia",21383,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"420",420,"Crepe myrtle","Lagerstroemia indica",NA,"species","also known as",83,"LeafLength",92.192,44.03526923,2.5,"LeafArea",2728.566,1316.1668,45.001
+"421",421,"Prunus salicina","Prunus salicina",506232,"species","",139,"LeafLength",12,7.2,3,NA,NA,NA,NA
+"422",422,"Na",NA,NA,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"423",423,"Tilia tomentosa","Tilia tomentosa",845764,"species","",188,"LeafLength",15,11,8,NA,NA,NA,NA
+"424",424,"Ulmus carpinifolia","Ulmus procera",19056,"species","not updated",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"425",425,"Pitch pine",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"426",426,"Loblolly pine","Pinus taeda",18037,"species","",121,"LeafLength",245.372,77.60442308,4.786,"LeafArea",361.5,140.4997625,4.574
+"427",427,"Fremont cottonwood","Populus fremontii",22459,"species","mispelled",127,"LeafLength",100.21,56.48266667,18.48,"LeafArea",7579,3189.342857,199
+"428",428,"Rosa","Rosa",24807,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"429",429,"Cypress",NA,NA,"species","check photos: two genuses",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"430",430,"Eastern cottonwood","Populus deltoides",22445,"species","",126,"LeafLength",18,14,10,"LeafArea",8400,7470,6075
+"431",431,"Azalea, rhododendron","Rhododendron",23700,"species","",170,"LeafLength",40,40,40,"LeafArea",1720.666667,1133.306667,400.2
+"432",432,"Post oak","Quercus stellata",19422,"species","",165,"LeafLength",179.76,102.3184848,4,"LeafArea",11790,5421.742857,1041
+"433",433,"Shortleaf pine","Pinus echinata",183335,"species","",118,"LeafLength",13,9,5,NA,NA,NA,NA
+"434",434,"Syringa vulgaris","Syringa vulgaris",32996,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"435",435,"Horse chestnut","Aesculus",28714,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"436",436,"Arizona white oak","Quercus arizonica",19292,"species","",147,"LeafLength",9,6,3,NA,NA,NA,NA
+"437",437,"Norway spruce","Picea abies",183289,"species","",115,"LeafLength",2.5,1.8,1,"LeafArea",237,84.46567143,11.6
+"438",438,"Shining willow","Salix lucida",22554,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"439",439,"Myrobalan plum","Prunus cerasifera",24772,"species","",134,"LeafLength",8,4.3,2,NA,NA,NA,NA
+"440",440,"European horse chestnut","Aesculus hippocastanum",28721,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"441",441,"Prunus serultaa","Prunus serrulata",506233,"species","mispelled",141,"LeafLength",12,7.125,3.5,NA,NA,NA,NA
+"442",442,"Prunus sargentii","Pseudophoenix sargentii ssp. Sargentii",524598,"species","possibly known as Sargent's cherry palm",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"443",443,"Amelanchier","Amelanchier",25108,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"444",444,"Staghorn sumac","Rhus typhina",28777,"species","",174,"LeafLength",50,50,50,"LeafArea",25500,2334.221739,770.27
+"445",445,"Cottonwood and poplar",NA,NA,"species","check photos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"446",446,"Quercus hemispherica","Quercus hemisphaerica",195108,"species","mispelled",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"447",447,"Prunus umbellata","Prunus umbellata",24805,"species","",143,"LeafLength",57.2,50.01666667,40.1,"LeafArea",1990,887.2340426,555
+"448",448,"Ilex ambigua","Ilex ambigua",27987,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"449",449,"Hibiscus coccineus albus","Hibiscus coccineus",21625,"species","possibly just Hibiscus coccineus",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"450",450,"Quercus nuttallii","Quercus texana",195188,"species","not updated",166,"LeafLength",20,13.75,7.5,NA,NA,NA,NA
+"451",451,"Hibiscus moscheutos","Hibiscus moscheutos",21612,"species","",NA,NA,NA,NA,NA,NA,NA,NA,NA
