@@ -40,9 +40,8 @@ traits = left_join(lengths, areas, by = 'AccSpeciesName') %>%
          LeafArea = NewTraitName.y)
 
 # Possibly joining the master plant list to the trait list to see what plants are left
-whats_missing = left_join(masterplants, traits, by = 'sciName') 
-#OR
-whats_missing = left_join(traits, masterplants, by = 'sciName') 
+whats_missing = left_join(masterplants, traits, by = c('sciName' = 'AccSpeciesName') 
+
 
 #%>% 
 #  filter(!AccSpeciesName %in% 8:9)

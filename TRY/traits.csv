@@ -1,4 +1,4 @@
-,sciName,LeafLength,maxLeafLength,meanLeafLength,minLeafLength,LeafArea,maxLeafArea,meanLeafArea,minLeafArea
+,AccSpeciesName,LeafLength,maxLeafLength,meanLeafLength,minLeafLength,LeafArea,maxLeafArea,meanLeafArea,minLeafArea
 1,Acca sellowiana,LeafLength,6.09,6.09,6.09,NA,NA,NA,NA
 2,Acer buergerianum,LeafLength,50,22,6,LeafArea,15007.5,2079.481818,266.8
 3,Acer campestre,LeafLength,7,5.5,4,LeafArea,5570,3843.714286,865
