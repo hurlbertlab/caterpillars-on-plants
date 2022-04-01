@@ -43,14 +43,23 @@ traits = left_join(lengths, areas, by = 'AccSpeciesName') %>%
 joined_try = left_join(
   masterplants, 
   traits, 
+  # tells R which columns should match as c('firstframe' = 'secondframe')
   by = c('sciName' = 'AccSpeciesName'))
 
+# check the number of rows where LeafLength is NA
 joined_try %>% 
   summarize(n_missing = sum(is.na(LeafLength)))
 
+# check the number of rows where LeafLength is not NA (where we have data)
 joined_try %>% 
   summarize(n_present = sum(!is.na(LeafLength)))
 
 #%>% 
 #  filter(!AccSpeciesName %in% 8:9)
+
+# index to view sciName where sciName is duplicated (in the list more than one time)
+joined_try$sciName[which(duplicated(joined_try$sciName))]
+
+# index to whole rows where sciName is 'Carpinus caroliniana'
+joined_try[joined_try$sciName == 'Carpinus caroliniana',]
 
