@@ -6,7 +6,8 @@ library(dplyr)
 # Read in TRY trait files
 try1 = read.csv('TRY/part1-fromTRYfromplantspp.csv')
 try2 = read.csv('TRY/part2-fromTRYfromplantspp.csv')
-masterplants = read.csv('TRY/plantspp.csv')
+masterplants = read.csv('Tasks/plantList_rerun.csv')
+traits = read.csv('TRY/traits.csv')
 
 try = rbind(try1, try2)
 
@@ -39,6 +40,10 @@ traits = left_join(lengths, areas, by = 'AccSpeciesName') %>%
          LeafArea = NewTraitName.y)
 
 # Possibly joining the master plant list to the trait list to see what plants are left
-whats_missing = left_join(masterplants, traits, by = 'AccSpeciesName') %>% 
-  filter(!AccSpeciesName %in% 8:9)
+whats_missing = left_join(masterplants, traits, by = 'sciName') 
+#OR
+whats_missing = left_join(traits, masterplants, by = 'sciName') 
+
+#%>% 
+#  filter(!AccSpeciesName %in% 8:9)
 

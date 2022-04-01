@@ -45,7 +45,7 @@ plantspp = data.frame(plantName = unique(plants$Species)) %>%
          plantName == "Olive quihoui??" ~ "NA",
          plantName == "Pear tree" ~ "Pear",
          plantName == "Red bay" ~ "Redbay",
-         plantName == "Prunus spp.(apricot)" ~ "Prunus",
+         plantName == "Prunus spp.(apricot)" ~ "Prunus armeniaca",
          plantName == "Prunus spp.(cherry)" ~ "Prunus",
          plantName == "Prunus spp.(plum)" ~ "Prunus",
          plantName == "Prunus serulata (japanese cherry blossom)" ~ "Prunus serultaa",
@@ -83,7 +83,7 @@ for (i in 1:nrow(plantList)) {
   
   print(paste(i, "of", nrow(plantList), "/n"))
   
-  hierarchy = classification("plantListClenanedName"[i], db = 'itis', accepted = TRUE)[[1]]
+  hierarchy = classification(plantList$ClenanedName[i], db = 'itis', accepted = TRUE)[[1]]
   
   # class is logical if taxonomic name does not match any existing names
   if (!is.null(nrow(hierarchy))) {
