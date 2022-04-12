@@ -52,21 +52,79 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
     mutate(meanDensity = totalCount/nSurveys,
            fracSurveys = 100*numSurveysGTzero/nSurveys,
            meanBiomass = totalBiomass/nSurveys) %>%
-  x  arrange(Species) %>%
+    arrange(Species) %>%
     data.frame()
   
   return(arthCount)
 }
 
-#Joining so "Species" becomes associated with a sciName
-caterpillar_unclean = read.csv('Tasks/caterpillar_plantanalysis.csv')
-plants_clean = read.csv('Tasks/plantList_rerun.csv')
-cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species')
 
-#Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
-Genus <- word(cleaned$sciName, 1)
-cleanedish <- mutate(cleaned, Genus=Genus)
+fullDataset = read.csv('../caterpillars-analysis-public/data/fullDataset_2022-03-22.csv')
+caterpillar_unclean = meanDensityBySpecies(fullDataset, ....)
+write.csv(caterpillar_unclean, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
+
+
+#Joining so "Species" becomes associated with a sciName
+caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv') %>%
+  select(-X)
+
+plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
+  select(-X)
+
+cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species') %>%
+  mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
 
 tallamy = read.csv('data/tallamy_shropshire_2009_plant_genera.csv')
-clean_and_tallamy <- left_join(tallamy, cleanedish, by = 'Genus')
-clean_and_tallamy <- select(clean_and_tallamy, -"X.1", -"X.2", -"X.x")
+
+alien_families = unique(tallamy$Family..as.listed.by.USDA.[tallamy$origin..for.analysis. == "alien"])
+
+clean_and_tallamy <- left_join(cleaned, tallamy, by = 'Genus') %>%
+  select(Species:Family..as.listed.by.USDA., origin..for.analysis., total.Lep.spp) %>%
+  rename(Family = Family..as.listed.by.USDA., origin = origin..for.analysis., lepS = total.Lep.spp) %>%
+  filter(Family %in% alien_families) %>%
+  arrange(Family, origin)
+
+
+
+# Compare origin = native to origin = alien
+
+# use log10 transformation because of skew in the distributions
+
+nativeData = filter(clean_and_tallamy, origin == 'native')
+
+alienData = filter(clean_and_tallamy, origin == 'alien')
+
+# Adding 0.001 to all values because there are many 0 values for which we can't calculate a log.
+# Should maybe revisit the decision to use 0.001 versus some other constant.
+
+t.test(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.001))
+
+boxplot(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.001), 
+        xaxt = 'n', las = 1, main = "All species")
+mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
+text(2, 0.3, "p = 0.003")
+
+
+## In addition to comparing meanDensity, you can compare meanBiomass and fracSurveys)
+
+
+# Compare origin = native vs alien for each of the 5 plant families with both
+
+#e.g.
+rosaceaeNative = filter(..., Family == "Rosaceae", origin == "native")
+
+
+
+
+# Multipanel plot
+par(mfrow = c(2, 3), mar = c(x, x, x, x))
+
+# Now just do your 6 plots and they will fill each of the 6 panels in order.
+
+
+
+# Compare average caterpillar density (and biomass, and fracSurveys) per branch to lepS (the # of species ever recorded for a genus).
+
+plot(clean_and_tallamy$lepS, clean_and_tallamy$meanDensity, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16)
+
+# also linear regression using lm.density = lm(meanDensity ~ lepS, data = clean_and_tallamy); summary(lm.density); abline(lm.density)
