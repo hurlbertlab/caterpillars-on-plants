@@ -258,23 +258,23 @@ dev.off()
 # also linear regression using lm.density = lm(meanDensity ~ lepS, data = clean_and_tallamy); summary(lm.density); abline(lm.density)
 
 pdf("Lepidoptera.pdf", width = 8.5, height = 11)
-par(mfrow = c(3, 1), mar = c(4,4,1,1))
+par(mfrow = c(3, 1), mar = c(5,5,1,1))
 
-plot(clean_and_tallamy$lepS, clean_and_tallamy$meanDensity, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16)
+plot(clean_and_tallamy$lepS, clean_and_tallamy$meanDensity, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16, main ="meanDensity")
 text(160, 2.60, "p = 0.001, R2 = 0.065")
 lm.density = lm(meanDensity ~ lepS, data = clean_and_tallamy)
 summary(lm.density)
 abline(lm.density)
 
 
-plot(clean_and_tallamy$lepS, clean_and_tallamy$meanBiomass, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16)
+plot(clean_and_tallamy$lepS, clean_and_tallamy$meanBiomass, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16, main ="meanBiomass")
 text(320, 130, "p = 0.476, R2 = 0.003")
 lm.biomass = lm(meanBiomass ~ lepS, data = clean_and_tallamy)
 summary(lm.biomass)
 abline(lm.biomass)
 
 
-plot(clean_and_tallamy$lepS, clean_and_tallamy$fracSurveys, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16)
+plot(clean_and_tallamy$lepS, clean_and_tallamy$fracSurveys, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per branch", pch = 16, main ="fracSurveys")
 text(160, 50, "p = 0.009, R2 = 0.041")
 lm.surveys = lm(fracSurveys ~ lepS, data = clean_and_tallamy)
 summary(lm.surveys)
