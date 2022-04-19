@@ -59,8 +59,20 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
 }
 
 
-fullDataset = read.csv('../caterpillars-analysis-public/data/fullDataset_2022-03-22.csv')
-caterpillar_unclean = meanDensityBySpecies(fullDataset, ordersToInclude = "caterpillar")
+cleanDataset = read.csv('../caterpillars-count-data/dataCleaning/flagged_dataset_2022-01-27.csv') %>%
+  filter(status != "remove")
+
+plantCountJuneJuly = cleanDataset %>%
+  filter(julianday >= 151, julianday <= 210) %>%
+  distinct(ID, Species) %>%
+  count(Species) %>%
+  arrange(desc(n))
+
+
+filteredData = cleanDataset %>%
+  filter(Species %in% plantCountJuneJuly$Species[plantCountJuneJuly$n >= 10])
+
+caterpillar_unclean = meanDensityBySpecies(filteredData, ordersToInclude = "caterpillar")
 write.csv(caterpillar_unclean, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
 
