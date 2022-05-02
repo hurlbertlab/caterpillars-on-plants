@@ -2,6 +2,7 @@ library(tidyverse)
 library(lubridate)
 library(data.table)
 library(gsheet)
+library(gridExtra)
 library(maps)
 library(sp)
 library(maptools)
@@ -12,6 +13,8 @@ mutate_cond <- function(.data, condition,...,envir=parent.frame()){
   .data[condition,] <- .data[condition,] %>% mutate(...)
   .data
 }
+
+#Looking at meanDensity, meanBiomass, and fracSurveys of arthropods in different plant families over the course of the citizen science dataset from June to July
 
 meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
                              ordersToInclude = 'All',       # or 'caterpillar'
@@ -35,7 +38,7 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
     mutate(julianweek = 7*floor(julianday/7) + 4)
   
   effortBySpecies = firstFilter %>%
-    group_by(Species) %>%  ## group_by(PlantSpecies)  or group_by(Species)
+    group_by(Species) %>% 
     summarize(nSurveys = n_distinct(ID))
   
   arthCount = firstFilter %>%
@@ -99,11 +102,7 @@ clean_and_tallamy <- left_join(cleaned, tallamy, by = 'Genus') %>%
 
 
 
-# Compare origin = native to origin = alien
-# use log10 transformation because of skew in the distributions
-# Adding 0.001 to all values because there are many 0 values for which we can't calculate a log.
-# Should maybe revisit the decision to use 0.001 versus some other constant.
-## In addition to comparing meanDensity, you can compare meanBiomass and fracSurveys)
+# Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
 
 nativeData = filter(clean_and_tallamy, origin == 'native')
 alienData = filter(clean_and_tallamy, origin == 'alien')
@@ -134,17 +133,16 @@ mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 138", "N = 27"), 1, at = 1:2, line = 2, cex = 0.75)
 text(2, 50, "p = 0.033")
 
-
 dev.off()
 
 
-# Compare origin = native vs alien for each of the 5 plant families with both
-# Multi-panel plots for meanDensity, meanBiomass, and fracSurveys for 5 families
+# Multi-panel plots comparing native vs alien species for 5 plant families for meanDensity, meanBiomass, and fracSurveys
 
 pdf("6families.pdf", width = 8.5, height = 12)
 par(mfrow = c(5, 3), mar = c(5, 5, 2, 2))
 
-#Rosaceae family
+
+#Rosaceae family comparison of meanDensity, meanBiomass, and fracSurveys
 rosaceaeNative = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == "native")
 rosaceaeAlien = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == 'alien')
 
@@ -173,7 +171,7 @@ text(2, 45, "p = 0.896")
 
 
 
-#Ericaceae family
+#Ericaceae family comparison of meanDensity, meanBiomass, and fracSurveys
 ericaceaeNative = filter(clean_and_tallamy, Family == "Ericaceae", origin == "native")
 ericaceaeAlien = filter(clean_and_tallamy, Family == "Ericaceae", origin == 'alien')
 
@@ -202,7 +200,7 @@ mtext(c("N = 15", "N = 1"), 1, at = 1:2, line = 2, cex = 0.75)
 
 
 
-#Moraceae family
+#Moraceae family comparison of meanDensity, meanBiomass, and fracSurveys
 moraceaeNative = filter(clean_and_tallamy, Family == "Moraceae", origin == "native")
 moraceaeAlien = filter(clean_and_tallamy, Family == "Moraceae", origin == 'alien')
 
@@ -231,7 +229,7 @@ mtext(c("N = 4", "N = 1"), 1, at = 1:2, line = 2, cex = 0.75)
 
 
 
-#Oleaceae family
+#Oleaceae family comparison of meanDensity, meanBiomass, and fracSurveys
 oleaceaeNative = filter(clean_and_tallamy, Family == "Oleaceae", origin == "native")
 oleaceaeAlien = filter(clean_and_tallamy, Family == "Oleaceae", origin == 'alien')
 
@@ -240,7 +238,8 @@ boxplot(log10(oleaceaeNative$meanDensity + 0.001), log10(oleaceaeAlien$meanDensi
         xaxt = 'n', las = 1, main = "Oleaceae", boxwex = 0.5, ylab = "log(Density)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 6", "N = 8"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 0.1, "p = 0.006")
+mtext(c("p = 0.006"), 1, at = 1, line = 0.05, cex = 0.5)
+#text(x=1, y=1, labels="p = 0.006", cex =5)
 #it's there but won't move down ####
 
 t.test(log10(oleaceaeNative$meanBiomass + 0.001), log10(oleaceaeAlien$meanBiomass + 0.001))
@@ -260,7 +259,7 @@ text(2, 15, "p = 0.155")
 
 
 
-#Ulmaceae family
+#Ulmaceae family comparison of meanDensity, meanBiomass, and fracSurveys
 ulmaceaeNative = filter(clean_and_tallamy, Family == "Ulmaceae", origin == "native")
 ulmaceaeAlien = filter(clean_and_tallamy, Family == "Ulmaceae", origin == 'alien')
 
@@ -290,10 +289,7 @@ text(2, 5.8, "p = 0.041")
 
 dev.off()
 
-
-# Compare average caterpillar density (and biomass, and fracSurveys) per branch to lepS (the # of species ever recorded for a genus).
-# also linear regression using lm.density = lm(meanDensity ~ lepS, data = clean_and_tallamy); summary(lm.density); abline(lm.density)
-
+# Comparing the average caterpillar density, biomass, and fracSurveys per survey to lepS and conducting a linear regression
 pdf("Lepidoptera.pdf", width = 20, height = 5)
 par(mfrow = c(1, 3), mar = c(5,5,2,1))
 
@@ -319,3 +315,20 @@ abline(lm.surveys)
 
 dev.off()
 
+
+# Creating a summary table of # of species, etc.
+pdf("Summary.pdf", height=11.5, width=8)
+grid.table(summary_table)
+
+n <- grep("native", clean_and_tallamy$origin)
+a <- grep("alien", clean_and_tallamy$origin)
+total <- grep("native|alien", clean_and_tallamy$origin)
+
+length(n)
+length(a)
+length(total)
+
+summary_table <- data.frame("Summary of Species"=c(length(total), length(n), length(a)))
+rownames(summary_table) <- c("Alien + Native","Native","Alien")
+
+dev.off()
