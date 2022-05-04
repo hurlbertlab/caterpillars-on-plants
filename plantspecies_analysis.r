@@ -1,4 +1,5 @@
 library(tidyverse)
+library(dplyr)
 library(lubridate)
 library(data.table)
 library(gsheet)
@@ -75,14 +76,13 @@ plantCountJuneJuly = cleanDataset %>%
 filteredData = cleanDataset %>%
   filter(Species %in% plantCountJuneJuly$Species[plantCountJuneJuly$n >= 10])
 
-# Specifices that only caterpillars (not all arthropods) were analyzed in this analysis
+# Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
 caterpillar_unclean = meanDensityBySpecies(filteredData, ordersToInclude = "caterpillar")
 write.csv(caterpillar_unclean, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
 
 #Joining so the "Species" column becomes associated with a sciName
-caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv') %>%
-  select(-X)
+#caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv') 
 
 plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
   select(-X)
