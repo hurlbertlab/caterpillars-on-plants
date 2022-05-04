@@ -145,7 +145,6 @@ dev.off()
 pdf("6families.pdf", width = 8.5, height = 12)
 par(mfrow = c(5, 3), mar = c(5, 5, 2, 2))
 
-
 #Rosaceae family comparison of meanDensity, meanBiomass, and fracSurveys
 rosaceaeNative = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == "native")
 rosaceaeAlien = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == 'alien')
@@ -173,7 +172,6 @@ boxplot(rosaceaeNative$fracSurveys, rosaceaeAlien$fracSurveys,
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 42", "N = 3"), 1, at = 1:2, line = 2, cex = 0.75)
 text(2, 45, "p = 0.896")
-
 
 
 #Ericaceae family comparison of meanDensity, meanBiomass, and fracSurveys
@@ -299,10 +297,10 @@ text(2, 5.8, "p = 0.041")
 dev.off()
 
 # Comparing the average caterpillar density, biomass, and fracSurveys per survey to lepS and conducting a linear regression
-pdf("Lepidoptera.pdf", width = 20, height = 5)
-par(mfrow = c(1, 3), mar = c(5,5,2,1))
+pdf("Lepidoptera.pdf", width = 9, height = 6)
+par(mfrow = c(2, 2), mar = c(5,5,2,1))
 
-plot(clean_and_tallamy$lepS, clean_and_tallamy$meanDensity, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per survey", pch = 16, main ="Mean Density")
+plot(clean_and_tallamy$lepS, clean_and_tallamy$meanDensity, xlab = "Lepidoptera per survey", ylab = "Density", pch = 16, main ="Mean Density")
 text(140, 2.60, "R2 = 0.065, p = 0.001")
 #mtext(text=LETTERS[1], xpd=NA, side=3, adj=0, font=2)
 lm.density = lm(meanDensity ~ lepS, data = clean_and_tallamy)
@@ -310,7 +308,7 @@ summary(lm.density)
 abline(lm.density)
 
 
-plot(log10(clean_and_tallamy$lepS), log10(clean_and_tallamy$meanBiomass), xlab = "log(Total Lepidoptera richness)", ylab = "log(Lepidoptera per survey)", pch = 16, main ="Mean Biomass")
+plot(log10(clean_and_tallamy$lepS), log10(clean_and_tallamy$meanBiomass), xlab = "log(Lepidoptera per survey)", ylab = "log(Biomass)", pch = 16, main ="Mean Biomass")
 text(0.75, 2, "R2 = 0.003, p = 0.469", cex = 0.85)
 #mtext(text=LETTERS[2], xpd=NA, side=3, adj=0, font=2)
 lm.biomass = lm(meanBiomass ~ lepS, data = clean_and_tallamy)
@@ -318,7 +316,7 @@ summary(lm.biomass)
 abline(lm.biomass)
 
 
-plot(clean_and_tallamy$lepS, clean_and_tallamy$fracSurveys, xlab = "Total Lepidoptera richness", ylab = "Lepidoptera per survey", pch = 16, main ="% of Surveys")
+plot(clean_and_tallamy$lepS, clean_and_tallamy$fracSurveys, xlab = "Lepidoptera per survey", ylab = "Lepidoptera Richness", pch = 16, main ="% of Surveys")
 text(140, 50, "R2 = 0.041, p = 0.009", cex = 0.85)
 #mtext(text=LETTERS[3], xpd=NA, side=3, adj=0, font=2)
 lm.surveys = lm(fracSurveys ~ lepS, data = clean_and_tallamy)
