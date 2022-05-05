@@ -1,5 +1,4 @@
 library(tidyverse)
-library(dplyr)
 library(lubridate)
 library(data.table)
 library(gsheet)
@@ -19,9 +18,8 @@ mutate_cond <- function(.data, condition,...,envir=parent.frame()){
 
 meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
                              ordersToInclude = 'All',       # or 'caterpillar'
-                             
                              minLength = 0,         # minimum arthropod size to include 
-                             jdRange = c(152, 212),
+                             jdRange = c(152, 212), #change range of days
                              outlierCount = 10000,
                              plotVar = 'meanDensity', # 'meanDensity' or 'fracSurveys' or 'meanBiomass'
                              ...)                  
@@ -35,7 +33,7 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
   numUniqueBranches = length(unique(surveyData$PlantFK))
   
   firstFilter = surveyData %>%
-    filter(julianday >= jdRange[152], julianday <= jdRange[212]) %>%
+    filter(julianday >= jdRange[1], julianday <= jdRange[2]) %>% #subscription notation
     mutate(julianweek = 7*floor(julianday/7) + 4)
   
   effortBySpecies = firstFilter %>%
@@ -67,7 +65,7 @@ cleanDataset = read.csv('../caterpillars-count-data/dataCleaning/flagged_dataset
   filter(status != "remove")
 
 plantCountJuneJuly = cleanDataset %>%
-  filter(julianday >= 151, julianday <= 210) %>%
+  filter(julianday >= 152, julianday <= 252) %>% #change range of days 
   distinct(ID, Species) %>%
   count(Species) %>%
   arrange(desc(n))
@@ -78,16 +76,17 @@ filteredData = cleanDataset %>%
 
 # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
 caterpillar_unclean = meanDensityBySpecies(filteredData, ordersToInclude = "caterpillar")
+
 write.csv(caterpillar_unclean, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
-
 #Joining so the "Species" column becomes associated with a sciName
-#caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv') 
+caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv')
 
 plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
   select(-X)
 
-cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species') %>%
+cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species')
+cleaned.new <- cleaned %>%
   mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
 
 tallamy = read.csv('data/tallamy_shropshire_2009_plant_genera.csv') %>%
@@ -95,7 +94,7 @@ tallamy = read.csv('data/tallamy_shropshire_2009_plant_genera.csv') %>%
 
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
 
-clean_and_tallamy <- left_join(cleaned, tallamy, by = 'Genus') %>%
+clean_and_tallamy <- left_join(cleaned.new, tallamy, by = 'Genus') %>%
   select(Species:Genus,Family, origin..for.analysis., total.Lep.spp) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
   filter(Family %in% alien_families) %>%
@@ -328,7 +327,7 @@ dev.off()
 
 # Creating a summary table of # of species, etc.
 pdf("Summary.pdf", height=11.5, width=8)
-grid.table(summary_table)
+
 
 n <- grep("native", clean_and_tallamy$origin)
 a <- grep("alien", clean_and_tallamy$origin)
@@ -340,5 +339,6 @@ length(total)
 
 summary_table <- data.frame("Summary of Species Totals"=c(length(total), length(n), length(a)))
 rownames(summary_table) <- c("Alien + Native","Native","Alien")
+grid.table(summary_table)
 
 dev.off()
