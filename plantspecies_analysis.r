@@ -85,7 +85,7 @@ caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.cs
 plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
   select(-X)
 
-cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species')
+cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species') 
 cleaned.new <- cleaned %>%
   mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
 
