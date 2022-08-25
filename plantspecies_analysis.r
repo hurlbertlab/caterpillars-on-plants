@@ -89,7 +89,7 @@ cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species')
 cleaned.new <- cleaned %>%
   mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
 
-tallamy = read.csv('data/tallamy_shropshire_2009_plant_genera.csv') %>%
+tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
   mutate(Family = trimws(Family..as.listed.by.USDA.))
 
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
