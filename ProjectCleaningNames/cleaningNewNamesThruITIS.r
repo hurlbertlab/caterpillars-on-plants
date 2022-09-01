@@ -3,10 +3,34 @@ library(taxize)
 library(stringr)
 
 officialPlantList = read.csv('ProjectCleaningNames/cleanedPlantList.csv')
-
+#TEMPORARY
+officialPlantList$plantName = officialPlantList$cleanedName
 
 sites = read.csv(list.files()[grep('Site.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
 plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
+
+#Finding new plant species by comparing new list from 2021 to cleanedPlantList
+new_species <- plants %>% 
+  rename(plantName = Species) %>%
+  distinct(plantName) %>%
+  # select rerun sciName entries that are NOT (!) in sciName from cleaned list
+  filter(!plantName %in% officialPlantList$plantName) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 coniferList = unique(plants[, c('Species', 'IsConifer')])
 
