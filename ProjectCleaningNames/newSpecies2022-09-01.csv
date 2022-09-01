@@ -1,0 +1,128 @@
+"X","cleanedName","sciName","itis_id","rank","notes","X.1"
+21,"Weeping cherry","Prunus subhirtella",NA,"species","also called winter-flowering cherry",NA
+33,"Viburnum trilobum","Viburnum opulus var. americanum",NA,"species","not updated",NA
+35,"Cornus stolonifera","Cornus sericea ssp. Sericea",NA,"species","not updated",NA
+41,"Viburnum cassinoide","Viburnum cassinoides",NA,"species","mispelled",NA
+47,"Malus sargentii","Malus sieboldii",NA,"species","not updated",NA
+49,"Sweetgum","Liquidambar",19026,"species","",NA
+50,"White fir","Abies concolor",181826,"species","",NA
+51,"Sourwood","Oxydendrum",23689,"species","",NA
+58,"Yellow buckeye","Aesculus flava",NA,"species","not updated",NA
+68,"Crapemyrtle","Lagerstroemia indica",27110,"species","",NA
+70,"Ironwood",NA,NA,"species","check photos",NA
+86,"Speckled alder",NA,NA,"species","check photos",NA
+93,"White birch",NA,NA,"species","",NA
+108,"Huckleberry",NA,NA,"species","check photos",NA
+110,"White cedar","Chamaecyparis",18045,"species","",NA
+115,"Basswood","Tilia",21535,"species","",NA
+117,"Malus siberica","Malus baccata",NA,"species","not updated",NA
+131,"Red oak",NA,NA,"species","check photos",NA
+132,"Pawpaw","Asimina",18108,"species","",NA
+144,"Tuliptree","Liriodendron",18085,"species","",NA
+147,"Cucumber magnolia","Magnolia acuminata",NA,"species","not updated",NA
+152,"Scrub oak","Quercus berberidifolia",507263,"species","",NA
+167,"Privet",NA,NA,"species","check photos",NA
+170,"Southern sugar maple","Acer saccharum var. saccharum",NA,"species","not updated",NA
+173,"Witch hazel","Hamamelidaceae",19025,"species","",NA
+183,"Chinese quince","Chaenomeles",NA,"species","not updated",NA
+186,"Yeddo euonymous","Euonymus hamiltonianus ssp. sieboldianus",NA,"species","mispelled, also known as Hamilton's spindletree",NA
+198,"Loebner magnolia",NA,NA,"species","unsure",NA
+200,"Possumhaw",NA,NA,"species","check photos",NA
+204,"Horned maple","Acer diabolicum",NA,"species","didn't match",NA
+207,"Chinese tallowtree","Triadica sebifera",NA,"species","called Chinese tallow tree but that's not updated",NA
+218,"Merrill magnolia",NA,NA,"species","unsure: maybe the same cross species as loebrni",NA
+226,"Coastal azalea","Rhododendron atlanticum",NA,"species","diff name",NA
+228,"Piedmont azalea",NA,NA,"species","",NA
+250,"Ozark witch hazel","Hamamelis vernalis",NA,"species","mispelled",NA
+254,"Frangula alnus","Rhamnus frangula",NA,"species","not updated",NA
+256,"Great rhododendron","Rhododendron maximum",NA,"species","more commonly known as great laurel",NA
+257,"Fraser's magnolia","Magnolia fraseri",18073,"species","",NA
+265,"Florida forestiera","Forestiera segregata",NA,"species","more commonly known as florida privet?",NA
+267,"Tanoak","Lithocarpus",19463,"species","",NA
+272,"Broadleaf hawthorn","Crataegus coccinioides",NA,"species","not updated",NA
+274,"Winterberry","Euonymus bungeanus",894990,"species","",NA
+285,"Kwanzan cherry","Prunus serrulata",NA,"species","more commonly known as japanese flowering cherry",NA
+287,"Grey dogwood","Cornus racemosa",NA,"species","mispelled",NA
+292,"Northern catalpa","Castanea pumila",NA,"species","check photos",NA
+308,"Spruce pine",NA,NA,"species","check photos",NA
+312,"Wafer ash","Ptelea trifoliata",NA,"species","known as hoptree",NA
+313,"Shumard oak","Quercus shumardii",NA,"species","known as Shumard's oak",NA
+320,"Shellbark hickory",NA,NA,"species","check photos",NA
+330,"Feijoa sellowiana","Acca sellowiana",NA,"species","not updated",NA
+331,"Olea","Olea",32989,"species","",NA
+332,"Osmanthus fragrans","Osmanthus fragrans",505977,"species","",NA
+333,"Illicium","Illicium",18082,"species","",NA
+334,"Magnolia figo","Liriodendron chinese",NA,"species","I think? Diff common name",NA
+337,"Asimina","Asimina",18108,"species","",NA
+360,"Heartleaf birch","Betula cordifolia",NA,"species","also known as mountain white birch",NA
+366,"Carolina laurel cherry","Prunus caroliniana",NA,"species","mispelled",NA
+367,"White spruce","Picea glauca",NA,"species","check photos",NA
+368,"Amelanchier alnifolia","Amelanchier alnifolia",25109,"species","",NA
+369,"Green alder","Alnus viridis",181892,"species","",NA
+370,"Buxus sempervirens","Buxus sempervirens",501097,"species","",NA
+371,"Euonymus japonicus","Euonymus japonicus",894987,"species","",NA
+372,"Nerium oleander","Nerium oleander",30184,"species","",NA
+373,"Viburnum tinus","Viburnum tinus",505680,"species","",NA
+374,"Nothoscordum gracile","Nothoscordum gracile",503967,"species","",NA
+375,"Texas sophora","Styphnolobium affine",NA,"species","not updated",NA
+376,"Lombardy's poplar","Populus nigra",22468,"species","",NA
+377,"Yucca rostrata","Yucca rostrata",43150,"species","",NA
+379,"Carolina lauralcherry","Carolina laurelcherry",NA,"species","mispelled",NA
+380,"Gum bumelia","Sideroxylon lanuginosum ssp. lanuginosum",524695,"species","",NA
+381,"Leatherleaf mahonia","Mahonia bealei",NA,"species","not updated",NA
+382,"Stretchberry","Forestiera pubescens",32957,"species","",NA
+383,"Chinese holly","Ilex cornuta",503155,"species","",NA
+386,"Chinese privet","Ligustrum sinense",32979,"species","",NA
+387,"Fishpole bamboo","Phyllostachys aurea",NA,"species","also known as golden bamboo",NA
+388,"Japanese spindletree","Euonymus japonicus",894987,"species","",NA
+389,"Common gardenia","Gardenia volkensii",845972,"species","",NA
+390,"Tree privet","Ligustrum lucidum",503450,"species","",NA
+391,"Reeves spiraea","Spiraea cantoniensis",NA,"species","bridalsreath spiraea is more common OR is it s. catoniensis",NA
+392,"Button mangrove","Conocarpus erectus",27766,"species","",NA
+393,"Strawberry bush","Euonymus americanus",27947,"species","",NA
+395,"Viburnum rhytidophyllum","Viburnum rhytidophyllum",505679,"species","",NA
+396,"Silver poplar","Populus alba",NA,"species","also known as white poplar",NA
+397,"Mountain maple","Acer spicatum",28758,"species","",NA
+398,"Carolina laurelcherry","Prunus caroliniana",24771,"species","",NA
+399,"Bigleaf snowbell","Styrax grandifolius",505399,"species","",NA
+402,"Prunus spp. (apricot)","Prunus armeniaca",24769,"species","",NA
+404,"Punica","Punica",27277,"species","",NA
+405,"Camptotheca","Camptotheca",500635,"species","",NA
+406,"Viburnum awabuki",NA,NA,"species","not sure what else",NA
+407,"Eriobotrya japonica","Eriobotrya japonica",502403,"species","",NA
+408,"Silverbell","Halesia",23863,"species","",NA
+409,"Pussy willow","Salix discolor",22524,"species","",NA
+410,"Cockspur hawthorn","Crataegus crus-galli",24552,"species","",NA
+411,"Honey locust","Gleditsia triacanthos",26714,"species","",NA
+414,"Japanese flowering cherry","Prunus serrulata",506233,"species","",NA
+415,"Alnus crispa","Alnus viridis ssp. Crispa",NA,"species","not updated",NA
+416,"Rosa acicularis","Rosa acicularis",24812,"species","",NA
+417,"Rubus idaeus","Rubus idaeus",24947,"species","",NA
+418,"Lonicera involucrata","Lonicera involucrata",35297,"species","",NA
+419,"Franklin tree","Franklinia",21383,"species","",NA
+420,"Crepe myrtle","Lagerstroemia indica",NA,"species","also known as",NA
+421,"Prunus salicina","Prunus salicina",506232,"species","",NA
+422,"Na",NA,NA,"species","",NA
+423,"Tilia tomentosa","Tilia tomentosa",845764,"species","",NA
+424,"Ulmus carpinifolia","Ulmus procera",19056,"species","not updated",NA
+425,"Pitch pine",NA,NA,"species","check photos",NA
+426,"Loblolly pine","Pinus taeda",18037,"species","",NA
+427,"Fremont cottonwood","Populus fremontii",22459,"species","mispelled",NA
+429,"Cypress",NA,NA,"species","check photos: two genuses",NA
+430,"Eastern cottonwood","Populus deltoides",22445,"species","",NA
+432,"Post oak","Quercus stellata",19422,"species","",NA
+433,"Shortleaf pine","Pinus echinata",183335,"species","",NA
+434,"Syringa vulgaris","Syringa vulgaris",32996,"species","",NA
+436,"Arizona white oak","Quercus arizonica",19292,"species","",NA
+437,"Norway spruce","Picea abies",183289,"species","",NA
+438,"Shining willow","Salix lucida",22554,"species","",NA
+439,"Myrobalan plum","Prunus cerasifera",24772,"species","",NA
+441,"Prunus serultaa","Prunus serrulata",506233,"species","mispelled",NA
+442,"Prunus sargentii","Pseudophoenix sargentii ssp. Sargentii",524598,"species","possibly known as Sargent's cherry palm",NA
+445,"Cottonwood and poplar",NA,NA,"species","check photos",NA
+446,"Quercus hemispherica","Quercus hemisphaerica",195108,"species","mispelled",NA
+447,"Prunus umbellata","Prunus umbellata",24805,"species","",NA
+448,"Ilex ambigua","Ilex ambigua",27987,"species","",NA
+449,"Hibiscus coccineus albus","Hibiscus coccineus",21625,"species","possibly just Hibiscus coccineus",NA
+450,"Quercus nuttallii","Quercus texana",195188,"species","not updated",NA
+451,"Hibiscus moscheutos","Hibiscus moscheutos",21612,"species","",NA

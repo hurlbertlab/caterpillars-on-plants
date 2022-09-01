@@ -116,6 +116,11 @@ plantspp = data.frame(plantName = unique(plants$Species)) %>%
   left_join(coniferList, by = c('plantName' = 'Species')) %>%
   full_join(officialPlantList, by = c('cleanedPlantName' = 'cleanedName'))
 
+# Run new entries through ITIS
+# Join to official master plant list
+# Manually correct names, etc
+# Re-run creation of plantList
+
 
 # Example of writing file with date in the filename
 write.csv(plantList, paste("ProjectCleaningNames/cleanedPlantList", Sys.Date(), ".csv", sep = ""), row.names = F)
