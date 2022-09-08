@@ -8,29 +8,34 @@ officialPlantList$plantName = officialPlantList$cleanedName
 
 sites = read.csv(list.files()[grep('Site.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
 plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
+plantList_rerun = read.csv('ProjectCleaningNames/plantList_rerun.csv')
 
-#Finding new plant species by comparing new list from 2021 to cleanedPlantList
+#Obtaining masterList as of Fall 2022
+new_species_create_list <- anti_join(plantList_rerun, officialPlantList, by = "cleanedName")  
+write.csv(new_species_create_list, paste("ProjectCleaningNames/newSpecies_to_create_list", Sys.Date(), ".csv", sep = ""), row.names = F)    
+  ##where are the plantNames in plantList_rerun? is it cleanName like line 7?
+  ###run these thru ITIS until everything and then manually until everything has an ID manually (won't run)
+  ####once this is added to officialPlantList then that's the starting official list for the new workflow
+
+## NEW WORKFLOW ##
+# 1. read in latest Plants.csv
+plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
+
+# 2. Find new names not in plantName of officialPLantList
+new_species <- anti_join(officialPlantList, plants, by = c("plantName" = "Species"))
+write.csv(new_species, paste("ProjectCleaningNames/newSpecies", Sys.Date(), ".csv", sep = ""), row.names = F)
+
+    #OR#
 new_species <- plants %>% 
   rename(plantName = Species) %>%
   distinct(plantName) %>%
   # select rerun sciName entries that are NOT (!) in sciName from cleaned list
   filter(!plantName %in% officialPlantList$plantName) 
 
+write.csv(new_species, paste("ProjectCleaningNames/newSpecies", Sys.Date(), ".csv", sep = ""), row.names = F)
+##this is just the plantName column?
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# 3. Run new entries through ITIS / Match new names using taxize
 
 coniferList = unique(plants[, c('Species', 'IsConifer')])
 
@@ -140,11 +145,37 @@ plantspp = data.frame(plantName = unique(plants$Species)) %>%
   left_join(coniferList, by = c('plantName' = 'Species')) %>%
   full_join(officialPlantList, by = c('cleanedPlantName' = 'cleanedName'))
 
-# Run new entries through ITIS
-# Join to official master plant list
-# Manually correct names, etc
-# Re-run creation of plantList
+##i want to keep plantName AND have cleanedPlantName
+plantList = data.frame(cleanedName = unique(new_species$plantName[new_species$plantName != "NA"]), 
+                       sciName = NA, 
+                       itis_id = NA,    
+                       rank = NA)
+
+for (i in 1:nrow(plantList)) {
+  
+  print(paste(i, "of", nrow(plantList), "/n"))
+  
+  hierarchy = classification(new_species$plantName[i], db = 'itis', accepted = TRUE)[[1]]
+  
+  # class is logical if taxonomic name does not match any existing names
+  if (!is.null(nrow(hierarchy))) {
+    plantList$sciName[i] = hierarchy$name[nrow(hierarchy)]
+    plantList$itis_id[i] = hierarchy$id[nrow(hierarchy)]
+    plantList$rank = hierarchy$rank[nrow(hierarchy)]
+  } else {
+    plantList$sciName[i] = NA
+    plantList$itis_id[i] = NA
+    plantList$rank[i] = NA
+  }    
+}
 
 
-# Example of writing file with date in the filename
-write.csv(plantList, paste("ProjectCleaningNames/cleanedPlantList", Sys.Date(), ".csv", sep = ""), row.names = F)
+# 4. Manually exmamine names that still don't match
+# 5. Add cleaning code to fix typos such that the cleanedPlantName will match in ITIS (the long list of plantName...?)
+
+# 6. Add all new plantName names to officialPlantList (after possibly running through the previous steps a couple of times)("paste" to the bottom of officialPlantList)
+officialPlantList <- full_join(new_species, officialPlantList) 
+          #OR pasting new species manually to the bottom of the official list
+
+# 7. Writing an updated officialPlantList
+write.csv(officialPlantList, paste("ProjectCleaningNames/officialPlantList", Sys.Date(), ".csv", sep = ""), row.names = F)
