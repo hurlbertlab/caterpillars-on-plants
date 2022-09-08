@@ -4,11 +4,50 @@ library(stringr)
 
 officialPlantList = read.csv('ProjectCleaningNames/cleanedPlantList.csv')
 #TEMPORARY
-officialPlantList$plantName = officialPlantList$cleanedName
+officialPlantList = officialPlantList %>%
+  mutate(plantName = cleanedName) %>%
+  select(plantName, cleanedName, sciName, itis_id, rank, isConifer, notes)
 
 sites = read.csv(list.files()[grep('Site.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
 plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
 plantList_rerun = read.csv('ProjectCleaningNames/plantList_rerun.csv')
+
+
+# This function takes a vector of species names and checks each one with ITIS,
+# returning a dataframe with the name, sciName, itis_id, and rank.
+cleanNamesThruITIS = function(speciesList) {
+  
+  # speciesList must have a column called plantName
+  plantList = data.frame(Species = speciesList,
+                         sciName = NA, 
+                         itis_id = NA,    
+                         rank = NA)
+  
+  for (i in 1:nrow(plantList)) {
+    
+    print(paste(i, "of", nrow(plantList), "/n"))
+    
+    hierarchy = classification(speciesList[i], db = 'itis', accepted = TRUE)[[1]]
+    
+    # class is logical if taxonomic name does not match any existing names
+    if (!is.null(nrow(hierarchy))) {
+      plantList$sciName[i] = hierarchy$name[nrow(hierarchy)]
+      plantList$itis_id[i] = hierarchy$id[nrow(hierarchy)]
+      plantList$rank = hierarchy$rank[nrow(hierarchy)]
+    } else {
+      plantList$sciName[i] = NA
+      plantList$itis_id[i] = NA
+      plantList$rank[i] = NA
+    }    
+  }
+  
+  return(plantList)
+  
+}
+
+
+
+
 
 #Obtaining masterList as of Fall 2022
 new_species_create_list <- anti_join(plantList_rerun, officialPlantList, by = "cleanedName")  
@@ -35,139 +74,31 @@ new_species <- plants %>%
 write.csv(new_species, paste("ProjectCleaningNames/newSpecies", Sys.Date(), ".csv", sep = ""), row.names = F)
 ##this is just the plantName column?
 
+
 # 3. Run new entries through ITIS / Match new names using taxize
 
-coniferList = unique(plants[, c('Species', 'IsConifer')])
 
-plantspp = data.frame(plantName = unique(plants$Species)) %>%
-  mutate(plantName = as.character(plantName),
-         cleanedPlantName = case_when(
-           plantName == "American witch-hazel" ~ "witch-hazel",
-           plantName == "American yellowwood" ~ "Kentucky yellowwood",
-           plantName == "Arrowwood" ~ "Viburnum",
-           plantName == "Arrowwood viburnum" ~ "Viburnum",
-           plantName == "Blue beech" ~ "Carpinus caroliniana",
-           plantName == "Big-leaf dogwood" ~ "Cornus macrophylla",
-           plantName == "Black haw" ~ "Blackhaw",
-           plantName == "Black birch" ~ "Sweet birch",
-           plantName == "Blueberry vaccinium sp." ~ "Vaccinium",
-           plantName == "Box elder (acer negundo)" ~ "Acer negundo",
-           plantName == "Boxelder maple" ~ "Acer negundo",
-           plantName == "Broadleaf hawthorn" ~ "Kansas hawthorn",
-           plantName == "Burr oak" ~ "Bur oak",
-           plantName == "Bush honeysuckle (caprifoliaceae family)" ~ "Bush honeysuckle",
-           plantName == "Buttonwood-mangrove" ~ "Button mangrove",
-           plantName == "California-laurel" ~ "California laurel",
-           plantName == "Carolina lauralcherry" ~ "Carolina laurelcherry",
-           plantName == "Carolina cherry laurel" ~ "Carolina laurelcherry",
-           plantName == "Carolina laurel cherry" ~ "Carolina laurelcherry",
-           plantName == "Cherry and plum" ~ "Prunus",
-           plantName == "Chinese tallowtree" ~ "Chinese tallow tree",
-           plantName == "Coastal azalea" ~ "Dwarf azalea",
-           plantName == "Common spicebush" ~ "Northern spicebush",
-           plantName == "Common privet" ~ "Wild privet",
-           plantName == "Crab apple sp" ~ "Malus",
-           plantName == "Crepe myrtle" ~ "Crapemyrtle",
-           plantName == "Cornelian-cherry dogwood" ~ "Cornelian cherry",
-           plantName == "Cornus stolonifera" ~ "Cornus sericea ssp. Sericea",
-           plantName == "Cucumber magnolia" ~ "Cucumbertree",
-           plantName == "Eastern sweet shrub" ~ "Eastern sweetshrub",
-           plantName == "Fremont cottonwood" ~ "Fremont's cottonwood",
-           plantName == "Fishpole bamboo" ~ "Golden bamboo",
-           plantName == "Florida forestiera" ~ "Florida privet",
-           plantName == "Fraser magnolia" ~ "Fraser's magnolia",
-           plantName == "Great rhododendron" ~ "Great laurel",
-           plantName == "Grey dogwood" ~ "Gray dogwood",
-           plantName == "Horse chestnut" ~ "Horsechestnut",
-           plantName == "Japanese spindle tree" ~ "Japanese spindletree",
-           plantName == "Japanese cherry" ~ "Japanese flowering cherry",
-           plantName == "Kwanzan cherry" ~ "Japanese flowering cherry",
-           plantName == "Leatherleaf mahonia" ~ "Beale's barberry",
-           plantName == "Lombardy poplar" ~ "Lombardy's poplar",
-           plantName == "Maple leaf viburnum" ~ "Mapleleaf viburnum",
-           plantName == "Malus sargentii" ~ "Malus sieboldii",
-           plantName == "Malus siberica" ~ "Malus baccata",
-           plantName == "Mountain or fraser magnolia" ~ "Fraser's magnolia",
-           plantName == "Myrica cerifera" ~ "Morella cerifera",
-           plantName == "Northern white-cedar" ~ "Northern white cedar",
-           plantName == "Nothoscordum gracile (onionweed)" ~ "Nothoscordum gracile",
-           plantName == "Heartleaf birch" ~ "Mountain white birch",
-           plantName == "Halesia tetraptera" ~ "Halesia carolina",
-           plantName == "Honey suckle" ~ "Honeysuckle",
-           plantName == "Hop hornbeam" ~ "Hophornbeam",
-           plantName == "Hop-hornbeam" ~ "Hophornbeam",
-           plantName == "Hydrangeas" ~ "Hydrangea",
-           plantName == "Magnolia figo" ~ "Chinese tulip tree",
-           plantName == "Olive quihoui??" ~ "NA",
-           plantName == "Ozark witch hazel" ~ "Ozark witchhazel",
-           plantName == "Pear tree" ~ "Pear",
-           plantName == "Red bay" ~ "Redbay",
-           plantName == "Reeves spiraea" ~ "Bridalwreath spirea",
-           plantName == "Prunus spp.(apricot)" ~ "Prunus",
-           plantName == "Prunus spp.(cherry)" ~ "Prunus",
-           plantName == "Prunus spp.(plum)" ~ "Prunus",
-           plantName == "Prunus serulata (japanese cherry blossom)" ~ "Prunus serultaa",
-           plantName == "Quihoui???" ~ "NA",
-           plantName == "Red osier dogwood" ~ "Redosier dogwood",
-           plantName == "Red-osier dogwood" ~ "Redosier dogwood",
-           plantName == "Red osier dogwood (cornus sericea)" ~ "Redosier dogwood",
-           plantName == "Sweet gum" ~ "Sweetgum",
-           plantName == "Silver poplar" ~ "White poplar",
-           plantName == "Simplocos tinctoria" ~ "Symplocos tinctoria",
-           plantName == "Shumard oak" ~ "Shumard's oak",
-           plantName == "Speckled japanese aralla" ~ "Paperplant",
-           plantName == "Symac?" ~ "NA",
-           plantName == "Symplocos tinctotria" ~ "Symplocos tinctoria",
-           plantName == "Trembling aspen" ~ "Quaking aspen",
-           plantName == "Vaccinum corymbosum" ~ "Vaccinium corymbosum",
-           plantName == "Vaccineum stamineum" ~ "Vaccinium stamineum",
-           plantName == "Virburnum" ~ "Viburnum",
-           plantName == "Vibirnum dentatum" ~ "Viburnum dentatum",
-           plantName == "Viburnum cassinoide" ~ "Viburnum cassinoides",
-           plantName == "Viburnum trilobum" ~ "	Viburnum opulus var. americanum",
-           plantName == "Vaccinium caesariense" ~ "Vaccinium corymbosum",
-           plantName == "Wafer ash" ~ "Hoptree",
-           plantName == "White elm" ~ "American elm",
-           plantName == "Wild cherry" ~ "Prunus",
-           plantName == "Winged eonymous" ~ "Winged Euonymus",
-           plantName == "Weeping cherry" ~ "Winter-flowering cherry",
-           plantName == "Weeping knoss dogwood" ~ "Kousa dogwood",
-           plantName == "Yellow buckeye" ~ "Aesculus flava",
-           plantName %in% c("", "8", "9", "N/A", "Unknown", "Na") ~ "NA",
-           TRUE ~ plantName),
-         cleanedPlantName = str_replace(cleanedPlantName, " spp.$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, " spp$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, " sp$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, " sp.$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, " species$", ""),
-         cleanedPlantName = str_replace(cleanedPlantName, "\\?", "")
-  ) %>%
-  left_join(coniferList, by = c('plantName' = 'Species')) %>%
-  full_join(officialPlantList, by = c('cleanedPlantName' = 'cleanedName'))
+cleanedNewNames = cleanNamesThruITIS(new_species$plantName)
 
-##i want to keep plantName AND have cleanedPlantName
-plantList = data.frame(cleanedName = unique(new_species$plantName[new_species$plantName != "NA"]), 
-                       sciName = NA, 
-                       itis_id = NA,    
-                       rank = NA)
 
-for (i in 1:nrow(plantList)) {
-  
-  print(paste(i, "of", nrow(plantList), "/n"))
-  
-  hierarchy = classification(new_species$plantName[i], db = 'itis', accepted = TRUE)[[1]]
-  
-  # class is logical if taxonomic name does not match any existing names
-  if (!is.null(nrow(hierarchy))) {
-    plantList$sciName[i] = hierarchy$name[nrow(hierarchy)]
-    plantList$itis_id[i] = hierarchy$id[nrow(hierarchy)]
-    plantList$rank = hierarchy$rank[nrow(hierarchy)]
-  } else {
-    plantList$sciName[i] = NA
-    plantList$itis_id[i] = NA
-    plantList$rank[i] = NA
-  }    
-}
+# 3.1  Separate out results that did vs did not match in ITIS
+
+
+# 3.2  For results that matched, rename "Species" as "plantName", add notes, isConifer, and cleanedName = plantName
+
+
+# 3.3  Append the matched results to officialPlantList and save with date in the filename.
+
+
+# 3.4  For results that don't match, write to a file and examine manually in Excel (as .csv), and add a new cleanedName if you can figure out what the original name is referring to.
+
+# 3.5  Then read in .csv as a dataframe which will have the original plantName and a new cleanedName
+
+# 3.6  Run the cleanedName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedName" and join the results back to the original manually created dataframe that includes both plantName and cleanedName by cleanedName.
+
+
+
+
 
 
 # 4. Manually exmamine names that still don't match
