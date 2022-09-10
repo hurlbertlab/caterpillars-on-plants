@@ -79,22 +79,22 @@ matched_new_species_without_NA <- new_species_create_list[complete.cases(new_spe
 
 # 3.3  Append the matched results to officialPlantList and save with date in the filename.
 
-#appended<-rbind(new_species_no_NA_list, new_species_NA_list)
+#appended<-rbind(officialPlantList, matched_new_species_without_NA_list)
 
 # 3.4  For results that don't match, write to a file and examine manually in Excel (as .csv), and add a new cleanedName if you can figure out what the original name is referring to.
 unmatched_new_species_with_NA <- new_species_create_list[!complete.cases(new_species_create_list),] %>%
   mutate(isConifer = NA,
          notes= NA) %>%
-  #write.csv(unmatched_new_species_without_NA, paste("ProjectCleaningNames/unmatched_new_species_with_NA", Sys.Date(), ".csv", sep = ""), row.names = F)    
+  #write.csv(manually_matched_new_species, paste("ProjectCleaningNames/unmatched_new_species_with_NA", Sys.Date(), ".csv", sep = ""), row.names = F)    
 
 # 3.5  Then read in .csv as a dataframe which will have the original plantName and a new cleanedName
+  manually_matched_new_species = read.csv('../caterpillars-on-plants/ProjectCleaningNames/manually_matched_new_species.csv') 
 
-# 3.6  Run the cleanedName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedName" and join the results back to the original manually created dataframe that includes both plantName and cleanedName by cleanedName.
-
-
-
-
-
+# 3.6  Run the cleanedName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedName" and join 
+#     the results back to the original manually created dataframe that includes both plantName and cleanedName by cleanedName.
+addingNamesbackIn = cleanNamesThruITIS(manually_matched_new_species$Species) %>%
+  rename(Species = cleanedName) %>%
+  rbind(officialPlantList, manually_matched_new_species)
 
 # 4. Manually exmamine names that still don't match
 # 5. Add cleaning code to fix typos such that the cleanedPlantName will match in ITIS (the long list of plantName...?)
