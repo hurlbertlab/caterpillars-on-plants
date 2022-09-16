@@ -47,64 +47,66 @@ cleanNamesThruITIS = function(speciesList) {
 ## NEW WORKFLOW ##
 # 1. read in latest Plants.csv
 plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
-officialPlantList = read.csv('ProjectCleaningNames/cleanedPlantList.csv')
+
+officialPlantListFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), 'officialPlantList_')]
+mostRecentOfficialPlantList = officialPlantListFiles[length(officialPlantListFiles)]
+officialPlantList = read.csv(paste0('ProjectCleaningNames/', mostRecentOfficialPlantList), header = T)
+
+
 
 # 2. Find new names not in plantName of officialPLantList
   # Below isn't a true representation of new species bc the names are not "clean" they still have spp., etc.
-#new_species <- plants %>% 
-  #rename(plantName = Species) %>%
-  #distinct(plantName) %>%
+new_species <- plants %>% 
+  rename(plantName = Species) %>%
+  distinct(plantName) %>%
   # select rerun sciName entries that are NOT (!) in sciName from cleaned list
-  #filter(!plantName %in% officialPlantList$plantName) 
+  filter(!plantName %in% officialPlantList$plantName) 
 
-new_species_create_list <- anti_join(plantList_rerun, officialPlantList, by = "cleanedName") %>%
-  distinct(cleanedName) 
 
 #new_species <- anti_join(officialPlantList, plants, by = c("cleanedName" = "Species"))
 #this gives like alllll the species that aren't on the official list from whatever year that was made
 #write.csv(new_species, paste("ProjectCleaningNames/newSpecies", Sys.Date(), ".csv", sep = ""), row.names = F)
 
 # 3. Run new entries through ITIS / Match new names using taxize
-cleanedNewNames = cleanNamesThruITIS(new_species_create_list$cleanedName)
+cleanedNewNames = cleanNamesThruITIS(new_species$cleanedName)
 
 # 3.1  Separate out results that did vs did not match in ITIS
+# For results that matched, rename "Species" as "plantName", add notes, isConifer, and cleanedName = plantName
 
-dataframe_with_NA_values = filter(is.na(cleanedNewNames$itis_id))
-  
-# 3.2  For results that matched, rename "Species" as "plantName", add notes, isConifer, and cleanedName = plantName
-
-matched_new_species_without_NA <- new_species_create_list[complete.cases(new_species_create_list),] %>%
-  #rename(Species = plantName) %>%
-  #mutate(isConifer = NA,
+matched_new_species <- filter(!is.na(cleanedNewNames$itis_id)) %>%
+  rename(Species = plantName) %>%
+  mutate(isConifer = NA,
          notes= NA) %>%
-  write.csv(matched_new_species_without_NA, paste("ProjectCleaningNames/matched_new_species_with_NA", Sys.Date(), ".csv", sep = ""), row.names = F)
+  write.csv(matched_new_species, paste("ProjectCleaningNames/matched_new_species_", Sys.Date(), ".csv", sep = ""), row.names = F)
 
 # 3.3  Append the matched results to officialPlantList and save with date in the filename.
 
-appended<-rbind(officialPlantList, matched_new_species_without_NA_list)
+officialPlantList <- rbind(officialPlantList, matched_new_species)
 
 # 3.4  For results that don't match, write to a file and examine manually in Excel (as .csv), and add a new cleanedName if you can figure out what the original name is referring to.
-unmatched_new_species_with_NA <- new_species_create_list[!complete.cases(new_species_create_list),] 
+unmatched_new_species <- filter(is.na(cleanedNewNames$itis_id)) %>% 
   mutate(isConifer = NA,
          notes= NA) %>%
-write.csv(unmatched_new_species_with_NA, paste("ProjectCleaningNames/unmatched_new_species_with_NA.csv", Sys.Date(), ".csv", sep = ""), row.names = F)    
+write.csv(unmatched_new_species, paste0("ProjectCleaningNames/unmatched_new_species_", Sys.Date(), ".csv"), row.names = F)    
 
   
 # 3.5  Then read in .csv as a dataframe which will have the original plantName and a new cleanedName
-manually_matched_new_species <- read.csv(list.files('data', full.names = T)[str_detect(list.files('data'), '^unmatched_new_species_with_NA')])
+listOfUnmatchedFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), '^unmatched_new_species_with_NA')]
+mostRecentFile = listOfUnmatchedFiles[length(listOfUnmatchedFiles)]
+  
+manually_matched_new_species <- read.csv(paste0('ProjectCleaningNames/', mostRecentFile))
 
 # 3.6  Run the cleanedName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedName" and join 
 #     the results back to the original manually created dataframe that includes both plantName and cleanedName by cleanedName.
-addingNamesbackIn = cleanNamesThruITIS(manually_matched_new_species$Species) %>%
-  rename(Species = cleanedName) %>%
-  rbind(officialPlantList, manually_matched_new_species)
+addingNamesBackIn = cleanNamesThruITIS(manually_matched_new_species$Species) %>%
+  rename(Species = cleanedName)
+
 
 # 4. Manually exmamine names that still don't match
 # 5. Add cleaning code to fix typos such that the cleanedPlantName will match in ITIS (the long list of plantName...?)
 
 # 6. Add all new plantName names to officialPlantList (after possibly running through the previous steps a couple of times)("paste" to the bottom of officialPlantList)
-officialPlantList <- full_join(new_species, officialPlantList) 
-          #OR pasting new species manually to the bottom of the official list
+officialPlantList = rbind(officialPlantList, addingNamesBackIn)
 
 # 7. Writing an updated officialPlantList
 write.csv(officialPlantList, paste("ProjectCleaningNames/officialPlantList", Sys.Date(), ".csv", sep = ""), row.names = F)
