@@ -53,7 +53,6 @@ mostRecentOfficialPlantList = officialPlantListFiles[length(officialPlantListFil
 officialPlantList = read.csv(paste0('ProjectCleaningNames/', mostRecentOfficialPlantList), header = T)
 
 
-
 # 2. Find new names not in plantName of officialPLantList
   # Below isn't a true representation of new species bc the names are not "clean" they still have spp., etc.
 new_species <- plants %>% 
@@ -62,9 +61,6 @@ new_species <- plants %>%
   # select rerun sciName entries that are NOT (!) in sciName from cleaned list
   filter(!plantName %in% officialPlantList$plantName) 
 
-
-#new_species <- anti_join(officialPlantList, plants, by = c("cleanedName" = "Species"))
-#this gives like alllll the species that aren't on the official list from whatever year that was made
 #write.csv(new_species, paste("ProjectCleaningNames/newSpecies", Sys.Date(), ".csv", sep = ""), row.names = F)
 
 # 3. Run new entries through ITIS / Match new names using taxize
@@ -77,7 +73,7 @@ matched_new_species <- filter(!is.na(cleanedNewNames$itis_id)) %>%
   rename(Species = plantName) %>%
   mutate(isConifer = NA,
          notes= NA) %>%
-  write.csv(matched_new_species, paste("ProjectCleaningNames/matched_new_species_", Sys.Date(), ".csv", sep = ""), row.names = F)
+  write.csv(matched_new_species, paste0("ProjectCleaningNames/matched_new_species_", Sys.Date(), ".csv", sep = ""), row.names = F)
 
 # 3.3  Append the matched results to officialPlantList and save with date in the filename.
 
