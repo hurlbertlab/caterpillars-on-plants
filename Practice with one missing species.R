@@ -87,7 +87,7 @@ write.csv(unmatched_new_species, paste0("ProjectCleaningNames/unmatched_new_spec
 
 
 # 3.5  Then read in .csv as a dataframe which will have the original plantName and a new cleanedName
-listOfUnmatchedFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), '^unmatched_new_species_')]
+alistOfUnmatchedFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), '^unmatched_new_species_')]
 mostRecentFile = listOfUnmatchedFiles[length(listOfUnmatchedFiles)]
 
 manually_matched_new_species <- read.csv(paste0('ProjectCleaningNames/', mostRecentFile))
