@@ -262,7 +262,7 @@ Swamp white oak,Swamp white oak,Quercus bicolor,19300,species,,0
 Scarlet oak,Scarlet oak,Quercus coccinea,19288,species,,0
 Southern red oak,Southern red oak,Quercus falcata,19277,species,,0
 Chinese evergreen oak,Chinese evergreen oak,Quercus glauca,845168,species,,0
-Scrub oak,Scrub oak,Quercus ilicifolia,19358,species,suggested change to 'bear oak' due to ambiguity,0
+Scrub oak,Scrub oak,Quercus ilicifolia,19358,species,"suggested change to 'bear oak' due to ambiguity, checking into",0
 Shingle oak,Shingle oak,Quercus imbricaria,19359,species,,0
 Turkey oak,Turkey oak,Quercus laevis,19367,species,,0
 Laurel oak,Laurel oak,Quercus laurifolia,19368,species,,0
@@ -443,7 +443,7 @@ Feijoa sellowiana,Acca sellowiana,Acca sellowiana,834974,species,,NA
 Olea spp.,Olea,Olea,32989,genus,,NA
 Osmanthus fragrans,Osmanthus fragrans,Osmanthus fragrans,505977,species,,NA
 Illicium spp.,Illicium,Illicium,18082,genus,,NA
-Magnolia figo,Magnolia figo,Magnolia figo,NA,species,according to Global Names Resolver it's recognized in databases like Open Tree of Life Reference Taxonomy,NA
+Magnolia figo,Magnolia figo,Magnolia figo,NA,species,recognized in Open Tree of Life Reference Taxonomy,NA
 Asimina spp.,Asimina,Asimina,18108,genus,,NA
 Eastern sweet shrub,Eastern sweetshrub,Calycanthus floridus,18142,species,,NA
 Lilac spp.,Lilac,Syringa,32994,genus,,NA
@@ -533,7 +533,7 @@ Shining willow,Shining willow,Salix lucida,22554,species,,NA
 Myrobalan plum,Myrobalan plum,Prunus cerasifera,24772,species,,NA
 Magnolia kobus,Magnolia kobus,Magnolia kobus,895295,species,,NA
 Prunus serulata (japanese cherry blossom),Prunus serrulata,Prunus serrulata,506233,species,,NA
-Prunus sargentii,Prunus sargentii,Prunus sargentii,NA,species,according to Global Names Resolver it's recognized in databases like The International Plant Names Index,NA
+Prunus sargentii,Prunus sargentii,Prunus sargentii,NA,species,recognized in The International Plant Names Index,NA
 Amelanchier,Amelanchier,Amelanchier,25108,genus,,NA
 Prunus rosaceae,Prunus,Prunus,24762,genus,,NA
 Staghorn sumac,Staghorn sumac,Rhus typhina,28777,species,,NA
@@ -563,9 +563,9 @@ Lantana,Lantana,Lantana,32173,genus,,NA
 Southern red cedar,Southern red-cedar,Juniperus virginiana var. silicicola,528648,species,,NA
 Cabbage palmetto,Cabbage palmetto,Sabal palmetto,42506,species,,NA
 Silverberry,Silverberry,Elaeagnus commutata,27771,species,,NA
-Loropetalum,Loropetalum,Loropetalum,NA,genus,according to Global Names Resolver it's recognized in databases like Open Tree of Life Reference Taxonomy,NA
+Loropetalum,Loropetalum,Loropetalum,NA,genus,recognized in Open Tree of Life Reference Taxonomy,NA
 Chinese elm,Chinese elm,Ulmus parvifolia,19055,species,,NA
-Windy salvia,Salvia,Salvia,32680,genus,a hybrid I believe,NA
+Windy salvia,NA,NA,NA,NA,"research did not yield results, looking into the site where it was recorded",NA
 Eastern baccharis,Eastern baccharis,Baccharis halimifolia,35682,species,,NA
 Pine spp.,Pine,Pinus,18035,genus,,NA
 Nannyberry,Nannyberry,Viburnum lentago,35266,species,,NA
