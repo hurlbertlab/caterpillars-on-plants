@@ -23,10 +23,10 @@ plants = read.csv(paste(github_raw, filter(data_links, grepl("Plant.csv", file_n
 unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
                         select(ID, Species)
 
-# Filtering surveys to find where PlantSpecies is also N/A and obtaining the PlantFK ID
+# Filtering surveys to find where PlantSpecies has a name entered by a user
+# and comparing to where Species has not been identified
 userIdentifiedBranches <- surveys %>%
-  filter(PlantSpecies == "N/A", PlantSpecies != "") %>%
+  filter(PlantSpecies != "N/A", PlantSpecies != "") %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
   left_join(unidentifiedBranches, by = c('PlantFK' = 'ID')) %>%
   filter(Species == "N/A")
-  
