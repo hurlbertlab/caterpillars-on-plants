@@ -1,7 +1,7 @@
-# KEY #
+## KEY ##
 # userPlantName = the user inputted name for a plant (might be the scientific name, different common names, a genus, etc.)
 # cleanedPlantName = a version of the plant name that contains only the scientific name, genus or common name without "spp.", "?", etc.
-# sciName = the official ITIS (usually) recognized scientific name
+# sciName = the official ITIS (usually) recognized scientific name, the number of unique species
 # ITIS_ID = the ID number that matches to a specific plant taxonomy in the Integrated Taxonomic Information System
 
 # NOTE: Still need a way to efficiently deal with ambiguous common names that could refer to different taxonomic concepts
