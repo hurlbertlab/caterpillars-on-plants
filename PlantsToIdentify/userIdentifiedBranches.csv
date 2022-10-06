@@ -1,60 +1,88 @@
-UserFKOfObserver,PlantSpecies,InferredName,ConfidenceInterval,Notes
-25,"White fir, White fir",White fir,3,NA
-40,Water oak,NA,1,NA
-74,"Winged elm, Winged elm, Winged elm",Winged elm,3,NA
-221,"Elm spp., Red maple, Red maple",NA,1,NA
-524,Hackberry,Hackberry,2,NA
-527,Japanese maple,Japanese maple,2,NA
-544,Dogwood spp.,Dogwood spp.,2,NA
-551,Cucumbertree,Cucumbertree,2,NA
-567,Bigleaf magnolia,Bigleaf magnolia,2,NA
-622,Rocky mountain maple,Rocky mountain maple,2,NA
-623,Rocky mountain maple,Rocky mountain maple,2,NA
-644,Oak spp.,Oak spp.,2,NA
-663,"American holly, American holly",American holly,3,NA
-664,Eastern redbud,Eastern redbud,2,NA
-670,"Red maple, Willow oak",NA,1,NA
-838,"Highbush blueberry, Black cherry",NA,1,NA
-894,"Asian pear tree, Chickasaw plum, Persimmon, Chickasaw plum, Chickasaw plum, Asian pear tree, Maple, Persimmon spp., Maple spp., Maple spp., Common persimmon",NA,1,NA
-899,"Elder, Maple, Common lilac?, Maple, Maple, Maple, Maple, Maple, Maple spp.",NA,1,NA
-903,White oak tree,White oak tree,2,NA
-910,Eastern redbud,Eastern redbud,2,NA
-1032,"White oak, White oak, White oak",White oak ,3,NA
-1042,"American beech, American beech, American beech, American beech",American beech,3,NA
-1059,American beech,American beech,2,NA
-1066,Silver maple,Silver maple,2,NA
-1071,"Southern catalpa, Willow oak, Willow oak",NA,1,NA
-1080,"American beech, American beech, American beech",American beech,3,NA
-1092,"Dogwood spp., Dogwood spp., Dogwood spp.",Dogwood spp.,3,NA
-1093,Willow oak,Willow oak,2,NA
-1108,Willow oak,Willow oak,2,NA
-1140,"Southern magnolia, Southern magnolia, Southern magnolia",Southern magnolia,3,NA
-1145,"Hackberry, Hackberry, Hackberry",Hackberry,3,NA
-1163,"Sugar maple, Sugar maple",Sugar maple,3,NA
-1169,"Magnolia spp., Magnolia, Magnolia",NA,1,NA
-1170,"American elm, American elm",American elm,3,NA
-1281,"Cucumbertree, Southern magnolia, Water oak, Southern magnolia",NA,1,NA
-1298,"Redosier dogwood, Common buckthorn, Common buckthorn, Black ash, Redosier dogwood",NA,1,NA
-1309,American holly,American holly,2,NA
-1712,Dogwood spp.,Dogwood spp.,2,NA
-1733,Cucumbertree,Cucumbertree,2,NA
-1759,Bigleaf maple,Bigleaf maple,2,NA
-1905,American beech,American beech,2,NA
-2180,Highbush blueberry,Highbush blueberry,2,NA
-2272,"Red maple, Red maple, American beech",NA,1,NA
-2774,"Devil’s walking stick, Flowering dogwood, American holly, Eastern hophornbeam, Sweetgum, Sweetgum, Sweetgum, Devil’s walking stick, Eastern hophornbeam, Sweetgum, Sweetgum, Flowering dogwood, American holly, Live oak, Sweetgum, Dogwood spp., Sweetgum, Sweetgum, Yaupon, Eastern hophornbeam, Sweetgum, Sweetgum, American holly, Flowering dogwood, Flowering dogwood, Sweetgum, Dogwood spp., Sweetgum, Live oak, Sweetgum",NA,1,NA
-2795,"Crabapple, Silver poplar, Silver poplar, Sweet crab apple, Silver poplar, Hackberry, Bigtooth aspen, Silver poplar, Silver poplar",NA,1,NA
-2849,"Red maple, Eastern hophornbeam, Eastern hophornbeam",NA,1,NA
-2877,"Red maple, Eastern hophornbeam, Red maple, Eastern hophornbeam, Bitternut hickory, Red maple, Bitternut hickory, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",NA,1,NA
-2887,"Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Fragrant sumac, Fragrant sumac, Fragrant sumac, Siberian elm, Siberian elm, Siberian elm, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Siberian elm, Fragrant sumac, Fragrant sumac, Fragrant sumac, Siberian elm, Siberian elm, Siberian elm, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Siberian elm, Siberian elm, Siberian elm, Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., New mexico olive, New mexico olive, New mexico olive, Siberian elm, Siberian elm, Siberian elm",NA,1,NA
-3123,"White mulberry, White mulberry",White mulberry,3,NA
-3222,"Eastern hophornbeam, Eastern hophornbeam, Black cherry, Red maple",NA,1,NA
-3223,"White ash, Eastern hophornbeam, Eastern hophornbeam, Bitternut hickory",NA,1,NA
-3254,"Northern red oak, Ash spp., Buckthorn spp., Oregon crab apple, Common buckthorn, Sugar maple, Staghorn sumac, Staghorn sumac, Northern red oak, Black cherry, Ash spp., Black oak, Buckthorn spp., Crabapple, Common buckthorn, Maple spp., Staghorn sumac, Black cherry, Oak spp., Black oak, White ash, Sugar maple, Common buckthorn, Northern red oak, Buckthorn spp., Maple spp., Black cherry, Black oak, White ash, Black oak, Buckthorn spp., Oregon crab apple, Common buckthorn, Maple spp., Staghorn sumac, Staghorn sumac, Black cherry, Northern red oak, Ash spp., Oak spp., Buckthorn spp., Buckthorn spp., Maple spp., Staghorn sumac, Staghorn sumac, Black cherry, Oak spp.",NA,1,NA
-3350,Black cherry,Black cherry,2,NA
-3351,Cherry and plum spp.,Cherry and plum spp.,2,NA
-3359,"American beech, American holly, American beech, American beech, Cherry and plum spp.",NA,1,NA
-3364,"Roughleaf dogwood, Common buckthorn, Staghorn sumac, Staghorn sumac, Black cherry",NA,1,NA
-3371,Northern red oak,Northern red oak,2,NA
-3376,"Buckthorn spp., Buckthorn spp., Staghorn sumac, Staghorn sumac",NA,1,NA
-3379,Maple spp.,Maple spp.,2,NA
+PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
+986,"American beech, American elm, American beech, American elm, American beech",NA,1,NA
+990,"Dogwood spp., Dogwood spp., Dogwood spp.",Dogwood spp.,3,NA
+1140,"Cucumbertree, Southern magnolia, Southern magnolia",NA,1,NA
+1156,Water oak,Water oak,2,NA
+1226,Common buckthorn,Common buckthorn,2,NA
+1227,Redosier dogwood,Redosier dogwood,2,NA
+1228,Black ash,Black ash,2,NA
+1229,Redosier dogwood,Redosier dogwood,2,NA
+1230,Common buckthorn,Common buckthorn,2,NA
+1502,Water oak,Water oak,2,NA
+1945,"Winged elm, Winged elm",Winged elm,3,NA
+1946,Winged elm,Winged elm,2,NA
+2352,"Rocky mountain maple, Red maple, Eastern redbud, Willow oak, Willow oak, Dogwood spp., White oak, White oak, White oak, Red maple, Red maple",NA,1,NA
+2355,"Rocky mountain maple, Cucumbertree, Red maple, Red maple",NA,1,NA
+2362,"Oak spp., Bigleaf magnolia, Magnolia spp., Magnolia, Magnolia, Bigleaf maple",NA,1,NA
+2375,"Southern magnolia, Southern magnolia, Southern magnolia, Cucumbertree",NA,1,NA
+2376,"Hackberry, Hackberry, Hackberry, Hackberry",Hackberry,3,NA
+2387,"Japanese maple, Sugar maple, Sugar maple, Silver maple",NA,1,NA
+2390,"American beech, American beech, American beech, American beech, American beech, American beech",American beech,3,NA
+2391,Dogwood spp.,Dogwood spp.,2,NA
+2393,"American holly, American holly, Willow oak",NA,1,NA
+2394,"Eastern redbud, Southern catalpa, Willow oak, Willow oak",NA,1,NA
+2405,"Elm spp., American beech",NA,1,NA
+3245,"White fir, White fir",White fir,3,NA
+3302,"Highbush blueberry, Black cherry, Highbush blueberry",NA,1,NA
+3532,Common lilac?,NA,1,NA
+3536,Elder,Elder,2,NA
+3537,Maple,Maple,2,NA
+3540,"Maple, Maple spp.",NA,1,NA
+3542,Maple spp.,Maple spp.,2,NA
+3544,White oak tree,White oak tree,2,NA
+3547,Maple,Maple,2,NA
+3549,"Maple, Maple",Maple,3,NA
+3552,"Maple, Maple spp.",NA,1,NA
+3553,Maple,Maple,2,NA
+3554,"Asian pear tree, Asian pear tree",Asian pear tree,3,NA
+3557,"Persimmon, Persimmon spp., Common persimmon",NA,1,NA
+3558,"Chickasaw plum, Chickasaw plum, Chickasaw plum",Chickasaw plum,3,NA
+5061,"Devil’s walking stick, Devil’s walking stick, Yaupon",NA,1,NA
+5072,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",Eastern hophornbeam,3,NA
+5073,"Flowering dogwood, Flowering dogwood, Flowering dogwood, Flowering dogwood",Flowering dogwood,3,NA
+5074,"American holly, American holly, American holly",American holly,3,NA
+5075,"Sweetgum, Sweetgum, Sweetgum",Sweetgum,3,NA
+5076,"Sweetgum, Sweetgum, Sweetgum",Sweetgum,3,NA
+5174,"Dogwood spp., Dogwood spp.",Dogwood spp.,3,NA
+5175,"Sweetgum, Sweetgum",Sweetgum,3,NA
+5176,"Sweetgum, Sweetgum, Sweetgum",Sweetgum,3,NA
+5177,"Live oak, Live oak",Live oak,3,NA
+5178,"Sweetgum, Sweetgum",Sweetgum,3,NA
+5281,"Crabapple, Bigtooth aspen",NA,1,NA
+5286,Sweet crab apple,Sweet crab apple,2,NA
+5327,American holly,American holly,2,NA
+5358,"Silver poplar, Silver poplar, Silver poplar, Silver poplar, Silver poplar",Silver poplar,3,NA
+5363,Hackberry,Hackberry,2,NA
+5994,"Red maple, Red maple, Red maple, Red maple, Red maple",Red maple,3,NA
+5998,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",Eastern hophornbeam,3,NA
+5999,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, White ash, Black cherry",NA,1,NA
+6000,"Bitternut hickory, Bitternut hickory, Bitternut hickory",Bitternut hickory,3,NA
+6001,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",Eastern hophornbeam,3,NA
+6107,"Russian olive, Russian olive, Russian olive, New mexico olive, New mexico olive, New mexico olive",NA,1,NA
+6108,"Cottonwood and poplar spp., Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",NA,1,NA
+6109,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",Siberian elm,3,NA
+6110,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",Russian olive,3,NA
+6111,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",Russian olive,3,NA
+6112,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",Siberian elm,3,NA
+6113,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",Russian olive,3,NA
+6114,"Russian olive, Russian olive, Fragrant sumac, Fragrant sumac, Fragrant sumac, Siberian elm, Fragrant sumac, Fragrant sumac, Fragrant sumac",NA,1,NA
+6115,"Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Russian olive, Russian olive",Cottonwood and poplar spp.,3,NA
+6116,"Russian olive, Russian olive, Russian olive, Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp.",NA,1,NA
+6329,Northern red oak,Northern red oak,2,NA
+6592,"White mulberry, White mulberry",White mulberry,3,NA
+6731,"American beech, Black cherry",NA,1,NA
+6734,"American holly, Cherry and plum spp.",NA,1,NA
+6739,"American beech, Cherry and plum spp.",NA,1,NA
+6757,American beech,American beech,2,NA
+7549,"Ash spp., Ash spp., White ash, White ash, Ash spp.",NA,1,NA
+7550,"Northern red oak, Black oak, Black oak, Black oak, Oak spp.",NA,1,NA
+7554,"Buckthorn spp., Buckthorn spp., Common buckthorn, Buckthorn spp., Buckthorn spp., Buckthorn spp.",NA,1,NA
+7555,"Oregon crab apple, Crabapple, Roughleaf dogwood, Buckthorn spp., Oregon crab apple",NA,1,NA
+7559,"Common buckthorn, Common buckthorn, Common buckthorn, Buckthorn spp., Common buckthorn, Buckthorn spp.",NA,1,NA
+7560,"Sugar maple, Maple spp., Sugar maple, Maple spp., Maple spp., Maple spp.",NA,1,NA
+7564,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac",Staghorn sumac,3,NA
+7565,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac",Staghorn sumac,3,NA
+7569,"Northern red oak, Oak spp., Northern red oak, Black oak, Northern red oak",NA,1,NA
+7570,"Black cherry, Black cherry, Black cherry, Black cherry, Black cherry, Black cherry",Black cherry,3,NA
+7573,Oak spp.,Oak spp.,2,NA
+7601,Maple spp.,Maple spp.,2,NA

@@ -39,7 +39,7 @@ userIdentifiedBranches <- surveys %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
   left_join(unidentifiedBranches, by = c('PlantFK' = 'ID')) %>%
   filter(Species == "N/A") %>%
-  group_by(UserFKOfObserver) %>%
+  group_by(PlantFK) %>%
   summarize(PlantSpecies = paste(PlantSpecies, collapse = ", ")) %>%
   # Giving a confidence rating for the most agreed upon name given by users 
   # (1 is the least confident meaning disagreement, 2 means only one name ever entered,
