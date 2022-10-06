@@ -28,7 +28,6 @@ unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
 userIdentifiedBranches <- surveys %>%
   filter(PlantSpecies != "N/A", 
          PlantSpecies != "", 
-         PlantSpecies != "Hello",
          PlantSpecies != "Dvt", 
          PlantSpecies != "Dvz", 
          PlantSpecies != "Dvt", 
@@ -39,12 +38,9 @@ userIdentifiedBranches <- surveys %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
   left_join(unidentifiedBranches, by = c('PlantFK' = 'ID')) %>%
   filter(Species == "N/A") %>%
-  arrange(UserFKOfObserver) %>%
-  summarize(PlantSpecies = paste(PlantSpecies, collapse = ", "), UserFKOfObserver = UserFKOfObserver)
   # Giving a confidence rating (1 is the least confident, 3 is the most) the most agreed upon name given by users
   mutate(InferredName = NA, 
          ConfidenceInterval = NA, 
          Notes = NA)
-
   # In Excel, fill in the inferred name if there's agreement and confidence rating
-  write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv", row.names = F)
+
