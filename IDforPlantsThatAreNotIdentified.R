@@ -39,12 +39,22 @@ userIdentifiedBranches <- surveys %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
   left_join(unidentifiedBranches, by = c('PlantFK' = 'ID')) %>%
   filter(Species == "N/A") %>%
-  arrange(UserFKOfObserver) %>%
-  summarize(PlantSpecies = paste(PlantSpecies, collapse = ", "), UserFKOfObserver = UserFKOfObserver)
-  # Giving a confidence rating (1 is the least confident, 3 is the most) the most agreed upon name given by users
+  group_by(UserFKOfObserver) %>%
+  summarize(PlantSpecies = paste(PlantSpecies, collapse = ", ")) %>%
+  # Giving a confidence rating for the most agreed upon name given by users 
+  # (1 is the least confident meaning disagreement, 2 means only one name ever entered,
+  # 3 is the most confident with all entries agreeing multiple times) 
   mutate(InferredName = NA, 
          ConfidenceInterval = NA, 
          Notes = NA)
 
-  # In Excel, fill in the inferred name if there's agreement and confidence rating
-  write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv", row.names = F)
+write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv", row.names = F)
+  
+# In Excel, fill in the inferred name if there's agreement and confidence rating
+# Obtain the branches with photos as they have an iNat ID and try to ID the plant from the photo
+branchesWithPhotos
+
+#### where did PlantFK go? if it's added it creates multiple rows with the same UserID
+
+
+  
