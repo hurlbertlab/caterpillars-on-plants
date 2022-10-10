@@ -19,6 +19,8 @@ surveys = read.csv(paste(github_raw, filter(data_links, grepl("Survey.csv", file
 
 plants = read.csv(paste(github_raw, filter(data_links, grepl("Plant.csv", file_name))$file_name, sep = ''), header = TRUE, stringsAsFactors = FALSE)
 
+ArthropodSighting = read.csv(paste(github_raw, filter(data_links, grepl("ArthropodSighting.csv", file_name))$file_name, sep = ''), header = TRUE, stringsAsFactors = FALSE)
+
 # Filtering plants to where Species is N/A and obtaining that ID
 unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
                         select(ID, Species)
@@ -49,12 +51,21 @@ userIdentifiedBranches <- surveys %>%
          Notes = NA)
 
 write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv", row.names = F)
-  
+#### where did UserofFKofObserver go? if it's added it creates multiple rows with the same UserID
+
 # In Excel, fill in the inferred name if there's agreement and confidence rating
 # Obtain the branches with photos as they have an iNat ID and try to ID the plant from the photo
-branchesWithPhotos
+ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv')
 
-#### where did PlantFK go? if it's added it creates multiple rows with the same UserID
+branchesWithPhotos <- left_join(ratedUserIdentifiedBranches, ArthropodSighting, by = c('PlantFK' = 'SurveyFK')) %>%
+                      filter(PhotoURL != "") %>% 
+                      select(PlantFK, PlantSpecies, InferredName, ConfidenceInterval, Notes.x, PhotoURL)
+                      # & ObservationMethod = "Visual"
 
+write.csv(branchesWithPhotos, "PlantsToIdentify/branchesWithPhotos.csv", row.names = F)
 
-  
+# In Excel, look at the PhotoURL and paste it after https://caterpillarscount.unc.edu/images/arthropods/
+# Try to ID plants based off of photos and add InferredName
+
+IDBranchesWithPhotos <- read.csv(file = 'PlantsToIdentify/brancheWithPhotos.csv', row.names = F)
+
