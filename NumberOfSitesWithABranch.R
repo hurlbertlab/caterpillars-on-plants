@@ -1,8 +1,8 @@
-library(dplyr)
 library(xml2)
 library(stringr)
 library(rvest)
 library(tidyverse)
+library(plyr)
 
 # Loading data_repo
 #data_repo <- "https://github.com/hurlbertlab/caterpillars-on-plants/data"
@@ -25,9 +25,12 @@ officialPlantList = read.csv(paste0('ProjectCleaningNames/', mostRecentOfficialP
 SiteFKinOfficialPlantList <- left_join(officialPlantList, fullDataset, by = c('userPlantName' = 'Species')) %>%
   select(sciName, SiteFK) %>%
   group_by(sciName)
+
 countDuplicateRows <-  ddply(SiteFKinOfficialPlantList,.(sciName, SiteFK), nrow) %>%
-  arrange(sciName) %>%
-  rename(sumOfDuplicateRows = V1)
+  arrange(sciName)
+  #rename(countDuplicateRows, sumOfDuplicateRows = V1)
+colnames(countDuplicateRows)[3] <- "sumOfDuplicateRows"
+
 
 #rnames <- officialPlantList$sciName
 #cnames <- unique(SiteFKinOfficialPlantList$SiteFK)
