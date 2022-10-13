@@ -28,15 +28,7 @@ unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
 # Filtering surveys to find where PlantSpecies has a name entered by a user
 # and comparing to where Species has not been identified
 userIdentifiedBranches <- surveys %>%
-  filter(!PlantSpecies %in% ("N/A", "", 
-         PlantSpecies != "Hello",
-         PlantSpecies != "Dvt", 
-         PlantSpecies != "Dvz", 
-         PlantSpecies != "Dvt", 
-         PlantSpecies != "N/a", 
-         PlantSpecies != "Tree", 
-         PlantSpecies != "Unknown", 
-         PlantSpecies != "Unknown, will take picture") %>%
+  filter(!PlantSpecies %in% ("N/A", "", "Hello", "Dvt", "Dvz", "Dvt", "N/a", "Tree", "Unknown", "Unknown, will take picture") %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
   left_join(unidentifiedBranches, by = c('PlantFK' = 'ID')) %>%
   filter(Species == "N/A") %>%
