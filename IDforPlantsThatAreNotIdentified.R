@@ -28,8 +28,7 @@ unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
 # Filtering surveys to find where PlantSpecies has a name entered by a user
 # and comparing to where Species has not been identified
 userIdentifiedBranches <- surveys %>%
-  filter(PlantSpecies != "N/A", 
-         PlantSpecies != "", 
+  filter(!PlantSpecies %in% ("N/A", "", 
          PlantSpecies != "Hello",
          PlantSpecies != "Dvt", 
          PlantSpecies != "Dvz", 
@@ -57,10 +56,26 @@ write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv",
 # Obtain the branches with photos as they have an iNat ID and try to ID the plant from the photo
 ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv')
 
-branchesWithPhotos <- left_join(ratedUserIdentifiedBranches, ArthropodSighting, by = c('PlantFK' = 'SurveyFK')) %>%
-                      filter(PhotoURL != "") %>% 
-                      select(PlantFK, PlantSpecies, InferredName, ConfidenceInterval, Notes.x, PhotoURL)
-                      # & ObservationMethod = "Visual"
+branchesWithPhotos <- surveys %>%
+  filter(PlantFK %in% ratedUserIdentifiedBranches$PlantFK,
+         ObservationMethod == "Visual") %>% 
+  left_join(ArthropodSighting, by = c('ID' = 'SurveyFK')) %>%
+  left_join(plants, by = c('PlantFK' = 'ID')) %>%
+  left_join(sites, by = c('SiteFK' = 'ID')) %>%
+  filter(PhotoURL != "") %>% 
+  select(Name, Region, PlantFK, PlantSpecies, Notes.x, PhotoURL)
+
+#think through logic of all the things we want to look at
+#don't need to sets of code just the one with stuff you think would be useful
+allbranchesWithPhotos <- surveys %>%
+  filter(ObservationMethod == "Visual") %>% 
+  left_join(ArthropodSighting, by = c('ID' = 'SurveyFK')) %>%
+  left_join(plants, by = c('PlantFK' = 'ID')) %>%
+  filter(Species == "N/A") %>%
+  left_join(sites, by = c('SiteFK' = 'ID')) %>%
+  filter(PhotoURL != "") %>% 
+  select(Name, Region, PlantFK, PlantSpecies, Notes.x, PhotoURL)
+
 
 write.csv(branchesWithPhotos, "PlantsToIdentify/branchesWithPhotos.csv", row.names = F)
 
