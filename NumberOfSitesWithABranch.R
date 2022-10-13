@@ -22,9 +22,20 @@ officialPlantListFiles = list.files('ProjectCleaningNames')[str_detect(list.file
 mostRecentOfficialPlantList = officialPlantListFiles[length(officialPlantListFiles)]
 officialPlantList = read.csv(paste0('ProjectCleaningNames/', mostRecentOfficialPlantList), header = T)
 
-SiteFKinOfficialPlantList <- left_join(officialPlantList, fullDataset, by = c('userPlantName' = 'Species')) %>%
-  select(sciName, SiteFK) %>%
-  group_by(sciName)
+askf <- left_join(fullDataset, officialPlantList, by = c('Species' = 'userPlantName')) %>%
+  distinct(sciName, SiteFK) %>%
+  mutate(presence = 1) %>%
+  pivot_wider(names_from = SiteFK, values_from = presence)
+
+
+SiteFKinOfficialPlantList <- left_join(fullDataset, officialPlantList, by = c('Species' = 'userPlantName')) %>%
+  distinct(sciName, SiteFK) %>%
+  count(sciName) %>% 
+  arrange(desc(n)) %>%
+  left_join(askf, by = 'sciName')
+
+
+
 
 countDuplicateRows <-  ddply(SiteFKinOfficialPlantList,.(sciName, SiteFK), nrow) %>%
   arrange(sciName)
