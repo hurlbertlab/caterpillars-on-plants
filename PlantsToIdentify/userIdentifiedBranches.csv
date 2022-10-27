@@ -1,7 +1,7 @@
 PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
 986,"American beech, American elm, American beech, American elm, American beech",NA,1,NA
-990,"Dogwood spp., Dogwood spp., Dogwood spp.",Dogwood spp.,3,NA
-1140,"Cucumbertree, Southern magnolia, Southern magnolia",NA,1,NA
+990,"Dogwood spp., Dogwood spp., Dogwood spp.",Dogwood,3,NA
+1140,"Cucumbertree, Southern magnolia, Southern magnolia",Magnolia,3,all suggested names Magnolias
 1156,Water oak,Water oak,2,NA
 1226,Common buckthorn,Common buckthorn,2,NA
 1227,Redosier dogwood,Redosier dogwood,2,NA
@@ -14,11 +14,11 @@ PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
 2352,"Rocky mountain maple, Red maple, Eastern redbud, Willow oak, Willow oak, Dogwood spp., White oak, White oak, White oak, Red maple, Red maple",NA,1,NA
 2355,"Rocky mountain maple, Cucumbertree, Red maple, Red maple",NA,1,NA
 2362,"Oak spp., Bigleaf magnolia, Magnolia spp., Magnolia, Magnolia, Bigleaf maple",NA,1,NA
-2375,"Southern magnolia, Southern magnolia, Southern magnolia, Cucumbertree",NA,1,NA
+2375,"Southern magnolia, Southern magnolia, Southern magnolia, Cucumbertree",Magnolia,3,all suggested names Magnolias
 2376,"Hackberry, Hackberry, Hackberry, Hackberry",Hackberry,3,NA
-2387,"Japanese maple, Sugar maple, Sugar maple, Silver maple",NA,1,NA
+2387,"Japanese maple, Sugar maple, Sugar maple, Silver maple",Maple,3,all suggested names Maples
 2390,"American beech, American beech, American beech, American beech, American beech, American beech",American beech,3,NA
-2391,Dogwood spp.,Dogwood spp.,2,NA
+2391,Dogwood spp.,Dogwood,2,NA
 2393,"American holly, American holly, Willow oak",NA,1,NA
 2394,"Eastern redbud, Southern catalpa, Willow oak, Willow oak",NA,1,NA
 2405,"Elm spp., American beech",NA,1,NA
@@ -27,15 +27,15 @@ PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
 3532,Common lilac?,NA,1,NA
 3536,Elder,Elder,2,NA
 3537,Maple,Maple,2,NA
-3540,"Maple, Maple spp.",NA,1,NA
-3542,Maple spp.,Maple spp.,2,NA
+3540,"Maple, Maple spp.",Maple,3,all suggested names Maples
+3542,Maple spp.,Maple ,2,NA
 3544,White oak tree,White oak tree,2,NA
 3547,Maple,Maple,2,NA
 3549,"Maple, Maple",Maple,3,NA
-3552,"Maple, Maple spp.",NA,1,NA
+3552,"Maple, Maple spp.",Maple,1,NA
 3553,Maple,Maple,2,NA
 3554,"Asian pear tree, Asian pear tree",Asian pear tree,3,NA
-3557,"Persimmon, Persimmon spp., Common persimmon",NA,1,NA
+3557,"Persimmon, Persimmon spp., Common persimmon",Persimmon,3,all suggested names Persimmons
 3558,"Chickasaw plum, Chickasaw plum, Chickasaw plum",Chickasaw plum,3,NA
 5061,"Devil’s walking stick, Devil’s walking stick, Yaupon",NA,1,NA
 5072,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",Eastern hophornbeam,3,NA
@@ -43,7 +43,7 @@ PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
 5074,"American holly, American holly, American holly",American holly,3,NA
 5075,"Sweetgum, Sweetgum, Sweetgum",Sweetgum,3,NA
 5076,"Sweetgum, Sweetgum, Sweetgum",Sweetgum,3,NA
-5174,"Dogwood spp., Dogwood spp.",Dogwood spp.,3,NA
+5174,"Dogwood spp., Dogwood spp.",Dogwood ,3,NA
 5175,"Sweetgum, Sweetgum",Sweetgum,3,NA
 5176,"Sweetgum, Sweetgum, Sweetgum",Sweetgum,3,NA
 5177,"Live oak, Live oak",Live oak,3,NA
@@ -58,8 +58,8 @@ PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
 5999,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, White ash, Black cherry",NA,1,NA
 6000,"Bitternut hickory, Bitternut hickory, Bitternut hickory",Bitternut hickory,3,NA
 6001,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",Eastern hophornbeam,3,NA
-6107,"Russian olive, Russian olive, Russian olive, New mexico olive, New mexico olive, New mexico olive",NA,1,NA
-6108,"Cottonwood and poplar spp., Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",NA,1,NA
+6107,"Russian olive, Russian olive, Russian olive, New mexico olive, New mexico olive, New mexico olive",Oleaceae,3,all suggested names Olives
+6108,"Cottonwood and poplar spp., Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",Siberian elm,1,most suggested names are Siberian elm
 6109,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",Siberian elm,3,NA
 6110,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",Russian olive,3,NA
 6111,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",Russian olive,3,NA
@@ -74,15 +74,15 @@ PlantFK,PlantSpecies,InferredName,ConfidenceInterval,Notes
 6734,"American holly, Cherry and plum spp.",NA,1,NA
 6739,"American beech, Cherry and plum spp.",NA,1,NA
 6757,American beech,American beech,2,NA
-7549,"Ash spp., Ash spp., White ash, White ash, Ash spp.",NA,1,NA
-7550,"Northern red oak, Black oak, Black oak, Black oak, Oak spp.",NA,1,NA
-7554,"Buckthorn spp., Buckthorn spp., Common buckthorn, Buckthorn spp., Buckthorn spp., Buckthorn spp.",NA,1,NA
+7549,"Ash spp., Ash spp., White ash, White ash, Ash spp.",Ash,3,all suggested names Ashes
+7550,"Northern red oak, Black oak, Black oak, Black oak, Oak spp.",Oak,3,all suggested names Oaks
+7554,"Buckthorn spp., Buckthorn spp., Common buckthorn, Buckthorn spp., Buckthorn spp., Buckthorn spp.",Buckthorn,3,all suggested names Buckthorn
 7555,"Oregon crab apple, Crabapple, Roughleaf dogwood, Buckthorn spp., Oregon crab apple",NA,1,NA
-7559,"Common buckthorn, Common buckthorn, Common buckthorn, Buckthorn spp., Common buckthorn, Buckthorn spp.",NA,1,NA
-7560,"Sugar maple, Maple spp., Sugar maple, Maple spp., Maple spp., Maple spp.",NA,1,NA
+7559,"Common buckthorn, Common buckthorn, Common buckthorn, Buckthorn spp., Common buckthorn, Buckthorn spp.",Buckthorn,3,all suggested names Buckthorn
+7560,"Sugar maple, Maple spp., Sugar maple, Maple spp., Maple spp., Maple spp.",Maple,3,all suggested names Maples
 7564,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac",Staghorn sumac,3,NA
 7565,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac",Staghorn sumac,3,NA
-7569,"Northern red oak, Oak spp., Northern red oak, Black oak, Northern red oak",NA,1,NA
+7569,"Northern red oak, Oak spp., Northern red oak, Black oak, Northern red oak",Oak,3,all suggested names Oaks
 7570,"Black cherry, Black cherry, Black cherry, Black cherry, Black cherry, Black cherry",Black cherry,3,NA
-7573,Oak spp.,Oak spp.,2,NA
-7601,Maple spp.,Maple spp.,2,NA
+7573,Oak spp.,Oak,2,NA
+7601,Maple spp.,Maple,2,NA
