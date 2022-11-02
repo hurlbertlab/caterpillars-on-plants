@@ -28,9 +28,10 @@ MatrixOfSpeciesFoundAtSite<- left_join(fullDataset, officialPlantList, by = c('S
   pivot_wider(names_from = SiteFK, values_from = presence)
 
 SiteFKinOfficialPlantList <- left_join(fullDataset, officialPlantList, by = c('Species' = 'userPlantName')) %>%
-  distinct(sciName, SiteFK) %>%
-  count('sciName') %>% 
-  #arrange(desc(n)) %>%
+  d
+istinct(sciName, SiteFK) %>%
+  dplyr::count(sciName) %>% 
+  arrange(desc(n)) %>%
   left_join(MatrixOfSpeciesFoundAtSite, by = 'sciName')
 
 

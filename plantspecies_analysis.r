@@ -15,7 +15,6 @@ mutate_cond <- function(.data, condition,...,envir=parent.frame()){
 }
 
 #Looking at meanDensity, meanBiomass, and fracSurveys of caterpillars in different plant families over the course of the citizen science dataset from June to July
-
 meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
                              ordersToInclude = 'All',       # or 'caterpillar'
                              minLength = 0,         # minimum arthropod size to include 
@@ -103,7 +102,6 @@ clean_and_tallamy <- left_join(cleaned.new, tallamy, by = 'Genus') %>%
 
 
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
-
 nativeData = filter(clean_and_tallamy, origin == 'native')
 alienData = filter(clean_and_tallamy, origin == 'alien')
 
@@ -140,7 +138,6 @@ dev.off()
 
 
 # Multi-panel plots comparing native vs alien species for 5 plant families for meanDensity, meanBiomass, and fracSurveys
-
 pdf("6families.pdf", width = 8.5, height = 12)
 par(mfrow = c(5, 3), mar = c(5, 5, 2, 2))
 
