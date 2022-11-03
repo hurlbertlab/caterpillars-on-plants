@@ -94,10 +94,13 @@ ratedUserIdentifiedBranches %>%
 #probably should've user rbind for code below but have to get the number of cols to match
 UserRatedAndPhotoExaminedBranches <- bind_rows(PhotosWithAllBranches, ratedUserIdentifiedBranches)
 
-#number of values definitely changes so that's not good, fix that
+#number of values definitely changes so that's not good, fix that : Name.y, PlantSpecies.y, etc blank)
+#how is it calling fullDataset
 JoinedPhotoAndOccurrenceToFull <- fullDataset %>%
   left_join(UserRatedAndPhotoExaminedBranches, by = 'PlantFK') %>%
   mutate(InferredName = ifelse(is.na(InferredName), Species, InferredName)) %>%
   left_join(officialPlantList, by = c("InferredName" = "cleanedPlantName"))
+
+write.csv(JoinedPhotoAndOccurrenceToFull, "PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv", row.names = F)
 #use this to ensure that the number of rows is not changing while joining the differnet files above
-length(unique(JoinedPhotoAndOccurrenceToFull$InferredName))
+length(unique(JoinedPhotoAndOccurrenceToFull$PlantFK))
