@@ -1,0 +1,88 @@
+"","Name","Region","PlantFK","PlantSpecies","InferredName","ConfidenceInterval","Notes"
+"1","NC State University","NC",986,"American beech, American elm, American beech, American elm, American beech",NA,NA,NA
+"2","NC State University","NC",990,"Dogwood spp., Dogwood spp., Dogwood spp.",NA,NA,NA
+"3","Columbus Botanical Garden","GA",1140,"Cucumbertree, Southern magnolia, Southern magnolia",NA,NA,NA
+"4","Columbus Botanical Garden","GA",1156,"Water oak",NA,NA,NA
+"5","Wye Marsh Wildlife Centre","ON",1226,"Common buckthorn",NA,NA,NA
+"6","Wye Marsh Wildlife Centre","ON",1227,"Redosier dogwood",NA,NA,NA
+"7","Wye Marsh Wildlife Centre","ON",1228,"Black ash",NA,NA,NA
+"8","Wye Marsh Wildlife Centre","ON",1229,"Redosier dogwood",NA,NA,NA
+"9","Wye Marsh Wildlife Centre","ON",1230,"Common buckthorn",NA,NA,NA
+"10","Red Top Mountain State Park","GA",1502,"Water oak",NA,NA,NA
+"11","Jordan Lake SRA","NC",1945,"Winged elm, Winged elm",NA,NA,NA
+"12","Jordan Lake SRA","NC",1946,"Winged elm",NA,NA,NA
+"13","NC State University","NC",2352,"Rocky mountain maple, Red maple, Eastern redbud, Willow oak, Willow oak, Dogwood spp., White oak, White oak, White oak, Red maple, Red maple",NA,NA,NA
+"14","NC State University","NC",2355,"Rocky mountain maple, Cucumbertree, Red maple, Red maple",NA,NA,NA
+"15","NC State University","NC",2362,"Oak spp., Bigleaf magnolia, Magnolia spp., Magnolia, Magnolia, Bigleaf maple",NA,NA,NA
+"16","NC State University","NC",2375,"Southern magnolia, Southern magnolia, Southern magnolia, Cucumbertree",NA,NA,NA
+"17","NC State University","NC",2376,"Hackberry, Hackberry, Hackberry, Hackberry",NA,NA,NA
+"18","NC State University","NC",2387,"Japanese maple, Sugar maple, Sugar maple, Silver maple",NA,NA,NA
+"19","NC State University","NC",2390,"American beech, American beech, American beech, American beech, American beech, American beech",NA,NA,NA
+"20","NC State University","NC",2391,"Dogwood spp.",NA,NA,NA
+"21","NC State University","NC",2393,"American holly, American holly, Willow oak",NA,NA,NA
+"22","NC State University","NC",2394,"Eastern redbud, Southern catalpa, Willow oak, Willow oak",NA,NA,NA
+"23","NC State University","NC",2405,"Elm spp., American beech",NA,NA,NA
+"24","Example Site","NC",3245,"White fir, White fir",NA,NA,NA
+"25","Museum of American Bird Art","MA",3302,"Highbush blueberry, Black cherry, Highbush blueberry",NA,NA,NA
+"26","Wellesley College","MA",3532,"Common lilac?",NA,NA,NA
+"27","Wellesley College","MA",3536,"Elder",NA,NA,NA
+"28","Wellesley College","MA",3537,"Maple",NA,NA,NA
+"29","Wellesley College","MA",3540,"Maple, Maple spp.",NA,NA,NA
+"30","Wellesley College","MA",3542,"Maple spp.",NA,NA,NA
+"31","Wellesley College","MA",3544,"White oak tree",NA,NA,NA
+"32","Wellesley College","MA",3547,"Maple",NA,NA,NA
+"33","Wellesley College","MA",3549,"Maple, Maple",NA,NA,NA
+"34","Wellesley College","MA",3552,"Maple, Maple spp.",NA,NA,NA
+"35","Wellesley College","MA",3553,"Maple",NA,NA,NA
+"36","Wellesley College","MA",3554,"Asian pear tree, Asian pear tree",NA,NA,NA
+"37","Wellesley College","MA",3557,"Persimmon, Persimmon spp., Common persimmon",NA,NA,NA
+"38","Wellesley College","MA",3558,"Chickasaw plum, Chickasaw plum, Chickasaw plum",NA,NA,NA
+"39","Botany Bay Heritage Preserve","SC",5061,"Devil’s walking stick, Devil’s walking stick, Yaupon",NA,NA,NA
+"40","Botany Bay Heritage Preserve","SC",5072,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",NA,NA,NA
+"41","Botany Bay Heritage Preserve","SC",5073,"Flowering dogwood, Flowering dogwood, Flowering dogwood, Flowering dogwood",NA,NA,NA
+"42","Botany Bay Heritage Preserve","SC",5074,"American holly, American holly, American holly",NA,NA,NA
+"43","Botany Bay Heritage Preserve","SC",5075,"Sweetgum, Sweetgum, Sweetgum",NA,NA,NA
+"44","Botany Bay Heritage Preserve","SC",5076,"Sweetgum, Sweetgum, Sweetgum",NA,NA,NA
+"45","Botany Bay Heritage Preserve","SC",5174,"Dogwood spp., Dogwood spp.",NA,NA,NA
+"46","Botany Bay Heritage Preserve","SC",5175,"Sweetgum, Sweetgum",NA,NA,NA
+"47","Botany Bay Heritage Preserve","SC",5176,"Sweetgum, Sweetgum, Sweetgum",NA,NA,NA
+"48","Botany Bay Heritage Preserve","SC",5177,"Live oak, Live oak",NA,NA,NA
+"49","Botany Bay Heritage Preserve","SC",5178,"Sweetgum, Sweetgum",NA,NA,NA
+"50","Chepiwanoxet","RI",5281,"Crabapple, Bigtooth aspen",NA,NA,NA
+"51","Chepiwanoxet","RI",5286,"Sweet crab apple",NA,NA,NA
+"52","RBP TRAINING SITE","VA",5327,"American holly",NA,NA,NA
+"53","Chepiwanoxet","RI",5358,"Silver poplar, Silver poplar, Silver poplar, Silver poplar, Silver poplar",NA,NA,NA
+"54","Chepiwanoxet","RI",5363,"Hackberry",NA,NA,NA
+"55","BHRC - Hemlock Draw","WI",5994,"Red maple, Red maple, Red maple, Red maple, Red maple",NA,NA,NA
+"56","BHRC - Hemlock Draw","WI",5998,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",NA,NA,NA
+"57","BHRC - Hemlock Draw","WI",5999,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, White ash, Black cherry",NA,NA,NA
+"58","BHRC - Hemlock Draw","WI",6000,"Bitternut hickory, Bitternut hickory, Bitternut hickory",NA,NA,NA
+"59","BHRC - Hemlock Draw","WI",6001,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam",NA,NA,NA
+"60","ABQ BioPark Botanical Garden","NM",6107,"Russian olive, Russian olive, Russian olive, New mexico olive, New mexico olive, New mexico olive",NA,NA,NA
+"61","ABQ BioPark Botanical Garden","NM",6108,"Cottonwood and poplar spp., Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",NA,NA,NA
+"62","ABQ BioPark Botanical Garden","NM",6109,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",NA,NA,NA
+"63","ABQ BioPark Botanical Garden","NM",6110,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",NA,NA,NA
+"64","ABQ BioPark Botanical Garden","NM",6111,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",NA,NA,NA
+"65","ABQ BioPark Botanical Garden","NM",6112,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",NA,NA,NA
+"66","ABQ BioPark Botanical Garden","NM",6113,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive",NA,NA,NA
+"67","ABQ BioPark Botanical Garden","NM",6114,"Russian olive, Russian olive, Fragrant sumac, Fragrant sumac, Fragrant sumac, Siberian elm, Fragrant sumac, Fragrant sumac, Fragrant sumac",NA,NA,NA
+"68","ABQ BioPark Botanical Garden","NM",6115,"Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Russian olive, Russian olive",NA,NA,NA
+"69","ABQ BioPark Botanical Garden","NM",6116,"Russian olive, Russian olive, Russian olive, Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp.",NA,NA,NA
+"70","Cambridge Miyawaki Forest (Danehy Park)","MA",6329,"Northern red oak",NA,NA,NA
+"71","Mjeidel","LB",6592,"White mulberry, White mulberry",NA,NA,NA
+"72","Gulf Branch Nature Center","VA",6731,"American beech, Black cherry",NA,NA,NA
+"73","Gulf Branch Nature Center","VA",6734,"American holly, Cherry and plum spp.",NA,NA,NA
+"74","Gulf Branch Nature Center","VA",6739,"American beech, Cherry and plum spp.",NA,NA,NA
+"75","Gulf Branch Nature Center","VA",6757,"American beech",NA,NA,NA
+"76","High Park","ON",7549,"Ash spp., Ash spp., White ash, White ash, Ash spp.",NA,NA,NA
+"77","High Park","ON",7550,"Northern red oak, Black oak, Black oak, Black oak, Oak spp.",NA,NA,NA
+"78","High Park","ON",7554,"Buckthorn spp., Buckthorn spp., Common buckthorn, Buckthorn spp., Buckthorn spp., Buckthorn spp.",NA,NA,NA
+"79","High Park","ON",7555,"Oregon crab apple, Crabapple, Roughleaf dogwood, Buckthorn spp., Oregon crab apple",NA,NA,NA
+"80","High Park","ON",7559,"Common buckthorn, Common buckthorn, Common buckthorn, Buckthorn spp., Common buckthorn, Buckthorn spp.",NA,NA,NA
+"81","High Park","ON",7560,"Sugar maple, Maple spp., Sugar maple, Maple spp., Maple spp., Maple spp.",NA,NA,NA
+"82","High Park","ON",7564,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac",NA,NA,NA
+"83","High Park","ON",7565,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac",NA,NA,NA
+"84","High Park","ON",7569,"Northern red oak, Oak spp., Northern red oak, Black oak, Northern red oak",NA,NA,NA
+"85","High Park","ON",7570,"Black cherry, Black cherry, Black cherry, Black cherry, Black cherry, Black cherry",NA,NA,NA
+"86","High Park","ON",7573,"Oak spp.",NA,NA,NA
+"87","Ucl","GB",7601,"Maple spp.",NA,NA,NA

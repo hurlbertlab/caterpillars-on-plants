@@ -1,147 +1,66 @@
-Name,Region,PlantFK,PlantSpecies,Notes.x,PhotoURL,InferredName,myNotes
-NC State University,NC,2391,Dogwood spp.,,159.jpeg,American Persimmon,confident
-NC State University,NC,2387,Japanese maple,,156.jpeg,NA,"bark, def not a maple"
-NC State University,NC,2394,Eastern redbud,Some branches had very small leaves some branches had much bigger leaves,179.jpeg,Eastern redbud,not confident
-Example Site,NC,3245,N/A,I just saw a caterpillar,861.jpeg,NA,berries and cream
-Wellesley College,MA,3544,White oak tree,,9603.jpeg,Sugar maple,
-Wellesley College,MA,3544,N/A,,11546.jpeg,NA,
-Wellesley College,MA,3553,N/A,,11558.jpeg,Red maple,confident
-Wellesley College,MA,3542,N/A,,12482.jpeg,Bear oak,
-Wellesley College,MA,3542,N/A,,13198.jpeg,Bear oak,
-NC State University,NC,2391,N/A,,41440.jpeg,Indian banyan,looks like 41441
-NC State University,NC,2391,N/A,,41441.jpeg,Indian banyan,looks like 41440
-NC State University,NC,2390,American beech,,41460.jpeg,American beech,
-NC State University,NC,2352,Willow oak,,41482.jpeg,Willow oak,
-NC State University,NC,2362,N/A,,41489.jpeg,NA,
-NC State University,NC,2362,N/A,,41490.jpeg,NA,mostly ground
-NC State University,NC,2352,White oak,,41549.jpeg,NA,ground
-NC State University,NC,2387,Sugar maple,,41585.jpeg,NA,bark
-NC State University,NC,2405,N/A,,41591.jpeg,American hornbeam,"mostly bark, sparse leaves"
-NC State University,NC,2405,N/A,,41592.jpeg,NA,bark
-NC State University,NC,2405,N/A,,41593.jpeg,American hornbeam,"mostly bark, sparse leaves"
-NC State University,NC,2405,N/A,,41594.jpeg,NA,phone case
-NC State University,NC,986,American beech,,41633.jpeg,American beech,
-NC State University,NC,2387,N/A,,41738.jpeg,Japanese maple,
-NC State University,NC,2387,Sugar maple,,41960.jpeg,NA,bark
-NC State University,NC,986,American elm,,41980.jpeg,NA,bark
-NC State University,NC,2405,Tree,,42143.jpeg,NA,
-NC State University,NC,986,American beech,,42188.jpeg,American beech,
-Wye Marsh Wildlife Centre,ON,1227,Redosier dogwood,,71096.jpeg,Dogwood,
-BHRC - Hemlock Draw,WI,5994,Red maple,Red maple,89160.jpeg,NA,hand
-BHRC - Hemlock Draw,WI,6001,N/A,,90861.jpeg,NA,
-BHRC - Hemlock Draw,WI,6001,N/A,,90862.jpeg,NA,
-BHRC - Hemlock Draw,WI,6000,N/A,,90864.jpeg,Hickory,possibly bitternut
-BHRC - Hemlock Draw,WI,5998,N/A,,90868.jpeg,NA,
-BHRC - Hemlock Draw,WI,5998,N/A,,90869.jpeg,NA,
-BHRC - Hemlock Draw,WI,5994,Red maple,,92464.jpeg,Maple,"Maple stem, veins hard to tell"
-BHRC - Hemlock Draw,WI,5998,Eastern hophornbeam,,92466.jpeg,Eastern hophornbeam,
-BHRC - Hemlock Draw,WI,5999,Eastern hophornbeam,,101773.jpeg,Eastern hophornbeam,
-BHRC - Hemlock Draw,WI,5998,N/A,,106886.jpeg,American hophornbeam,
-BHRC - Hemlock Draw,WI,6001,N/A,,106891.jpeg,American hophornbeam,
-BHRC - Hemlock Draw,WI,6001,N/A,,106892.jpeg,American hophornbeam,
-BHRC - Hemlock Draw,WI,5994,N/A,,106916.jpeg,Maple,"Maple like, uncertain"
-BHRC - Hemlock Draw,WI,5994,N/A,,106917.jpeg,Maple,"Maple like, uncertain"
-BHRC - Hemlock Draw,WI,5994,N/A,,106918.jpeg,Maple,"Maple like, uncertain"
-BHRC - Hemlock Draw,WI,5994,N/A,,106919.jpeg,Maple,"Maple like,"
-BHRC - Hemlock Draw,WI,5994,N/A,,106920.jpeg,Maple,Maple
-Gulf Branch Nature Center,VA,6734,N/A,,110116.jpeg,Common serviceberry,
-Gulf Branch Nature Center,VA,6739,N/A,,110119.jpeg,NA,possibly identifable
-Gulf Branch Nature Center,VA,6757,N/A,,110159.jpeg,Sweet cherry,
-BHRC - Hemlock Draw,WI,5999,White ash,,110263.jpeg,White ash,
-Gulf Branch Nature Center,VA,6734,N/A,,112693.jpeg,Japanese cherry,
-Gulf Branch Nature Center,VA,6739,N/A,,115102.jpeg,NA,branch IYE
-Gulf Branch Nature Center,VA,6739,N/A,,115103.jpeg,NA,branch IYE
-Gulf Branch Nature Center,VA,6757,N/A,,115148.jpeg,NA,
-Gulf Branch Nature Center,VA,6731,N/A,,117712.jpeg,NA,
-Gulf Branch Nature Center,VA,6731,N/A,,117713.jpeg,NA,
-Gulf Branch Nature Center,VA,6739,N/A,,122759.jpeg,NA,"leaves pretty clear, can't tell"
-Gulf Branch Nature Center,VA,6739,Cherry and plum spp.,,127035.jpeg,Japanese cherry,
-High Park,ON,7565,Staghorn sumac,,131341.jpeg,Staghorn sumac,
-High Park,ON,7570,Black cherry,,131342.jpeg,Black cherry,
-High Park,ON,7549,White ash,,131592.jpeg,White ash,
-High Park,ON,7554,Buckthorn spp.,,131597.jpeg,Common buckthorn,
-High Park,ON,7559,Common buckthorn,,131602.jpeg,Common buckthorn,
-Cambridge Miyawaki Forest (Danehy Park),MA,6329,Northern red oak,,131955.jpeg,Northern red oak,
-Cambridge Miyawaki Forest (Danehy Park),MA,6329,Northern red oak,,131956.jpeg,Northern red oak,
-Cambridge Miyawaki Forest (Danehy Park),MA,6329,Northern red oak,,131957.jpeg,Northern red oak,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
+"Name","Region","PlantFK","PlantSpecies","Notes.x","PhotoURL"
+"NC State University","NC",2391,"Dogwood spp.","","159.jpeg"
+"NC State University","NC",2387,"Japanese maple","","156.jpeg"
+"NC State University","NC",2394,"Eastern redbud","Some branches had very small leaves some branches had much bigger leaves","179.jpeg"
+"Example Site","NC",3245,"N/A","I just saw a caterpillar","861.jpeg"
+"Wellesley College","MA",3544,"White oak tree","","9603.jpeg"
+"Wellesley College","MA",3544,"N/A","","11546.jpeg"
+"Wellesley College","MA",3553,"N/A","","11558.jpeg"
+"Wellesley College","MA",3542,"N/A","","12482.jpeg"
+"Wellesley College","MA",3542,"N/A","","13198.jpeg"
+"NC State University","NC",2391,"N/A","","41440.jpeg"
+"NC State University","NC",2391,"N/A","","41441.jpeg"
+"NC State University","NC",2390,"American beech","","41460.jpeg"
+"NC State University","NC",2352,"Willow oak","","41482.jpeg"
+"NC State University","NC",2362,"N/A","","41489.jpeg"
+"NC State University","NC",2362,"N/A","","41490.jpeg"
+"NC State University","NC",2352,"White oak","","41549.jpeg"
+"NC State University","NC",2387,"Sugar maple","","41585.jpeg"
+"NC State University","NC",2405,"N/A","","41591.jpeg"
+"NC State University","NC",2405,"N/A","","41592.jpeg"
+"NC State University","NC",2405,"N/A","","41593.jpeg"
+"NC State University","NC",2405,"N/A","","41594.jpeg"
+"NC State University","NC",986,"American beech","","41633.jpeg"
+"NC State University","NC",2387,"N/A","","41738.jpeg"
+"NC State University","NC",2387,"Sugar maple","","41960.jpeg"
+"NC State University","NC",986,"American elm","","41980.jpeg"
+"NC State University","NC",2405,"Tree","","42143.jpeg"
+"NC State University","NC",986,"American beech","","42188.jpeg"
+"Wye Marsh Wildlife Centre","ON",1227,"Redosier dogwood","","71096.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"Red maple","Red maple","89160.jpeg"
+"BHRC - Hemlock Draw","WI",6001,"N/A","","90861.jpeg"
+"BHRC - Hemlock Draw","WI",6001,"N/A","","90862.jpeg"
+"BHRC - Hemlock Draw","WI",6000,"N/A","","90864.jpeg"
+"BHRC - Hemlock Draw","WI",5998,"N/A","","90868.jpeg"
+"BHRC - Hemlock Draw","WI",5998,"N/A","","90869.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"Red maple","","92464.jpeg"
+"BHRC - Hemlock Draw","WI",5998,"Eastern hophornbeam","","92466.jpeg"
+"BHRC - Hemlock Draw","WI",5999,"Eastern hophornbeam","","101773.jpeg"
+"BHRC - Hemlock Draw","WI",5998,"N/A","","106886.jpeg"
+"BHRC - Hemlock Draw","WI",6001,"N/A","","106891.jpeg"
+"BHRC - Hemlock Draw","WI",6001,"N/A","","106892.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"N/A","","106916.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"N/A","","106917.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"N/A","","106918.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"N/A","","106919.jpeg"
+"BHRC - Hemlock Draw","WI",5994,"N/A","","106920.jpeg"
+"Gulf Branch Nature Center","VA",6734,"N/A","","110116.jpeg"
+"Gulf Branch Nature Center","VA",6739,"N/A","","110119.jpeg"
+"Gulf Branch Nature Center","VA",6757,"N/A","","110159.jpeg"
+"BHRC - Hemlock Draw","WI",5999,"White ash","","110263.jpeg"
+"Gulf Branch Nature Center","VA",6734,"N/A","","112693.jpeg"
+"Gulf Branch Nature Center","VA",6739,"N/A","","115102.jpeg"
+"Gulf Branch Nature Center","VA",6739,"N/A","","115103.jpeg"
+"Gulf Branch Nature Center","VA",6757,"N/A","","115148.jpeg"
+"Gulf Branch Nature Center","VA",6731,"N/A","","117712.jpeg"
+"Gulf Branch Nature Center","VA",6731,"N/A","","117713.jpeg"
+"Gulf Branch Nature Center","VA",6739,"N/A","","122759.jpeg"
+"Gulf Branch Nature Center","VA",6739,"Cherry and plum spp.","","127035.jpeg"
+"High Park","ON",7565,"Staghorn sumac","","131341.jpeg"
+"High Park","ON",7570,"Black cherry","","131342.jpeg"
+"High Park","ON",7549,"White ash","","131592.jpeg"
+"High Park","ON",7554,"Buckthorn spp.","","131597.jpeg"
+"High Park","ON",7559,"Common buckthorn","","131602.jpeg"
+"Cambridge Miyawaki Forest (Danehy Park)","MA",6329,"Northern red oak","","131955.jpeg"
+"Cambridge Miyawaki Forest (Danehy Park)","MA",6329,"Northern red oak","","131956.jpeg"
+"Cambridge Miyawaki Forest (Danehy Park)","MA",6329,"Northern red oak","","131957.jpeg"
