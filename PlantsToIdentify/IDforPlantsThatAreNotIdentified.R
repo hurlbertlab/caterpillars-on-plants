@@ -32,6 +32,7 @@ unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
 
 # Filtering surveys to find where PlantSpecies has a name entered by a user
 # and comparing to where Species has not been identified
+# (one row per PlantFK)
 userIdentifiedBranches <- surveys %>%
   filter(!PlantSpecies %in% c("N/A","","Hello","Dvt","Dvz","Dvt","N/a","Tree","Unknown","Unknown, will take picture")) %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
@@ -50,14 +51,18 @@ write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv")
 # Giving a confidence rating for the most agreed upon name given by users 
 # 1 is the least confident meaning disagreement, 2 means only one name ever entered,
 # 3 is the most confident with all entries agreeing multiple times)
+
+# Save a new version of the file with InferredName and ConfidenceInterval (and Notes) values where appropriate
+# --suggested filename: ratedUserIdentifiedBranches.csv
+
 # Obtain the branches with photos as they have an iNat ID and try to ID the plant from the photo
-ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv') %>%
+ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/ratedUserIdentifiedBranches.csv') %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
   left_join(surveys, by = c('PlantFK', 'Notes', 'PlantSpecies')) %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
   select(Name, Region, PlantFK, PlantSpecies, InferredName, ConfidenceInterval, Notes)
 
-write.csv(ratedUserIdentifiedBranches, "PlantsToIdentify/ratedUserIdentifiedBranches.csv")
+write.csv(ratedUserIdentifiedBranches, "PlantsToIdentify/fullUserIdentifiedBranches.csv")
 
 branchesWithPhotos <- surveys %>%
   filter(PlantFK %in% ratedUserIdentifiedBranches$PlantFK,
@@ -69,11 +74,17 @@ branchesWithPhotos <- surveys %>%
   select(Name, Region, PlantFK, PlantSpecies, Notes.x, PhotoURL)
 
 write.csv(branchesWithPhotos, "PlantsToIdentify/branchesWithPhotos.csv")
-read.csv('PlantsToIdentify/branchesWithPhotos.csv')
 #added in Excel, InferredName and myNotes column to try and use the iNaturalist photos to determine plant species
+
+# write human-modified file under new filename
+
+# READ IN HUMAN-MODIFIED FILE:
+read.csv('PlantsToIdentify/*****branchesWithPhotos****.csv')
+
 
 #think through logic of all the things we want to look at
 #don't need two sets of code just the one with stuff you think would be useful
+# (potentially multiple rows per PlantFK)
 allbranchesWithPhotos <- surveys %>%
   filter(ObservationMethod == "Visual") %>% 
   left_join(ArthropodSighting, by = c('ID' = 'SurveyFK')) %>%
@@ -81,7 +92,14 @@ allbranchesWithPhotos <- surveys %>%
   filter(Species == "N/A") %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
   filter(PhotoURL != "") %>% 
-  select(Name, Region, PlantFK, PlantSpecies, Notes.x, PhotoURL)
+  group_by(PlantFK) %>%
+  summarize(PhotoURLs = paste(....)) %>%
+  select(PlantFK, PhotoURL)
+
+# full_join userIdentifiedBranches, allbranchesWithPhotos
+
+
+
 
 JoinedBranches <- anti_join(allbranchesWithPhotos, branchesWithPhotos, by = c('PlantFK', 'Name', 'Region', 'PlantSpecies', 'Notes.x', 'PhotoURL'))
 write.csv(JoinedBranches, "PlantsToIdentify/JoinedBranches.csv")
