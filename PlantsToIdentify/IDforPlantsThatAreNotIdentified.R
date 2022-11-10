@@ -81,7 +81,7 @@ write.csv(JoinedDoc, "PlantsToIdentify/JoinedDoc.csv")
 
 # Joining the previously unidentified photos to the fullDataset
 JoinedPhotoAndOccurrenceToFull <- fullDataset %>%
-  left_join(fullUserIdentifiedBranches, by = 'PlantFK') %>%
+  left_join(fullUserIdentifiedBranches, by = c('PlantFK')) %>%
   mutate(InferredName = ifelse(is.na(InferredName), Species, InferredName)) %>%
   left_join(officialPlantList, by = c("InferredName" = "cleanedPlantName")) %>%
   arrange(desc(NameConfidence))
