@@ -1,0 +1,103 @@
+"","Name","Region","PlantFK","UserSuggestedName","InferredName","NameConfidence","Notes","PhotoURL"
+"1","NC State University","NC",986,"American beech, American elm, American beech, American elm, American beech",NA,1,NA,"41633.jpeg, 41980.jpeg, 42188.jpeg"
+"2","NC State University","NC",990,"Dogwood spp., Dogwood spp., Dogwood spp.","Dogwood spp.",3,NA,NA
+"3","Columbus Botanical Garden","GA",1140,"Cucumbertree, Southern magnolia, Southern magnolia",NA,1,NA,NA
+"4","Columbus Botanical Garden","GA",1156,"Water oak","Water oak",2,"",NA
+"5","Wye Marsh Wildlife Centre","ON",1226,"Common buckthorn","Common buckthorn",2,"",NA
+"6","Wye Marsh Wildlife Centre","ON",1227,"Redosier dogwood","Redosier dogwood",2,"","71096.jpeg"
+"7","Wye Marsh Wildlife Centre","ON",1228,"Black ash","Black ash",2,"",NA
+"8","Wye Marsh Wildlife Centre","ON",1229,"Redosier dogwood","Redosier dogwood",2,"some wind",NA
+"9","Wye Marsh Wildlife Centre","ON",1230,"Common buckthorn","Common buckthorn",2,"",NA
+"10","Red Top Mountain State Park","GA",1502,"Water oak","Water oak",2,"",NA
+"11","Jordan Lake SRA","NC",1945,"Winged elm, Winged elm","Winged elm",3,NA,NA
+"12","Jordan Lake SRA","NC",1946,"Winged elm","Winged elm",2,"",NA
+"13","NC State University","NC",2352,"Rocky mountain maple, Red maple, Eastern redbud, Willow oak, Willow oak, Dogwood spp., White oak, White oak, White oak, Red maple, Red maple",NA,1,NA,"41482.jpeg, 41549.jpeg"
+"14","NC State University","NC",2355,"Rocky mountain maple, Cucumbertree, Red maple, Red maple",NA,1,NA,NA
+"15","NC State University","NC",2362,"Oak spp., Bigleaf magnolia, Magnolia spp., Magnolia, Magnolia, Bigleaf maple",NA,1,NA,"41489.jpeg, 41490.jpeg"
+"16","NC State University","NC",2375,"Southern magnolia, Southern magnolia, Southern magnolia, Cucumbertree",NA,1,NA,NA
+"17","NC State University","NC",2376,"Hackberry, Hackberry, Hackberry, Hackberry","Hackberry",3,NA,NA
+"18","NC State University","NC",2387,"Japanese maple, Sugar maple, Sugar maple, Silver maple",NA,1,NA,"156.jpeg, 41585.jpeg, 41738.jpeg, 41960.jpeg"
+"19","NC State University","NC",2390,"American beech, American beech, American beech, American beech, American beech, American beech","American beech",3,NA,"41460.jpeg"
+"20","NC State University","NC",2391,"Dogwood spp.","Dogwood spp.",2,"","159.jpeg, 41440.jpeg, 41441.jpeg"
+"21","NC State University","NC",2393,"American holly, American holly, Willow oak",NA,1,NA,NA
+"22","NC State University","NC",2394,"Eastern redbud, Southern catalpa, Willow oak, Willow oak",NA,1,NA,"179.jpeg"
+"23","NC State University","NC",2405,"Elm spp., American beech",NA,1,NA,"41591.jpeg, 41592.jpeg, 41593.jpeg, 41594.jpeg, 42143.jpeg"
+"24","Example Site","NC",3245,"White fir, White fir","White fir",3,NA,"861.jpeg"
+"25","Museum of American Bird Art","MA",3302,"Highbush blueberry, Black cherry, Highbush blueberry",NA,1,NA,NA
+"26","Wellesley College","MA",3532,"Common lilac?",NA,1,"",NA
+"27","Wellesley College","MA",3536,"Elder","Elder",2,"",NA
+"28","Wellesley College","MA",3537,"Maple","Maple",2,"",NA
+"29","Wellesley College","MA",3540,"Maple, Maple spp.",NA,1,NA,NA
+"30","Wellesley College","MA",3542,"Maple spp.","Maple spp.",2,"","12482.jpeg, 13198.jpeg"
+"31","Wellesley College","MA",3544,"White oak tree","White oak tree",2,"","9603.jpeg, 11546.jpeg"
+"32","Wellesley College","MA",3547,"Maple","Maple",2,"",NA
+"33","Wellesley College","MA",3549,"Maple, Maple","Maple",3,NA,NA
+"34","Wellesley College","MA",3552,"Maple, Maple spp.",NA,1,NA,NA
+"35","Wellesley College","MA",3553,"Maple","Maple",2,"Lots of falls on leaves","11558.jpeg"
+"36","Wellesley College","MA",3554,"Asian pear tree, Asian pear tree","Asian pear tree",3,NA,NA
+"37","Wellesley College","MA",3557,"Persimmon, Persimmon spp., Common persimmon",NA,1,NA,NA
+"38","Wellesley College","MA",3558,"Chickasaw plum, Chickasaw plum, Chickasaw plum","Chickasaw plum",3,NA,NA
+"39","Botany Bay Heritage Preserve","SC",5061,"Devil’s walking stick, Devil’s walking stick, Yaupon",NA,1,NA,NA
+"40","Botany Bay Heritage Preserve","SC",5072,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam","Eastern hophornbeam",3,NA,NA
+"41","Botany Bay Heritage Preserve","SC",5073,"Flowering dogwood, Flowering dogwood, Flowering dogwood, Flowering dogwood","Flowering dogwood",3,NA,NA
+"42","Botany Bay Heritage Preserve","SC",5074,"American holly, American holly, American holly","American holly",3,NA,NA
+"43","Botany Bay Heritage Preserve","SC",5075,"Sweetgum, Sweetgum, Sweetgum","Sweetgum",3,NA,NA
+"44","Botany Bay Heritage Preserve","SC",5076,"Sweetgum, Sweetgum, Sweetgum","Sweetgum",3,NA,NA
+"45","Botany Bay Heritage Preserve","SC",5174,"Dogwood spp., Dogwood spp.","Dogwood spp.",3,NA,NA
+"46","Botany Bay Heritage Preserve","SC",5175,"Sweetgum, Sweetgum","Sweetgum",3,NA,NA
+"47","Botany Bay Heritage Preserve","SC",5176,"Sweetgum, Sweetgum, Sweetgum","Sweetgum",3,NA,NA
+"48","Botany Bay Heritage Preserve","SC",5177,"Live oak, Live oak","Live oak",3,NA,NA
+"49","Botany Bay Heritage Preserve","SC",5178,"Sweetgum, Sweetgum","Sweetgum",3,NA,NA
+"50","Chepiwanoxet","RI",5281,"Crabapple, Bigtooth aspen",NA,1,NA,NA
+"51","Chepiwanoxet","RI",5286,"Sweet crab apple","Sweet crab apple",2,"",NA
+"52","RBP TRAINING SITE","VA",5327,"American holly","American holly",2,"",NA
+"53","Chepiwanoxet","RI",5358,"Silver poplar, Silver poplar, Silver poplar, Silver poplar, Silver poplar","Silver poplar",3,NA,NA
+"54","Chepiwanoxet","RI",5363,"Hackberry","Hackberry",2,"",NA
+"55","BHRC - Hemlock Draw","WI",5994,"Red maple, Red maple, Red maple, Red maple, Red maple","Red maple",3,NA,"89160.jpeg, 92464.jpeg, 106916.jpeg, 106917.jpeg, 106918.jpeg, 106919.jpeg, 106920.jpeg"
+"56","BHRC - Hemlock Draw","WI",5998,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam","Eastern hophornbeam",3,NA,"90868.jpeg, 90869.jpeg, 92466.jpeg, 106886.jpeg"
+"57","BHRC - Hemlock Draw","WI",5999,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, White ash, Black cherry",NA,1,NA,"101773.jpeg, 110263.jpeg"
+"58","BHRC - Hemlock Draw","WI",6000,"Bitternut hickory, Bitternut hickory, Bitternut hickory","Bitternut hickory",3,NA,"90864.jpeg"
+"59","BHRC - Hemlock Draw","WI",6001,"Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam, Eastern hophornbeam","Eastern hophornbeam",3,NA,"90861.jpeg, 90862.jpeg, 106891.jpeg, 106892.jpeg"
+"60","ABQ BioPark Botanical Garden","NM",6107,"Russian olive, Russian olive, Russian olive, New mexico olive, New mexico olive, New mexico olive",NA,1,NA,NA
+"61","ABQ BioPark Botanical Garden","NM",6108,"Cottonwood and poplar spp., Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm",NA,1,NA,NA
+"62","ABQ BioPark Botanical Garden","NM",6109,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm","Siberian elm",3,NA,NA
+"63","ABQ BioPark Botanical Garden","NM",6110,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive","Russian olive",3,NA,NA
+"64","ABQ BioPark Botanical Garden","NM",6111,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive","Russian olive",3,NA,NA
+"65","ABQ BioPark Botanical Garden","NM",6112,"Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm, Siberian elm","Siberian elm",3,NA,NA
+"66","ABQ BioPark Botanical Garden","NM",6113,"Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive, Russian olive","Russian olive",3,NA,NA
+"67","ABQ BioPark Botanical Garden","NM",6114,"Russian olive, Russian olive, Fragrant sumac, Fragrant sumac, Fragrant sumac, Siberian elm, Fragrant sumac, Fragrant sumac, Fragrant sumac",NA,1,NA,NA
+"68","ABQ BioPark Botanical Garden","NM",6115,"Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp., Russian olive, Russian olive","Cottonwood and poplar spp.",3,NA,NA
+"69","ABQ BioPark Botanical Garden","NM",6116,"Russian olive, Russian olive, Russian olive, Cottonwood and poplar spp., Cottonwood and poplar spp., Cottonwood and poplar spp.",NA,1,NA,NA
+"70","Cambridge Miyawaki Forest (Danehy Park)","MA",6329,"Northern red oak","Northern red oak",2,"","131955.jpeg, 131956.jpeg, 131957.jpeg"
+"71","Mjeidel","LB",6592,"White mulberry, White mulberry","White mulberry",3,NA,NA
+"72","Gulf Branch Nature Center","VA",6731,"American beech, Black cherry",NA,1,NA,"117712.jpeg, 117713.jpeg"
+"73","Gulf Branch Nature Center","VA",6734,"American holly, Cherry and plum spp.",NA,1,NA,"110116.jpeg, 112693.jpeg"
+"74","Gulf Branch Nature Center","VA",6739,"American beech, Cherry and plum spp.",NA,1,NA,"110119.jpeg, 115102.jpeg, 115103.jpeg, 122759.jpeg, 127035.jpeg"
+"75","Gulf Branch Nature Center","VA",6757,"American beech","American beech",2,"","110159.jpeg, 115148.jpeg"
+"76","High Park","ON",7549,"Ash spp., Ash spp., White ash, White ash, Ash spp.",NA,1,NA,"131592.jpeg"
+"77","High Park","ON",7550,"Northern red oak, Black oak, Black oak, Black oak, Oak spp.",NA,1,NA,NA
+"78","High Park","ON",7554,"Buckthorn spp., Buckthorn spp., Common buckthorn, Buckthorn spp., Buckthorn spp., Buckthorn spp.",NA,1,NA,"131597.jpeg"
+"79","High Park","ON",7555,"Oregon crab apple, Crabapple, Roughleaf dogwood, Buckthorn spp., Oregon crab apple",NA,1,NA,NA
+"80","High Park","ON",7559,"Common buckthorn, Common buckthorn, Common buckthorn, Buckthorn spp., Common buckthorn, Buckthorn spp.",NA,1,NA,"131602.jpeg"
+"81","High Park","ON",7560,"Sugar maple, Maple spp., Sugar maple, Maple spp., Maple spp., Maple spp.",NA,1,NA,NA
+"82","High Park","ON",7564,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac","Staghorn sumac",3,NA,NA
+"83","High Park","ON",7565,"Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac, Staghorn sumac","Staghorn sumac",3,NA,"131341.jpeg"
+"84","High Park","ON",7569,"Northern red oak, Oak spp., Northern red oak, Black oak, Northern red oak",NA,1,NA,NA
+"85","High Park","ON",7570,"Black cherry, Black cherry, Black cherry, Black cherry, Black cherry, Black cherry","Black cherry",3,NA,"131342.jpeg"
+"86","High Park","ON",7573,"Oak spp.","Oak spp.",2,"",NA
+"87","Ucl","GB",7601,"Maple spp.","Maple spp.",2,"",NA
+"88",NA,NA,3529,NA,NA,NA,NA,"7460.jpeg"
+"89",NA,NA,3530,NA,NA,NA,NA,"11554.jpeg"
+"90",NA,NA,3531,NA,NA,NA,NA,"8335.jpeg, 11553.jpeg, 12485.jpeg"
+"91",NA,NA,3534,NA,NA,NA,NA,"7439.jpeg, 12486.jpeg"
+"92",NA,NA,3538,NA,NA,NA,NA,"8342.jpeg"
+"93",NA,NA,3541,NA,NA,NA,NA,"7433.jpeg, 8325.jpeg"
+"94",NA,NA,3546,NA,NA,NA,NA,"8322.jpeg, 8324.jpeg, 9599.jpeg, 11548.jpeg, 11549.jpeg, 13195.jpeg"
+"95",NA,NA,3548,NA,NA,NA,NA,"8330.jpeg"
+"96",NA,NA,3550,NA,NA,NA,NA,"11555.jpeg"
+"97",NA,NA,3551,NA,NA,NA,NA,"11559.jpeg, 11560.jpeg"
+"98",NA,NA,3555,NA,NA,NA,NA,"7467.jpeg"
+"99",NA,NA,3556,NA,NA,NA,NA,"13418.jpeg"
+"100",NA,NA,3866,NA,NA,NA,NA,"61115.jpeg, 61116.jpeg"
+"101",NA,NA,3872,NA,NA,NA,NA,"61164.jpeg, 61165.jpeg, 61166.jpeg"
+"102",NA,NA,3874,NA,NA,NA,NA,"61135.jpeg, 61136.jpeg"

@@ -41,51 +41,28 @@ userIdentifiedBranches <- surveys %>%
   group_by(PlantFK) %>%
   summarize(PlantSpecies = paste(PlantSpecies, collapse = ", ")) %>%
   mutate(InferredName = NA, 
-         ConfidenceInterval = NA, 
-         Notes = NA)
+         NameConfidence = NA)
 
 write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv")
-
 
 # In Excel, fill in the inferred name if there's agreement and confidence rating
 # Giving a confidence rating for the most agreed upon name given by users 
 # 1 is the least confident meaning disagreement, 2 means only one name ever entered,
 # 3 is the most confident with all entries agreeing multiple times)
+# Save a new version of the file with InferredName and NameConfidence (and Notes) values where appropriate
 
-# Save a new version of the file with InferredName and ConfidenceInterval (and Notes) values where appropriate
-# --suggested filename: ratedUserIdentifiedBranches.csv
+#ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv') 
 
-# Obtain the branches with photos as they have an iNat ID and try to ID the plant from the photo
-ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/ratedUserIdentifiedBranches.csv') %>%
+# Trying to ID photos based off of user suggestions (confidence rating) and photo ID
+fullUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv') %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
-  left_join(surveys, by = c('PlantFK', 'Notes', 'PlantSpecies')) %>%
+  left_join(surveys, by = c('PlantFK', 'PlantSpecies')) %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
-  select(Name, Region, PlantFK, PlantSpecies, InferredName, ConfidenceInterval, Notes)
-
-write.csv(ratedUserIdentifiedBranches, "PlantsToIdentify/fullUserIdentifiedBranches.csv")
-
-branchesWithPhotos <- surveys %>%
-  filter(PlantFK %in% ratedUserIdentifiedBranches$PlantFK,
-         ObservationMethod == "Visual") %>% 
-  left_join(ArthropodSighting, by = c('ID' = 'SurveyFK')) %>%
-  left_join(plants, by = c('PlantFK' = 'ID')) %>%
-  left_join(sites, by = c('SiteFK' = 'ID')) %>%
-  filter(PhotoURL != "") %>% 
-  select(Name, Region, PlantFK, PlantSpecies, Notes.x, PhotoURL)
-
-write.csv(branchesWithPhotos, "PlantsToIdentify/branchesWithPhotos.csv")
-#added in Excel, InferredName and myNotes column to try and use the iNaturalist photos to determine plant species
-
-# write human-modified file under new filename
-
-# READ IN HUMAN-MODIFIED FILE:
-read.csv('PlantsToIdentify/*****branchesWithPhotos****.csv')
-
-
-#think through logic of all the things we want to look at
-#don't need two sets of code just the one with stuff you think would be useful
-# (potentially multiple rows per PlantFK)
-allbranchesWithPhotos <- surveys %>%
+  select(Name, Region, PlantFK, PlantSpecies, InferredName, NameConfidence, Notes) %>%
+  rename('UserSuggestedName' = 'PlantSpecies')
+  
+# deleted branchesWithPhotos bc the data is already entered and duplicate of some below
+allBranchesWithPhotos <- surveys %>%
   filter(ObservationMethod == "Visual") %>% 
   left_join(ArthropodSighting, by = c('ID' = 'SurveyFK')) %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
@@ -93,40 +70,23 @@ allbranchesWithPhotos <- surveys %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
   filter(PhotoURL != "") %>% 
   group_by(PlantFK) %>%
-  summarize(PhotoURLs = paste(....)) %>%
+  summarize(PhotoURL = paste(PhotoURL, collapse = ", ")) %>%
   select(PlantFK, PhotoURL)
 
-# full_join userIdentifiedBranches, allbranchesWithPhotos
-
-
-
-
-JoinedBranches <- anti_join(allbranchesWithPhotos, branchesWithPhotos, by = c('PlantFK', 'Name', 'Region', 'PlantSpecies', 'Notes.x', 'PhotoURL'))
-write.csv(JoinedBranches, "PlantsToIdentify/JoinedBranches.csv")
-
 # In Excel, look at the PhotoURL and paste it after https://caterpillarscount.unc.edu/images/arthropods/
-# Try to ID plants based off of photos and add to InferredName in ratedUserIdentifiedBranches.csv
-# Joining the two datasets back together (for easier flow should just use allBranches...)
-IDBranchesWithPhotos <- read.csv(file = 'PlantsToIdentify/branchesWithPhotos.csv')
-IDJoinedBranches <-read.csv(file = 'PlantsToIdentify/JoinedBranches.csv')
+# Joining userIdentifiedBranches.csv and allBranchesWithPhotos.csv to compile a doc with
+# the names suggested by users and plants identified by photos and add to fullUserIdentifiedBranches.csv
+JoinedDoc <- full_join(fullUserIdentifiedBranches, allBranchesWithPhotos, by = c('PlantFK'))
+write.csv(JoinedDoc, "PlantsToIdentify/JoinedDoc.csv")
 
-PhotosWithAllBranches <- rbind(IDJoinedBranches, IDBranchesWithPhotos) %>%
-  rename("Notes" = "Notes.x")
-
-#Joining PhotosWithAllBranches (photos) to ratedUserIdentifiedBranches (consistency)
-
-ratedUserIdentifiedBranches %>%
-  filter(!PlantFK %in% PhotosWithAllBranches$PlantFK)
-#possibly rbind for below but have to get 3 other columns involved
-UserRatedAndPhotoExaminedBranches <- bind_rows(PhotosWithAllBranches, ratedUserIdentifiedBranches)
-
-#number of values definitely changes so that's not good, fix that : Name.y, PlantSpecies.y, etc blank)
+# Joining the previously unidentified photos to the fullDataset
 JoinedPhotoAndOccurrenceToFull <- fullDataset %>%
-  left_join(UserRatedAndPhotoExaminedBranches, by = 'PlantFK') %>%
+  left_join(fullUserIdentifiedBranches, by = 'PlantFK') %>%
   mutate(InferredName = ifelse(is.na(InferredName), Species, InferredName)) %>%
-  left_join(officialPlantList, by = c("InferredName" = "cleanedPlantName"))
-
+  left_join(officialPlantList, by = c("InferredName" = "cleanedPlantName")) %>%
+  arrange(desc(NameConfidence))
+  
 write.csv(JoinedPhotoAndOccurrenceToFull, "PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv")
 
-#use this to ensure that the number of rows is not changing while joining the differnet files above
-length(unique(JoinedPhotoAndOccurrenceToFull$PlantFK))
+# use this to ensure that the number of rows is not changing while joining the differnet files above
+#length(unique(JoinedPhotoAndOccurrenceToFull$PlantFK))
