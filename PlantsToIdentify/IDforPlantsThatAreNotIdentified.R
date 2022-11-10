@@ -33,6 +33,9 @@ unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
 # Filtering surveys to find where PlantSpecies has a name entered by a user
 # and comparing to where Species has not been identified
 # (one row per PlantFK)
+#say you rerun this again bc new plants were added: filter so only new species are running through
+#then rbind it back to the older dataset?
+# filter !%in% older version of JoinedPhotos
 userIdentifiedBranches <- surveys %>%
   filter(!PlantSpecies %in% c("N/A","","Hello","Dvt","Dvz","Dvt","N/a","Tree","Unknown","Unknown, will take picture")) %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
@@ -41,9 +44,10 @@ userIdentifiedBranches <- surveys %>%
   group_by(PlantFK) %>%
   summarize(PlantSpecies = paste(PlantSpecies, collapse = ", ")) %>%
   mutate(InferredName = NA, 
-         NameConfidence = NA)
+         NameConfidence = NA) %>%
+#  filter(!#new# JoinedPhotoAndOccurrenceToFull$PlantFK %in% #old# JoinedPhotoAndOccurrenceToFull )
 
-write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv")
+write.csv(userIdentifiedBranches, "PlantsToIdentify/ModifiedUserIdentifiedBranches.csv")
 
 # In Excel, fill in the inferred name if there's agreement and confidence rating
 # Giving a confidence rating for the most agreed upon name given by users 
@@ -54,7 +58,7 @@ write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv")
 #ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv') 
 
 # Trying to ID photos based off of user suggestions (confidence rating) and photo ID
-fullUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv') %>%
+fullUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/ModifiedUserIdentifiedBranches.csv') %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
   left_join(surveys, by = c('PlantFK', 'PlantSpecies')) %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
@@ -85,7 +89,7 @@ JoinedPhotoAndOccurrenceToFull <- fullDataset %>%
   mutate(InferredName = ifelse(is.na(InferredName), Species, InferredName)) %>%
   left_join(officialPlantList, by = c("InferredName" = "cleanedPlantName")) %>%
   arrange(desc(NameConfidence))
-  
+#maybe save with SysDate  
 write.csv(JoinedPhotoAndOccurrenceToFull, "PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv")
 
 # use this to ensure that the number of rows is not changing while joining the differnet files above
