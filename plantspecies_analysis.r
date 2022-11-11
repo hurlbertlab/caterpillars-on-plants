@@ -7,14 +7,15 @@ library(maps)
 library(sp)
 library(maptools)
 
-#Added bc "mutate_cond" is not a built-in function
+# Added because "mutate_cond" is not a built-in function
 mutate_cond <- function(.data, condition,...,envir=parent.frame()){
   condition <- eval(substitute(condition),.data,envir)
   .data[condition,] <- .data[condition,] %>% mutate(...)
   .data
 }
 
-#Looking at meanDensity, meanBiomass, and fracSurveys of caterpillars in different plant families over the course of the citizen science dataset from June to July
+# Looking at meanDensity, meanBiomass, and fracSurveys of caterpillars in different plant families 
+# over the course of the citizen science dataset from June to July
 meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
                              ordersToInclude = 'All',       # or 'caterpillar'
                              minLength = 0,         # minimum arthropod size to include 
@@ -59,14 +60,10 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
   return(arthCount)
 }
 
-
-# cleanDataset = read.csv('../caterpillars-count-da/dataCleaning/flagged_dataset_2022-01-27.csv') %>%
-#  filter(status != "remove")
 cleanDataset = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
-  mutate(Genus = word(sciName, 1))
-#  filter(status != "remove")
-#statu not in these 
-  
+  mutate(Genus = word(sciName, 1)) 
+
+# Finding the caterpillars surveyed in the months of June and July  
 plantCountJuneJuly = cleanDataset %>%
   filter(julianday >= 152, julianday <= 252) %>% #change range of days 
   distinct(ID, Species) %>%
@@ -78,58 +75,38 @@ SurveyedCertainAmount = cleanDataset %>%
   filter(Species %in% plantCountJuneJuly$Species[plantCountJuneJuly$n >= 10])
 
 # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
-
 onlyCaterpillars = meanDensityBySpecies(SurveyedCertainAmount, ordersToInclude = "caterpillar")
 
+###don't know why this is being written, if it's needed
 write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
-#Joining so the "Species" column becomes associated with a sciName
-# I don't think I still need this...11/10/2022
-#caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv')
-
-#plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
-#  select(-X)
-
-#cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species') 
-
+### I'm not sure WHY i'm doing this 
 SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = 'Species')
-
-#cleaned.new <- cleaned %>%
-#  mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
 
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
 # This helps obtain the families that should be analyzed (those with native, introduced species)
 tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
   mutate(Family = trimws(Family..as.listed.by.USDA.))
 
+# finding the plant families that are alien
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
 
 clean_and_tallamy <- left_join(SurveyWithCaterpillar, tallamy, by = 'Genus') %>%
   select(Species:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
-#finding Families that are in both native and alien categories?  
+###finding Families that are in both native and alien categories?  
   filter(Family %in% alien_families) %>%
   arrange(Family, origin)
 
 
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
-nativeData = filter(clean_and_tallamy, origin == 'native')
-UniqueNativeData = unique(nativeData) %>% 
-  group_by(Family) %>%
-  summarize(Family = paste(Family, collapse = ", "))
+### is giving all the entries.. is this right
+
+nativeData = filter(clean_and_tallamy, origin == 'native') 
+#nativeData <- distinct(nativeData)
 
 alienData = filter(clean_and_tallamy, origin == 'alien')
-UniqueAlienData = unique(alienData) %>% 
-  group_by(Family) %>%
-  summarize(Family = paste(Family, collapse = ", "))
-
-# To look at the families that have both alien and native species
-#alienData = filter(clean_and_tallamy, origin == 'alien') %>% 
-#  select(Family)
-#unique(alienData$Family)
-#nativeData = filter(clean_and_tallamy, origin == 'native') %>% 
-#  select(Family)
-#unique(nativeData$Family)
+#alienData <- distinct(alienData)
 
 
 # A pdf with graphs depicting density, biomass, % surveyed
