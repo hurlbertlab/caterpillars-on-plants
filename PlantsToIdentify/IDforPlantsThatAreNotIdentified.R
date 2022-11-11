@@ -33,9 +33,8 @@ unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
 # Filtering surveys to find where PlantSpecies has a name entered by a user
 # and comparing to where Species has not been identified
 # (one row per PlantFK)
-#say you rerun this again bc new plants were added: filter so only new species are running through
-#then rbind it back to the older dataset?
-# filter !%in% older version of JoinedPhotos
+
+
 userIdentifiedBranches <- surveys %>%
   filter(!PlantSpecies %in% c("N/A","","Hello","Dvt","Dvz","Dvt","N/a","Tree","Unknown","Unknown, will take picture")) %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
@@ -44,21 +43,28 @@ userIdentifiedBranches <- surveys %>%
   group_by(PlantFK) %>%
   summarize(PlantSpecies = paste(PlantSpecies, collapse = ", ")) %>%
   mutate(InferredName = NA, 
-         NameConfidence = NA) %>%
-#  filter(!#new# JoinedPhotoAndOccurrenceToFull$PlantFK %in% #old# JoinedPhotoAndOccurrenceToFull )
+         NameConfidence = NA)
 
-write.csv(userIdentifiedBranches, "PlantsToIdentify/ModifiedUserIdentifiedBranches.csv")
+write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv", row.names = F)
 
+#This would be where you start everytime with a new list: 
 # In Excel, fill in the inferred name if there's agreement and confidence rating
 # Giving a confidence rating for the most agreed upon name given by users 
 # 1 is the least confident meaning disagreement, 2 means only one name ever entered,
 # 3 is the most confident with all entries agreeing multiple times)
-# Save a new version of the file with InferredName and NameConfidence (and Notes) values where appropriate
+# Save a new version of the file with InferredName and NameConfidence where appropriate in Excel as:
 
-#ratedUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/userIdentifiedBranches.csv') 
+ModifiedUserIdentifiedBranches = read.csv(file = 'PlantsToIdentify/ModifiedUserIdentifiedBranches.csv')
+
+filteredNewPlantFKs <- read.csv(file = 'PlantsToIdentify/ModifiedUserIdentifiedBranches.csv') %>%
+  filter(!PlantFK %in% userIdentifiedBranches$PlantFK) 
+  
+# Then, if there are new entries, go back to Excel and fill in InferredName and NameConfidence 
+# possibly even run through allBranchesWithPhotos ??
+ModifiedUserIdentifiedBranches = rbind(ModifiedUserIdentifiedBranches, filteredNewPlantFKs)
 
 # Trying to ID photos based off of user suggestions (confidence rating) and photo ID
-fullUserIdentifiedBranches <- read.csv(file = 'PlantsToIdentify/ModifiedUserIdentifiedBranches.csv') %>%
+fullUserIdentifiedBranches <- ModifiedUserIdentifiedBranches %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
   left_join(surveys, by = c('PlantFK', 'PlantSpecies')) %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
@@ -87,8 +93,7 @@ write.csv(JoinedDoc, "PlantsToIdentify/JoinedDoc.csv")
 JoinedPhotoAndOccurrenceToFull <- fullDataset %>%
   left_join(fullUserIdentifiedBranches, by = c('PlantFK', 'Name', 'Region')) %>%
   mutate(InferredName = ifelse(is.na(InferredName), Species, InferredName)) %>%
-  left_join(officialPlantList, by = c("InferredName" = "cleanedPlantName")) %>%
-  arrange(desc(NameConfidence))
+  left_join(officialPlantList, by = c("InferredName" = "userPlantName")) 
 #maybe save with SysDate  
 write.csv(JoinedPhotoAndOccurrenceToFull, "PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv")
 

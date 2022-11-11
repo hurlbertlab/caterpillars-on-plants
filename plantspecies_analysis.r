@@ -60,9 +60,10 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
 }
 
 
-#cleanDataset = read.csv('../caterpillars-count-da/dataCleaning/flagged_dataset_2022-01-27.csv') %>%
+# cleanDataset = read.csv('../caterpillars-count-da/dataCleaning/flagged_dataset_2022-01-27.csv') %>%
 #  filter(status != "remove")
-cleanDataset = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv')
+cleanDataset = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
+  mutate(Genus = word(sciName, 1))
 #  filter(status != "remove")
 #statu not in these 
   
@@ -73,41 +74,65 @@ plantCountJuneJuly = cleanDataset %>%
   arrange(desc(n))
 
 # Specifies that only plant species that were surveyed at least 10x in June and July were included
-filteredData = cleanDataset %>%
+SurveyedCertainAmount = cleanDataset %>%
   filter(Species %in% plantCountJuneJuly$Species[plantCountJuneJuly$n >= 10])
 
 # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
-caterpillar_unclean = meanDensityBySpecies(filteredData, ordersToInclude = "caterpillar")
 
-write.csv(caterpillar_unclean, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
+onlyCaterpillars = meanDensityBySpecies(SurveyedCertainAmount, ordersToInclude = "caterpillar")
+
+write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
 #Joining so the "Species" column becomes associated with a sciName
-caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv')
+# I don't think I still need this...11/10/2022
+#caterpillar_unclean = read.csv('data/Plant Analysis/caterpillar_plantanalysis.csv')
 
-plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
-  select(-X)
+#plants_clean = read.csv('data/Plant Analysis/plantList_rerun.csv') %>%
+#  select(-X)
 
-cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species') 
-cleaned.new <- cleaned %>%
-  mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
+#cleaned <- left_join(caterpillar_unclean, plants_clean, by= 'Species') 
 
+SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = 'Species')
+
+#cleaned.new <- cleaned %>%
+#  mutate(Genus = word(cleaned$sciName, 1)) #Created a column with just "Genus" in order to add to "tallamy_shrop...csv"
+
+# Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
+# This helps obtain the families that should be analyzed (those with native, introduced species)
 tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
   mutate(Family = trimws(Family..as.listed.by.USDA.))
 
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
 
-clean_and_tallamy <- left_join(cleaned.new, tallamy, by = 'Genus') %>%
-  select(Species:Genus,Family, origin..for.analysis., total.Lep.spp) %>%
+clean_and_tallamy <- left_join(SurveyWithCaterpillar, tallamy, by = 'Genus') %>%
+  select(Species:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
+#finding Families that are in both native and alien categories?  
   filter(Family %in% alien_families) %>%
   arrange(Family, origin)
 
 
-
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
 nativeData = filter(clean_and_tallamy, origin == 'native')
-alienData = filter(clean_and_tallamy, origin == 'alien')
+UniqueNativeData = unique(nativeData) %>% 
+  group_by(Family) %>%
+  summarize(Family = paste(Family, collapse = ", "))
 
+alienData = filter(clean_and_tallamy, origin == 'alien')
+UniqueAlienData = unique(alienData) %>% 
+  group_by(Family) %>%
+  summarize(Family = paste(Family, collapse = ", "))
+
+# To look at the families that have both alien and native species
+#alienData = filter(clean_and_tallamy, origin == 'alien') %>% 
+#  select(Family)
+#unique(alienData$Family)
+#nativeData = filter(clean_and_tallamy, origin == 'native') %>% 
+#  select(Family)
+#unique(nativeData$Family)
+
+
+# A pdf with graphs depicting density, biomass, % surveyed
 pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/allSpecies.pdf",
     width = 15, height = 5)
 par(mfrow = c(1, 3), mar = c(5, 5, 2, 1))
@@ -336,6 +361,7 @@ pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpilla
 n <- grep("native", clean_and_tallamy$origin)
 a <- grep("alien", clean_and_tallamy$origin)
 total <- grep("native|alien", clean_and_tallamy$origin)
+
 
 length(n)
 length(a)
