@@ -80,8 +80,9 @@ onlyCaterpillars = meanDensityBySpecies(SurveyedCertainAmount, ordersToInclude =
 ###don't know why this is being written, if it's needed
 write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
-### I'm not sure WHY i'm doing this 
-SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = 'Species')
+### I'm not sure WHY i'm doing this -- adding col from onlycaterpillars to surveycertainamount
+SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = c('cleanedPlantName' = 'Species')) %>%
+  select(!c( )
 
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
 # This helps obtain the families that should be analyzed (those with native, introduced species)
