@@ -75,7 +75,9 @@ SurveyedCertainAmount = cleanDataset %>%
   filter(Species %in% plantCountJuneJuly$Species[plantCountJuneJuly$n >= 10])
 
 # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
-onlyCaterpillars = meanDensityBySpecies(SurveyedCertainAmount, ordersToInclude = "caterpillar")
+onlyCaterpillars = meanDensityBySpecies(SurveyedCertainAmount, ordersToInclude = "caterpillar") %>%
+  left_join(SurveyedCertainAmount, by = "Species") %>%
+  select(Species, sciName, totalCount, numSurveysGTzero, totalBiomass, nSurveys, meanDensity, fracSurveys, meanBiomass)
 
 ###don't know why this is being written, if it's needed
 write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
