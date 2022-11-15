@@ -82,7 +82,7 @@ write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv',
 
 ### I'm not sure WHY i'm doing this -- adding col from onlycaterpillars to surveycertainamount
 SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = c('cleanedPlantName' = 'Species')) %>%
-  select(!c( )
+#  distinct(Species, Genus, totalCount, numSurveysGTzero, totalBiomass, nSurveys, meanDensity, fracSurveys, meanBiomass, sciName)
 
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
 # This helps obtain the families that should be analyzed (those with native, introduced species)
@@ -99,14 +99,15 @@ clean_and_tallamy <- left_join(SurveyWithCaterpillar, tallamy, by = 'Genus') %>%
   filter(Family %in% alien_families) %>%
   arrange(Family, origin)
 
-
+# There's a way to do this easier: Look at SurveyWithCaterpillar and I think this join is where col are repeating
+# Bc there's a smaller number of col in onlyCaterpillars
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
 ### is giving all the entries.. is this right
 
-nativeData = filter(clean_and_tallamy, origin == 'native') 
+nativeData = filter(uniqueTallamy, origin == 'native') 
 #nativeData <- distinct(nativeData)
 
-alienData = filter(clean_and_tallamy, origin == 'alien')
+alienData = filter(uniqueTallamy, origin == 'alien')
 #alienData <- distinct(alienData)
 
 
@@ -119,7 +120,7 @@ t.test(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.00
 boxplot(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.001), 
         xaxt = 'n', las = 1, main = "All species", width = c(0.5, 0.5), ylab = "log(Density)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 90", "N = 12"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 449", "N = 49"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[1], xpd=NA, side=1, adj=0, font=2, cex=0.75)
 text(2, 0.34, "p = 0.015")
 
@@ -128,7 +129,7 @@ t.test(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.00
 boxplot(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.001), 
         xaxt = 'n', las = 1, main = "All species", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 90", "N = 12"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 449", "N = 49"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[2], xpd=NA, side=1, adj=0, font=2, cex=0.75)
 text(2, 1.8, "p = 0.100")
 
@@ -137,7 +138,7 @@ t.test(nativeData$fracSurveys, alienData$fracSurveys)
 boxplot(nativeData$fracSurveys, alienData$fracSurveys, 
         xaxt = 'n', las = 1, main = "All species", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 90", "N = 12"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 449", "N = 49"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[3], xpd=NA, side=1, adj=0, font=2, cex=0.75)
 text(2, 50, "p = 0.008")
 
