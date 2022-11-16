@@ -103,7 +103,8 @@ clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
 ###finding Families that are in both native and alien categories?  
   filter(Family %in% alien_families) %>%
-  arrange(Family, origin)
+  arrange(Family, origin) #%>%
+#  duplicate()
 
 # There's a way to do this easier: Look at SurveyWithCaterpillar and I think this join is where col are repeating
 # Bc there's a smaller number of col in onlyCaterpillars
@@ -126,7 +127,7 @@ boxplot(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.0
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[1], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 0.34, "p = 0.015")
+text(2, 0.34, "p = 2.2e-16")
 
 
 t.test(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.001))
@@ -135,7 +136,7 @@ boxplot(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.0
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[2], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 1.8, "p = 0.100")
+text(2, 1.8, "p = 2.2e-16")
 
 
 t.test(nativeData$fracSurveys, alienData$fracSurveys)
@@ -144,7 +145,7 @@ boxplot(nativeData$fracSurveys, alienData$fracSurveys,
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[3], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 50, "p = 0.008")
+text(2, 50, "p = 2.2e-16")
 
 dev.off()
 
@@ -162,24 +163,24 @@ t.test(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensit
 boxplot(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001), 
         xaxt = 'n', las = 1, main = "Rosaceae", boxwex = 0.5, ylab = "log(Density)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 27", "N = 2"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 11539", "N = 266"), 1, at = 1:2, line = 2, cex = 0.75)
 mtext(text=LETTERS[1], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 0.3, "p = 0.624")
+text(2, 0.3, "p = 2.2e-16")
 
 
 t.test(log10(rosaceaeNative$meanBiomass + 0.001), log10(rosaceaeAlien$meanBiomass + 0.001))
 boxplot(log10(rosaceaeNative$meanBiomass + 0.001), log10(rosaceaeAlien$meanBiomass + 0.001), 
         xaxt = 'n', las = 1, main = "Rosaceae", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 27", "N = 2"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 0.3, "p = 0.887")
+mtext(c("N = 11539", "N = 266"), 1, at = 1:2, line = 2, cex = 0.75)
+text(2, 0.3, "p = 2.2e-16")
 
 
 t.test(rosaceaeNative$fracSurveys, rosaceaeAlien$fracSurveys)
 boxplot(rosaceaeNative$fracSurveys, rosaceaeAlien$fracSurveys, 
         xaxt = 'n', las = 1, main = "Rosaceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 27", "N = 2"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 11539", "N = 266"), 1, at = 1:2, line = 2, cex = 0.75)
 text(2, 45, "p = 0.055")
 
 
