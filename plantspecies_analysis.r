@@ -16,7 +16,7 @@ mutate_cond <- function(.data, condition,...,envir=parent.frame()){
 
 # Looking at meanDensity, meanBiomass, and fracSurveys of caterpillars in different plant families 
 # over the course of the citizen science dataset from June to July
-meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
+meanDensityBySciName = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
                              ordersToInclude = 'All',       # or 'caterpillar'
                              minLength = 0,         # minimum arthropod size to include 
                              jdRange = c(152, 212), #change range of days
@@ -36,54 +36,57 @@ meanDensityBySpecies = function(surveyData, # merged dataframe of Survey and art
     filter(julianday >= jdRange[1], julianday <= jdRange[2]) %>% #subscription notation
     mutate(julianweek = 7*floor(julianday/7) + 4)
   
-  effortBySpecies = firstFilter %>%
-    group_by(Species) %>% 
+  effortBySciName = firstFilter %>%
+    group_by(sciName) %>% 
     summarize(nSurveys = n_distinct(ID))
   
   arthCount = firstFilter %>%
     filter(Length >= minLength, 
            Group %in% ordersToInclude) %>%
     mutate(Quantity2 = ifelse(Quantity > outlierCount, 1, Quantity)) %>% #outlier counts replaced with 1
-    group_by(Species) %>%
+    group_by(sciName) %>%
     summarize(totalCount = sum(Quantity2, na.rm = TRUE),
               numSurveysGTzero = length(unique(ID[Quantity > 0])),
               totalBiomass = sum(Biomass_mg, na.rm = TRUE)) %>% 
-    right_join(effortBySpecies, by = 'Species') %>%
+    right_join(effortBySciName, by = 'sciName') %>%
     #next line replaces 3 fields with 0 if the totalCount is NA
     mutate_cond(is.na(totalCount), totalCount = 0, numSurveysGTzero = 0, totalBiomass = 0) %>%
     mutate(meanDensity = totalCount/nSurveys,
            fracSurveys = 100*numSurveysGTzero/nSurveys,
            meanBiomass = totalBiomass/nSurveys) %>%
-    arrange(Species) %>%
+    arrange(sciName) %>%
     data.frame()
   
   return(arthCount)
 }
 
-cleanDataset = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
-  mutate(Genus = word(sciName, 1)) 
+cleanDataset = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) 
 
 # Finding the caterpillars surveyed in the months of June and July  
 plantCountJuneJuly = cleanDataset %>%
   filter(julianday >= 152, julianday <= 252) %>% #change range of days 
-  distinct(ID, Species) %>%
-  count(Species) %>%
+  distinct(ID, sciName) %>%
+  count(sciName) %>%
   arrange(desc(n))
 
 # Specifies that only plant species that were surveyed at least 10x in June and July were included
 SurveyedCertainAmount = cleanDataset %>%
-  filter(Species %in% plantCountJuneJuly$Species[plantCountJuneJuly$n >= 10])
+  filter(sciName %in% plantCountJuneJuly$sciName[plantCountJuneJuly$n >= 10])
 
 # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
-onlyCaterpillars = meanDensityBySpecies(SurveyedCertainAmount, ordersToInclude = "caterpillar") %>%
-  left_join(SurveyedCertainAmount, by = "Species") %>%
-  select(Species, sciName, totalCount, numSurveysGTzero, totalBiomass, nSurveys, meanDensity, fracSurveys, meanBiomass)
+onlyCaterpillars = meanDensityBySciName(SurveyedCertainAmount, ordersToInclude = "caterpillar") %>%
+  left_join(SurveyedCertainAmount, by = c('sciName')) %>%
+  mutate(Genus = word(sciName, 1)) %>%
+  select(sciName, Genus, Species, totalCount, numSurveysGTzero, totalBiomass, nSurveys, meanDensity, fracSurveys, meanBiomass)
+  
 
 ###don't know why this is being written, if it's needed
-write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
+#write.csv(onlyCaterpillars, 'data/Plant Analysis/caterpillar_plantanalysis.csv', row.names = F)
 
 ### I'm not sure WHY i'm doing this -- adding col from onlycaterpillars to surveycertainamount
-SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = c('cleanedPlantName' = 'Species')) %>%
+## if using sciName in place of Species then i don't believe this step is needed bc when it's run
+## more columns are added by row numbers don't change between SurveyedCertainAmount and onlyCaterpillars
+#SurveyWithCaterpillar <- left_join(SurveyedCertainAmount, onlyCaterpillars, by = c('sciName')) %>%
 #  distinct(Species, Genus, totalCount, numSurveysGTzero, totalBiomass, nSurveys, meanDensity, fracSurveys, meanBiomass, sciName)
 
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
@@ -94,7 +97,8 @@ tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv
 # finding the plant families that are alien
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
 
-clean_and_tallamy <- left_join(SurveyWithCaterpillar, tallamy, by = 'Genus') %>%
+# left_join SurveyWithCaterpillar before
+clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
   select(Species:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
 ###finding Families that are in both native and alien categories?  
@@ -105,12 +109,10 @@ clean_and_tallamy <- left_join(SurveyWithCaterpillar, tallamy, by = 'Genus') %>%
 # Bc there's a smaller number of col in onlyCaterpillars
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
 ### is giving all the entries.. is this right
+#where was uniqueTallamy done originally
+nativeData = filter(clean_and_tallamy, origin == 'native') 
 
-nativeData = filter(uniqueTallamy, origin == 'native') 
-#nativeData <- distinct(nativeData)
-
-alienData = filter(uniqueTallamy, origin == 'alien')
-#alienData <- distinct(alienData)
+alienData = filter(clean_and_tallamy, origin == 'alien')
 
 
 # A pdf with graphs depicting density, biomass, % surveyed
@@ -122,7 +124,7 @@ t.test(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.00
 boxplot(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.001), 
         xaxt = 'n', las = 1, main = "All species", width = c(0.5, 0.5), ylab = "log(Density)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 449", "N = 49"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[1], xpd=NA, side=1, adj=0, font=2, cex=0.75)
 text(2, 0.34, "p = 0.015")
 
@@ -131,7 +133,7 @@ t.test(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.00
 boxplot(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.001), 
         xaxt = 'n', las = 1, main = "All species", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 449", "N = 49"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[2], xpd=NA, side=1, adj=0, font=2, cex=0.75)
 text(2, 1.8, "p = 0.100")
 
@@ -140,7 +142,7 @@ t.test(nativeData$fracSurveys, alienData$fracSurveys)
 boxplot(nativeData$fracSurveys, alienData$fracSurveys, 
         xaxt = 'n', las = 1, main = "All species", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-mtext(c("N = 449", "N = 49"), 1, at = 1:2, line = 2, cex = 0.75)
+mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[3], xpd=NA, side=1, adj=0, font=2, cex=0.75)
 text(2, 50, "p = 0.008")
 
