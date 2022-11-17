@@ -127,7 +127,7 @@ boxplot(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.0
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[1], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 0.34, "p = 2.2e-16")
+text(2, 0.34, "p = 1.80-14")
 
 
 t.test(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.001))
@@ -136,7 +136,7 @@ boxplot(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.0
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[2], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 1.8, "p = 2.2e-16")
+text(2, 1.8, "p = 2.31e-08")
 
 
 t.test(nativeData$fracSurveys, alienData$fracSurveys)
@@ -145,7 +145,7 @@ boxplot(nativeData$fracSurveys, alienData$fracSurveys,
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 28062", "N = 1523"), 1, at = 1:2, line = 2, cex = 0.75)
 #mtext(text=LETTERS[3], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 50, "p = 2.2e-16")
+text(2, 50, "p = 4.24e-11")
 
 dev.off()
 
@@ -181,7 +181,7 @@ boxplot(rosaceaeNative$fracSurveys, rosaceaeAlien$fracSurveys,
         xaxt = 'n', las = 1, main = "Rosaceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 11539", "N = 266"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 45, "p = 0.055")
+text(2, 45, "p = 2.2e-16")
 
 
 #Ericaceae family comparison of meanDensity, meanBiomass, and fracSurveys
@@ -194,7 +194,7 @@ boxplot(log10(ericaceaeNative$meanDensity + 0.001), log10(ericaceaeAlien$meanDen
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 14", "N = 1"), 1, at = 1:2, line = 2, cex = 0.75)
 mtext(text=LETTERS[2], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-#text(2, 0.3, "p = ")
+#text(2, 0.3, "p = 2.2e-16")
 
 
 t.test(log10(ericaceaeNative$meanBiomass + 0.001), log10(ericaceaeAlien$meanBiomass + 0.001))
@@ -202,7 +202,7 @@ boxplot(log10(ericaceaeNative$meanBiomass + 0.001), log10(ericaceaeAlien$meanBio
         xaxt = 'n', las = 1, main = "Ericaceae", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 14", "N = 1"), 1, at = 1:2, line = 2, cex = 0.75)
-#text(2, 0.3, "p = ")
+#text(2, 0.3, "p = 2.2e-16")
 
 
 t.test(ericaceaeNative$fracSurveys, ericaceaeAlien$fracSurveys)
@@ -210,7 +210,7 @@ boxplot(ericaceaeNative$fracSurveys, ericaceaeAlien$fracSurveys,
         xaxt = 'n', las = 1, main = "Ericaceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 14", "N = 1"), 1, at = 1:2, line = 2, cex = 0.75)
-#text(2, 0.3, "p = ")
+#text(2, 0.3, "p = 2.2e-16")
 
 
 
@@ -224,7 +224,7 @@ boxplot(log10(moraceaeNative$meanDensity + 0.001), log10(moraceaeAlien$meanDensi
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 3", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
 mtext(text=LETTERS[3], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-#text(2, 0.3, "p = ")
+#text(2, 0.3, "p = 2.2e-16")
 
 
 t.test(log10(moraceaeNative$meanBiomass + 0.001), log10(moraceaeAlien$meanBiomass + 0.001))
@@ -232,7 +232,7 @@ boxplot(log10(moraceaeNative$meanBiomass + 0.001), log10(moraceaeAlien$meanBioma
         xaxt = 'n', las = 1, main = "Moraceae", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 3", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
-#text(2, 0.3, "p = ")
+#text(2, 0.3, "p = 2.2e-16")
 
 
 t.test(moraceaeNative$fracSurveys, moraceaeAlien$fracSurveys)
@@ -240,7 +240,7 @@ boxplot(moraceaeNative$fracSurveys, moraceaeAlien$fracSurveys,
         xaxt = 'n', las = 1, main = "Moraceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 3", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
-#text(2, 0.3, "p = ")
+#text(2, 0.3, "p = 2.2e-16")
 
 
 
@@ -255,7 +255,7 @@ mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 6", "N = 2"), 1, at = 1:2, line = 2, cex = 0.75)
 mtext(c("p = 0.291"), 1, at = 1, line = 0.05, cex = 0.5)
 mtext(text=LETTERS[4], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-#text(x=1, y=1, labels="p = 0.006", cex =5)
+#text(x=1, y=1, labels="p = 2.2e-16", cex =5)
 #it's there but won't move down ####
 
 t.test(log10(oleaceaeNative$meanBiomass + 0.001), log10(oleaceaeAlien$meanBiomass + 0.001))
@@ -263,7 +263,7 @@ boxplot(log10(oleaceaeNative$meanBiomass + 0.001), log10(oleaceaeAlien$meanBioma
         xaxt = 'n', las = 1, main = "Oleaceae", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 6", "N = 2"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 0.3, "p = 0.399")
+text(2, 0.3, "p = 3.26e-06")
 
 
 t.test(oleaceaeNative$fracSurveys, oleaceaeAlien$fracSurveys)
@@ -271,7 +271,7 @@ boxplot(oleaceaeNative$fracSurveys, oleaceaeAlien$fracSurveys,
         xaxt = 'n', las = 1, main = "Oleaceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 6", "N = 2"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 15, "p = 0.088")
+text(2, 15, "p = 9.85e-12")
 
 
 ####
@@ -293,7 +293,7 @@ boxplot(log10(berberidaceaeNative$meanBiomass + 0.001), log10(berberidaceaeAlien
         xaxt = 'n', las = 1, main = "Berberidaceae", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 5", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 0.3, "p = ")
+text(2, 0.3, "p = constant")
 
 
 t.test(berberidaceaeNative$fracSurveys, berberidaceaeAlien$fracSurveys)
@@ -301,7 +301,7 @@ boxplot(berberidaceaeNative$fracSurveys, berberidaceaeAlien$fracSurveys,
         xaxt = 'n', las = 1, main = "Berberidaceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 5", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 5.8, "p = ")
+text(2, 5.8, "p = constant")
 
 #Theaceae family comparison of meanDensity, meanBiomass, and fracSurveys
 theaceaeNative = filter(clean_and_tallamy, Family == "Theaceae", origin == "native")
@@ -313,7 +313,7 @@ boxplot(log10(theaceaeNative$meanDensity + 0.001), log10(theaceaeAlien$meanDensi
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 5", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
 mtext(text=LETTERS[5], xpd=NA, side=1, adj=0, font=2, cex=0.75)
-text(2, 0.0099, "p = ")
+text(2, 0.0099, "p = constant")
 
 
 t.test(log10(theaceaeNative$meanBiomass + 0.001), log10(theaceaeAlien$meanBiomass + 0.001))
@@ -321,7 +321,7 @@ boxplot(log10(theaceaeNative$meanBiomass + 0.001), log10(theaceaeAlien$meanBioma
         xaxt = 'n', las = 1, main = "Theaceae", boxwex = 0.5, ylab = "log(Biomass)", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 5", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 0.3, "p = ")
+text(2, 0.3, "p = constant")
 
 
 t.test(theaceaeNative$fracSurveys, theaceaeAlien$fracSurveys)
@@ -329,7 +329,7 @@ boxplot(theaceaeNative$fracSurveys, theaceaeAlien$fracSurveys,
         xaxt = 'n', las = 1, main = "Theaceae", boxwex = 0.5, ylab = "% of Surveys", col = c("burlywood", "rosybrown"))
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 5", "N = 0"), 1, at = 1:2, line = 2, cex = 0.75)
-text(2, 5.8, "p = ")
+text(2, 5.8, "p = constant")
 
 
 dev.off()
@@ -340,7 +340,7 @@ pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpilla
 par(mfrow = c(2, 2), mar = c(5,5,2,1))
 
 plot(clean_and_tallamy$lepS, clean_and_tallamy$meanDensity, xlab = "Lepidoptera per survey", ylab = "Density", pch = 16, main ="Mean Density")
-text(140, 2.60, "R2 = 0.028, p = 0.094")
+text(140, 2.60, "R2 = 8.64e-06, p = 0.613")
 #mtext(text=LETTERS[1], xpd=NA, side=3, adj=0, font=2)
 lm.density = lm(meanDensity ~ lepS, data = clean_and_tallamy)
 summary(lm.density)
@@ -356,7 +356,7 @@ abline(lm.biomass)
 
 
 plot(clean_and_tallamy$lepS, clean_and_tallamy$fracSurveys, xlab = "Lepidoptera per survey", ylab = "Lepidoptera Richness", pch = 16, main ="% of Surveys")
-text(140, 50, "R2 = 0.053, p = 0.020", cex = 0.85)
+text(140, 50, "R2 = 0.105, p = 2.2e-16", cex = 0.85)
 #mtext(text=LETTERS[3], xpd=NA, side=3, adj=0, font=2)
 lm.surveys = lm(fracSurveys ~ lepS, data = clean_and_tallamy)
 summary(lm.surveys)
