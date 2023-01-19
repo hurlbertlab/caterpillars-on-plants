@@ -5,14 +5,18 @@ library(gsheet)
 library(gridExtra)
 library(maps)
 library(sp)
+#maptools is going to expire; do i need this?
 library(maptools)
 
+arth_plant_comp <- function(arthgroup, plantfam){
+  
 # Added because "mutate_cond" is not a built-in function
 mutate_cond <- function(.data, condition,...,envir=parent.frame()){
   condition <- eval(substitute(condition),.data,envir)
   .data[condition,] <- .data[condition,] %>% mutate(...)
   .data
 }
+
 
 # Looking at meanDensity, meanBiomass, and fracSurveys of caterpillars in different plant families 
 # over the course of the citizen science dataset from June to July
@@ -60,6 +64,8 @@ meanDensityBySciName = function(surveyData, # merged dataframe of Survey and art
   return(arthCount)
 }
 
+#Trying to add this into a function
+ 
 cleanDataset = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) 
 cleanDataset$sciName = gsub("\xa0", " ", cleanDataset$sciName)
 
@@ -93,8 +99,12 @@ clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
 ###finding Families that are in both native and alien categories?  
   filter(Family %in% alien_families) %>%
-  arrange(Family, origin) #%>%
-
+  arrange(Family, origin) 
+#need to be able to chose what family you want to see
+plantfam <- clean_and_tallamy$Family
+cbind(arthgroup, plantfam)
+}
+#############
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
 ### is giving all the entries.. is this right
 nativeData = filter(clean_and_tallamy, origin == 'native') 
@@ -361,4 +371,12 @@ grid.table(summary_table)
 t(summary_table)
 
 dev.off()
+
+#The 'all' is not there
+arthplant = function(arth, plant) {   
+  if(length(arth)==1 & arth[1]=='All')
+    {arth = cleanDataset$Group} 
+  if(length(plant) ==1 & plant[1] == 'All') {plant = clean_and_tallamy$Family}
+  }
+
 
