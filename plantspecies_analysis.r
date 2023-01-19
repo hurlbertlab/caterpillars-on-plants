@@ -8,8 +8,124 @@ library(sp)
 #maptools is going to expire; do i need this?
 library(maptools)
 
-arth_plant_comp <- function(arthgroup, plantfam){
+cleanDatasetCC = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
+  mutate(sciName = gsub("\xa0", " ", sciName),
+         Genus = word(sciName, 1))
+
+
+# Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
+# This helps obtain the families that should be analyzed (those with native, introduced species)
+tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
+  mutate(Family = trimws(Family..as.listed.by.USDA.)) %>%
+  filter(!common.name %in% c("Viginia sweetspire"))   #eliminate duplicate Genus entries (Itea, Morella, Polypogon, Xanthorhiza)
+
+# finding the plant families that are alien
+alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
+
+# left_join Caterpillars Count! data with Tallamy (alien/native) genus list
+cc_plus_tallamy <- left_join(cleanDatasetCC, tallamy, by = 'Genus') %>%
+  dplyr::select(PlantFK:ObservationMethod, PlantSpecies:AverageLeafLength, Group:Biomass_mg, 
+                sciName:Genus,Family, origin..for.analysis., total.Lep.spp) %>%
+  dplyr::rename(origin = origin..for.analysis., lepS = total.Lep.spp)
+
+write.csv(cc_plus_tallamy, ...)
+
+
+
+# START HERE
+cc_plus_tallamy = read.csv()
+
+
+# Rename the function
+comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         #
+                            arthGroup,               #  
+                            plantFamily,             #  
+                            jdRange = c(152, 252),   #
+                            minSurveysPerPlant = 10,
+                            plot = FALSE) #
   
+  {
+
+# check that there are both native and alien members of the family in the dataset
+  
+# if not, then use stop()
+  
+  
+  
+    alien_families = unique(cc_plus_tallamy$Family[cc_plus_tallamy$origin == "alien"])
+  
+  # Counting branch surveys per species within the time range   
+  plantCount = cleanDataset %>%
+    dplyr::filter(julianday >= jdRange[1], julianday <= jdRange[2]) %>% #change range of days 
+    distinct(ID, sciName) %>%
+    count(sciName) %>%
+    arrange(desc(n))
+  
+  filteredData = cc_plus_tallamy(Group == "arthGroup",
+                                 julianday >= jdRange[1], 
+                                 julianday <= jdRange[2],
+                                 Family == plantFamily
+                                 sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
+  
+  
+  
+  # meanDensityBySciName on filteredData
+  
+  
+
+
+  # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
+  onlyCaterpillars = meanDensityBySciName(SurveyedCertainAmount, ordersToInclude = "caterpillar") %>%
+    mutate(Genus = word(sciName, 1)) 
+  
+  
+  
+  
+  
+  # left_join SurveyWithCaterpillar before
+  clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
+    select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
+    rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
+    ###finding Families that are in both native and alien categories?  
+    filter(Family %in% alien_families) %>%
+    arrange(Family, origin) 
+  #need to be able to chose what family you want to see
+  plantfam <- clean_and_tallamy$Family
+  cbind(arthgroup, plantfam)
+  
+  rosaceaeNative = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == "native")
+  rosaceaeAlien = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == 'alien')
+  
+  t.test(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001))
+
+  if(plot) {
+    
+    boxplot(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001), 
+            xaxt = 'n', las = 1, main = "Rosaceae", boxwex = 0.5, ylab = "log(Density)", col = c("burlywood", "rosybrown"))
+    mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
+    mtext(c("N = 29", "N = 3"), 1, at = 1:2, line = 2, cex = 0.75)
+    mtext(text=LETTERS[1], xpd=NA, side=2, adj=0, font=2, cex=0.75)
+    text(2, 0.3, "p = 0.529")
+    
+  }
+  
+  
+  
+  
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  }
+
 # Added because "mutate_cond" is not a built-in function
 mutate_cond <- function(.data, condition,...,envir=parent.frame()){
   condition <- eval(substitute(condition),.data,envir)
