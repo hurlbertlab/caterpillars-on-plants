@@ -5,7 +5,7 @@ library(gsheet)
 library(gridExtra)
 library(maps)
 library(sp)
-#maptools is going to expire; do i need this?
+#maptools is going to expire end of 2023; do i need this?
 library(maptools)
 
 cleanDatasetCC = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
@@ -17,7 +17,7 @@ cleanDatasetCC = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhot
 # This helps obtain the families that should be analyzed (those with native, introduced species)
 tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
   mutate(Family = trimws(Family..as.listed.by.USDA.)) %>%
-  filter(!common.name %in% c("Viginia sweetspire"))   #eliminate duplicate Genus entries (Itea, Morella, Polypogon, Xanthorhiza)
+  filter(herbaceous.or.woody %in% c("w"))
 
 # finding the plant families that are alien
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
@@ -28,28 +28,39 @@ cc_plus_tallamy <- left_join(cleanDatasetCC, tallamy, by = 'Genus') %>%
                 sciName:Genus,Family, origin..for.analysis., total.Lep.spp) %>%
   dplyr::rename(origin = origin..for.analysis., lepS = total.Lep.spp)
 
-write.csv(cc_plus_tallamy, ...)
-
+write.csv(cc_plus_tallamy, 'data/Plant Analysis/cc_plus_tallamy.csv', row.names = F)
 
 
 # START HERE
-cc_plus_tallamy = read.csv()
-
+cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
 
 # Rename the function
-comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         #
-                            arthGroup,               #  
-                            plantFamily,             #  
-                            jdRange = c(152, 252),   #
-                            minSurveysPerPlant = 10,
-                            plot = FALSE) #
+comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # original dataset with native/alien info
+                            arthGroup,               # Arthropod to be analyzed
+                            plantFamily,             # Plant family with both native/alien species
+                            jdRange = c(152, 252),   # Range of days
+                            minSurveysPerPlant = 10, # minimum number of surveys done per branch
+                            plot = FALSE)            # Enough data to plot?
   
   {
 
 # check that there are both native and alien members of the family in the dataset
-  
+    
 # if not, then use stop()
+cc_plus_tallamy %>%  
+  if (dplyr::filter(origin %in% c("alien", "native")) > 0) {
+    #nrow(cc_plus_tallamy) > 0 #count those rows and make sure > 0 
+    print(Success)
+  } else {
+    #a stop message for each problem = more complicated ; add a nested ifelse statement?
+    stop("There were not enough native/alien/etc species.")
+  }
   
+  cc_plus_tallamy %>%  
+    dplyr::filter(origin %in% c("alien", "native")) %>% 
+     if nrow(cc_plus_tallamy) > 0 {
+       print("success")
+     }
   
   
     alien_families = unique(cc_plus_tallamy$Family[cc_plus_tallamy$origin == "alien"])
@@ -74,7 +85,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         #
   
 
 
-  # Specifics that only caterpillars (not all arthropods) were analyzed in this analysis
+  # Specifies that only caterpillars (not all arthropods) were analyzed in this analysis
   onlyCaterpillars = meanDensityBySciName(SurveyedCertainAmount, ordersToInclude = "caterpillar") %>%
     mutate(Genus = word(sciName, 1)) 
   
@@ -89,15 +100,13 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         #
     ###finding Families that are in both native and alien categories?  
     filter(Family %in% alien_families) %>%
     arrange(Family, origin) 
-  #need to be able to chose what family you want to see
-  plantfam <- clean_and_tallamy$Family
-  cbind(arthgroup, plantfam)
-  
+
+  ##
   rosaceaeNative = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == "native")
   rosaceaeAlien = dplyr::filter(clean_and_tallamy, Family == "Rosaceae", origin == 'alien')
   
   t.test(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001))
-
+#######
   if(plot) {
     
     boxplot(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001), 
@@ -220,6 +229,7 @@ clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
 plantfam <- clean_and_tallamy$Family
 cbind(arthgroup, plantfam)
 }
+
 #############
 # Compare origin to native and origin to alien species and examining arthropod meanDensity, meanBiomass, and fracSurveys 
 ### is giving all the entries.. is this right
