@@ -44,22 +44,31 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
   
   {
 
-# check that there are both native and alien members of the family in the dataset
-#filter families to those that have both a native/alien species
-#if a family has at least one native and one alien per family then count those rows (so maybe
-#  split Origin into two columns then count those > 0)
-# if not, then use stop() 
+# check that there are both native and alien members of the family in the data set
+  # counting how many species for each family: 1 for either just alien or just native, 2 for both 
+  practice =  cc_plus_tallamy %>%
+      group_by(Family) %>%
+      mutate(NativeAlien = length(unique(origin))) %>%
+      filter(NativeAlien == 2)
 cc_plus_tallamy %>%  
-  if (dplyr::filter(origin %in% c("alien", "native")) > 0) {
-    #nrow(cc_plus_tallamy) > 0
-    return(cc_plus_tallamy)
+  if (NativeAlien == 2) {
+    return(practice)
   } else {
-    #a stop message for each problem = more complicated ; add a nested ifelse statement?
-    stop("There were not enough native/alien/etc species.")
+    stop("There is either not enough native or alien species to analyze.")
   }
-#which(cc_plus_tallamy$origin == c("alien") & cc_plus_tallamy$origin == c("native"))
-  
 
+###
+  summarize(varname = length(unique(origin))) %>%
+      filter_all(any_vars(varname == 2)) %>%
+      #pull(Family)
+      if (varname == 2) {
+        return()
+      } else {
+         #would have to refine/rework the filtering 
+        stop("There were not enough species.")
+      }
+
+ 
 # Counting branch surveys per species within the time range   
   plantCount = cleanDataset %>%
     dplyr::filter(julianday >= jdRange[1], julianday <= jdRange[2]) %>% #change range of days 
