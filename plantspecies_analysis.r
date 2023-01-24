@@ -45,27 +45,22 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
   {
 
 # check that there are both native and alien members of the family in the dataset
-    
-# if not, then use stop()
+#filter families to those that have both a native/alien species
+#if a family has at least one native and one alien per family then count those rows (so maybe
+#  split Origin into two columns then count those > 0)
+# if not, then use stop() 
 cc_plus_tallamy %>%  
   if (dplyr::filter(origin %in% c("alien", "native")) > 0) {
-    #nrow(cc_plus_tallamy) > 0 #count those rows and make sure > 0 
-    print(Success)
+    #nrow(cc_plus_tallamy) > 0
+    return(cc_plus_tallamy)
   } else {
     #a stop message for each problem = more complicated ; add a nested ifelse statement?
     stop("There were not enough native/alien/etc species.")
   }
+#which(cc_plus_tallamy$origin == c("alien") & cc_plus_tallamy$origin == c("native"))
   
-  cc_plus_tallamy %>%  
-    dplyr::filter(origin %in% c("alien", "native")) %>% 
-     if nrow(cc_plus_tallamy) > 0 {
-       print("success")
-     }
-  
-  
-    alien_families = unique(cc_plus_tallamy$Family[cc_plus_tallamy$origin == "alien"])
-  
-  # Counting branch surveys per species within the time range   
+
+# Counting branch surveys per species within the time range   
   plantCount = cleanDataset %>%
     dplyr::filter(julianday >= jdRange[1], julianday <= jdRange[2]) %>% #change range of days 
     distinct(ID, sciName) %>%
@@ -75,26 +70,18 @@ cc_plus_tallamy %>%
   filteredData = cc_plus_tallamy(Group == "arthGroup",
                                  julianday >= jdRange[1], 
                                  julianday <= jdRange[2],
-                                 Family == plantFamily
+                                 Family == "plantFamily",
                                  sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
   
-  
-  
-  # meanDensityBySciName on filteredData
-  
-  
 
+  # meanDensityBySciName on filteredData
 
   # Specifies that only caterpillars (not all arthropods) were analyzed in this analysis
   onlyCaterpillars = meanDensityBySciName(SurveyedCertainAmount, ordersToInclude = "caterpillar") %>%
     mutate(Genus = word(sciName, 1)) 
   
-  
-  
-  
-  
   # left_join SurveyWithCaterpillar before
-  clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
+#  clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
     select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
     rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
     ###finding Families that are in both native and alien categories?  
@@ -107,9 +94,9 @@ cc_plus_tallamy %>%
   
   t.test(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001))
 #######
-  if(plot) {
+  if(plot == TRUE) {
     
-    boxplot(log10(rosaceaeNative$meanDensity + 0.001), log10(rosaceaeAlien$meanDensity + 0.001), 
+    boxplot(log10(Family[1]$meanDensity + 0.001), log10(Family[1]$meanDensity + 0.001), 
             xaxt = 'n', las = 1, main = "Rosaceae", boxwex = 0.5, ylab = "log(Density)", col = c("burlywood", "rosybrown"))
     mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
     mtext(c("N = 29", "N = 3"), 1, at = 1:2, line = 2, cex = 0.75)
@@ -123,16 +110,6 @@ cc_plus_tallamy %>%
   
 }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   }
 
 # Added because "mutate_cond" is not a built-in function
@@ -226,8 +203,7 @@ clean_and_tallamy <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
   filter(Family %in% alien_families) %>%
   arrange(Family, origin) 
 #need to be able to chose what family you want to see
-plantfam <- clean_and_tallamy$Family
-cbind(arthgroup, plantfam)
+
 }
 
 #############
