@@ -12,7 +12,6 @@ cleanDatasetCC = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhot
   mutate(sciName = gsub("\xa0", " ", sciName),
          Genus = word(sciName, 1))
 
-
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
 # This helps obtain the families that should be analyzed (those with native, introduced species)
 tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
@@ -30,7 +29,6 @@ cc_plus_tallamy <- left_join(cleanDatasetCC, tallamy, by = 'Genus') %>%
 
 write.csv(cc_plus_tallamy, 'data/Plant Analysis/cc_plus_tallamy.csv', row.names = F)
 
-
 # Added because "mutate_cond" is not a built-in function
 mutate_cond <- function(.data, condition,...,envir=parent.frame()){
   condition <- eval(substitute(condition),.data,envir)
@@ -39,18 +37,17 @@ mutate_cond <- function(.data, condition,...,envir=parent.frame()){
 }
 
 # Looking at meanDensity, Biomass, and fracSurveys of caterpillars in different plant families 
-# over the course of the citizen science dataset from June to July
+# over the course of the citizen science dataset from June to July; how is this different
+# meanDensityBySciName on filteredData -
 DensityBySciName = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
-                                ordersToInclude = 'All',       # or 'caterpillar'
-                                minLength = 0,         # minimum arthropod size to include 
-                                jdRange = c(152, 212), #change range of days
-                                outlierCount = 10000,
-                                plotVar = 'Density', # 'Density' or 'fracSurveys' or 'Biomass'
-                                ...)                  
+                            ordersToInclude = 'All',    # or 'caterpillar' like arthGroup
+                            minLength = 0,              # minimum arthropod size to include 
+                            jdRange = c(152, 212),      # change range of days
+                            outlierCount = 10000,       # Outliers 
+                            plotVar = 'Density',        # 'Density' or 'fracSurveys' or 'Biomass'
+                            ...)                  
   
-{
-  
-  if(length(ordersToInclude)==1 & ordersToInclude[1]=='All') {
+{ if(length(ordersToInclude)==1 & ordersToInclude[1]=='All') {
     ordersToInclude = unique(surveyData$Group)
   }
   
@@ -87,7 +84,7 @@ DensityBySciName = function(surveyData, # merged dataframe of Survey and arthrop
 # START HERE
 cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
 
-# Rename the function
+# Rename the function ; incorporating the other function?
 comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # original dataset with native/alien info
                             arthGroup,               # Arthropod to be analyzed
                             plantFamily,             # Plant family with both native/alien species
@@ -100,23 +97,21 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
     filter(NativeAlien == 2)
   # counting how many species for each family: 1 for either just alien or just native, 2 for both 
   if (plantFamily %in% familiesWithNativeAndAlienSpecies$Family) {
+    # it's asking if plantFamily values are found in the Family column in that familiesWith... file
     return(familiesWithNativeAndAlienSpecies)
 } else {
-  #could make an error message for each problem; nestted ifelse statement
+  # could make an error message for each problem; nestted ifelse statement
     stop("There are either not enough native or alien species to analyze.")
 }
-  
-
-# Counting branch surveys per species within the time range   
-  #Not 100% sure what's going on here -- i think this is a new function? what i know: referring to arguments
+  # Counting branch surveys per species within the time range   
+  # Not 100% sure what's going on here -- i think this is a new function? what i know: referring to arguments
   # in the other function, renaming some of those arguments
   filteredData = cc_plus_tallamy(Group == "arthGroup",
                                  julianday >= jdRange[1], 
                                  julianday <= jdRange[2],
                                  Family == "plantFamily",
                                  sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
-  
-  onlyBugs = meanDensityBySciName(filteredData, Group) 
+  onlyBugs = DensityBySciName(filteredData, Group) 
   
   ##why is this before the other plotting stuff
   #creating native and alien species lists  
@@ -125,16 +120,14 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
   alienData = filter(onlyBugs, origin == 'alien')
   #Extracting only the p.value each time the test is run
   p_value = t.test(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.001))$p.value
-  # meanDensityBySciName on filteredData -
-  # Specifies that only caterpillars (not all arthropods) were analyzed in this analysis
-  
+
   ####### have to be able to change things like p-values and stuff
   ## should i be able to change: main = family name ; population size (N) ; ylabel ; menDensity stuff
   ### stuff on the internet about ggplot()
   if(plot == TRUE) {
     #Trying to get these things to be easily changeable 
-    plot_title <- paste(Family, sep = " ")
-    y_label <- paste(onlyBugs, sep = " ") 
+    plot_title <- paste(onlyBugs)
+    y_label <- paste(onlyBugs) 
     
     boxplot(log10(Family$meanDensity + 0.001), log10(Family$meanDensity + 0.001), 
             xaxt = 'n', las = 1, main = plot_title, boxwex = 0.5, ylab = y_label, col = c("burlywood", "rosybrown"))
@@ -145,7 +138,8 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
   }
   }
 
-  
+
+
 
 
 
@@ -163,7 +157,6 @@ select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, mea
 nativeData = filter(familiesWithNativeAndAlienSpecies, origin == 'native') 
 alienData = filter(clean_and_tallamy, origin == 'alien')
 
-
 # A pdf with graphs depicting density, biomass, % surveyed
 pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/allSpecies.pdf",
     width = 15, height = 5)
@@ -175,7 +168,6 @@ boxplot(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.0
 mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
 mtext(c("N = 96", "N = 18"), 1, at = 1:2, line = 2, cex = 0.75)
 text(2, 0.34, "p = 0.005")
-
 
 t.test(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.001))
 boxplot(log10(nativeData$meanBiomass + 0.001), log10(alienData$meanBiomass + 0.001), 
@@ -431,5 +423,4 @@ arthplant = function(arth, plant) {
     {arth = cleanDataset$Group} 
   if(length(plant) ==1 & plant[1] == 'All') {plant = clean_and_tallamy$Family}
   }
-
 
