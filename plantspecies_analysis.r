@@ -23,7 +23,7 @@ alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"]
 
 # left_join Caterpillars Count! data with Tallamy (alien/native) genus list
 cc_plus_tallamy <- left_join(cleanDatasetCC, tallamy, by = 'Genus') %>%
-  dplyr::select(PlantFK:ObservationMethod, PlantSpecies:AverageLeafLength, Group:Biomass_mg, 
+  dplyr::select(ID, PlantFK:ObservationMethod, PlantSpecies:AverageLeafLength, Group:Biomass_mg, 
                 sciName:Genus,Family, origin..for.analysis., total.Lep.spp) %>%
   dplyr::rename(origin = origin..for.analysis., lepS = total.Lep.spp)
 
@@ -90,28 +90,38 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
                             plantFamily,             # Plant family with both native/alien species
                             jdRange = c(152, 252),   # Range of days
                             minSurveysPerPlant = 10, # minimum number of surveys done per branch
-                            plot = FALSE)            # Enough data to plot? 
+                            plot = FALSE,      # Enough data to plot? 
+                            comparisonVar = "meanDensity")            # also meanBiomass, etc. 
   { familiesWithNativeAndAlienSpecies = cc_plus_tallamy %>%
     group_by(Family) %>%
-    mutate(NativeAlien = length(unique(origin))) %>%
+    summarize(NativeAlien = length(unique(origin))) %>%
     filter(NativeAlien == 2)
+  
+  #create plantCount - taking cc_plus_tallamy and count sciName
+  plantCount = cc_plus_tallamy %>%
+    filter(Family == plantFamily, 
+           julianday >= jdRange[1], 
+           julianday <= jdRange[2]) %>%
+    count(Family, sciName, origin) 
+    
+  
   # counting how many species for each family: 1 for either just alien or just native, 2 for both 
-  if (plantFamily %in% familiesWithNativeAndAlienSpecies$Family) {
+  if (!plantFamily %in% familiesWithNativeAndAlienSpecies$Family) {
     # it's asking if plantFamily values are found in the Family column in that familiesWith... file
-    return(familiesWithNativeAndAlienSpecies)
+    stop("There are either not enough native or alien species to analyze.")
 } else {
   # could make an error message for each problem; nestted ifelse statement
-    stop("There are either not enough native or alien species to analyze.")
-}
   # Counting branch surveys per species within the time range   
   # Not 100% sure what's going on here -- i think this is a new function? what i know: referring to arguments
   # in the other function, renaming some of those arguments
-  filteredData = cc_plus_tallamy(Group == "arthGroup",
-                                 julianday >= jdRange[1], 
-                                 julianday <= jdRange[2],
-                                 Family == "plantFamily",
-                                 sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
-  onlyBugs = DensityBySciName(filteredData, Group) 
+  filteredData = cc_plus_tallamy %>% 
+    filter(julianday >= jdRange[1], 
+           julianday <= jdRange[2],
+          Family == plantFamily,
+   sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
+  
+  onlyBugs = DensityBySciName(filteredData, ordersToInclude = arthGroup) %>%
+    left_join(plantCount, by = "sciName")
   
   ##why is this before the other plotting stuff
   #creating native and alien species lists  
@@ -119,25 +129,29 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,         # or
   nativeData = filter(onlyBugs, origin == 'native') 
   alienData = filter(onlyBugs, origin == 'alien')
   #Extracting only the p.value each time the test is run
-  p_value = t.test(log10(nativeData$meanDensity + 0.001), log10(alienData$meanDensity + 0.001))$p.value
+  #save t.test seperate and then pull out p-value and mean
+  t = t.test(log10(nativeData[,comparisonVar] + 0.001), log10(alienData[,comparisonVar] + 0.001))
+  nativeMean = t$estimate[1]
+  alienMean = t$estimate[2]
+  p_value = t$p.value
 
   ####### have to be able to change things like p-values and stuff
   ## should i be able to change: main = family name ; population size (N) ; ylabel ; menDensity stuff
   ### stuff on the internet about ggplot()
   if(plot == TRUE) {
     #Trying to get these things to be easily changeable 
-    plot_title <- paste(onlyBugs)
-    y_label <- paste(onlyBugs) 
+    plot_title <- plantFamily
+    y_label = comparisonVar
     
-    boxplot(log10(Family$meanDensity + 0.001), log10(Family$meanDensity + 0.001), 
-            xaxt = 'n', las = 1, main = plot_title, boxwex = 0.5, ylab = y_label, col = c("burlywood", "rosybrown"))
+    boxplot(log10(nativeData[,comparisonVar] + 0.001), log10(alienData[,comparisonVar] + 0.001), 
+            xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value,3)), boxwex = 0.5, ylab = y_label, col = c("burlywood", "rosybrown"))
     mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
     mtext(c("N = 29", "N = 3"), 1, at = 1:2, line = 2, cex = 0.75)
     mtext(text=LETTERS[1], xpd=NA, side=2, adj=0, font=2, cex=0.75)
-    text(2, 0.3, ""= p_value)
+    #text(2, 0.3, paste("p =", p_value) )
   }
   }
-
+}
 
 
 
