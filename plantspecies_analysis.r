@@ -81,12 +81,13 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
 
 # START HERE
 cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
+#for every plant family return a graph created by comparingBugs... for an arthropod
+#for (i in Family) {
+# A pdf with graphs depicting density, biomass, % surveyed
 
-for (i in plantFamily){
-  # A pdf with graphs depicting density, biomass, % surveyed
-  pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ByArthByPlantFam.pdf",
-      width = 15, height = 5)
-  par(mfrow = c(1, 3), mar = c(5, 5, 3, 1))
+par(mfrow = c(1, 3), mar = c(5, 5, 3, 1))
+
+
   
 # Rename the function ; incorporating the other function?
 comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original dataset with native/alien info
@@ -116,8 +117,8 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     filteredData = cc_plus_tallamy %>% 
       filter(julianday >= jdRange[1], 
              julianday <= jdRange[2],
-            Family == plantFamily,
-     sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
+             Family == plantFamily,
+             sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
     
     onlyBugs = AnalysisBySciName(filteredData, ordersToInclude = arthGroup) %>%
       left_join(plantCount, by = "sciName")
@@ -125,7 +126,8 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     # Separating datasets
     nativeData = filter(onlyBugs, origin == 'native') 
     alienData = filter(onlyBugs, origin == 'alien')
-  
+  #for a family in bot native and alien datasets
+    for (i in Family) { 
     # Completing a t.test analysis and pulling out the means and p-value
     t = t.test(log10(nativeData[,comparisonVar] + 0.001), log10(alienData[,comparisonVar] + 0.001))
     nativeMean = t$estimate[1]
@@ -135,7 +137,9 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     alien_pop_size = nrow(alienData)
     
     # Creating a pdf for each arthGroup
-   
+    loop <- 30 #creating a loop vector
+    for (i in loop) { # looping over the vector/col
+      storing <- cc_plus_tallamy[,i] #storing data in col.i as storing
     # Plotting the analysis
     if(plot == TRUE) {
       plot_title = plantFamily
@@ -149,8 +153,11 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     }
   }
 }
-dev.off()
 }
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ByArthByPlantFam.pdf",
+    width = 15, height = 5)
+dev.off()
+
 
 
 # Comparing the average caterpillar density, biomass, and fracSurveys per survey to lepS and conducting a linear regression
