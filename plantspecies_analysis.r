@@ -83,27 +83,20 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
 cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
 
 #for every plant family return a graph created by comparingBugs... for an arthropod
-# A pdf with graphs depicting density, biomass, % surveyed
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ByArthByPlantFam.pdf",
-    width = 15, height = 5)
-par(mfrow = c(1, 3), mar = c(5, 5, 3, 1))
-  
-for (j in cc_plus_tallamy$Group) {
-  for (i in cc_plus_tallamy$Family) {
-
 
 # Rename the function ; incorporating the other function?
 comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original dataset with native/alien info
-                            arthGroup = j,                               # Arthropod to be analyzed
-                            plantFamily = i,                             # Plant family with both native/alien species
+                            arthGroup,                               # Arthropod to be analyzed
+                            plantFamily,                             # Plant family with both native/alien species
                             jdRange = c(152, 252),                   # Range of days
                             minSurveysPerPlant = 10,                 # Minimum number of surveys done per branch
                             plot = FALSE,                            # Plotting the data
                             comparisonVar = "meanDensity")           # 'meanDensity' or 'fracSurveys' or 'meanBiomass' 
   { familiesWithNativeAndAlienSpecies = cc_plus_tallamy %>%
     group_by(Family) %>%
-    summarize(NativeAlien = length(unique(origin))) %>%
-    filter(NativeAlien == 2)
+    summarize(NativeSpp = length(unique(sciName[origin == 'native'])),
+             AlienSpp = length(unique(sciName[origin == 'alien']))) %>%
+    filter(NativeSpp >= 2 & AlienSpp >= 2)
   
   # Further filtering the data, to pull out the rows with a Family fitting these conditions
   plantCount = cc_plus_tallamy %>%
@@ -131,7 +124,15 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     alienData = filter(onlyBugs, origin == 'alien')
 
     # Completing a t.test analysis and pulling out the means and p-value
-    t = t.test(log10(nativeData[,comparisonVar] + 0.001), log10(alienData[,comparisonVar] + 0.001))
+    if(comparisonVar != "fracSurveys") {
+      x = log10(nativeData[,comparisonVar] + 0.001)
+      y = log10(alienData[,comparisonVar] + 0.001)
+    } else {
+      x = nativeData[,comparisonVar]
+      y = alienData[,comparisonVar]
+    }
+    
+    t = t.test(x, y)
     nativeMean = t$estimate[1]
     alienMean = t$estimate[2]
     p_value = t$p.value
@@ -151,16 +152,32 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
         #|| y_label = "Biomass" || y_label = "% Surveyed"
      # }
       
-      boxplot(log10(nativeData[,comparisonVar] + 0.001), log10(alienData[,comparisonVar] + 0.001), 
-              xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value,3)), boxwex = 0.5, ylab = y_label, col = c("burlywood", "rosybrown"))
+      boxplot(x, y, xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value,3)),
+              boxwex = 0.5, ylab = y_label, col = c("burlywood", "rosybrown"))
       mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
       mtext(c(paste("N =", native_pop_size), paste("N =", alien_pop_size)), 1, at = 1:2, line = 2, cex = 0.75)
       mtext(text=LETTERS[1], xpd=NA, side=2, adj=0, font=2, cex=0.75)
     }
   }
 }
+
+# A pdf with graphs depicting density, biomass, % surveyed
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ByArthByPlantFam.pdf",
+    width = 15, height = 5)
+par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
+
+#creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
+
+    
+for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
+  
+  for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
+    
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", arthGroup = group, comparisonVar = plotVar, plot = TRUE)
+  }
 }
-}
+
+    
 dev.off()
 
 
