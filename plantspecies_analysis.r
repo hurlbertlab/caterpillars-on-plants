@@ -7,10 +7,12 @@ library(maps)
 library(sp)
 #maptools is going to expire end of 2023; do i need this?
 library(maptools)
+library(vioplot)
 
 cleanDatasetCC = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
   mutate(sciName = gsub("\xa0", " ", sciName),
-         Genus = word(sciName, 1))
+         Genus = word(sciName, 1)) %>%
+  filter(sciName != Genus)
 
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
 # This helps obtain the families that should be analyzed (those with native, introduced species)
@@ -117,9 +119,9 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
              sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
     
     onlyBugs = AnalysisBySciName(filteredData, ordersToInclude = arthGroup) %>%
-      left_join(plantCount, by = "sciName")
+      left_join(plantCount, by = "sciName") 
     
-    # Separating datasets
+    # Separating data sets
     nativeData = filter(onlyBugs, origin == 'native') 
     alienData = filter(onlyBugs, origin == 'alien')
 
@@ -132,7 +134,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       y = alienData[,comparisonVar]
     }
     
-    t = t.test(x, y)
+    t = wilcox.test(x, y)
     nativeMean = t$estimate[1]
     alienMean = t$estimate[2]
     p_value = t$p.value
@@ -152,34 +154,38 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
         #|| y_label = "Biomass" || y_label = "% Surveyed"
      # }
       
-      boxplot(x, y, xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value,3)),
+      vioplot(x, y, xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value,3)),
               boxwex = 0.5, ylab = y_label, col = c("burlywood", "rosybrown"))
       mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
       mtext(c(paste("N =", native_pop_size), paste("N =", alien_pop_size)), 1, at = 1:2, line = 2, cex = 0.75)
-      mtext(text=LETTERS[1], xpd=NA, side=2, adj=0, font=2, cex=0.75)
     }
   }
 }
 
 # A pdf with graphs depicting density, biomass, % surveyed
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ByArthByPlantFam.pdf",
-    width = 15, height = 5)
+# Changing the name of the file and the plant famiy used, manually
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/RosaceaeWilCoxTest.pdf",
+    width = 11, height = 8)
 par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
 
 #creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
-
-    
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", arthGroup = group, comparisonVar = plotVar, plot = TRUE)
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", 
+                                           arthGroup = group, comparisonVar = plotVar, plot = TRUE)
   }
 }
-
-    
 dev.off()
 
+#A graph of all the families combined
+
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/RosaceaeWilCoxTest.pdf",
+    width = 11, height = 8)
+par(mfrow = c(1, 1), mar = c(3, 3, 3, 1))
+
+dev.off()
 
 
 # Comparing the average caterpillar density, biomass, and fracSurveys per survey to lepS and conducting a linear regression
@@ -231,5 +237,4 @@ grid.table(summary_table)
 t(summary_table)
 
 dev.off()
-
 
