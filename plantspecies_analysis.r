@@ -173,7 +173,6 @@ pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpilla
 par(mfrow = c(4, 3), mar = c(5, 5, 3, 1))
 
 #creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
-#maybe creating all families with all arthropods?
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
@@ -185,19 +184,17 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
 dev.off()
 
 
-#A graph of all the families combined
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/AllFamilies.pdf",
+# A graph of all the families combined
+
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/AllFamiliesAllArth.pdf",
     width = 11, height = 8)
 par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
 
-for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
+for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
   
-  for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
-    
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = c("Rosaceae","Oleaceae"), 
-                                           arthGroup = group, comparisonVar = plotVar, plot = TRUE)
+  comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = c("Rosaceae","Oleaceae"), 
+                                         arthGroup = c("caterpillar", "beetle", "truebugs", "spider"), comparisonVar = plotVar, plot = TRUE)
   }
-}
 dev.off()
 
 
