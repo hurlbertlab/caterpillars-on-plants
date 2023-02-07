@@ -173,6 +173,7 @@ pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpilla
 par(mfrow = c(4, 3), mar = c(5, 5, 3, 1))
 
 #creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
+#maybe creating all families with all arthropods?
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
