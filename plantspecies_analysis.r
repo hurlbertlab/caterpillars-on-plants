@@ -169,7 +169,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
 # A pdf with graphs depicting density, biomass, % surveyed
 # Changing the name of the file and the plant famiy used, manually
 pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/RosaceaeWilCoxtest.pdf",
-    width = 11, height = 8)
+    width = 10, height = 8)
 par(mfrow = c(4, 3), mar = c(5, 5, 3, 1))
 
 #creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
@@ -189,26 +189,13 @@ pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpilla
     width = 11, height = 8)
 par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
 
-#Families 
-familiesWithNativeAndAlienSpecies = cc_plus_tallamy %>%
-  group_by(Family) %>%
-  summarize(NativeSpp = length(unique(sciName[origin == 'native'])),
-            AlienSpp = length(unique(sciName[origin == 'alien']))) %>%
-  filter(NativeSpp >= 2 & AlienSpp >= 2)
-#cycling thru families right now; want it to put all the families together and then cycle thru
-#arths, and plotVar
-## filtering through native and alien data set the original one
-
-#this just creates a page for each family
-for (fam in familiesWithNativeAndAlienSpecies$Family) {
-  for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
+for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
+  
+  for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
-      
-      comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = fam, 
-                                             arthGroup = group, comparisonVar = plotVar, plot = TRUE)
-    }
-  }  
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = c("Rosaceae","Oleaceae"), 
+                                           arthGroup = group, comparisonVar = plotVar, plot = TRUE)
+  }
 }
 dev.off()
 
