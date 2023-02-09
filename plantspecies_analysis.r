@@ -203,26 +203,26 @@ pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpilla
     width = 9, height = 6)
 par(mfrow = c(2, 2), mar = c(5,5,2,1))
 
-plot(cc_plus_tallamy_tallamy$lepS, cc_plus_tallamy_tallamy$meanDensity, xlab = "Lepidoptera Richness", ylab = "Density", pch = 16, main ="Mean Density")
+plot(cc_plus_tallamy$lepS, cc_plus_tallamy$meanDensity, xlab = "Lepidoptera Richness", ylab = "Density", pch = 16, main ="Mean Density")
 text(140, 2.60, "R2 =0.067, p = 0.006")
 mtext(text=LETTERS[1], xpd=NA, side=3, adj=0, font=2)
-lm.density = lm(meanDensity ~ lepS, data = cc_plus_tallamy_tallamy)
+lm.density = lm(meanDensity ~ lepS, data = cc_plus_tallamy)
 summary(lm.density)
 abline(lm.density)
 
 
-plot(log10(cc_plus_tallamy_tallamy$lepS), log10(cc_plus_tallamy_tallamy$meanBiomass), xlab = "Lepidoptera Richness", ylab = "log(Biomass)", pch = 16, main ="Mean Biomass")
+plot(log10(cc_plus_tallamy$lepS), log10(cc_plus_tallamy$meanBiomass), xlab = "Lepidoptera Richness", ylab = "log(Biomass)", pch = 16, main ="Mean Biomass")
 text(0.75, 2, "R2 = 4.25e-05, p = 0.945", cex = 0.85)
 mtext(text=LETTERS[2], xpd=NA, side=3, adj=0, font=2)
-lm.biomass = lm(meanBiomass ~ lepS, data = cc_plus_tallamy_tallamy)
+lm.biomass = lm(meanBiomass ~ lepS, data = cc_plus_tallamy)
 summary(lm.biomass)
 abline(lm.biomass)
 
 
-plot(cc_plus_tallamy_tallamy$lepS, cc_plus_tallamy_tallamy$fracSurveys, xlab = "Lepidoptera Richness", ylab = "Lepidoptera", pch = 16, main ="% of Surveys")
+plot(cc_plus_tallamy$lepS, cc_plus_tallamy$fracSurveys, xlab = "Lepidoptera Richness", ylab = "Lepidoptera", pch = 16, main ="% of Surveys")
 text(140, 50, "R2 = 0.069, p = 0.005", cex = 0.85)
 mtext(text=LETTERS[3], xpd=NA, side=3, adj=0, font=2)
-lm.surveys = lm(fracSurveys ~ lepS, data = cc_plus_tallamy_tallamy)
+lm.surveys = lm(fracSurveys ~ lepS, data = cc_plus_tallamy)
 summary(lm.surveys)
 abline(lm.surveys)
 
