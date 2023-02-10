@@ -122,7 +122,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       left_join(plantCount, by = "sciName") 
     
     # Separating data sets
-    nativeData = filter(onlyBugs, origin == 'native') 
+    nativeData = filter(onlyBugs, origin == 'native')
     alienData = filter(onlyBugs, origin == 'alien')
 
     # Completing a t.test analysis and pulling out the means and p-value
@@ -134,14 +134,6 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       y = alienData[,comparisonVar]
     }
     
-    #t = t.test(x, y)
-    
-    #When we use the normal approximation the phrase “with continuity correction” is added to the name 
-    # of the test. A continuity correction is an adjustment that is made when a discrete distribution 
-    # is approximated by a continuous distribution.
-    #ties or the same value means that an exact p-value cannot be computed without correction
-    #since this data has ties (mostly zeros) AND there's less than 50 values a normally approximated
-    # p-value is returned with an error message
     t = wilcox.test(x, y, exact = FALSE)
     p_value = t$p.value
     
@@ -154,12 +146,13 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     # Creating a pdf for each arthGroup
     # Plotting the analysis
     if(plot == TRUE) {
-      plot_title = plantFamily
+      #plot_title = plantFamily
       y_label = comparisonVar
       
-      vioplot(x, y, xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value,3)),
-              boxwex = 0.5, ylab = c(paste(arthGroup)), col = c("burlywood", "rosybrown"))
-      mtext(c(paste(comparisonVar)), 3, line = 0.25, at = 1, adj = -0.5, cex = 0.75)
+      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, ylab = c(paste(arthGroup)), col = c("burlywood", "rosybrown"))
+      mtext(paste("p =", round(p_value,3)), adj = 1, line = -1, cex = 0.65)  
+      #mtext(c(paste(comparisonVar)), 3, line = 0.25, at = 1, adj = -0.5, cex = 0.75)
+      #mtext(paste("p =", round(p_value,3)))
       #mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
       #mtext(c(paste("N =", native_pop_size), paste("N =", alien_pop_size)), 1, at = 1:2, line = 2, cex = 0.75)
     }
@@ -168,9 +161,12 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
 
 # A pdf with graphs depicting density, biomass, % surveyed
 # Changing the name of the file and the plant famiy used, manually
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/RosaceaeWilCoxtest.pdf",
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/Practice.pdf",
     width = 10, height = 8)
-par(mfrow = c(4, 3), mar = c(5, 5, 3, 1))
+par(mfrow = c(4, 3), mar = c(5, 5, 3, 1), oma = c(0,0,1,0))
+mtext("Density        Biomass         Occurrence", outer = TRUE, line = 0)
+#mtext("Biomass", outer = TRUE)
+#mtext("Occurrence", outer = TRUE)
 
 #creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
@@ -184,7 +180,8 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
 dev.off()
 
 
-# A graph of all the families combined
+# A graph of ALL the families in the dataset so not just Rosaceae, Oleaceae but still separating 
+# the arthropod groups
 
 pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/AllFamiliesAllArth.pdf",
     width = 11, height = 8)
@@ -196,6 +193,8 @@ for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
                                          arthGroup = c("caterpillar", "beetle", "truebugs", "spider"), comparisonVar = plotVar, plot = TRUE)
   }
 dev.off()
+
+# Code to calculate the lepS stuff
 
 
 # Comparing the average caterpillar density, biomass, and fracSurveys per survey to lepS and conducting a linear regression
