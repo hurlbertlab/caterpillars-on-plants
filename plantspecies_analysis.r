@@ -191,7 +191,8 @@ for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
   comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = c('All'), 
                                          arthGroup = c("caterpillar", "beetle", "truebugs", "spider"), 
                                          comparisonVar = plotVar, plot = TRUE)
-  }
+}
+
 dev.off()
 
 
