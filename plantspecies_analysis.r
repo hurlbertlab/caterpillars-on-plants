@@ -332,7 +332,9 @@ barplot(alienSpecies_desc$nSurveys, xlab = "Alien Plant Sp.",
      legend = TRUE)
      #col = ifelse(alienSpecies_desc$Family == c("Rosaceae","Oleaceae"), "black", "blue"))
 namelist = as.vector(colnames(alienSpecies_desc$sciName))
-text(1:10, par("usr")[1], labels = namelist, srt=45, cex=0.2, adj = 0.5, xpd = NA)
+axis(side = 1, labels= FALSE)
+text(1:10, par("usr")[3]-0.45, labels = names(alienSpecies_desc), cex = 0.6, 
+     xpd = NA, srt=35, adj=1.2)
 
 dev.off()
 
