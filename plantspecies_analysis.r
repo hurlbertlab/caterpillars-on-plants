@@ -188,7 +188,7 @@ par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
 
 for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
   
-  comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = c('All'), 
+  comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = cc_plus_tallamy$Family, 
                                          arthGroup = c("caterpillar", "beetle", "truebugs", "spider"), 
                                          comparisonVar = plotVar, plot = TRUE)
 }
@@ -197,7 +197,7 @@ dev.off()
 
 
 
-## Code to calculate the lepS stuff ##
+## Code to calculate the lepS stuff ## something is still off
 # need meanDensity, etc. to be calculated but that's all cal in the function currently
 plantCountJuneJuly = cleanDatasetCC %>%
   dplyr::filter(julianday >= 152, julianday <= 252) %>% #change range of days 
@@ -317,22 +317,22 @@ NativeTop10 = nativeSpecies_desc[1:10,]
 
 alienSpecies_desc = alienSpecies[order(-alienSpecies$nSurveys),]
 
-barplot(NativeTop10$nSurveys, xlab = "Plant Species", ylab = "# of Branches Surveyed", 
+barplot(NativeTop10$nSurveys, xlab = "Native Plant Sp.", ylab = "# of Branches Surveyed", 
         names.arg = NativeTop10$sciName, las = 3, cex.names = 0.5,
-        pch = 16, main ="Breakdown By Plant Species",
+        pch = 16, main ="Breakdown By Native Plant Species",
         col = c("blue", "black", "black", "red", "black", "black","black", "black","black", "black"),
         legend = TRUE)
 #namelist = as.vector(colnames(NativeTop10$sciName))
 #text(1:10, par("usr")[1], labels = namelist, srt=45, cex=0.65, pos = 1, xpd = TRUE)
 
-barplot(alienSpecies_desc$nSurveys, xlab = "Plant Species", 
+barplot(alienSpecies_desc$nSurveys, xlab = "Alien Plant Sp.", 
      ylab = "# of Branches Surveyed",
-     pch = 16, main ="Breakdown By Plant Species", cex.names = 0.5,
+     pch = 16, main ="Breakdown By Alien Plant Species", cex.names = 0.5,
      col = c("red", "black","black", "black","black", "blue","black","black", "blue"),
      legend = TRUE)
      #col = ifelse(alienSpecies_desc$Family == c("Rosaceae","Oleaceae"), "black", "blue"))
 namelist = as.vector(colnames(alienSpecies_desc$sciName))
-text(1:10, par("usr")[1], labels = namelist, srt=45, cex=0.5, adj = 0.5, xpd = NA)
+text(1:10, par("usr")[1], labels = namelist, srt=45, cex=0.2, adj = 0.5, xpd = NA)
 
 dev.off()
 
