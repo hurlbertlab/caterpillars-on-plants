@@ -189,9 +189,12 @@ par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
 for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
   
   comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = c('All'), 
-                                         arthGroup = c('All'), comparisonVar = plotVar, plot = TRUE)
+                                         arthGroup = c("caterpillar", "beetle", "truebugs", "spider"), 
+                                         comparisonVar = plotVar, plot = TRUE)
   }
 dev.off()
+
+
 
 ## Code to calculate the lepS stuff ##
 # need meanDensity, etc. to be calculated but that's all cal in the function currently
