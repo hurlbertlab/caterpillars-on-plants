@@ -235,14 +235,15 @@ plot(lepSandAllFam$lepS, lepSandAllFam$meanDensity, xlab = "Lepidoptera Richness
      ylab = "log(Density)", pch = 16, main ="Density", col = lepSandAllFam$AssignedOrigin)
 #mtext(text=LETTERS[1], xpd=NA, side=3, adj=0, font=2)
 lm.density = lm(meanDensity ~ lepS, data = lepSandAllFam)
-#lm.density = lm(meanDensity ~ lepS + lepS + origin + lepS * origin, data = lepSandAllFam)
+lm.density.2 = lm(meanDensity ~ lepS + origin + lepS * origin, data = lepSandAllFam)
 RandP = summary(lm.density)
 #p value is still incorrect i believe
-p_value = pf(RandP$fstatistic[1],RandP$fstatistic[2],RandP$fstatistic[1], lower.tail = FALSE)
-R_value = RandP$r.squared
-mtext(paste("p =", round(p_value,3)), line = -1)
-mtext(paste("R =", round(R_value,3)), adj = 1, line = 0, cex = 0.65)  
+#p_value = pf(RandP$fstatistic[1],RandP$fstatistic[2],RandP$fstatistic[1], lower.tail = FALSE)
+R2_value = RandP$r.squared
+mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = -1)
+#mtext(paste("R =", round(R_value,3)), adj = 1, line = 0, cex = 0.65)  
 abline(lm.density)
+abline(lm.density.2)
 
 
 plot(log10(lepSandAllFam$lepS), log10(lepSandAllFam$meanBiomass), xlab = "Lepidoptera Richness", 
@@ -286,30 +287,13 @@ AllArths = AnalysisBySciName(SurveyedCertainAmount, ordersToInclude = "All") %>%
 ArthsAndTallamy = left_join(AllArths, tallamy, by = 'Genus') %>%
   select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
-  ###finding Families that are in both native and alien categories?  
-  filter(Family %in% alien_families) %>%
-  arrange(Family, origin) %>%
-  filter(nSurveys >= 10) 
-#%>%
- # add_column(AssignedFam = NA)
-  #mutate(AssignedFam = ArthsAndTallamy$Family <- ifelse(ArthsAndTallamy$Family == "Oleaceae" || ArthsAndTallamy$Family == "Rosaceae",1,2))
-#trying to not hard code the colors 
-#if (ArthsAndTallamy$Family == "Oleaceae" || ArthsAndTallamy$Family == "Rosaceae") {
-#  AssignedFam == "1"
-#} else {
-#  AssignedFam == "2"
-#}
-#colors <- c("blue", "red")
-#colors <- colors[as.numeric(ArthsAndTallamy$AssignedFam)]
-
+  filter(nSurveys >= 10) %>%
+  mutate(color = case_when(Family == "Rosaceae" ~ "red",
+                           Family == "Oleaceae" ~ "blue",
+                           TRUE ~ "black"))
 
 nativeSpecies = filter(ArthsAndTallamy, origin == 'native')  
 alienSpecies = filter(ArthsAndTallamy, origin == 'alien')         
-
-
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/BranchesVsSpecies.pdf", 
-    width = 9, height = 6)
-par(mfrow = c(1, 2), mar = c(5,5,2,1))
 
 # only the top 10 or so
 nativeSpecies_desc = nativeSpecies[order(-nativeSpecies$nSurveys),] 
@@ -317,10 +301,15 @@ NativeTop10 = nativeSpecies_desc[1:10,]
 
 alienSpecies_desc = alienSpecies[order(-alienSpecies$nSurveys),]
 
+
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/BranchesVsSpecies.pdf", 
+    width = 9, height = 6)
+par(mfrow = c(1, 2), mar = c(5,5,2,1))
+
 barplot(NativeTop10$nSurveys, xlab = "Native Plant Sp.", ylab = "# of Branches Surveyed", 
         names.arg = NativeTop10$sciName, las = 3, cex.names = 0.5,
         pch = 16, main ="Breakdown By Native Plant Species",
-        col = c("blue", "black", "black", "red", "black", "black","black", "black","black", "black"),
+        col = NativeTop10$color,
         legend = TRUE)
 #namelist = as.vector(colnames(NativeTop10$sciName))
 #text(1:10, par("usr")[1], labels = namelist, srt=45, cex=0.65, pos = 1, xpd = TRUE)
@@ -328,13 +317,11 @@ barplot(NativeTop10$nSurveys, xlab = "Native Plant Sp.", ylab = "# of Branches S
 barplot(alienSpecies_desc$nSurveys, xlab = "Alien Plant Sp.", 
      ylab = "# of Branches Surveyed",
      pch = 16, main ="Breakdown By Alien Plant Species", cex.names = 0.5,
-     col = c("red", "black","black", "black","black", "blue","black","black", "blue"),
+     col = alienSpecies_desc$color,
      legend = TRUE)
-     #col = ifelse(alienSpecies_desc$Family == c("Rosaceae","Oleaceae"), "black", "blue"))
-namelist = as.vector(colnames(alienSpecies_desc$sciName))
-axis(side = 1, labels= FALSE)
-text(1:10, par("usr")[3]-0.45, labels = names(alienSpecies_desc), cex = 0.6, 
-     xpd = NA, srt=35, adj=1.2)
+#axis(side = 1, labels= FALSE)
+text(1:10, par("usr")[3]-0.45, labels = alienSpecies_desc$sciName, cex = 0.6, 
+     xpd = NA, srt=35, adj=1)
 
 dev.off()
 
