@@ -118,7 +118,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
              Family == plantFamily,
              sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
     
-    onlyBugs<<-AnalysisBySciName(filteredData, ordersToInclude = arthGroup) %>%
+    onlyBugs<-AnalysisBySciName(filteredData, ordersToInclude = arthGroup) %>%
       left_join(plantCount, by = "sciName") 
     
     # Separating data sets
@@ -146,65 +146,80 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     # Creating a pdf for each arthGroup
     # Plotting the analysis
     if(plot == TRUE) {
-      #plot_title = plantFamily
       y_label = comparisonVar
+      plot_title = plantFamily
       
-      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, ylab = c(paste(arthGroup)), col = c("burlywood", "rosybrown"))
-      mtext(paste("p =", round(p_value,3)), adj = 1, line = -1, cex = 0.65)  
-      #mtext(c(paste(comparisonVar)), 3, line = 0.25, at = 1, adj = -0.5, cex = 0.75)
-      #mtext(paste("p =", round(p_value,3)))
-      #mtext(c("Native", "Alien"), 1, at = 1:2, line = 1)
-      #mtext(c(paste("N =", native_pop_size), paste("N =", alien_pop_size)), 1, at = 1:2, line = 2, cex = 0.75)
+      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, main = paste(plot_title, ", p =", round(p_value, 3)),
+              ylab = c(paste(arthGroup)),col = c("burlywood", "rosybrown"))
+      mtext(paste("p =", round(p_value,3)), adj = 1, line = -1, cex = 0.65, ylim = 20)
+      mtext("Density        Biomass         Occurrence", outer = TRUE, line = 0)
     }
   }
 }
 
-# A pdf with graphs depicting density, biomass, % surveyed
-# Changing the name of the file and the plant famiy used, manually
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/Practice.pdf",
+
+## A pdf with graphs depicting density, biomass, % surveyed ##
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ReplaceName.pdf",
     width = 10, height = 8)
 par(mfrow = c(4, 3), mar = c(5, 5, 3, 1), oma = c(0,0,1,0))
-mtext("Density        Biomass         Occurrence", outer = TRUE, line = 0)
-#mtext("Biomass", outer = TRUE)
-#mtext("Occurrence", outer = TRUE)
 
-#creating a vector list for arthGroup and the specific families, can run the familiesWith... group after the function
+# Changing the name of the file and the plant famiy used, manually
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = Family, 
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", 
                                            arthGroup = group, comparisonVar = plotVar, plot = TRUE)
   }
 }
 dev.off()
 
 
-# A graph of ALL the families in the dataset so not just Rosaceae, Oleaceae but still separating the arthropod groups
-
+## A graph of ALL the families in the dataset, still separating the arthropod groups
 pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/AllFamiliesAllArth.pdf",
     width = 11, height = 8)
-par(mfrow = c(4, 3), mar = c(3, 3, 3, 1))
+par(mfrow = c(4, 3), mar = c(3, 4, 3, 1))
 
-for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
+#comparisonVar = meanDensity, biomass, fracSurveys 
+for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
-  comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = cc_plus_tallamy$Family, 
-                                         arthGroup = c("caterpillar", "beetle", "truebugs", "spider"), 
-                                         comparisonVar = plotVar, plot = TRUE)
-}
+  for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
+    
+    allFamilies = AnalysisBySciName(cc_plus_tallamy, ordersToInclude = group, plotVar = analysis) %>%
+      left_join(cc_plus_tallamy, by = 'sciName') %>%
+      select(sciName, totalCount, numSurveysGTzero, totalBiomass, nSurveys, meanDensity,
+           fracSurveys, meanBiomass, origin) %>%
+      distinct(sciName, .keep_all = TRUE) 
+  
+    allNativeFamilies = filter(allFamilies, origin == 'native')
+    allAlienFamilies = filter(allFamilies, origin == 'alien')
+  
+    if(plotVar != "fracSurveys") {
+      x = log10(allNativeFamilies[,plotVar] + 0.001)
+      y = log10(allAlienFamilies[,plotVar] + 0.001)
+    } else {
+      x = allNativeFamilies[,plotVar]
+      y = allAlienFamilies[,plotVar]
+    }
+    
+    vioplot(x, y, boxwex = 0.5, ylab = group, col = c("burlywood", "rosybrown"), las = 1)
+    w = wilcox.test(x, y, exact = FALSE)
+    p_value = w$p.value
+    mtext(paste("p =", round(p_value,3)), adj = 1, line = -1, cex = 0.75, ylim = 25)  
+  }
+}  
 
 dev.off()
 
 
-
-## Code to calculate the lepS stuff ## something is still off
+## Code to calculate the lepS stuff ## something is still off ##
 # need meanDensity, etc. to be calculated but that's all cal in the function currently
 plantCountJuneJuly = cleanDatasetCC %>%
   dplyr::filter(julianday >= 152, julianday <= 252) %>% #change range of days 
   distinct(ID, sciName) %>%
   count(sciName) %>%
-  arrange(desc(n))
-
+  arrange(desc(n)) #%>%
+  #filter(sciName %in% plantCountJuneJuly$sciName[plantCountJuneJuly$n >= 10])
 # Specifies that only plant species that were surveyed at least 10x in June and July were included
 SurveyedCertainAmount = cleanDatasetCC %>%
   filter(sciName %in% plantCountJuneJuly$sciName[plantCountJuneJuly$n >= 10])
@@ -215,61 +230,54 @@ onlyCaterpillars = AnalysisBySciName(SurveyedCertainAmount, ordersToInclude = "c
 
 # left_join SurveyWithCaterpillar before
 lepSandAllFam <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
-  select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
+  select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, 
+         meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
-  ###finding Families that are in both native and alien categories?  
-  filter(Family %in% alien_families) %>%
-  arrange(Family, origin) %>%
   filter(nSurveys >= 10) %>%
-  mutate(AssignedOrigin = lepSandAllFam$origin <- ifelse(lepSandAllFam$origin == "native",1,2))
+  mutate(origin2 = case_when(origin == "native" ~ 1,
+                                    origin == "alien" ~ 2))
 
-colors <- c("#00AFBB", "#E7B800")
-colors <- colors[as.numeric(lepSandAllFam$AssignedOrigin)]
-
-## Comparing the average *caterpillar* density, biomass, and fracSurveys per survey to lepS and conducting a linear regression
+## Comparing the average *caterpillar* density, biomass, and fracSurveys 
+## per survey to lepS and conducting a linear regression
 pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/LepidopteraAnalysis.pdf", 
     width = 9, height = 6)
 par(mfrow = c(2, 2), mar = c(5,5,2,1))
 
-plot(lepSandAllFam$lepS, lepSandAllFam$meanDensity, xlab = "Lepidoptera Richness", 
-     ylab = "log(Density)", pch = 16, main ="Density", col = lepSandAllFam$AssignedOrigin)
-#mtext(text=LETTERS[1], xpd=NA, side=3, adj=0, font=2)
-lm.density = lm(meanDensity ~ lepS, data = lepSandAllFam)
-lm.density.2 = lm(meanDensity ~ lepS + origin + lepS * origin, data = lepSandAllFam)
-RandP = summary(lm.density)
-#p value is still incorrect i believe
-#p_value = pf(RandP$fstatistic[1],RandP$fstatistic[2],RandP$fstatistic[1], lower.tail = FALSE)
-R2_value = RandP$r.squared
-mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = -1)
-#mtext(paste("R =", round(R_value,3)), adj = 1, line = 0, cex = 0.65)  
-abline(lm.density)
-abline(lm.density.2)
+# Taking out the outlier of 6.8; what should this threshold is
+outlier = lepSandAllFam$meanDensity >= 6.8
 
+plot(lepSandAllFam$lepS[!outlier], lepSandAllFam$meanDensity[!outlier], xlab = "Lepidoptera Richness", 
+     ylab = "Density", col = lepSandAllFam$origin2, las = 1,
+     pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17))
+lm.density = lm(meanDensity ~ lepS, data = lepSandAllFam)
+#lm.density.2 = lm(meanDensity ~ lepS + origin + lepS * origin, data = lepSandAllFam)
+p_value = summary(lm.density)$coefficients[2,4]
+R2_value = summary(lm.density)$r.squared
+mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = 0)
+abline(lm.density)
+#abline(lm.density.2)
 
 plot(log10(lepSandAllFam$lepS), log10(lepSandAllFam$meanBiomass), xlab = "Lepidoptera Richness", 
-     ylab = "log(Biomass)", pch = 16, main =" Biomass", col = lepSandAllFam$AssignedOrigin)
+     ylab = "Biomass", col = lepSandAllFam$origin2, las = 1,
+     pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17))
 lm.biomass = lm(meanBiomass ~ lepS, data = lepSandAllFam)
-RandP = summary(lm.biomass)
-p_value = pf(RandP$fstatistic[1],RandP$fstatistic[2],RandP$fstatistic[1], lower.tail = FALSE)
-R_value = RandP$r.squared
-mtext(paste("p =", round(p_value,3)), line = -1)
-mtext(paste("R =", round(R_value,3)), adj = 1, line = 0, cex = 0.65) 
+p_value = summary(lm.biomass)$coefficients[2,4]
+R2_value = summary(lm.biomass)$r.squared
+mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = 0)
 abline(lm.biomass)
 
-
 plot(lepSandAllFam$lepS, lepSandAllFam$fracSurveys, xlab = "Lepidoptera Richness", 
-     ylab = "Lepidoptera", pch = 16, main ="Occurrence", col = lepSandAllFam$AssignedOrigin)
+     ylab = "% Occurrence", col = lepSandAllFam$origin2, las = 1,
+     pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17))
 lm.surveys = lm(fracSurveys ~ lepS, data = lepSandAllFam)
-RandP = summary(lm.surveys)
-p_value = pf(RandP$fstatistic[1],RandP$fstatistic[2],RandP$fstatistic[1], lower.tail = FALSE)
-R_value = RandP$r.squared
-mtext(paste("p =", round(p_value,3)), line = -1)
-mtext(paste("R =", round(R_value,3)), adj = 1, line = -1, cex = 0.65) 
+p_value = summary(lm.surveys)$coefficients[2,4]
+R2_value = summary(lm.surveys)$r.squared
+mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = 0)
 abline(lm.surveys)
 
 dev.off()
 
-## Summary of the different species of native vs. alien plants in the two families used for analysis
+## Summary of the different species of native vs. alien plants in the two families used for analysis ##
 plantCountJuneJuly = cleanDatasetCC %>%
   dplyr::filter(julianday >= 152, julianday <= 252) %>% #change range of days 
   distinct(ID, sciName) %>%
@@ -297,31 +305,28 @@ alienSpecies = filter(ArthsAndTallamy, origin == 'alien')
 
 # only the top 10 or so
 nativeSpecies_desc = nativeSpecies[order(-nativeSpecies$nSurveys),] 
-NativeTop10 = nativeSpecies_desc[1:10,]
+nativeTop20 = nativeSpecies_desc[1:20,]
 
 alienSpecies_desc = alienSpecies[order(-alienSpecies$nSurveys),]
 
 
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/BranchesVsSpecies.pdf", 
-    width = 9, height = 6)
-par(mfrow = c(1, 2), mar = c(5,5,2,1))
+pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/BranchesVsSpecies.pdf", width = 6, height = 6)
+par(mfrow = c(2, 1), mar = c(4,3,2,1))
 
-barplot(NativeTop10$nSurveys, xlab = "Native Plant Sp.", ylab = "# of Branches Surveyed", 
-        names.arg = NativeTop10$sciName, las = 3, cex.names = 0.5,
-        pch = 16, main ="Breakdown By Native Plant Species",
-        col = NativeTop10$color,
-        legend = TRUE)
-#namelist = as.vector(colnames(NativeTop10$sciName))
-#text(1:10, par("usr")[1], labels = namelist, srt=45, cex=0.65, pos = 1, xpd = TRUE)
+barplot(nativeTop20$nSurveys, ylab = "# of Branches Surveyed",
+        pch = 16, main ="(A) Native Species",
+        col = nativeTop20$color,
+        legend.text = TRUE)
+text(1:20, par("usr")[3]-0.45, labels = nativeTop20$sciName, cex = 1, 
+     xpd = NA, srt=90, adj=1)
 
-barplot(alienSpecies_desc$nSurveys, xlab = "Alien Plant Sp.", 
+barplot(alienSpecies_desc$nSurveys, 
      ylab = "# of Branches Surveyed",
-     pch = 16, main ="Breakdown By Alien Plant Species", cex.names = 0.5,
+     pch = 16, main ="(B) Alien Species", 
      col = alienSpecies_desc$color,
-     legend = TRUE)
-#axis(side = 1, labels= FALSE)
+     legend.text = rownames(alienSpecies_desc))
 text(1:10, par("usr")[3]-0.45, labels = alienSpecies_desc$sciName, cex = 0.6, 
-     xpd = NA, srt=35, adj=1)
+     xpd = NA, srt=35, adj=1.1)
 
 dev.off()
 
