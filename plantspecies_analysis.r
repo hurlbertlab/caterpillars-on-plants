@@ -9,7 +9,9 @@ library(sp)
 library(maptools)
 library(vioplot)
 
-cleanDatasetCC = read.csv('../caterpillars-on-plants/PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
+sites = read.csv('2022-08-17_Site.csv', row.names = 1)
+
+cleanDatasetCC = read.csv('PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
   mutate(sciName = gsub("\xa0", " ", sciName),
          Genus = word(sciName, 1)) %>%
   filter(sciName != Genus)
@@ -159,7 +161,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
 
 
 ## A pdf with graphs depicting density, biomass, % surveyed ##
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/ReplaceName.pdf",
+pdf(file = "Figures/ReplaceName.pdf",
     width = 10, height = 8)
 par(mfrow = c(4, 3), mar = c(5, 5, 3, 1), oma = c(0,0,1,0))
 
@@ -176,7 +178,7 @@ dev.off()
 
 
 ## A graph of ALL the families in the dataset, still separating the arthropod groups
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/AllFamiliesAllArth.pdf",
+pdf(file = "Figures/AllFamiliesAllArth.pdf",
     width = 11, height = 8)
 par(mfrow = c(4, 3), mar = c(3, 4, 3, 1))
 
@@ -239,7 +241,7 @@ lepSandAllFam <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
 
 ## Comparing the average *caterpillar* density, biomass, and fracSurveys 
 ## per survey to lepS and conducting a linear regression
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/LepidopteraAnalysis.pdf", 
+pdf(file = "Figures/LepidopteraAnalysis.pdf", 
     width = 9, height = 6)
 par(mfrow = c(2, 2), mar = c(5,5,2,1))
 
@@ -310,7 +312,7 @@ nativeTop20 = nativeSpecies_desc[1:20,]
 alienSpecies_desc = alienSpecies[order(-alienSpecies$nSurveys),]
 
 
-pdf(file = "/Users/colleenwhitener/Documents/2-Junior Year/1-BIOL 395/caterpillars-on-plants/Figures/BranchesVsSpecies.pdf", width = 6, height = 6)
+pdf(file = "Figures/BranchesVsSpecies.pdf", width = 6, height = 6)
 par(mfrow = c(2, 1), mar = c(4,3,2,1))
 
 barplot(nativeTop20$nSurveys, ylab = "# of Branches Surveyed",
@@ -329,4 +331,10 @@ text(1:10, par("usr")[3]-0.45, labels = alienSpecies_desc$sciName, cex = 0.6,
      xpd = NA, srt=35, adj=1.1)
 
 dev.off()
+
+# Mapping Caterpillars Count! site data
+activeSites <- cleanDatasetCC %>%
+  select(Latitude, Longitude) %>%
+  
+
 
