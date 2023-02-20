@@ -237,10 +237,10 @@ lepSandAllFam <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
   filter(nSurveys >= 10) %>%
   mutate(origin2 = case_when(origin == "native" ~ 1,
-                                    origin == "alien" ~ 2))
+                                    origin == "alien" ~ 0))
 
 ## Comparing the average *caterpillar* density, biomass, and fracSurveys 
-## per survey to lepS and conducting a linear regression
+## per survey to lepS and conducting a linear regression 
 pdf(file = "Figures/LepidopteraAnalysis.pdf", 
     width = 9, height = 6)
 par(mfrow = c(2, 2), mar = c(5,5,2,1))
@@ -252,12 +252,15 @@ plot(lepSandAllFam$lepS[!outlier], lepSandAllFam$meanDensity[!outlier], xlab = "
      ylab = "Density", col = lepSandAllFam$origin2, las = 1,
      pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17))
 lm.density = lm(meanDensity ~ lepS, data = lepSandAllFam)
-#lm.density.2 = lm(meanDensity ~ lepS + origin + lepS * origin, data = lepSandAllFam)
 p_value = summary(lm.density)$coefficients[2,4]
 R2_value = summary(lm.density)$r.squared
 mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = 0)
 abline(lm.density)
-#abline(lm.density.2)
+
+# ancova.test = lm(meanDensity ~ lepS + origin2 + lepS * origin2, data = lepSandAllFam)
+# summary(ancova.test)
+# separate lines for each part of the ancova values based on the summary
+
 
 plot(log10(lepSandAllFam$lepS), log10(lepSandAllFam$meanBiomass), xlab = "Lepidoptera Richness", 
      ylab = "Biomass", col = lepSandAllFam$origin2, las = 1,
@@ -312,29 +315,36 @@ nativeTop20 = nativeSpecies_desc[1:20,]
 alienSpecies_desc = alienSpecies[order(-alienSpecies$nSurveys),]
 
 
-pdf(file = "Figures/BranchesVsSpecies.pdf", width = 6, height = 6)
-par(mfrow = c(2, 1), mar = c(4,3,2,1))
-
-barplot(nativeTop20$nSurveys, ylab = "# of Branches Surveyed",
-        pch = 16, main ="(A) Native Species",
-        col = nativeTop20$color,
-        legend.text = TRUE)
-text(1:20, par("usr")[3]-0.45, labels = nativeTop20$sciName, cex = 1, 
-     xpd = NA, srt=90, adj=1)
+pdf(file = "Figures/BranchesVsSpecies.pdf", width = 8, height = 10)
+par(mfrow = c(2, 1), mar = c(4,5,2,1))
 
 barplot(alienSpecies_desc$nSurveys, 
-     ylab = "# of Branches Surveyed",
-     pch = 16, main ="(B) Alien Species", 
-     col = alienSpecies_desc$color,
-     legend.text = rownames(alienSpecies_desc))
-text(1:10, par("usr")[3]-0.45, labels = alienSpecies_desc$sciName, cex = 0.6, 
+        ylab = "# of Branches Surveyed",
+        pch = 16, main ="(A) Alien Species", 
+        col = alienSpecies_desc$color)
+legend("topright", legend = c("Rosaceae", "Oleaceae", "Other Families"), 
+       col = c("red", "blue", "black"), 
+       lty = 2, cex = 0.9, box.lty = 0)
+text(1:10, par("usr")[3]-0.45, labels = alienSpecies_desc$sciName, cex = 0.7, 
      xpd = NA, srt=35, adj=1.1)
+
+barplot(nativeTop20$nSurveys, ylab = "# of Branches Surveyed",
+        pch = 16, main ="(B) Native Species",
+        col = nativeTop20$color,
+        names.arg = nativeTop20$sciName, las = 2, cex.names = 0.7)
+legend("topright", legend = c("Rosaceae", "Oleaceae", "Other Families"), 
+       col = c("red", "blue", "black"), 
+       lty = 2, cex = 0.9, box.lty = 0)
+#text(1:20, par("usr")[3]-0.45, labels = nativeTop20$sciName, cex = 1, 
+#     xpd = NA, srt=90, adj=1)
 
 dev.off()
 
-# Mapping Caterpillars Count! site data
+# Mapping Caterpillars Count! site data by finding the sites that are still in use
 activeSites <- cleanDatasetCC %>%
   select(Latitude, Longitude) %>%
-  
+  left_join(sites, by = c('Latitude', 'Longitude'), all.x = TRUE) %>%
+  distinct(Latitude, Longitude)
 
+write.csv(activeSites, 'Figures/activeSites.csv', row.names = F)
 
