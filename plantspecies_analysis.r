@@ -248,10 +248,10 @@ par(mfrow = c(2, 2), mar = c(5,5,2,1))
 # Taking out the outlier of 6.8; what should this threshold is
 outlier = lepSandAllFam$meanDensity >= 6.8
 
-plot(lepSandAllFam$lepS[!outlier], lepSandAllFam$meanDensity[!outlier], xlab = "Lepidoptera Richness", 
-     ylab = "Density", col = lepSandAllFam$origin2, las = 1,
-     pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17))
-lm.density = lm(meanDensity ~ lepS, data = lepSandAllFam)
+plot(lepSandAllFam$lepS, log10(lepSandAllFam$meanDensity), xlab = "Genus-level Lepidoptera Richness", 
+     ylab = "Density per Branch", col = lepSandAllFam$origin2, las = 1,
+     pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17), cex = log10(lepSandAllFam$nSurveys)/2)
+lm.density = lm(log10(meanDensity[meanDensity > 0]) ~ lepS[meanDensity > 0], data = lepSandAllFam)
 p_value = summary(lm.density)$coefficients[2,4]
 R2_value = summary(lm.density)$r.squared
 mtext(paste("p =", round(p_value,3), ", R^2 = ", round(R2_value,3)), line = 0)
@@ -312,31 +312,35 @@ alienSpecies = filter(ArthsAndTallamy, origin == 'alien')
 nativeSpecies_desc = nativeSpecies[order(-nativeSpecies$nSurveys),] 
 nativeTop20 = nativeSpecies_desc[1:20,]
 
+nativeTop = nativeSpecies_desc %>%
+  filter(Family %in% c("Rosaceae", "Oleaceae") | nSurveys >= 500)
+
 alienSpecies_desc = alienSpecies[order(-alienSpecies$nSurveys),]
 
 
 pdf(file = "Figures/BranchesVsSpecies.pdf", width = 8, height = 10)
-par(mfrow = c(2, 1), mar = c(4,5,2,1))
+par(mfrow = c(2, 1), mar = c(4,5,2,1), mgp = c(3.5,.75,0))
 
-barplot(alienSpecies_desc$nSurveys, 
+barplot1 = barplot(alienSpecies_desc$nSurveys, 
         ylab = "# of Branches Surveyed",
         pch = 16, main ="(A) Alien Species", 
-        col = alienSpecies_desc$color)
+        col = alienSpecies_desc$color, las = 1)
 legend("topright", legend = c("Rosaceae", "Oleaceae", "Other Families"), 
-       col = c("red", "blue", "black"), 
-       lty = 2, cex = 0.9, box.lty = 0)
-text(1:10, par("usr")[3]-0.45, labels = alienSpecies_desc$sciName, cex = 0.7, 
+       col = c("red", "blue", "black"), pch = 15, pt.cex = 2,
+       cex = 0.9, bty = "n")
+text(barplot1 +.3, -1, labels = alienSpecies_desc$sciName, cex = 0.7, 
      xpd = NA, srt=35, adj=1.1)
 
-barplot(nativeTop20$nSurveys, ylab = "# of Branches Surveyed",
+barplot2 = barplot(log10(nativeTop$nSurveys), ylab = "log10 # of Surveys",
         pch = 16, main ="(B) Native Species",
-        col = nativeTop20$color,
-        names.arg = nativeTop20$sciName, las = 2, cex.names = 0.7)
-legend("topright", legend = c("Rosaceae", "Oleaceae", "Other Families"), 
-       col = c("red", "blue", "black"), 
-       lty = 2, cex = 0.9, box.lty = 0)
-#text(1:20, par("usr")[3]-0.45, labels = nativeTop20$sciName, cex = 1, 
-#     xpd = NA, srt=90, adj=1)
+        col = nativeTop$color,
+        xaxt = "n", yaxt="n", ylim = c(0, 4))
+axis(2, at = 0:4, labels = c(1, 10, 100, 1000, 10000), las = 1)
+#legend("topright", legend = c("Rosaceae", "Oleaceae", "Other Families"), 
+#       col = c("red", "blue", "black"), pch = 15, pt.cex = 2,
+#       cex = 0.9, box.lty = 0)
+text(barplot2 + 0.3, -.3, labels = nativeTop$sciName, cex = .5, 
+     xpd = NA, srt=35, adj=1)
 
 dev.off()
 
