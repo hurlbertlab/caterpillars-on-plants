@@ -291,6 +291,23 @@ dev.off()
 
 
 ## Summary of the different species of native vs. alien plants in the two families used for analysis ##
+likefamiles = cc_plus_tallamy %>%
+  group_by(Family) %>%
+  summarize(NativeSpp = length(unique(sciName[origin == 'native'])),
+           AlienSpp = length(unique(sciName[origin == 'alien']))) %>%
+  filter(NativeSpp >= 2 & AlienSpp >= 2)
+
+likeplantcount = cc_plus_tallamy %>%
+  filter(julianday >= 152, julianday <= 252) %>%
+  count(Family, sciName, origin)
+likefiltereddata = cc_plus_tallamy %>%
+  filter(julianday >= 152, julianday <= 252) %>%
+  sciName %in% likeplantcount$sciName[likeplantcount$n >= 10]
+likeonlyBugs = AnalysisBySciName(likefiltereddata, ordersToInclude = "All") %>%
+  left_join(likeplantcount, by = 'sciName')
+  
+
+
 plantCountJuneJuly = cleanDatasetCC %>%
   dplyr::filter(julianday >= 152, julianday <= 252) %>% #change range of days 
   distinct(ID, sciName) %>%
@@ -308,7 +325,6 @@ AllArths = AnalysisBySciName(SurveyedCertainAmount, ordersToInclude = "All") %>%
 ArthsAndTallamy = left_join(AllArths, tallamy, by = 'Genus') %>%
   select(sciName:Genus,Family, origin..for.analysis., total.Lep.spp, nSurveys, meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
-  filter(nSurveys >= 10) %>%
   mutate(color = case_when(Family == "Rosaceae" ~ "red",
                            Family == "Oleaceae" ~ "blue",
                            TRUE ~ "black"))
@@ -336,7 +352,7 @@ barplot1 = barplot(log10(alienSpecies_desc$nSurveys),
 legend("top", legend = c("Rosaceae", "Oleaceae", "Other Families"), 
        col = c("red", "blue", "black"), pch = 15, horiz = TRUE, pt.cex = 1,
        cex = 0.6, bty = "n")
-text(barplot1 +.3, -0.08, labels = alienSpecies_desc$sciName, cex = 0.7, 
+text(barplot1 +.3, -0.05, labels = alienSpecies_desc$sciName, cex = 0.7, 
      xpd = NA, srt=35, adj=1)
 axis(2, at = 0:4, labels = c(1, 10, 100, 1000, 10000), las = 1)
 
