@@ -371,10 +371,28 @@ text(barplot2 + 0.3, -.13, labels = nativeTop$sciName, cex = .5,
 dev.off()
 
 # Mapping Caterpillars Count! site data by finding the sites that are still in use
+
 activeSites <- cleanDatasetCC %>%
   select(Latitude, Longitude) %>%
   left_join(sites, by = c('Latitude', 'Longitude'), all.x = TRUE) %>%
   distinct(Latitude, Longitude)
 
 write.csv(activeSites, 'Figures/activeSites.csv', row.names = F)
+
+
+#Creates an interactive zooming map that won't save
+#In ggplot...
+library(mapdata)
+library(maps)
+library(ggplot2)
+
+(activeSites <- st_as_sf(sites, coords = c("Longitude", "Latitude"), 
+                   crs = 4326, agr = "constant"))
+
+ggplot(data = world) +
+  geom_sf() +
+  geom_sf(data = activeSites, size = 4, shape = 16, fill = "lightblue") +
+  coord_sf(xlim = c(-135, 5), ylim = c(-2, 75), expand = FALSE)
+
+
 
