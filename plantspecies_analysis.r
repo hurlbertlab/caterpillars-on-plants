@@ -316,7 +316,7 @@ plantCountJuneJuly = cleanDatasetCC %>%
 
 # Specifies that only plant species that were surveyed at least 10x in June and July were included
 SurveyedCertainAmount = cleanDatasetCC %>%
-  filter(sciName %in% plantCountJuneJuly$sciName[plantCountJuneJuly$n >= 10])
+  filter(sciName %in% plantCountJuneJuly$sciName[plantCountJuneJuly$n >= 6])
 
 # Specifies that only caterpillars (not all arthropods) were analyzed in this analysis
 AllArths = AnalysisBySciName(SurveyedCertainAmount, ordersToInclude = "All") %>%
