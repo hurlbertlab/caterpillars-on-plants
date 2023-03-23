@@ -151,17 +151,17 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       y_label = comparisonVar
 
       vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("burlywood", "rosybrown"))
-      mtext(paste("p =", round(p_value,3)), adj = 0.9, line = -1.5, cex = 1.0, ylim = 20)
+      mtext(paste("p =", round(p_value,3)), adj = 0.9, line = -1.5, cex = 1.15, ylim = 20)
       mtext(c(paste("Native =", native_pop_size), paste("Alien =", alien_pop_size)), 1,
-            line = 0.8, at = 1:2, cex = 0.95)
+            line = 0.8, at = 1:2, cex = 1.15)
     }
   }
 }
 
 
 ## A pdf with graphs depicting density, biomass, % surveyed ##
-pdf(file = "Figures/OleaceaeWilCoxTest.pdf",
-    width = 12, height = 10)
+pdf(file = "Figures/RosaceaeWilCoxTest.pdf",
+    width = 11, height = 8.5)
 par(mfrow = c(4, 3), mar = c(2, 4, 2, 1), oma = c(0,0,1,0))
 
 text(1, -0.5, "Density")
@@ -171,7 +171,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Oleaceae", 
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", 
                                            arthGroup = group, comparisonVar = plotVar, plot = TRUE)
   }
 }
@@ -211,7 +211,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
     vioplot(x, y, boxwex = 0.5, xaxt = 'n', col = c("burlywood", "rosybrown"), las = 1)
     w = wilcox.test(x, y, exact = FALSE)
     p_value = w$p.value
-    mtext(paste("p =", round(p_value,3)), adj = 0.91, line = -1.5, cex = 1.0, ylim = 25) 
+    mtext(paste("p =", round(p_value,3)), adj = 0.91, line = -1.5, cex = 1.15, ylim = 25) 
     mtext(c(paste("Native =", Allnative_pop_size), paste("Alien =", Allalien_pop_size)), 1,
           line = 0.8, at = 1:2, cex = 0.95)
   }
