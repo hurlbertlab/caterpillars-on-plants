@@ -149,8 +149,9 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     # Plotting the analysis
     if(plot == TRUE) {
       y_label = comparisonVar
-
-      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("burlywood", "rosybrown"))
+      
+      # Colors associated with each family name changed manually
+      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("blue4", "royalblue2"))
       mtext(paste("p =", round(p_value,3)), adj = 0.9, line = -1.5, cex = 1.15, ylim = 20)
       mtext(c(paste("Native =", native_pop_size), paste("Alien =", alien_pop_size)), 1,
             line = 0.8, at = 1:2, cex = 1.15)
@@ -160,18 +161,18 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
 
 
 ## A pdf with graphs depicting density, biomass, % surveyed ##
-pdf(file = "Figures/RosaceaeWilCoxTest.pdf",
+pdf(file = "Figures/OleaceaeWilCoxTest.pdf",
     width = 11, height = 8.5)
 par(mfrow = c(4, 3), mar = c(2, 4, 2, 1), oma = c(0,0,1,0))
 
 text(1, -0.5, "Density")
 
-# Changing the name of the file and the plant famiy used, manually
+# Changing the name of the file and the plant family used, manually
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", 
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Oleaceae", 
                                            arthGroup = group, comparisonVar = plotVar, plot = TRUE)
   }
 }
@@ -208,7 +209,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
       y = allAlienFamilies[,plotVar]
     }
   
-    vioplot(x, y, boxwex = 0.5, xaxt = 'n', col = c("burlywood", "rosybrown"), las = 1)
+    vioplot(x, y, boxwex = 0.5, xaxt = 'n', col = c("grey28", "grey76"), las = 1)
     w = wilcox.test(x, y, exact = FALSE)
     p_value = w$p.value
     mtext(paste("p =", round(p_value,3)), adj = 0.91, line = -1.5, cex = 1.15, ylim = 25) 
@@ -261,8 +262,8 @@ plot(lepSandAllFam$lepS, log10(lepSandAllFam$meanDensity), xlab = "Genus-level L
      pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17), cex = log10(lepSandAllFam$nSurveys)/2)
 lm.density = lm(log10(meanDensity[meanDensity > 0]) ~ lepS[meanDensity > 0], data = lepSandAllFam)
 p_value = summary(lm.density)$coefficients[2,4]
-R2_value = summary(lm.density)$r.squared
-mtext(paste("R^2 = ", round(R2_value,3), ", p =", round(p_value,3)), line = -1.15, adj = 0.05)
+text(61, 0.5, bquote(R^2==.(round(summary(lm.density)$r.squared, 2))))
+mtext(paste("p =", round(p_value,3)), line = -1.15, adj = 0.05)
 abline(lm.density)
 
 # ancova.test = lm(meanDensity ~ lepS + origin2 + lepS * origin2, data = lepSandAllFam)
@@ -272,10 +273,10 @@ abline(lm.density)
 plot(log10(lepSandAllFam$lepS), log10(lepSandAllFam$meanBiomass), xlab = "Genus-level Lepidoptera Richness", 
      ylab = "Biomass per Branch", col = lepSandAllFam$color, las = 1,
      pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17), cex = log10(lepSandAllFam$nSurveys)/2)
-lm.biomass = lm(meanBiomass ~ lepS, data = lepSandAllFam)
+lm.biomass = lm(log10(meanBiomass[meanBiomass > 0]) ~ lepS[meanBiomass > 0], data = lepSandAllFam)
 p_value = summary(lm.biomass)$coefficients[2,4]
-R2_value = summary(lm.biomass)$r.squared
-mtext(paste("R^2 = ", round(R2_value,3), ", p =", round(p_value,3)), line = -1.15, adj = 0.05)
+text(0.31, 2, bquote(R^2==.(round(summary(lm.biomass)$r.squared, 2))))
+mtext(paste("p =", round(p_value,3)), line = -1.15, adj = 0.05)
 abline(lm.biomass)
 
 
@@ -284,8 +285,8 @@ plot(lepSandAllFam$lepS, lepSandAllFam$fracSurveys, xlab = "Genus-level Lepidopt
      pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17), cex = log10(lepSandAllFam$nSurveys)/2)
 lm.surveys = lm(fracSurveys ~ lepS, data = lepSandAllFam)
 p_value = summary(lm.surveys)$coefficients[2,4]
-R2_value = summary(lm.surveys)$r.squared
-mtext(paste("R^2 = ", round(R2_value,3), ", p =", round(p_value,3)), line = -1.15, adj = 0.05)
+text(61, 50, bquote(R^2==.(round(summary(lm.surveys)$r.squared, 2))))
+mtext(paste("p =", round(p_value,3)), line = -1.15, adj = 0.05)
 abline(lm.surveys)
 
 dev.off()
