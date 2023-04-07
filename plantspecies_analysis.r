@@ -92,7 +92,7 @@ cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
 comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original dataset with native/alien info
                             arthGroup,                               # Arthropod to be analyzed
                             plantFamily,                             # Plant family with both native/alien species
-                            jdRange = c(152, 252),                   # Range of days
+                            jdRange = c(152, 212),                   # Range of days
                             minSurveysPerPlant = 10,                 # Minimum number of surveys done per branch
                             plot = FALSE,                            # Plotting the data
                             comparisonVar = "meanDensity")           # 'meanDensity' or 'fracSurveys' or 'meanBiomass' 
@@ -142,8 +142,8 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     nativeMean = w$estimate[1]
     alienMean = w$estimate[2]
     
-    #native_pop_size = nrow(nativeData)
-    #alien_pop_size = nrow(alienData)
+    native_pop_size = nrow(nativeData)
+    alien_pop_size = nrow(alienData)
     
     # Creating a pdf for each arthGroup
     # Plotting the analysis
@@ -160,7 +160,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
 
 
 ## A pdf with graphs depicting density, biomass, % surveyed ##
-pdf(file = "Figures/OleaceaeWilCoxTest.pdf",
+pdf(file = "Figures/RosaceaeWilCoxTest.pdf",
     width = 11, height = 8.5)
 par(mfrow = c(4, 3), mar = c(2, 4, 2, 1), oma = c(0,0,1,0))
 
@@ -171,7 +171,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Oleaceae", 
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", 
                                            arthGroup = group, comparisonVar = plotVar, plot = TRUE)
   }
 }
@@ -198,8 +198,8 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
     allNativeFamilies = filter(allFamilies, origin == 'native')
     allAlienFamilies = filter(allFamilies, origin == 'alien')
     
-    #Allnative_pop_size = nrow(allNativeFamilies)
-    #Allalien_pop_size = nrow(allAlienFamilies)
+    Allnative_pop_size = nrow(allNativeFamilies)
+    Allalien_pop_size = nrow(allAlienFamilies)
   
     if(plotVar != "fracSurveys") {
       x = log10(allNativeFamilies[,plotVar] + 0.001)
@@ -215,14 +215,13 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
     mtext(paste("p =", round(p_value,3)), adj = 0.91, line = -1.5, cex = 1.15, ylim = 25) 
   }
 }  
-
 dev.off()
 
 
 ## Code to calculate the lepS stuff ## something is still off ##
 # need meanDensity, etc. to be calculated but that's all cal in the function currently
 plantCountJuneJuly = cleanDatasetCC %>%
-  dplyr::filter(julianday >= 152, julianday <= 252) %>% #change range of days 
+  dplyr::filter(julianday >= 152, julianday <= 212) %>% #change range of days 
   distinct(ID, sciName) %>%
   count(sciName) %>%
   arrange(desc(n)) #%>%
@@ -299,16 +298,16 @@ likefamiles = cc_plus_tallamy %>%
   filter(NativeSpp >= 2 & AlienSpp >= 2)
 
 likeplantcount = cc_plus_tallamy %>%
-  filter(julianday >= 152, julianday <= 252) %>%
+  filter(julianday >= 152, julianday <= 212) %>%
   count(Family, sciName, origin)
 likefiltereddata = cc_plus_tallamy %>%
-  filter(julianday >= 152, julianday <= 252) %>%
+  filter(julianday >= 152, julianday <= 212) %>%
   sciName %in% likeplantcount$sciName[likeplantcount$n >= 10]
 likeonlyBugs = AnalysisBySciName(likefiltereddata, ordersToInclude = "All") %>%
   left_join(likeplantcount, by = 'sciName')
-
+##
 plantCountJuneJuly = cleanDatasetCC %>%
-  dplyr::filter(julianday >= 152, julianday <= 252) %>% #change range of days 
+  dplyr::filter(julianday >= 152, julianday <= 212) %>% #change range of days 
   distinct(ID, sciName) %>%
   count(sciName) %>%
   arrange(desc(n))  
