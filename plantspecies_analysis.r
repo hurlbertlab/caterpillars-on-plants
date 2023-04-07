@@ -44,7 +44,7 @@ mutate_cond <- function(.data, condition,...,envir=parent.frame()){
 AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
                             ordersToInclude = 'All',    # or 'caterpillar' like arthGroup
                             minLength = 0,              # minimum arthropod size to include 
-                            jdRange = c(152, 212),      # change range of days
+                            jdRange = c(132, 232),      # change range of days
                             outlierCount = 10000,       # Outliers 
                             plotVar = 'Density',        # 'Density' or 'fracSurveys' or 'Biomass'
                             ...)                  
@@ -92,7 +92,7 @@ cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
 comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original dataset with native/alien info
                             arthGroup,                               # Arthropod to be analyzed
                             plantFamily,                             # Plant family with both native/alien species
-                            jdRange = c(152, 212),                   # Range of days
+                            jdRange = c(132, 232),                   # Range of days
                             minSurveysPerPlant = 10,                 # Minimum number of surveys done per branch
                             plot = FALSE,                            # Plotting the data
                             comparisonVar = "meanDensity")           # 'meanDensity' or 'fracSurveys' or 'meanBiomass' 
@@ -221,7 +221,7 @@ dev.off()
 ## Code to calculate the lepS stuff ## something is still off ##
 # need meanDensity, etc. to be calculated but that's all cal in the function currently
 plantCountJuneJuly = cleanDatasetCC %>%
-  dplyr::filter(julianday >= 152, julianday <= 212) %>% #change range of days 
+  dplyr::filter(julianday >= 132, julianday <= 232) %>% #change range of days 
   distinct(ID, sciName) %>%
   count(sciName) %>%
   arrange(desc(n)) #%>%
@@ -298,16 +298,16 @@ likefamiles = cc_plus_tallamy %>%
   filter(NativeSpp >= 2 & AlienSpp >= 2)
 
 likeplantcount = cc_plus_tallamy %>%
-  filter(julianday >= 152, julianday <= 212) %>%
+  filter(julianday >= 132, julianday <= 232) %>%
   count(Family, sciName, origin)
 likefiltereddata = cc_plus_tallamy %>%
-  filter(julianday >= 152, julianday <= 212) %>%
+  filter(julianday >= 132, julianday <= 232) %>%
   sciName %in% likeplantcount$sciName[likeplantcount$n >= 10]
 likeonlyBugs = AnalysisBySciName(likefiltereddata, ordersToInclude = "All") %>%
   left_join(likeplantcount, by = 'sciName')
 ##
 plantCountJuneJuly = cleanDatasetCC %>%
-  dplyr::filter(julianday >= 152, julianday <= 212) %>% #change range of days 
+  dplyr::filter(julianday >= 132, julianday <= 232) %>% #change range of days 
   distinct(ID, sciName) %>%
   count(sciName) %>%
   arrange(desc(n))  
