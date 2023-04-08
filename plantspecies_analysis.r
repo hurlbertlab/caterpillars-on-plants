@@ -152,7 +152,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       
       # Colors associated with each family name changed manually: 
       # Native plants are darker colors (blue4, darkred) and alien plants (steelblue1, firebrick1)
-      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("blue4", "steelblue1"))
+      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("darkred", "firebrick1"))
       mtext(paste("p =", round(p_value,3)), adj = 0.9, line = -1.5, cex = 1.15, ylim = 20)
     }
   }
@@ -259,7 +259,7 @@ plot(lepSandAllFam$lepS, log10(lepSandAllFam$meanDensity), xlab = "Genus-level L
      pch = ifelse(lepSandAllFam$origin2 == 1, 16, 17), cex = log10(lepSandAllFam$nSurveys)/2)
 lm.density = lm(log10(meanDensity[meanDensity > 0]) ~ lepS[meanDensity > 0], data = lepSandAllFam)
 p_value = summary(lm.density)$coefficients[2,4]
-text(48, 0.5, bquote(R^2==.(round(summary(lm.density)$r.squared, 2))), cex = 1.05)
+text(48, 0.45, bquote(R^2==.(round(summary(lm.density)$r.squared, 2))), cex = 1.05)
 mtext(paste("p =", round(p_value,3)), line = -1.15, adj = 0.05)
 abline(lm.density)
 
