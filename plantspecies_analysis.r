@@ -152,15 +152,17 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       
       # Colors associated with each family name changed manually: 
       # Native plants are darker colors (blue4, darkred) and alien plants (steelblue1, firebrick1)
-      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("darkred", "firebrick1"))
+      vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("blue4", "steelblue1"))
       mtext(paste("p =", round(p_value,3)), adj = 0.9, line = -1.5, cex = 1.15, ylim = 20)
+      mtext(c(paste("Native"), paste("Alien")), 1,
+            line = 0.8, at = 1:2, cex = 1.15)
     }
   }
 }
 
 
 ## A pdf with graphs depicting density, biomass, % surveyed ##
-pdf(file = "Figures/RosaceaeWilCoxTest.pdf",
+pdf(file = "Figures/OleaceaeWilCoxTest.pdf",
     width = 11, height = 8.5)
 par(mfrow = c(4, 3), mar = c(2, 4, 2, 1), oma = c(0,0,1,0))
 
@@ -171,7 +173,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
     
-    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Rosaceae", 
+    comparingBugsonNativeVersusAlienPlants(cc_plus_tallamy, plantFamily = "Oleaceae", 
                                            arthGroup = group, comparisonVar = plotVar, plot = TRUE)
   }
 }
@@ -213,6 +215,8 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
     w = wilcox.test(x, y, exact = FALSE)
     p_value = w$p.value
     mtext(paste("p =", round(p_value,3)), adj = 0.91, line = -1.5, cex = 1.15, ylim = 25) 
+    mtext(c(paste("Native"), paste("Alien")), 1,
+          line = 0.8, at = 1:2, cex = 0.95)
   }
 }  
 dev.off()
