@@ -290,6 +290,12 @@ text(48, 50, bquote(R^2==.(round(summary(lm.surveys)$r.squared, 2))), cex = 1.05
 mtext(paste("p =", round(p_value,3)), line = -1.15, adj = 0.05)
 abline(lm.surveys)
 
+plot(x = 1, type = 'n', ylab = "", yaxt = 'n', xlab = "", xaxt = 'n')
+
+legend("center", legend = c("Rosaceae Native", "Rosaceae Alien", "Oleaceae Native", "Oleaceae Alien", "Native Other Families", "Alien Other Families"), 
+       col = c("darkred","firebrick1", "blue4", "steelblue1", "black", "black"),
+       pch= c(16, 17, 16, 17, 16, 17), pt.cex = 1.5, cex = 1.5)
+
 dev.off()
 
 
