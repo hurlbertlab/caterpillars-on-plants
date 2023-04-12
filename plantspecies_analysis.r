@@ -244,8 +244,10 @@ lepSandAllFam <- left_join(onlyCaterpillars, tallamy, by = 'Genus') %>%
          meanDensity, fracSurveys, meanBiomass) %>%
   rename(origin = origin..for.analysis., lepS = total.Lep.spp) %>%
   filter(nSurveys >= 10) %>%
-  mutate(color = case_when(Family == "Rosaceae" ~ "red",
-                           Family == "Oleaceae" ~ "blue",
+  mutate(color = case_when(Family == "Rosaceae" & origin == "native" ~ "darkred",
+                           Family == "Rosaceae" & origin == "alien" ~ "firebrick1",
+                           Family == "Oleaceae" & origin == "native" ~ "blue4",
+                           Family == "Oleaceae" & origin == "alien" ~ "steelblue1",
                            TRUE ~ "black")) %>%
   mutate(origin2 = case_when(origin == "native" ~ 1,
                              origin == "alien" ~ 2))
