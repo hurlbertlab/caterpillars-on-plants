@@ -118,7 +118,8 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       filter(julianday >= jdRange[1], 
              julianday <= jdRange[2],
              Family == plantFamily,
-             sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant])  
+             sciName %in% plantCount$sciName[plantCount$n >= minSurveysPerPlant]) #%>%
+      #filter(ObservationMethod == "BeatSheet")
     
     onlyBugs<-AnalysisBySciName(filteredData, ordersToInclude = arthGroup) %>%
       left_join(plantCount, by = "sciName") 
@@ -302,22 +303,6 @@ dev.off()
 
 
 ## Summary of the different species of native vs. alien plants in the two families used for analysis ##
-### HAVEN'T USED ####
-likefamiles = cc_plus_tallamy %>%
-  group_by(Family) %>%
-  summarize(NativeSpp = length(unique(sciName[origin == 'native'])),
-           AlienSpp = length(unique(sciName[origin == 'alien']))) %>%
-  filter(NativeSpp >= 2 & AlienSpp >= 2)
-
-likeplantcount = cc_plus_tallamy %>%
-  filter(julianday >= 132, julianday <= 232) %>%
-  count(Family, sciName, origin)
-likefiltereddata = cc_plus_tallamy %>%
-  filter(julianday >= 132, julianday <= 232) %>%
-  sciName %in% likeplantcount$sciName[likeplantcount$n >= 10]
-likeonlyBugs = AnalysisBySciName(likefiltereddata, ordersToInclude = "All") %>%
-  left_join(likeplantcount, by = 'sciName')
-##
 plantCountJuneJuly = cleanDatasetCC %>%
   dplyr::filter(julianday >= 132, julianday <= 232) %>% #change range of days 
   distinct(ID, sciName) %>%
