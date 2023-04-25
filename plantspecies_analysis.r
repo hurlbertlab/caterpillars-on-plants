@@ -155,7 +155,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
       # Native plants are darker colors (blue4, darkred) and alien plants (steelblue1, firebrick1)
       vioplot(x, y, boxwex = 0.5, xaxt = 'n', las = 1, col = c("blue4", "steelblue1"))
       mtext(paste("p =", round(p_value,3)), adj = 0.9, line = -1.5, cex = 1.15, ylim = 20)
-      mtext(c(paste("Native"), paste("Alien")), 1,
+      mtext(c(paste("Native"), paste("Non-native")), 1,
             line = 0.8, at = 1:2, cex = 1.15)
     }
   }
@@ -216,7 +216,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
     w = wilcox.test(x, y, exact = FALSE)
     p_value = w$p.value
     mtext(paste("p =", round(p_value,3)), adj = 0.91, line = -1.5, cex = 1.15, ylim = 25) 
-    mtext(c(paste("Native"), paste("Alien")), 1,
+    mtext(c(paste("Native"), paste("Non-native")), 1,
           line = 0.8, at = 1:2, cex = 0.95)
   }
 }  
@@ -295,7 +295,7 @@ abline(lm.surveys)
 
 plot(x = 1, type = 'n', ylab = "", yaxt = 'n', xlab = "", xaxt = 'n')
 
-legend("center", legend = c("Rosaceae Native", "Rosaceae Alien", "Oleaceae Native", "Oleaceae Alien", "Native Other Families", "Alien Other Families"), 
+legend("center", legend = c("Rosaceae Natives", "Rosaceae Non-natives", "Oleaceae Natives", "Oleaceae Non-natives", "Native Other Families", "Non-native Other Families"), 
        col = c("darkred","firebrick1", "blue4", "steelblue1", "black", "black"),
        pch= c(16, 17, 16, 17, 16, 17), pt.cex = 1.5, cex = 1.5)
 
@@ -349,7 +349,7 @@ barplot2 = barplot(log10(nativeTop$nSurveys), ylab = "log10 # of Surveys",
                    col = nativeTop$color,
                    xaxt = "n", yaxt="n", ylim = c(0, 4))
 axis(2, at = 0:4, labels = c(1, 10, 100, 1000, 10000), las = 1)
-legend("topright", legend = c("Rosaceae Native", "Oleaceae Native", "Other Families"), 
+legend("topright", legend = c("Rosaceae Natives", "Oleaceae Natives", "Other Families"), 
        col = c("darkred", "blue4", "black"), pch = 15, horiz = FALSE, pt.cex = 1,
        cex = 0.9, bty = "n")
 text(barplot2 + 0.3, -.13, labels = nativeTop$sciName, cex = .5, 
@@ -357,9 +357,9 @@ text(barplot2 + 0.3, -.13, labels = nativeTop$sciName, cex = .5,
 
 barplot1 = barplot(log10(alienSpecies_desc$nSurveys), 
         ylab = "log 10 # of Surveys",
-        pch = 16, main ="(B) Alien Species", 
+        pch = 16, main ="(B) Non-native Species", 
         col = alienSpecies_desc$color, las = 1, yaxt = 'n', ylim = c(0,3))
-legend("topright", legend = c("Rosaceae Alien", "Oleaceae Alien", "Other Families"), 
+legend("topright", legend = c("Rosaceae Non-natives", "Oleaceae Non-natives", "Other Families"), 
        col = c("firebrick1", "steelblue1", "black"), pch = 15, horiz = FALSE, pt.cex = 1,
        cex = 0.9, bty = "n")
 text(barplot1 +.3, -0.05, labels = alienSpecies_desc$sciName, cex = 0.7, 
