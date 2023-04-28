@@ -5,7 +5,6 @@ library(gsheet)
 library(gridExtra)
 library(maps)
 library(sp)
-#maptools is going to expire end of 2023; do i need this?
 library(maptools)
 library(vioplot)
 
@@ -87,8 +86,6 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
 cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
 
 #for every plant family return a graph created by comparingBugs... for an arthropod
-
-# Rename the function ; incorporating the other function?
 comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original dataset with native/alien info
                             arthGroup,                               # Arthropod to be analyzed
                             plantFamily,                             # Plant family with both native/alien species
@@ -128,7 +125,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     nativeData = filter(onlyBugs, origin == 'native')
     alienData = filter(onlyBugs, origin == 'alien')
     
-    # Completing a t.test analysis and pulling out the means and p-value
+    # Completing an analysis and pulling out the means, p-value, etc.
     if(comparisonVar != "fracSurveys") {
       x = log10(nativeData[,comparisonVar] + 0.001)
       y = log10(alienData[,comparisonVar] + 0.001)
@@ -140,7 +137,7 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     w = wilcox.test(x, y, exact = FALSE)
     p_value = w$p.value
     
-    #Change the column name to meanBiomass, meanDensity, or fraSurveys
+    # Change the column name to meanBiomass, meanDensity, or fracSurveys
     median(nativeData$meanDensity)
     median(alienData$meanDensity)
     #nativeMean = w$estimate[1]
@@ -170,8 +167,6 @@ pdf(file = "Figures/RosaceaeWilCoxTest.pdf",
     width = 11, height = 8.5)
 par(mfrow = c(4, 3), mar = c(2, 4, 2, 1), oma = c(0,0,1,0))
 
-#text(1, -0.5, "Density")
-
 # Changing the name of the file and the plant family used, manually
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
@@ -189,8 +184,6 @@ pdf(file = "Figures/AllFamiliesAllArth.pdf",
     width = 11, height = 8.5)
 par(mfrow = c(4, 3), mar = c(3, 4, 3, 1))
 
-
-#comparisonVar = meanDensity, biomass, fracSurveys 
 for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
   
   for (plotVar in c("meanDensity", "meanBiomass", "fracSurveys")) {
@@ -230,8 +223,7 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
 dev.off()
 
 
-## Code to calculate the lepS stuff ## something is still off ##
-# need meanDensity, etc. to be calculated but that's all cal in the function currently
+## Code to calculate the lepS comparisons 
 plantCountJuneJuly = cleanDatasetCC %>%
   dplyr::filter(julianday >= 132, julianday <= 232) %>% #change range of days 
   distinct(ID, sciName) %>%
@@ -276,10 +268,6 @@ p_value = summary(lm.density)$coefficients[2,4]
 text(48, 0.45, bquote(R^2==.(round(summary(lm.density)$r.squared, 2))), cex = 1.05)
 mtext(paste("p =", round(p_value,3)), line = -1.15, adj = 0.05)
 abline(lm.density)
-
-# ancova.test = lm(meanDensity ~ lepS + origin2 + lepS * origin2, data = lepSandAllFam)
-# summary(ancova.test)
-# separate lines for each part of the ancova values based on the summary
 
 plot(log10(lepSandAllFam$lepS), log10(lepSandAllFam$meanBiomass), xlab = "Genus-level Lepidoptera Richness", 
      ylab = "Biomass per Branch", col = lepSandAllFam$color, las = 1,
