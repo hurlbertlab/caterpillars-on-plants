@@ -140,8 +140,11 @@ comparingBugsonNativeVersusAlienPlants <- function(cc_plus_tallamy,  # Original 
     w = wilcox.test(x, y, exact = FALSE)
     p_value = w$p.value
     
-    nativeMean = w$estimate[1]
-    alienMean = w$estimate[2]
+    #Change the column name to meanBiomass, meanDensity, or fraSurveys
+    median(nativeData$meanDensity)
+    median(alienData$meanDensity)
+    #nativeMean = w$estimate[1]
+    #alienMean = w$estimate[2]
     
     native_pop_size = nrow(nativeData)
     alien_pop_size = nrow(alienData)
@@ -204,6 +207,10 @@ for (group in c("caterpillar", "beetle", "truebugs", "spider")) {
     Allnative_pop_size = nrow(allNativeFamilies)
     Allalien_pop_size = nrow(allAlienFamilies)
   
+    # Change the column name to meanBiomass, meanDensity, or fraSurveys
+    median(allNativeFamilies$meanDensity)
+    median(allAlienFamilies$meanDensity)
+    
     if(plotVar != "fracSurveys") {
       x = log10(allNativeFamilies[,plotVar] + 0.001)
       y = log10(allAlienFamilies[,plotVar] + 0.001)
