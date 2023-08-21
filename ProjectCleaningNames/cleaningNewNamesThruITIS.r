@@ -57,7 +57,7 @@ cleanNamesThruITIS = function(speciesList) {
 # 1. read in latest Plants.csv
 plants = read.csv(list.files()[grep('Plant.csv', list.files())], header = TRUE, stringsAsFactors = FALSE)
 
-officialPlantListFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), 'officialPlantList_')]
+officialPlantListFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), 'officialPlantList')]
 mostRecentOfficialPlantList = officialPlantListFiles[length(officialPlantListFiles)]
 officialPlantList = read.csv(paste0('ProjectCleaningNames/', mostRecentOfficialPlantList), header = T)
 
@@ -96,21 +96,20 @@ unmatched_new_species <- filter(cleanedNewNames, is.na(cleanedNewNames$itis_id))
   mutate(cleanedPlantName = NA,
          isConifer = NA,
          notes= NA) %>%
-  select(userPlantName, cleanedPlantName, sciName, itis_id, rank, notes, isConifer) %>%
+  select(userPlantName, cleanedPlantName, sciName, itis_id, rank, notes, isConifer)
+
 write.csv(unmatched_new_species, paste0("ProjectCleaningNames/unmatched_new_species_", Sys.Date(), ".csv"), row.names = F)    
 
-  
 # 3.5  Manually go through all rows in unmatched_new_species...csv file and fill in a taxonomically valid cleanedPlantName.
 # -- Use resolver.globalnames.org to find potential synonymns or other authorities that recognize the name (put in notes).
 # -- After manually fixing all entries, then read in .csv as a dataframe which will have the original userPlantName and a new cleanedPlantName.
 # -- If research does not yield a valid taxonomic name, leave cleanedPlantName as NA.
-listOfUnmatchedFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), '^unmatched_new_species_with_NA')]
+listOfUnmatchedFiles = list.files('ProjectCleaningNames')[str_detect(list.files('ProjectCleaningNames'), '^unmatched_new_species')]
 mostRecentUnmatchedFile = listOfUnmatchedFiles[length(listOfUnmatchedFiles)]
   
 manually_matched_new_species <- read.csv(paste0('ProjectCleaningNames/', mostRecentUnmatchedFile))
 
-# 3.6  Run the cleanedPlantName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedPlantName" and join 
-#     the results back to the original manually created dataframe that includes both userPlantName and cleanedPlantName by cleanedPlantName.
+# 3.6  Run the cleanedPlantName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedPlantName" and join the results back to the original manually created dataframe that includes both userPlantName and cleanedPlantName by cleanedPlantName.
 cleanedManuallyEnteredNames = cleanNamesThruITIS(manually_matched_new_species$cleanedPlantName) 
 
 manuallyCleanedRecordsWithITIS = left_join(manually_matched_new_species[, c('userPlantName', 'cleanedPlantName')], 
@@ -124,7 +123,7 @@ manuallyCleanedRecordsWithITIS = left_join(manually_matched_new_species[, c('use
 # 5. Add cleaning code to fix typos such that the cleanedPlantName will match in ITIS 
 
 # 6. Add all new userPlantName names to officialPlantList (after possibly running through the previous steps a couple of times)("paste" to the bottom of officialPlantList)
-officialPlantList = rbind(officialPlantList, cleanedManuallyEnteredNames)
+officialPlantList = rbind(officialPlantList, manuallyCleanedRecordsWithITIS)
 
 # 7. Writing an updated officialPlantList
 write.csv(officialPlantList, paste("ProjectCleaningNames/officialPlantList", Sys.Date(), ".csv", sep = ""), row.names = F)
