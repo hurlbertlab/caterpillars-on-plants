@@ -4,14 +4,13 @@ library(data.table)
 library(gsheet)
 library(gridExtra)
 library(maps)
-library(sp)
-library(maptools)
+#library(sp)         # phasing out sp, maptools, rgdal etc.; may need to find alternate workflows
+#library(maptools)
 library(vioplot)
 
-sites = read.csv('2022-08-17_Site.csv', row.names = 1)
 
 cleanDatasetCC = read.csv('PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
-  mutate(sciName = gsub("\xa0", " ", sciName),
+  mutate(sciName = str_replace(sciName, "\xa0", " "),
          Genus = word(sciName, 1)) %>%
   filter(sciName != Genus)
 
