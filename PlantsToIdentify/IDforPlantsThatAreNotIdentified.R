@@ -1,3 +1,9 @@
+# This script is the workflow for identifying individual survey branches that have not been id'ed by site managers where Plant Species name is blank (NA). In those cases, the branch is potentially identifiable to family, genus, or species either because
+#  1) users entered a plant species name while conducting a survey, or
+#  2) arthropod photos from that survey branch might allow the inference of plant species
+
+# 
+
 library(dplyr)
 library(xml2)
 library(stringr)
