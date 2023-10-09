@@ -59,9 +59,11 @@ new_species <- plants %>%
   # select rerun sciName entries that are NOT (!) in sciName from cleaned list
   filter(!userPlantName %in% officialPlantList$userPlantName) 
 
+# IF THERE ARE NEW SPECIES (nrow(new_species) > 0), MOVE FORWARD. OTHERWISE STOP.
+
 write.csv(new_species, paste("ProjectCleaningNames/newSpecies_", Sys.Date(), ".csv", sep = ""), row.names = F)
 
-if (nrow(new_species) > 0) {
+
 # 3. Run new entries through ITIS / Match new names using taxize
 cleanedNewNames = cleanNamesThruITIS(new_species$userPlantName)
 
@@ -108,12 +110,10 @@ manuallyCleanedRecordsWithITIS = left_join(manually_matched_new_species[, c('use
   select(userPlantName, cleanedPlantName, sciName, itis_id, rank, notes, isConifer)
 
 
-# 4. Manually exmamine names that still don't match
-# 5. Add cleaning code to fix typos such that the cleanedPlantName will match in ITIS 
+# 4. Manually examine names that still don't match and correct where possible. Remaining unmatched names will simply be NA.
 
-# 6. Add all new userPlantName names to officialPlantList (after possibly running through the previous steps a couple of times)("paste" to the bottom of officialPlantList)
+# 5. Add all new userPlantName names to officialPlantList (after possibly running through the previous steps a couple of times)("paste" to the bottom of officialPlantList)
 officialPlantList = rbind(officialPlantList, manuallyCleanedRecordsWithITIS)
 
-# 7. Writing an updated officialPlantList
+# 6. Writing an updated officialPlantList
 write.csv(officialPlantList, paste("ProjectCleaningNames/officialPlantList", Sys.Date(), ".csv", sep = ""), row.names = F)
-}
