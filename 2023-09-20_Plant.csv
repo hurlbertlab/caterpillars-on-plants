@@ -12169,3 +12169,48 @@ ID,SiteFK,Circle,Orientation,Code,Species,IsConifer
 8628,78,5,E,DCJ,"Ash spp.",0
 8629,78,8,B,DCV,"Ash spp.",0
 8630,375,1,E,LKQ,"Red maple",0
+8631,386,1,A,LSY,"Red maple",0
+8632,386,1,B,LSZ,"Red maple",0
+8633,386,1,C,LTA,N/A,0
+8634,386,1,D,LTB,N/A,0
+8635,386,1,E,LTC,N/A,0
+8636,386,2,A,LTD,"American beautyberry",0
+8637,386,2,B,LTE,"Mulberry spp.",0
+8638,386,2,C,LTF,N/A,0
+8639,386,2,D,LTG,N/A,0
+8640,386,2,E,LTH,"Oak spp.",0
+8641,386,3,A,LTI,"Sweetshrub spp.",0
+8642,386,3,B,LTJ,"Oak spp.",0
+8643,386,3,C,LTK,"American holly",0
+8644,386,3,D,LTL,"Magnolia spp.",0
+8645,386,3,E,LTM,"American holly",0
+8646,386,4,A,LTN,"American holly",0
+8647,386,4,B,LTO,"Hornbeam spp.",0
+8648,386,4,C,LTP,N/A,0
+8649,386,4,D,LTQ,"Oriental bittersweet",0
+8650,386,4,E,LTR,N/A,0
+8651,386,5,A,LTS,"Elm spp.",0
+8652,386,5,B,LTT,Sweetgum,0
+8653,386,5,C,LTU,N/A,0
+8654,386,5,D,LTV,"Oak spp.",0
+8655,386,5,E,LTW,"Chestnut spp.",0
+8656,386,6,A,LTX,N/A,0
+8657,386,6,B,LTY,N/A,0
+8658,386,6,C,LTZ,N/A,0
+8659,386,6,D,LUA,Cucumbertree,0
+8660,386,6,E,LUB,N/A,0
+8661,386,7,A,LUC,N/A,0
+8662,386,7,B,LUD,N/A,0
+8663,386,7,C,LUE,N/A,0
+8664,386,7,D,LUF,N/A,0
+8665,386,7,E,LUG,N/A,0
+8666,386,8,A,LUH,"Maple spp.",0
+8667,386,8,B,LUI,"Maple spp.",0
+8668,386,8,C,LUJ,Sweetgum,0
+8669,386,8,D,LUK,N/A,0
+8670,386,8,E,LUL,N/A,0
+8671,386,9,A,LUM,"Chestnut spp.",0
+8672,386,9,B,LUN,"Chestnut spp.",0
+8673,386,9,C,LUO,"Chestnut spp.",0
+8674,386,9,D,LUP,N/A,0
+8675,386,9,E,LUQ,N/A,0
