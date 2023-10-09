@@ -17,7 +17,6 @@ library(stringr)
 # returning a dataframe with the name, sciName, itis_id, and rank.
 cleanNamesThruITIS = function(speciesList) {
   
-  # speciesList must have a column called userPlantName
   plantList = data.frame(Species = speciesList,
                          sciName = NA, 
                          itis_id = NA,    
@@ -25,32 +24,22 @@ cleanNamesThruITIS = function(speciesList) {
   
   for (i in 1:nrow(plantList)) {
     
-    print(paste(i, "of", nrow(plantList), "/n"))
+    print(paste(i, "of", nrow(plantList)))
     
-    if (is.na(speciesList[i])) { 
+    if (!is.na(speciesList[i]) & nchar(speciesList[i]) >= 3) {  # for names that are at least 3 characters and not NA, try to match
       
-      plantList$sciName[i] = NA
-      plantList$itis_id[i] = NA
-      plantList$rank[i] = NA
-    
-    } else {
-    
       hierarchy = classification(speciesList[i], db = 'itis', accepted = TRUE)[[1]]
       
       # class is logical if taxonomic name does not match any existing names
       if (!is.null(nrow(hierarchy))) {
         plantList$sciName[i] = hierarchy$name[nrow(hierarchy)]
         plantList$itis_id[i] = hierarchy$id[nrow(hierarchy)]
-        plantList$rank = hierarchy$rank[nrow(hierarchy)]
-      } else {
-        plantList$sciName[i] = NA
-        plantList$itis_id[i] = NA
-        plantList$rank[i] = NA
-      }    
-    }
-  }
+        plantList$rank[i] = hierarchy$rank[nrow(hierarchy)]
+        
+      } # end if there's a match
+    } # end if name should be searched
+  } # end for loop
   return(plantList)
-  
 }
 
 ## NEW WORKFLOW ##
