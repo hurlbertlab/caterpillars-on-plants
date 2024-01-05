@@ -101,7 +101,9 @@ mostRecentUnmatchedFile = listOfUnmatchedFiles[length(listOfUnmatchedFiles)]
 manually_matched_new_species <- read.csv(paste0('ProjectCleaningNames/', mostRecentUnmatchedFile))
 
 # 3.6  Run the cleanedPlantName column of that dataframe through cleanNamesThruITIS(), rename "Species" as "cleanedPlantName" and join the results back to the original manually created dataframe that includes both userPlantName and cleanedPlantName by cleanedPlantName.
-cleanedManuallyEnteredNames = cleanNamesThruITIS(manually_matched_new_species$cleanedPlantName) 
+
+manually_matched_names_to_clean = manually_matched_new_species$cleanedPlantName[!is.na(manually_matched_new_species$cleanedPlantName)]
+cleanedManuallyEnteredNames = cleanNamesThruITIS(manually_matched_names_to_clean) 
 
 manuallyCleanedRecordsWithITIS = left_join(manually_matched_new_species[, c('userPlantName', 'cleanedPlantName')], 
                                            cleanedManuallyEnteredNames, by = c('cleanedPlantName' = 'Species')) %>%
