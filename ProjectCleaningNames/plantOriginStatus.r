@@ -4,28 +4,6 @@
 library(tidyverse)
 library(readxl)
 
-# Global Register of Introduced and Invasive Species - United States (Contiguous) (ver.2.0, 2022)
-#alien = read.table('data/Plant Analysis/gbif_plant_origin_verbatim.txt', header = T, 
-#                   sep = '\t', quote ='\"', fill = T) %>%
-#  dplyr::filter(kingdom == "Plantae") %>%
-#  dplyr::select(scientificName, family) %>%
-#  mutate(plantOrigin = 'alien',
-#         Source = 'https://doi.org/10.15468/dl.mxhtx8') %>%
-#  arrange(family, scientificName) %>%
-#  filter(!scientificName %in% c("Malus coronaria", "Quadrella incana")) #remove a few species on this list that are actually native
-
-# Carrero et al. 2022 Data sharing for conservation: A standardized checklist of US native tree species and threat assessments to prioritize and coordinate action. https://nph.onlinelibrary.wiley.com/doi/10.1002/ppp3.10305
-#native = read_excel('data/Plant Analysis/ppp3_10305-sup-0001-dataset s1.xlsx', sheet = "Checklist of US trees") %>%
-#  mutate(scientificName = `Species Name`,
-#         family = Family,
-#         plantOrigin = 'native',
-#         Source = 'https://doi.org/10.1002/ppp3.10305') %>%
-#  select(scientificName, family, plantOrigin, Source) %>%
-# arrange(family, scientificName) %>%
-#  filter(!scientificName %in% c("Crataegus laevigata", "Crataegus monogyna")) # remove a few species on this list that are actually NOT native
-
-#plantOrigin = rbind(native, alien)
-
 ## Expanded USDA plants database
 # Per the USDA PLANTS Database website, species were listed as "native" if their L48 native status was listed as N, N?, NI, or NI? and "exotic" if their L48 native status was listed as GP, GP?, I, I?, N?I, W, or W?.
 
