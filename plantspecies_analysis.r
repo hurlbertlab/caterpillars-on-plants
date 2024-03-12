@@ -12,13 +12,18 @@ library(vioplot)
 cleanDatasetCC = read.csv('PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
   mutate(sciName = str_replace(sciName, "\xa0", " "),
          Genus = word(sciName, 1)) %>%
-  filter(sciName != Genus)
+  filter(sciName != Genus) %>%
+  left_join(plantOrigin, by = c('sciName' = 'scientificName'))
+
+
 
 # Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
 # This helps obtain the families that should be analyzed (those with native, introduced species)
 tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
   mutate(Family = trimws(Family..as.listed.by.USDA.)) %>%
-  filter(herbaceous.or.woody %in% c("w"))
+  #filter(herbaceous.or.woody == "w") %>%
+  select(Genus, Family, origin..for.analysis., total.Lep.spp)
+
 
 # Finding the plant families that are alien
 alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
