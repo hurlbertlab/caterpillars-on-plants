@@ -441,7 +441,7 @@ Cucurbitaceae ,Cucurbitaceae ,Echinocystis,wild cucumber,h,native,native,1 nativ
 Alismataceae,,Echinodorus,burrhead,h,native,native,1 native aquatic,0,0,0
 Asteraceae,,Echinops,globethistle,h,alien,alien,1 alien,0,0,0
 Asteraceae,,Eclipta,eclipta,h,native,native,1 native,0,0,0
-Hydrocharitaceae             ,,Egeria,egeria,h,alien,alien,1 alien aquatic,0,0,0
+Hydrocharitaceae,,Egeria,egeria,h,alien,alien,1 alien aquatic,0,0,0
 Pontederiaceae,,Eichhornia,water hyacinth,h,alien,alien,1 alien aquatic,0,0,0
 Eleagnaceae,Eleagnaceae,Elaeagnus,"autumn olive, Russian olive, thorny olive, Eleagnus",w,alien,alien,"4 aliens perhaps anothers if cultivated, native western",9,1,8
 Elatinaceae,,Elatine,waterwort,h,native,native,1 native aquatic,0,0,0
@@ -450,7 +450,7 @@ Asteraceae,Compositae ,Elephantopus,elephantfoot,h,native,both,"3 natives, 2 ali
 Poaceae,Gramineae,Eleusine,indian goosegrass,h,alien,alien,2 aliens,0,0,0
 Araliaceae,,Eleutherococcus,ginseng,h,alien,alien,1 alien,0,0,0
 Hydrophyllaceae ,,Ellisia,ellisia,h,native,native,1 native aquatic,0,0,0
-Hydrocharitaceae             ,,Elodea,waterweed,h,native,native,1 native aquatic,0,0,0
+Hydrocharitaceae,,Elodea,waterweed,h,native,native,1 native aquatic,0,0,0
 Lamiaceae,,Elsholtzia,elsholtzia,h,alien,alien,1 alien,0,0,0
 Poaceae,Gramineae,Elymus,"rye, wheat, bottlebrush grass",h,native,both,"9 natives, 1 aliens, others if cultivated",31,2,29
 Polygonaceae ,,Emex,threecornerjack,h,alien,alien,1 alien,0,0,0
@@ -616,8 +616,8 @@ Liliaceae,Hyacinthacaea,Hyacinthus,garden hyacinth,h,alien,alien,1 alien,1,0,1
 Violaceae,,Hybanthus,greenviolet,h,native,native,1 native,0,0,0
 Hydrangaeceae,Hydrangaeceae,Hydrangea,hydrangea,w,native,both,"2 natives, 1 alien perhaps another if cultivated",5,0,5
 Ranunculaceae,,Hydrastis,hydrastis,h,native,native,1 native,0,0,0
-Hydrocharitaceae             ,,Hydrilla,hydrilla,h,alien,alien,1 alien aquatic,0,0,0
-Hydrocharitaceae             ,,Hydrocharis,hydrocharis,h,alien,alien,1 alien aquatic,0,0,0
+Hydrocharitaceae,,Hydrilla,hydrilla,h,alien,alien,1 alien aquatic,0,0,0
+Hydrocharitaceae,,Hydrocharis,hydrocharis,h,alien,alien,1 alien aquatic,0,0,0
 Apiaceae,Umbelliferae ,Hydrocotyle,marshpennywort,h,native,both,"5 natives, 1 alien",2,0,2
 Hydrophyllaceae ,,Hydrolea,false fiddleleaf,h,native,native,1 native aquatic,0,0,0
 Hydrophyllaceae ,,Hydrophyllum,waterleaf,h,native,native,4 natives aquatic,0,0,0
@@ -720,7 +720,7 @@ Apiaceae,Umbelliferae ,Ligusticum,licorice-root,h,native,native unless cultivate
 Oleaceae,Oleaceae,Ligustrum,privet,w,alien,alien,7 aliens perhaps more if cultivated,24,5,19
 Apiaceae,,Lilaeopsis,grasswort,h,native,native,2 natives,0,0,0
 Liliaceae,Liliaceae,Lilium,"lily, tiger lily",h,native,both,"9 natives, 2 aliens perhaps others if cultivated",11,0,11
-Hydrocharitaceae             ,,Limnobium,spongeplant,h,native,native,1 native aquatic,0,0,0
+Hydrocharitaceae,,Limnobium,spongeplant,h,native,native,1 native aquatic,0,0,0
 Plumbaginaceae,Plumbaginaceae,Limonium,"sealavander, statice",h,native,both,"1 native, 1 alien, 2 more if cultivated",1,1,0
 Scrophulariaceae,,Limosella,,h,native,native,1 native aquatic,0,0,0
 Scrophulariaceae,Scrophulariaceae,Linaria,"butter and eggs, toadflax",h,alien,alien,6 aliens,5,1,4
@@ -1292,7 +1292,7 @@ Ericaceae ,Ericaceae ,Vaccinium,"cranberry, blueberry",w,native,native,21 native
 Poaceae,,Vahlodea,hairgrass,h,native,native,1 native,0,0,0
 Valerianaceae,,Valeriana,valerian,h,native,both,"2 natives , 1 alien",1,0,1
 Valerianaceae,Valerianaceae,Valerianella,cornsalad,h,native,both,"3 natives, 1 alien perhaps another if cultivated",2,0,2
-Hydrocharitaceae             ,Hydrocharitaceae             ,Vallisneria,eelgrass,h,native,both,"1 native, 1 alien if cultivated (some say same species).",1,0,1
+Hydrocharitaceae,Hydrocharitaceae,Vallisneria,eelgrass,h,native,both,"1 native, 1 alien if cultivated (some say same species).",1,0,1
 Poaceae,,Ventenata,Africa grass,h,alien,alien,1 alien,0,0,0
 Liliaceae,Melanthiaceae,Veratrum,false hellebore,h,native,both,"4 natives, 1 alien when cultivated",5,0,5
 Scrophulariaceae,Scrophulariaceae,Verbascum,mullein,h,alien,alien,9 aliens others if cultivated,7,0,7
