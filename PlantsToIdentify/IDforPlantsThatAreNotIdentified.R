@@ -2,21 +2,23 @@
 #  1) users entered a plant species name while conducting a survey, or
 #  2) arthropod photos from that survey branch might allow the inference of plant species
 
-# 
-
 library(dplyr)
 library(xml2)
 library(stringr)
 library(rvest)
 
-# Loading data_repo
+# Existing table of inferred names (swap out for most recent file)
+inferredNames = read.csv("PlantsToIdentify/inferredPlantNames_2024-03-13.csv")
+
+# Specifying data_repo
 data_repo <- "https://github.com/hurlbertlab/caterpillars-count-data"
 webpage <- read_html(data_repo)
-repo_links <- html_attr(html_nodes(webpage, "a"), "href")
+repo_links <- unique(html_attr(html_nodes(webpage, "a"), "href"))
 data_links <- tibble(link = repo_links[grepl(".csv", repo_links)]) %>%
   mutate(file_name = word(link, 6, 6, sep = "/"))
 
-# Read data files from data repo links
+# Read data files from data repo links.
+# This is necessary because PhotoURL and user-specified plant names are in 'surveys' and 'ArthropodSightings' tables
 github_raw <- "https://raw.githubusercontent.com/hurlbertlab/caterpillars-count-data/master/"
 
 sites = read.csv(paste(github_raw, filter(data_links, grepl("Site.csv", file_name))$file_name, sep = ''), header = TRUE, stringsAsFactors = FALSE)
@@ -27,20 +29,13 @@ plants = read.csv(paste(github_raw, filter(data_links, grepl("Plant.csv", file_n
 
 ArthropodSighting = read.csv(paste(github_raw, filter(data_links, grepl("ArthropodSighting.csv", file_name))$file_name, sep = ''), header = TRUE, stringsAsFactors = FALSE)
 
-fullDataset <- read.csv(list.files('data', full.names = T)[str_detect(list.files('data'), '^fullDataset')])
 
-officialPlantList <- read.csv(list.files('ProjectCleaningNames', full.names = T)[str_detect(list.files('ProjectCleaningNames'), '^officialPlantList_')])
-
-
-# Filtering plants to where Species is N/A and obtaining that ID
-unidentifiedBranches <- filter(plants, plants$Species == "N/A") %>%
-                        select(ID, Species)
-
-# Filtering surveys to find where PlantSpecies has a name entered by a user
-# and comparing to where Species has not been identified
-# (one row per PlantFK)
+# Filtering plants to where Species is N/A. These include species which we may have evaluated previously, but it's possible that new photos or new user-entered names have been added since, so we take all of it.
+unidentifiedBranches <- plants %>% 
+  filter(Species == "N/A") 
 
 
+# Filtering surveys to find where PlantSpecies has a name entered by a user at least once
 userIdentifiedBranches <- surveys %>%
   filter(!PlantSpecies %in% c("N/A","","Hello","Dvt","Dvz","Dvt","N/a","Tree","Unknown","Unknown, will take picture")) %>%
   select(UserFKOfObserver, PlantSpecies, PlantFK) %>%
@@ -48,60 +43,56 @@ userIdentifiedBranches <- surveys %>%
   filter(Species == "N/A") %>%
   group_by(PlantFK) %>%
   summarize(PlantSpecies = paste(PlantSpecies, collapse = ", ")) %>%
-  mutate(InferredName = NA, 
-         NameConfidence = NA)
-
-write.csv(userIdentifiedBranches, "PlantsToIdentify/userIdentifiedBranches.csv", row.names = F)
-
-#This would be where you start everytime with a new list: 
-# In Excel, fill in the inferred name if there's agreement and confidence rating
-# Giving a confidence rating for the most agreed upon name given by users 
-# 1 is the least confident meaning disagreement, 2 means only one name ever entered,
-# 3 is the most confident with all entries agreeing multiple times)
-# Save a new version of the file with InferredName and NameConfidence where appropriate in Excel as:
-
-ModifiedUserIdentifiedBranches = read.csv(file = 'PlantsToIdentify/ModifiedUserIdentifiedBranches.csv')
-
-filteredNewPlantFKs <- read.csv(file = 'PlantsToIdentify/ModifiedUserIdentifiedBranches.csv') %>%
-  filter(!PlantFK %in% userIdentifiedBranches$PlantFK) 
-  
-# Then, if there are new entries, go back to Excel and fill in InferredName and NameConfidence 
-# possibly even run through allBranchesWithPhotos ??
-ModifiedUserIdentifiedBranches = rbind(ModifiedUserIdentifiedBranches, filteredNewPlantFKs)
-
-# Trying to ID photos based off of user suggestions (confidence rating) and photo ID
-fullUserIdentifiedBranches <- ModifiedUserIdentifiedBranches %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
   left_join(surveys, by = c('PlantFK', 'PlantSpecies')) %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
-  select(Name, Region, PlantFK, PlantSpecies, InferredName, NameConfidence, Notes) %>%
+  filter(Name != "Example Site") %>%
+  select(Name, Region, PlantFK, PlantSpecies) %>%
   rename('UserSuggestedName' = 'PlantSpecies')
-  
-# deleted branchesWithPhotos bc the data is already entered and duplicate of some below
+
+# All survey branches without a Species name where an arthropod photo has been taken
 allBranchesWithPhotos <- surveys %>%
   filter(ObservationMethod == "Visual") %>% 
   left_join(ArthropodSighting, by = c('ID' = 'SurveyFK')) %>%
   left_join(plants, by = c('PlantFK' = 'ID')) %>%
   filter(Species == "N/A") %>%
   left_join(sites, by = c('SiteFK' = 'ID')) %>%
-  filter(PhotoURL != "") %>% 
-  group_by(PlantFK) %>%
+  filter(PhotoURL != "",
+         Name != "Example Site") %>% 
+  group_by(PlantFK, Name, Region) %>%
   summarize(PhotoURL = paste(PhotoURL, collapse = ", ")) %>%
-  select(PlantFK, PhotoURL)
+  select(Name, Region, PlantFK, PhotoURL)
 
-# In Excel, look at the PhotoURL and paste it after https://caterpillarscount.unc.edu/images/arthropods/
-# Joining userIdentifiedBranches.csv and allBranchesWithPhotos.csv to compile a doc with
-# the names suggested by users and plants identified by photos and add to fullUserIdentifiedBranches.csv
-JoinedDoc <- full_join(fullUserIdentifiedBranches, allBranchesWithPhotos, by = c('PlantFK'))
-write.csv(JoinedDoc, "PlantsToIdentify/JoinedDoc.csv")
+# Join to get one dataframe with both user-entered names as well as photos
+plantsToIdentify = full_join(userIdentifiedBranches, allBranchesWithPhotos, by = c('Name', 'Region', 'PlantFK')) %>% 
+  arrange(Name, PlantFK)
 
-# Joining the previously unidentified photos to the fullDataset
-JoinedPhotoAndOccurrenceToFull <- fullDataset %>%
-  left_join(fullUserIdentifiedBranches, by = c('PlantFK', 'Name', 'Region')) %>%
-  mutate(InferredName = ifelse(is.na(InferredName), Species, InferredName)) %>%
-  left_join(officialPlantList, by = c("InferredName" = "userPlantName")) 
-#maybe save with SysDate  
-write.csv(JoinedPhotoAndOccurrenceToFull, "PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv")
+# New branches with either user-entered names or photos that have not been examined before
+newPlantsToIdentify = plantsToIdentify %>%
+  filter(!PlantFK %in% inferredNames$PlantFK) %>%
+  mutate(InferredName = NA,
+         NameConfidence = NA,
+         Notes = NA,
+         New = 'Y')
 
-# use this to ensure that the number of rows is not changing while joining the differnet files above
-#length(unique(JoinedPhotoAndOccurrenceToFull$PlantFK))
+# Check branches that have been previously examined for which NameConfidence < 3 to see whether there are new user-entered names or photos by comparing the number of characters in the UserSuggestedNames and PhotoURL fields (if new names or photos have been added, the number will be larger)
+oldPlantsToIdentify = plantsToIdentify %>%
+  filter(PlantFK %in% inferredNames$PlantFK) %>%
+  mutate(ncharNamesNew = nchar(UserSuggestedName, keepNA = F),
+         ncharPhotoNew = nchar(PhotoURL, keepNA = F)) %>%
+  left_join(inferredNames, by = c('Name', 'Region', 'PlantFK')) %>%
+  mutate(ncharNamesOld = nchar(UserSuggestedName.y, keepNA = F),
+         ncharPhotoOld = nchar(PhotoURL.y, keepNA = F),
+         UserSuggestedName = ifelse(ncharNamesNew > ncharNamesOld, UserSuggestedName.x, UserSuggestedName.y),
+         PhotoURL = ifelse(ncharPhotoNew > ncharPhotoOld, PhotoURL.x, PhotoURL.y),
+         New = ifelse((ncharNamesNew > ncharNamesOld | ncharPhotoNew > ncharPhotoOld) & NameConfidence < 3, 'Y', 'N')) %>%
+  select(Name, Region, PlantFK, UserSuggestedName, PhotoURL, InferredName, NameConfidence, Notes, New)
+
+newInferredNames = rbind(oldPlantsToIdentify, newPlantsToIdentify)
+
+# Examine each record where New == 'Y' manually (e.g. in Excel), fill in the inferred name if there's agreement, and assign a confidence rating based on user agreement.
+# 1 is the least confident meaning there is disagreement among user-entered names, 
+# 2 could mean only one name ever entered, or that it is identifiable to genus but not species from photos
+# 3 is the most confident with all entries agreeing multiple times, or photos support id.
+
+write.csv(newInferredNames, paste("PlantsToIdentify/inferredPlantNames_", Sys.Date(), ".csv", sep = ""), row.names = F)
