@@ -40,7 +40,7 @@ unknownorigin = filter(origin, is.na(plantOrigin))
 
 officialPlantList[officialPlantList$sciName %in% unknownorigin$scientificName,]
 
-# Manually specified alien species
+# Manually add specified alien species that are listed in USDA plants but without origin info
 origin$plantOrigin[origin$scientificName %in% c("Acer buergerianum",
                                                 "Acer diabolicum",
                                                 "Cornus macrophylla",
@@ -57,4 +57,25 @@ origin$plantOrigin[origin$scientificName %in% c("Acer buergerianum",
                                                 "Prunus salicina",
                                                 "Galphimia glauca")] = 'alien'
 
-write.csv(origin, 'data/Plant Analysis/usda_plant_origin_status.csv', row.names = F)
+# Manually add species in the CC Official Plant List that are not listed in USDA Plants
+speciesNotInUSDA = unique(officialPlantList$sciName[!officialPlantList$sciName %in% origin$scientificName])
+speciesNotInUSDA = speciesNotInUSDA[!speciesNotInUSDA %in% c("Unknown", NA)]
+
+families = c()
+for (s in speciesNotInUSDA) { 
+  foo = classification(s, db = 'ncbi')
+  fam = ifelse(!is.null(dim(foo[[1]])), foo[[1]]$name[foo[[1]]$rank == 'family'], NA)
+  families = c(families, fam)
+}
+
+# EDIT THIS SECTION BASED ON THE SPECIFIC NEW SPECIES (i.e. LOOK UP ORIGIN STATUS FOR THESE MANUALLY AND SPECIFY)
+originAddendum = data.frame(scientificName = speciesNotInUSDA,
+                            Family = families,
+                            nativeStatus = NA,
+                            plantOrigin = c("native", "alien", "alien", "alien", "native",
+                                            "alien", "alien", "alien", "alien", "native",
+                                            "alien", "alien", "NA", "alien"))
+
+expandedOrigin = rbind(origin, originAddendum)
+
+write.csv(expandedOrigin, 'data/Plant Analysis/plant_origin_status.csv', row.names = F)
