@@ -1,60 +1,46 @@
+# Script for calculating average abundance, biomass, and occurrence per plant species, and for comparing broadly between native and alien plants
+
 library(tidyverse)
 library(lubridate)
 library(data.table)
 library(gsheet)
-library(gridExtra)
-library(maps)
-#library(sp)         # phasing out sp, maptools, rgdal etc.; may need to find alternate workflows
-#library(maptools)
 library(vioplot)
+library(RCurl)
 
+# Read in CC data
+cc = read.csv('data/fullDataset_2023-10-12.csv')
 
-cleanDatasetCC = read.csv('PlantsToIdentify/JoinedPhotoAndOccurrenceToFull.csv', row.names = 1) %>%
-  mutate(sciName = str_replace(sciName, "\xa0", " "),
-         Genus = word(sciName, 1)) %>%
-  filter(sciName != Genus) %>%
-  left_join(plantOrigin, by = c('sciName' = 'scientificName'))
+# Loading plant files from data_repo
+data_repo = "https://raw.githubusercontent.com/hurlbertlab/caterpillars-count-data/master/plantSpecies/"
+originURL = getURL(paste0(data_repo, "plant_origin_status.csv"))
+officialNamesURL = getURL(paste0(data_repo, "officialPlantList2024-03-15.csv"))
+inferredNamesURL = getURL(paste0(data_repo, "inferredPlantNames_2024-03-14.csv"))
 
+plantOrigin = read.csv(text = originURL)
+officialPlantList = read.csv(text = officialNamesURL)
+inferredPlantNames = read.csv(text = inferredNamesURL)
 
+# The dataset for which we have plant species names with NameConfidence >= 2
+ccPlants = cc %>%
+  left_join(inferredPlantNames[, c('PlantFK', 'InferredName', 'NameConfidence')], by = 'PlantFK') %>%
+  mutate(Species2 = ifelse(Species == "N/A" & NameConfidence >= 2, InferredName, Species)) %>%
+  left_join(officialPlantList[, c('userPlantName', 'sciName')], by = c('Species2' = 'userPlantName')) %>%
+  left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
+  filter(!is.na(sciName))
+  
 
-# Joining official full dataset of plants to Tallamy et al. to get native, introduced, etc. data
-# This helps obtain the families that should be analyzed (those with native, introduced species)
-tallamy = read.csv('data/Plant Analysis/tallamy_shropshire_2009_plant_genera.csv') %>%
-  mutate(Family = trimws(Family..as.listed.by.USDA.)) %>%
-  #filter(herbaceous.or.woody == "w") %>%
-  select(Genus, Family, origin..for.analysis., total.Lep.spp)
-
-
-# Finding the plant families that are alien
-alien_families = unique(tallamy$Family[tallamy$origin..for.analysis. == "alien"])
-
-# Left_join Caterpillars Count! data with Tallamy (alien/native) genus list
-cc_plus_tallamy <- left_join(cleanDatasetCC, tallamy, by = 'Genus') %>%
-  dplyr::select(ID, PlantFK:ObservationMethod, PlantSpecies:AverageLeafLength, Group:Biomass_mg, 
-                sciName:Genus,Family, origin..for.analysis., total.Lep.spp) %>%
-  dplyr::rename(origin = origin..for.analysis., lepS = total.Lep.spp)
-
-write.csv(cc_plus_tallamy, 'data/Plant Analysis/cc_plus_tallamy.csv', row.names = F)
-
-# Added because "mutate_cond" is not a built-in function
-mutate_cond <- function(.data, condition,...,envir=parent.frame()){
-  condition <- eval(substitute(condition),.data,envir)
-  .data[condition,] <- .data[condition,] %>% mutate(...)
-  .data
-}
-
+# FUNCTIONS
 # Looking at meanDensity, Biomass, and fracSurveys of caterpillars in different plant families 
 AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthropodSighting tables for a single site
-                            ordersToInclude = 'All',    # or 'caterpillar' like arthGroup
-                            minLength = 0,              # minimum arthropod size to include 
-                            jdRange = c(132, 232),      # change range of days
-                            outlierCount = 10000,       # Outliers 
-                            plotVar = 'Density',        # 'Density' or 'fracSurveys' or 'Biomass'
-                            ...)                  
+                             ordersToInclude = 'All',    # or 'caterpillar' like arthGroup
+                             minLength = 0,              # minimum arthropod size to include 
+                             jdRange = c(132, 232),      # change range of days
+                             outlierCount = 10000       # Outliers 
+                             )                  
   
 { if(length(ordersToInclude)==1 & ordersToInclude[1]=='All') {
-    ordersToInclude = unique(surveyData$Group)
-  }
+  ordersToInclude = unique(surveyData$Group)
+}
   
   numUniqueBranches = length(unique(surveyData$PlantFK))
   
@@ -75,16 +61,122 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
               numSurveysGTzero = length(unique(ID[Quantity > 0])),
               totalBiomass = sum(Biomass_mg, na.rm = TRUE)) %>% 
     right_join(effortBySciName, by = 'sciName') %>%
-    #next line replaces 3 fields with 0 if the totalCount is NA
-    mutate_cond(is.na(totalCount), totalCount = 0, numSurveysGTzero = 0, totalBiomass = 0) %>%
     mutate(meanDensity = totalCount/nSurveys,
            fracSurveys = 100*numSurveysGTzero/nSurveys,
            meanBiomass = totalBiomass/nSurveys) %>%
     arrange(sciName) %>%
     data.frame()
   
+  arthCount[is.na(arthCount)] = 0
+  
   return(arthCount)
 }
+
+# Finding the plant families that are alien
+alien_families = unique(ccPlants$Family[ccPlants$plantOrigin == "alien"])
+
+
+
+
+
+comparingNativeAlien = function(surveyData, 
+                                arthGroup = 'caterpillar',            # 'caterpillar', 'spider', etc.
+                                plantFamily = 'All',                  # Plant Family for comparison
+                                obsMethod = c('Visual', 'Beat sheet'),# or 'Visual', or 'Beat sheet'
+                                jdRange = c(132, 232),                # Range of days over which surveys were done   
+                                minSurveys = 10,                      # min # of survey events per group (native/alien)
+                                minBranches = 5)                      # min # of unique branches per group (native/alien) 
+{
+
+  # Warning messages
+  if (!arthGroup %in% unique(surveyData$Group)) {
+    stop("Not a valid arthropod group name. Should be one of: 'ant', 'aphid', 'bee', 'beetle', 'caterpillar', 
+          'daddlylonglegs', 'fly', 'grasshopper', 'leafhopper', 'moths', 'truebugs'.")
+  }
+  
+  if (!plantFamily %in% c('All', unique(surveyData$Family))) {
+    stop("Not a valid plant Family name.")
+  }
+  
+  
+  if (plantFamily == 'All') {
+    fam = unique(surveyData$Family) 
+  } else {
+    fam = plantFamily
+  }
+  
+  survData = filter(surveyData, 
+                    Family %in% fam,
+                    plantOrigin %in% c('alien', 'native'),
+                    ObservationMethod %in% obsMethod,
+                    julianday >= jdRange[1], 
+                    julianday <= jdRange[2])
+  
+  arthData = filter(survData, Group == arthGroup) %>%
+    select(ID, Quantity, Length)
+
+  surveyEvents = survData %>%
+    distinct(ID, PlantFK, sciName, Family, plantOrigin) %>%
+    left_join(arthData, by = 'ID')
+  
+  surveyEvents[is.na(surveyEvents)] = 0 # fill in 0's where Quantity or Length is NA
+  
+  nativeSurveyEvents = n_distinct(surveyEvents$ID[surveyEvents$plantOrigin == 'native'])
+  alienSurveyEvents = n_distinct(surveyEvents$ID[surveyEvents$plantOrigin == 'alien'])
+  
+  nativeSurveyBranches = n_distinct(surveyEvents$PlantFK[surveyEvents$plantOrigin == 'native'])
+  alienSurveyBranches = n_distinct(surveyEvents$PlantFK[surveyEvents$plantOrigin == 'alien'])
+  
+  
+  if (nativeSurveyEvents < minSurveys | alienSurveyEvents < minSurveys) {
+    stop("Not enough survey events for the comparison.")
+  }
+  
+  if (nativeSurveyBranches < minBranches | alienSurveyBranches < minBranches) {
+    stop("Not enough unique survey branches for the comparison.")
+  }
+  
+  
+  # Fit zero-inflated negative binomial
+  if (plantFamily == 'All') {
+
+    zinfmodel = glmmTMB(Quantity ~ plantOrigin + (1 | Family / sciName), 
+                        ziformula = ~1, 
+                        family=nbinom2, 
+                        data = surveyEvents)
+  } else {
+    
+    zinfmodel = glmmTMB(Quantity ~ plantOrigin + (1 | sciName), 
+                        ziformula = ~1, 
+                        family=nbinom2, 
+                        data = surveyEvents)
+    
+  }
+  
+  return(list(Group = arthGroup,
+              Family = plantFamily,
+              nNativeSurveys = nativeSurveyEvents,
+              nAlienSurveys = alienSurveyEvents,
+              nNativeBranches = nativeSurveyBranches,
+              nAlienBranches = alienSurveyBranches,
+              model = summary(zinfmodel)))
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # START HERE
 cc_plus_tallamy = read.csv(file = "data/Plant Analysis/cc_plus_tallamy.csv")
