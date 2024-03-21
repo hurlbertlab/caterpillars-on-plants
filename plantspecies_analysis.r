@@ -72,20 +72,19 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
   return(arthCount)
 }
 
-# Finding the plant families that are alien
-alien_families = unique(ccPlants$Family[ccPlants$plantOrigin == "alien"])
 
-
-
-
-
+# Function for comparing arthropod abundance at the branch-scale between native and alien tree species.
+# This is done using zero-inflated negative binomial regression due to the large number of 0's in this count data.
+# This can be done across all families (in which case plant species is a random effect nested within Family), or
+# within a specified plant family (in which case plant species is a random effect).
 comparingNativeAlien = function(surveyData, 
                                 arthGroup = 'caterpillar',            # 'caterpillar', 'spider', etc.
                                 plantFamily = 'All',                  # Plant Family for comparison
                                 obsMethod = c('Visual', 'Beat sheet'),# or 'Visual', or 'Beat sheet'
                                 jdRange = c(132, 232),                # Range of days over which surveys were done   
                                 minSurveys = 10,                      # min # of survey events per group (native/alien)
-                                minBranches = 5)                      # min # of unique branches per group (native/alien) 
+                                minBranches = 5,                      # min # of unique branches per group (native/alien) 
+                                minArths = 10,                        # min # of surveys with at least 1 arthropod
 {
 
   # Warning messages
@@ -121,12 +120,17 @@ comparingNativeAlien = function(surveyData,
   
   surveyEvents[is.na(surveyEvents)] = 0 # fill in 0's where Quantity or Length is NA
   
+  nArthRecords = n_distinct(surveyEvents$ID[surveyEvents$Quantity > 0])
+  
   nativeSurveyEvents = n_distinct(surveyEvents$ID[surveyEvents$plantOrigin == 'native'])
   alienSurveyEvents = n_distinct(surveyEvents$ID[surveyEvents$plantOrigin == 'alien'])
   
   nativeSurveyBranches = n_distinct(surveyEvents$PlantFK[surveyEvents$plantOrigin == 'native'])
   alienSurveyBranches = n_distinct(surveyEvents$PlantFK[surveyEvents$plantOrigin == 'alien'])
   
+  if (nArthRecords < minArths) {
+    stop("Not enough surveys with arthropods")
+  }
   
   if (nativeSurveyEvents < minSurveys | alienSurveyEvents < minSurveys) {
     stop("Not enough survey events for the comparison.")
@@ -150,8 +154,9 @@ comparingNativeAlien = function(surveyData,
                         ziformula = ~1, 
                         family=nbinom2, 
                         data = surveyEvents)
-    
   }
+  
+  ci = confint(zinfmodel)
   
   return(list(Group = arthGroup,
               Family = plantFamily,
@@ -159,19 +164,88 @@ comparingNativeAlien = function(surveyData,
               nAlienSurveys = alienSurveyEvents,
               nNativeBranches = nativeSurveyBranches,
               nAlienBranches = alienSurveyBranches,
-              model = summary(zinfmodel)))
-  
+              model = summary(zinfmodel),
+              confint = ci[2, 1:2]))
 }
 
 
 
+# Find set of plant families with sufficient data for comparisons
+jdRange = c(152, 194) # 3 weeks before to 3 weeks after summer solstice (173)
+
+familyStats = ccPlants %>%
+  filter(julianday >= jdRange[1], 
+         julianday <= jdRange[2]) %>%
+  distinct(ID, PlantFK, Family, sciName, plantOrigin, ObservationMethod) %>%
+  group_by(Family) %>%
+  summarize(nSpeciesA = n_distinct(sciName[plantOrigin == 'alien']),
+            nSpeciesN = n_distinct(sciName[plantOrigin == 'native']),
+            nBranchesA = n_distinct(PlantFK[plantOrigin == 'alien']),
+            nBranchesN = n_distinct(PlantFK[plantOrigin == 'native']),
+            nSurveysA = n_distinct(ID[plantOrigin == 'alien']),
+            nSurveysN = n_distinct(ID[plantOrigin == 'native'])) %>%
+  #arrange(desc(nBranchesA)) %>%
+  filter(nBranchesA >= 5,
+         nBranchesN >= 5,
+         nSurveysA >= 10,
+         nSurveysN >= 10)
+  
+
+arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
+                        color = c('limegreen', 'black', 'dodgerblue', 'red', 'magenta', 'orange'))
 
 
+comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
+                         nAlienBranches = NULL, nNativeBranches = NULL, estimate = NULL, se = NULL, 
+                         l95 = NULL, u95 = NULL, p = NULL)
+
+for (f in c('All', familyStats$Family)) {
+  for (a in arthropods$Group) {
+    
+    tmp = comparingNativeAlien(ccPlants, arthGroup = a, plantFamily = f, jdRange = c(152, 194))
+    
+    tmpcomp = data.frame(Family = tmp$Family,
+                         Group = tmp$Group,
+                         nAlienSurveys = tmp$nAlienSurveys,
+                         nNativeSurveys = tmp$nNativeSurveys,
+                         nAlienBranches = tmp$nAlienBranches,
+                         nNativeBranches = tmp$nNativeBranches,
+                         estimate = tmp$model$coefficients$cond[2,1],
+                         se = tmp$model$coefficients$cond[2,2],
+                         l95 = tmp$confint[1],
+                         u95 = tmp$confint[2],
+                         p = tmp$model$coefficients$cond[2,4])
+    
+    if (is.nan(tmpcomp$se)) {
+      tmpcomp$estimate = NA
+    }
+    
+    comparisons = rbind(comparisons, tmpcomp)
+    
+  }
+}
 
 
-
-
-
+# Plotting comparisons
+par(mar = c(2, 0, 2, 0), oma = c(3, 17, 0, 0), mfrow = c(1,6), mgp = c(3, .5, 0))
+for (a in arthropods$Group) {
+  plot(comparisons$estimate[comparisons$Group == a], 1:length(unique(comparisons$Family)),
+       xlab = "", ylab = "", yaxt = "n", tck = -0.03,
+       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 2, xlim = c(-2, 5), main = a)
+  segments(comparisons$l95[comparisons$Group == a], 1:length(unique(comparisons$Family)),
+        comparisons$u95[comparisons$Group == a], 1:length(unique(comparisons$Family)), 
+        col = arthropods$color[arthropods$Group == a])
+  abline(v = 0, lty = 'dashed')
+  
+  if (a == arthropods$Group[1]) {
+    mtext(paste0(comparisons$Family[comparisons$Group == a], 
+                " (", comparisons$nAlienSurveys[comparisons$Group == a], ", ", 
+                comparisons$nNativeSurveys[comparisons$Group == a], ")"),
+          2, at = 1:length(unique(comparisons$Family)), 
+          las = 1, line = 1)
+  }
+}
+mtext("log Native / Alien abundance", 1, outer = TRUE, line = 1.5, cex = 1.5)
 
 
 
