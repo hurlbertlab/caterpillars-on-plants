@@ -6,9 +6,22 @@ library(data.table)
 library(gsheet)
 library(vioplot)
 library(RCurl)
+library(rvest)
+library(xml2)
 
-# Read in CC data
-cc = read.csv('data/fullDataset_2023-10-12.csv')
+
+# Read in latest CC fullDataset
+fd_data_repo <- "https://github.com/hurlbertlab/caterpillars-analysis-public/tree/master/data"
+fd_webpage <- read_html(fd_data_repo)
+fd_repo_links <- html_attr(html_nodes(fd_webpage, "a"), "href")
+fd_data_links <- tibble(link = fd_repo_links[grepl("fullDataset", fd_repo_links)]) %>%
+  mutate(file_name = word(link, 7, 7, sep = "/")) %>%
+  distinct()
+
+mostRecentFullDataset = fd_data_links$file_name[nrow(fd_data_links)]
+
+cc = read.csv(paste0("https://raw.githubusercontent.com/hurlbertlab/caterpillars-analysis-public/master/data/", mostRecentFullDataset), header = T, quote = '\"', fill = TRUE)
+
 
 # Loading plant files from data_repo
 data_repo = "https://raw.githubusercontent.com/hurlbertlab/caterpillars-count-data/master/plantSpecies/"
