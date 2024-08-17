@@ -48,7 +48,6 @@ inferredPlantNames = read.csv(text = inferredNamesURL)
 ccPlants = cc %>%
   left_join(inferredPlantNames[, c('PlantFK', 'InferredName', 'NameConfidence')], by = 'PlantFK') %>%
   mutate(Species2 = ifelse(Species == "N/A" & NameConfidence >= 2, InferredName, Species)) %>%
-  left_join(officialPlantList[, c('userPlantName', 'sciName')], by = c('Species2' = 'userPlantName')) %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   filter(!is.na(sciName))
   
