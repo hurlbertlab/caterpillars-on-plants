@@ -25,11 +25,22 @@ cc = read.csv(paste0("https://raw.githubusercontent.com/hurlbertlab/caterpillars
 
 # Loading plant files from data_repo
 data_repo = "https://raw.githubusercontent.com/hurlbertlab/caterpillars-count-data/master/plantSpecies/"
-originURL = getURL(paste0(data_repo, "plant_origin_status.csv"))
-officialNamesURL = getURL(paste0(data_repo, "officialPlantList2024-03-15.csv"))
-inferredNamesURL = getURL(paste0(data_repo, "inferredPlantNames_2024-03-14.csv"))
+
+plants_webpage <- read_html("https://github.com/hurlbertlab/caterpillars-count-data/tree/master/plantSpecies")
+plants_repo_links <- html_attr(html_nodes(plants_webpage, "a"), "href")
+official_data_links <- tibble(link = plants_repo_links[grepl("officialPlantList", plants_repo_links)]) %>%
+  mutate(file_name = word(link, 7, 7, sep = "/")) %>%
+  distinct()
+
+inferred_data_links <- tibble(link = plants_repo_links[grepl("inferredPlantNames", plants_repo_links)]) %>%
+  mutate(file_name = word(link, 7, 7, sep = "/")) %>%
+  distinct()
 
 plantOrigin = read.csv(text = originURL)
+officialPlantList = read.csv(paste0(data_repo, official_data_links$file_name[nrow(official_data_links)]))
+inferredPlantNames = read.csv(paste0(data_repo, inferred_data_links$file_name[nrow(inferred_data_links)]))
+
+plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv"))
 officialPlantList = read.csv(text = officialNamesURL)
 inferredPlantNames = read.csv(text = inferredNamesURL)
 
