@@ -11,7 +11,7 @@ library(xml2)
 
 
 # Read in latest CC fullDataset
-fd_data_repo <- "https://github.com/hurlbertlab/caterpillars-analysis-public/tree/master/data"
+fd_data_repo <- "https://github.com/hurlbertlab/caterpillars-analysis-public/blob/master/data"
 fd_webpage <- read_html(fd_data_repo)
 fd_repo_links <- html_attr(html_nodes(fd_webpage, "a"), "href")
 fd_data_links <- tibble(link = fd_repo_links[grepl("fullDataset", fd_repo_links)]) %>%
