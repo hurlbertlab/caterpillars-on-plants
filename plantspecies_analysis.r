@@ -36,19 +36,17 @@ inferred_data_links <- tibble(link = plants_repo_links[grepl("inferredPlantNames
   mutate(file_name = word(link, 7, 7, sep = "/")) %>%
   distinct()
 
-plantOrigin = read.csv(text = originURL)
 officialPlantList = read.csv(paste0(data_repo, official_data_links$file_name[nrow(official_data_links)]))
 inferredPlantNames = read.csv(paste0(data_repo, inferred_data_links$file_name[nrow(inferred_data_links)]))
 
 plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv"))
-officialPlantList = read.csv(text = officialNamesURL)
-inferredPlantNames = read.csv(text = inferredNamesURL)
 
 # The dataset for which we have plant species names with NameConfidence >= 2
+# NOTE: sciName is the field that includes inferred scientific names in addition to official ones
 ccPlants = cc %>%
-  left_join(inferredPlantNames[, c('PlantFK', 'InferredName', 'NameConfidence')], by = 'PlantFK') %>%
-  mutate(Species2 = ifelse(Species == "N/A" & NameConfidence >= 2, InferredName, Species)) %>%
+  left_join(inferredPlantNames[, c('PlantFK', 'InferredSciName', 'NameConfidence')], by = 'PlantFK') %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
+  mutate(sciName = ifelse(Species == "N/A" & NameConfidence >= 2, InferredSciName, sciName)) %>%
   filter(!is.na(sciName))
   
 
@@ -73,7 +71,10 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
   
   effortBySciName = firstFilter %>%
     group_by(sciName) %>% 
-    summarize(nSurveys = n_distinct(ID))
+    summarize(nSurveys = n_distinct(ID),
+              nBranches = n_distinct(PlantFK),
+              nSites = n_distinct(Name),
+              nRegions = n_distinct(Region))
   
   arthCount = firstFilter %>%
     filter(Length >= minLength, 
@@ -85,8 +86,10 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
               totalBiomass = sum(Biomass_mg, na.rm = TRUE)) %>% 
     right_join(effortBySciName, by = 'sciName') %>%
     mutate(meanDensity = totalCount/nSurveys,
+           meanBiomass = totalBiomass/nSurveys,
            fracSurveys = 100*numSurveysGTzero/nSurveys,
-           meanBiomass = totalBiomass/nSurveys) %>%
+           LL95frac = fracSurveys - 1.96*(fracSurveys*(100-fracSurveys)/nSurveys)^.5,
+           UL95frac = fracSurveys + 1.96*(fracSurveys*(100-fracSurveys)/nSurveys)^.5) %>%
     arrange(sciName) %>%
     data.frame()
   
