@@ -8,6 +8,7 @@ library(vioplot)
 library(RCurl)
 library(rvest)
 library(xml2)
+library(glmmTMB)
 
 
 # Read in latest CC fullDataset
@@ -110,9 +111,11 @@ comparingNativeAlien = function(surveyData,
                                 jdRange = c(132, 232),                # Range of days over which surveys were done   
                                 minSurveys = 10,                      # min # of survey events per group (native/alien)
                                 minBranches = 5,                      # min # of unique branches per group (native/alien) 
-                                minArths = 10,                        # min # of surveys with at least 1 arthropod
+                                minArths = 10)                        # min # of surveys with at least 1 arthropod
 {
 
+  require(glmmTMB)
+  
   # Warning messages
   if (!arthGroup %in% unique(surveyData$Group)) {
     stop("Not a valid arthropod group name. Should be one of: 'ant', 'aphid', 'bee', 'beetle', 'caterpillar', 
