@@ -57,8 +57,8 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
                              ordersToInclude = 'All',    # or 'caterpillar' like arthGroup
                              minLength = 0,              # minimum arthropod size to include 
                              jdRange = c(132, 232),      # change range of days
-                             outlierCount = 10000       # Outliers 
-                             )                  
+                             outlierCount = 10000,       # Outliers 
+                             excludeWetLeaves = TRUE)    # exclude surveys with wet leaves                  
   
 { if(length(ordersToInclude)==1 & ordersToInclude[1]=='All') {
   ordersToInclude = unique(surveyData$Group)
@@ -69,6 +69,10 @@ AnalysisBySciName = function(surveyData, # merged dataframe of Survey and arthro
   firstFilter = surveyData %>%
     filter(julianday >= jdRange[1], julianday <= jdRange[2]) %>% #subscription notation
     mutate(julianweek = 7*floor(julianday/7) + 4)
+  
+  if (excludeWetLeaves) {
+    firstFilter = filter(firstFilter, !WetLeaves)
+  }
   
   effortBySciName = firstFilter %>%
     group_by(sciName) %>% 
