@@ -202,6 +202,10 @@ comparingNativeAlien = function(surveyData,
               nAlienSurveys = alienSurveyEvents,
               nNativeBranches = nativeSurveyBranches,
               nAlienBranches = alienSurveyBranches,
+              nNativeSurvsWithArth = n_distinct(surveyEvents$ID[surveyEvents$Quantity > 0 &
+                                                                  surveyEvents$plantOrigin == 'native']),
+              nAlienSurvsWithArth = n_distinct(surveyEvents$ID[surveyEvents$Quantity > 0 &
+                                                                 surveyEvents$plantOrigin == 'alien']),
               model = summary(zinfmodel),
               confint = ci[2, 1:2]))
 }
@@ -231,7 +235,9 @@ familyStats = ccPlants %>%
   
 
 arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
-                        color = c('limegreen', 'black', 'dodgerblue', 'red', 'magenta', 'orange'))
+                        GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
+                        color = c('limegreen', 'gray50', 'dodgerblue', 'salmon', 'magenta', 'orange'),
+                        color2 = c('darkgreen', 'black', 'darkblue', 'red', 'purple3', 'orange4'))
 
 
 comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
@@ -249,6 +255,8 @@ for (f in c('All', familyStats$Family)) {
                          nNativeSurveys = tmp$nNativeSurveys,
                          nAlienBranches = tmp$nAlienBranches,
                          nNativeBranches = tmp$nNativeBranches,
+                         nAlienSurvsWithArth = tmp$nAlienSurvsWithArth,
+                         nNativeSurvsWithArth = tmp$nNativeSurvsWithArth,
                          estimate = tmp$model$coefficients$cond[2,1],
                          se = tmp$model$coefficients$cond[2,2],
                          l95 = tmp$confint[1],
@@ -264,13 +272,40 @@ for (f in c('All', familyStats$Family)) {
   }
 }
 
+comparisons = comparisons %>%
+  mutate(propAlienSurvsWithArth = nAlienSurvsWithArth/nAlienSurveys,
+         propNativeSurvsWithArth = nNativeSurvsWithArth/nNativeSurveys,
+         # Below, multiplying by 1.96 to get half-width of 95% CI
+         errorAlienSurvsWithArth = 1.96*((propAlienSurvsWithArth)*(1 - propAlienSurvsWithArth)/
+                                           nAlienSurveys)^.5,
+         errorNativeSurvsWithArth = 1.96*((propNativeSurvsWithArth)*(1 - propNativeSurvsWithArth)/
+                                            nNativeSurveys)^.5,
+         
+         # z = (p1 - p2)/((p1*(1-p1)/n1) + (p2*(1-p2)/n2))^.5
+         
+         # As opposed to also commonly used z = (p1 - p2)/((p*(1-p)*(1/n1 + 1/n2)))^.5
+         propTestZ = (propNativeSurvsWithArth - propAlienSurvsWithArth)/
+           ((propNativeSurvsWithArth*(1-propNativeSurvsWithArth)/nNativeSurveys) + 
+               (propAlienSurvsWithArth*(1-propAlienSurvsWithArth)/nAlienSurveys))^.5,
+         propTestP = 2*pnorm(q=abs(propTestZ), lower.tail=FALSE),
+         pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
+                           propTestP > 0.001 & propTestP <= 0.01 & propTestZ >= 0 ~ '++',
+                           propTestP > 0.01 & propTestP <= 0.05 & propTestZ >= 0 ~ '+',
+                           propTestP <= 0.001 & propTestZ < 0 ~ '---',
+                           propTestP > 0.001 & propTestP <= 0.01 & propTestZ < 0 ~ '--',
+                           propTestP > 0.01 & propTestP <= 0.05 & propTestZ < 0 ~ '-',
+                           propTestP > 0.05 ~ '')
+  )
 
 # Plotting comparisons
+# --one issue with this plot is that if there are ZERO observations for a group (e.g. caterpillars on alien Cornaceae),
+#   then model fails to converge and no estimate or SE are available
 par(mar = c(2, 0, 2, 0), oma = c(3, 17, 0, 0), mfrow = c(1,6), mgp = c(3, .5, 0))
 for (a in arthropods$Group) {
   plot(comparisons$estimate[comparisons$Group == a], 1:length(unique(comparisons$Family)),
        xlab = "", ylab = "", yaxt = "n", tck = -0.03,
-       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 2, xlim = c(-2, 5), main = a)
+       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 2, xlim = c(-2, 5), 
+       main = arthropods$GroupLabel[arthropods$Group == a])
   segments(comparisons$l95[comparisons$Group == a], 1:length(unique(comparisons$Family)),
         comparisons$u95[comparisons$Group == a], 1:length(unique(comparisons$Family)), 
         col = arthropods$color[arthropods$Group == a])
@@ -287,6 +322,55 @@ for (a in arthropods$Group) {
 mtext("log Native / Alien abundance", 1, outer = TRUE, line = 1.5, cex = 1.5)
 
 
+# Second comparison plot shows separate alien and native estimates +- 95% CI for % of surveys with arthropod
+par(mar = c(2, 0, 2, 0), oma = c(3, 17, 0, 0), mfrow = c(1,6), mgp = c(3, .5, 0))
+
+vertOffset = 0.1
+
+for (a in arthropods$Group) {
+  plot(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a], 
+       1:length(unique(comparisons$Family)) + vertOffset,
+       xlab = "", ylab = "", yaxt = "n", tck = -0.03, xlim = c(0, 44),
+       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 1.8, 
+       main = arthropods$GroupLabel[arthropods$Group == a])
+  segments(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] - 
+             100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
+           1:length(unique(comparisons$Family)) + vertOffset,
+           100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] + 
+             100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
+           1:length(unique(comparisons$Family)) + vertOffset, 
+           col = arthropods$color[arthropods$Group == a])
+  
+  points(100*comparisons$propAlienSurvsWithArth[comparisons$Group == a], 
+         1:length(unique(comparisons$Family)) - vertOffset,
+       pch = 1, col = arthropods$color[arthropods$Group == a], cex = 1.8)
+  segments(100*comparisons$propAlienSurvsWithArth[comparisons$Group == a] - 
+             100*comparisons$errorAlienSurvsWithArth[comparisons$Group == a], 
+           1:length(unique(comparisons$Family)) - vertOffset,
+           100*comparisons$propAlienSurvsWithArth[comparisons$Group == a] + 
+             100*comparisons$errorAlienSurvsWithArth[comparisons$Group == a], 
+           1:length(unique(comparisons$Family)) - vertOffset, 
+           col = arthropods$color[arthropods$Group == a])
+  
+  text(# Commented out line below makes horizontal placement relative to largest values
+       #100*max(c(comparisons$propAlienSurvsWithArth[comparisons$Group == a], 
+       #       comparisons$propNativeSurvsWithArth[comparisons$Group == a])) + 2,
+       40,
+       1:length(unique(comparisons$Family)),
+       labels = comparisons$pText[comparisons$Group == a], 
+       # - symbols are much smaller than +, so making them a larger font size (2 vs 1.5)
+       cex = ifelse(comparisons$propTestZ[comparisons$Group == a] < 0, 2, 1.5))
+  
+  # Put plant Family labels along the y-axis for the first plot
+  if (a == arthropods$Group[1]) {
+    mtext(paste0(comparisons$Family[comparisons$Group == a], 
+                 " (", comparisons$nAlienSurveys[comparisons$Group == a], ", ", 
+                 comparisons$nNativeSurveys[comparisons$Group == a], ")"),
+          2, at = 1:length(unique(comparisons$Family)), 
+          las = 1, line = 1)
+  }
+}
+mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 1.5)
 
 
 
