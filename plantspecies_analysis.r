@@ -111,7 +111,8 @@ comparingNativeAlien = function(surveyData,
                                 jdRange = c(132, 232),                # Range of days over which surveys were done   
                                 minSurveys = 10,                      # min # of survey events per group (native/alien)
                                 minBranches = 5,                      # min # of unique branches per group (native/alien) 
-                                minArths = 10)                        # min # of surveys with at least 1 arthropod
+                                minArths = 10,                        # min # of surveys with at least 1 arthropod
+                                excludeWetLeaves = TRUE)              # exclude surveys with wet leaves
 {
 
   require(glmmTMB)
@@ -139,6 +140,10 @@ comparingNativeAlien = function(surveyData,
                     ObservationMethod %in% obsMethod,
                     julianday >= jdRange[1], 
                     julianday <= jdRange[2])
+  
+  if (excludeWetLeaves) {
+    survData = filter(survData, !WetLeaves)
+  }
   
   arthData = filter(survData, Group == arthGroup) %>%
     select(ID, Quantity, Length)
@@ -204,7 +209,8 @@ jdRange = c(152, 194) # 3 weeks before to 3 weeks after summer solstice (173)
 
 familyStats = ccPlants %>%
   filter(julianday >= jdRange[1], 
-         julianday <= jdRange[2]) %>%
+         julianday <= jdRange[2],
+         !WetLeaves) %>%
   distinct(ID, PlantFK, Family, sciName, plantOrigin, ObservationMethod) %>%
   group_by(Family) %>%
   summarize(nSpeciesA = n_distinct(sciName[plantOrigin == 'alien']),
@@ -231,7 +237,7 @@ comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNat
 for (f in c('All', familyStats$Family)) {
   for (a in arthropods$Group) {
     
-    tmp = comparingNativeAlien(ccPlants, arthGroup = a, plantFamily = f, jdRange = c(152, 194))
+    tmp = comparingNativeAlien(ccPlants, arthGroup = a, plantFamily = f, jdRange = c(152, 194), minArths = 5)
     
     tmpcomp = data.frame(Family = tmp$Family,
                          Group = tmp$Group,
