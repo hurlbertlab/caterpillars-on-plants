@@ -328,38 +328,42 @@ par(mar = c(2, 0, 2, 0), oma = c(3, 18, 0, 1), mfrow = c(1,6), mgp = c(3, .5, 0)
 
 vertOffset = 0.1
 
+# Order of plant families
+famOrder = c(1, length(unique(comparisons$Family)):2) # alphabetical, but with "All" at the bottom
+#famOrder = 1:length(unique(comparisons$Family)) 
+
 for (a in arthropods$Group) {
   plot(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a], 
-       1:length(unique(comparisons$Family)) + vertOffset,
+       famOrder + vertOffset,
        xlab = "", ylab = "", yaxt = "n", tck = -0.03, xlim = c(0, 44), ylim = c(1, 15),
        pch = 16, col = arthropods$color[arthropods$Group == a], cex = 1.8, 
        main = arthropods$GroupLabel[arthropods$Group == a])
   segments(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] - 
              100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
-           1:length(unique(comparisons$Family)) + vertOffset,
+           famOrder + vertOffset,
            100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] + 
              100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
-           1:length(unique(comparisons$Family)) + vertOffset, 
+           famOrder + vertOffset, 
            col = arthropods$color[arthropods$Group == a])
   
   points(100*comparisons$propAlienSurvsWithArth[comparisons$Group == a], 
-         1:length(unique(comparisons$Family)) - vertOffset,
+         famOrder - vertOffset,
        pch = 1, col = arthropods$color[arthropods$Group == a], cex = 1.8)
   segments(100*comparisons$propAlienSurvsWithArth[comparisons$Group == a] - 
              100*comparisons$errorAlienSurvsWithArth[comparisons$Group == a], 
-           1:length(unique(comparisons$Family)) - vertOffset,
+           famOrder - vertOffset,
            100*comparisons$propAlienSurvsWithArth[comparisons$Group == a] + 
              100*comparisons$errorAlienSurvsWithArth[comparisons$Group == a], 
-           1:length(unique(comparisons$Family)) - vertOffset, 
+           famOrder - vertOffset, 
            col = arthropods$color[arthropods$Group == a])
   
-  #abline(h = 1:length(unique(comparisons$Family))+0.5)
+  abline(h = 1.5, lwd = 2)
   
   text(# Commented out line below makes horizontal placement relative to largest values
        #100*max(c(comparisons$propAlienSurvsWithArth[comparisons$Group == a], 
        #       comparisons$propNativeSurvsWithArth[comparisons$Group == a])) + 2,
        40,
-       1:length(unique(comparisons$Family)),
+       famOrder,
        labels = comparisons$pText[comparisons$Group == a], 
        # - symbols are much smaller than +, so making them a larger font size (2 vs 1.5)
        cex = ifelse(comparisons$propTestZ[comparisons$Group == a] < 0, 2, 1.5))
@@ -369,7 +373,7 @@ for (a in arthropods$Group) {
     mtext(paste0(comparisons$Family[comparisons$Group == a], 
                  " (", comparisons$nAlienSurveys[comparisons$Group == a], ", ", 
                  comparisons$nNativeSurveys[comparisons$Group == a], ")"),
-          2, at = 1:length(unique(comparisons$Family)), 
+          2, at = famOrder, 
           las = 1, line = 1)
     legend("topleft", inset=c(-1,0), legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
            xpd = NA, cex = 1.5)
