@@ -236,7 +236,7 @@ familyStats = ccPlants %>%
 
 arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
                         GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
-                        color = c('limegreen', 'gray50', 'dodgerblue', 'salmon', 'magenta', 'orange'),
+                        color = c('limegreen', 'gray50', 'dodgerblue', 'salmon', 'magenta3', 'orange'),
                         color2 = c('darkgreen', 'black', 'darkblue', 'red', 'purple3', 'orange4'))
 
 
@@ -323,6 +323,7 @@ for (a in arthropods$Group) {
 mtext("log Native / Alien abundance", 1, outer = TRUE, line = 1.5, cex = 1.5)
 
 
+############################################################################################################
 # Second comparison plot shows separate alien and native estimates +- 95% CI for % of surveys with arthropod
 par(mar = c(2, 0, 2, 0), oma = c(3, 18, 0, 1), mfrow = c(1,6), mgp = c(3, .5, 0))
 
@@ -336,7 +337,7 @@ for (a in arthropods$Group) {
   plot(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a], 
        famOrder + vertOffset,
        xlab = "", ylab = "", yaxt = "n", tck = -0.03, xlim = c(0, 44), ylim = c(1, 15),
-       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 1.8, 
+       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 1.8, cex.axis = 1,
        main = arthropods$GroupLabel[arthropods$Group == a])
   segments(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] - 
              100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
@@ -371,8 +372,8 @@ for (a in arthropods$Group) {
   # Put plant Family labels along the y-axis for the first plot
   if (a == arthropods$Group[1]) {
     mtext(paste0(comparisons$Family[comparisons$Group == a], 
-                 " (", comparisons$nAlienSurveys[comparisons$Group == a], ", ", 
-                 comparisons$nNativeSurveys[comparisons$Group == a], ")"),
+                 " (", comparisons$nNativeSurveys[comparisons$Group == a], ", ", 
+                 comparisons$nAlienSurveys[comparisons$Group == a], ")"),
           2, at = famOrder, 
           las = 1, line = 1)
     legend("topleft", inset=c(-1,0), legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
@@ -380,6 +381,126 @@ for (a in arthropods$Group) {
   }
 }
 mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 1.5)
+
+
+#######################################################################################################
+# Controlling for geographic variation by focusing on a single family, Aceraceae, with the most surveys
+
+ccPlants %>% 
+  filter(Family=="Aceraceae", julianday >= 152, julianday <=194) %>% 
+  distinct(ID, sciName, plantOrigin, Region) %>% 
+  count(sciName, plantOrigin, Region) %>% 
+  arrange(Region, desc(n))
+
+# This shows that the following regions have sufficient surveys (>50 per plantOrigin) for a comparison:
+regions = list('ON',
+               c('MA','RI'),
+               c('DC', 'MD', 'VA'),
+               'NC')
+
+acerComparisons = data.frame(Region = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
+                         nAlienBranches = NULL, nNativeBranches = NULL, estimate = NULL, se = NULL, 
+                         l95 = NULL, u95 = NULL, p = NULL)
+
+for (r in 1:length(regions)) {
+  
+  ccPlantsTmp = ccPlants %>% 
+    filter(Region %in% regions[[r]])
+  
+  acerTmp = comparingNativeAlien(ccPlantsTmp, 
+                                 arthGroup = 'caterpillar', 
+                                 plantFamily = 'Aceraceae', 
+                                 jdRange = c(145, 201), 
+                                 minArths = 5)
+  
+  acerTmpcomp = data.frame(Region = paste(regions[[r]], collapse = "-"),
+                       Group = 'caterpillar',
+                       nAlienSurveys = acerTmp$nAlienSurveys,
+                       nNativeSurveys = acerTmp$nNativeSurveys,
+                       nAlienBranches = acerTmp$nAlienBranches,
+                       nNativeBranches = acerTmp$nNativeBranches,
+                       nAlienSurvsWithArth = acerTmp$nAlienSurvsWithArth,
+                       nNativeSurvsWithArth = acerTmp$nNativeSurvsWithArth,
+                       estimate = acerTmp$model$coefficients$cond[2,1],
+                       se = acerTmp$model$coefficients$cond[2,2],
+                       l95 = acerTmp$confint[1],
+                       u95 = acerTmp$confint[2],
+                       p = acerTmp$model$coefficients$cond[2,4])
+  
+  if (is.nan(acerTmpcomp$se)) {
+    tmpcomp$estimate = NA
+  }
+  
+  acerComparisons = rbind(acerComparisons, acerTmpcomp)
+  
+}
+
+acerComparisons = acerComparisons %>%
+  mutate(propAlienSurvsWithArth = nAlienSurvsWithArth/nAlienSurveys,
+         propNativeSurvsWithArth = nNativeSurvsWithArth/nNativeSurveys,
+         # Below, multiplying by 1.96 to get half-width of 95% CI
+         errorAlienSurvsWithArth = 1.96*((propAlienSurvsWithArth)*(1 - propAlienSurvsWithArth)/
+                                           nAlienSurveys)^.5,
+         errorNativeSurvsWithArth = 1.96*((propNativeSurvsWithArth)*(1 - propNativeSurvsWithArth)/
+                                            nNativeSurveys)^.5,
+         
+         # z = (p1 - p2)/((p1*(1-p1)/n1) + (p2*(1-p2)/n2))^.5 
+         # which I think is preferable when n1 and n2 might differ substantially and/or if p1 or p2 = 0
+         
+         # As opposed to also commonly used z = (p1 - p2)/((p*(1-p)*(1/n1 + 1/n2)))^.5
+         propTestZ = (propNativeSurvsWithArth - propAlienSurvsWithArth)/
+           ((propNativeSurvsWithArth*(1-propNativeSurvsWithArth)/nNativeSurveys) + 
+              (propAlienSurvsWithArth*(1-propAlienSurvsWithArth)/nAlienSurveys))^.5,
+         propTestP = 2*pnorm(q=abs(propTestZ), lower.tail=FALSE),
+         pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
+                           propTestP > 0.001 & propTestP <= 0.01 & propTestZ >= 0 ~ '++',
+                           propTestP > 0.01 & propTestP <= 0.05 & propTestZ >= 0 ~ '+',
+                           propTestP <= 0.001 & propTestZ < 0 ~ '---',
+                           propTestP > 0.001 & propTestP <= 0.01 & propTestZ < 0 ~ '--',
+                           propTestP > 0.01 & propTestP <= 0.05 & propTestZ < 0 ~ '-',
+                           propTestP > 0.05 ~ ''))
+
+# Plot - vertical - caterpillars on Aceraceae
+par(mar = c(6, 6, 1, 1), mfrow = c(1,1), mgp = c(3, 1.2, 0), oma = c(0,0,0,0), xpd = FALSE)
+
+horizOffset = 0.05
+
+plot(4:1 + horizOffset, 100*acerComparisons$propNativeSurvsWithArth, 
+     xlab = "", ylab = "% of surveys", xaxt = "n", tck = -0.02, xlim = c(0.5, 4.5), ylim = c(0, 18),
+     pch = 16, col = 'black', cex = 2, cex.axis = 1.5, las = 1, cex.lab = 2)
+segments(4:1 + horizOffset, 100*acerComparisons$propNativeSurvsWithArth - 
+           100*acerComparisons$errorNativeSurvsWithArth, 
+         4:1 + horizOffset,
+         100*acerComparisons$propNativeSurvsWithArth + 
+           100*acerComparisons$errorNativeSurvsWithArth, 
+         lwd = 2)
+
+points(4:1 - horizOffset, 100*acerComparisons$propAlienSurvsWithArth, pch = 1, cex = 2)
+segments(4:1 - horizOffset, 100*acerComparisons$propAlienSurvsWithArth - 
+           100*acerComparisons$errorAlienSurvsWithArth, 
+         4:1 - horizOffset,
+         100*acerComparisons$propAlienSurvsWithArth + 
+           100*acerComparisons$errorAlienSurvsWithArth, 
+         lwd = 2)
+
+#abline(h = 1.5, lwd = 2)
+
+text(4:1, 13, labels = acerComparisons$pText, 
+     # - symbols are much smaller than +, so making them a larger font size (2 vs 1.5)
+     cex = ifelse(acerComparisons$propTestZ < 0, 2, 1.5))
+
+mtext(paste0(acerComparisons$Region, 
+             "\n(", acerComparisons$nNativeSurveys, ", ", 
+             acerComparisons$nAlienSurveys, ")"),
+      1, at = 4:1, las = 1, line = 3, cex = 1.5)
+
+legend("topleft", legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
+       xpd = NA, cex = 1.5)
+
+
+
+
+
 
 
 
