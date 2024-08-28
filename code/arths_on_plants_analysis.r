@@ -52,12 +52,30 @@ ccPlants = cc %>%
 
 # Comparison across tree species
 
+plantList = officialPlantList %>%
+  distinct(sciName, rank)
+
+# Tree species with at least 50 surveys, ranked by % of surveys with caterpillars
+byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar', jdRange = c(152, 194)) %>%
+  left_join(plantList, by = 'sciName') %>%
+  left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
+  filter(rank == 'species',
+         nSurveys >= 50) %>%
+  mutate(color = ifelse(plantOrigin == 'native', 'gray70', 'firebrick2')) %>%
+  arrange(desc(fracSurveys))
 
 
+par(mar = c(6, 8, 1, 1), mgp = c(3, 1, 0), mfrow = c(1,1), oma = c(0, 0, 0, 0))
+plot(byTreeSpp$fracSurveys, nrow(byTreeSpp):1, yaxt = 'n', ylab = '', xlab = '% of surveys with caterpillars',
+     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color, xlim = c(0, 32), ylim = c(5, nrow(byTreeSpp))-2)
+segments(byTreeSpp$LL95frac, nrow(byTreeSpp):1, byTreeSpp$UL95frac, nrow(byTreeSpp):1,
+         lwd = 2, col = byTreeSpp$color)
+mtext(byTreeSpp$sciName, 2, at = nrow(byTreeSpp):1, line = 1, adj = 1, las = 1, cex = .6)
+legend("bottomright", c("native", "alien"), col = c('gray70', 'firebrick2'), 
+       pch = 16, lty = 'solid', cex = 1.75, lwd = 2)
 
-
-
-
+caterpillar = readPNG('images/caterpillar.png')
+rasterImage(caterpillar, 18, 15, 34, 30)
 
 
 
@@ -204,6 +222,8 @@ for (a in arthropods$Group) {
   }
 }
 mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 1.5)
+
+
 
 
 #######################################################################################################
