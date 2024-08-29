@@ -55,27 +55,57 @@ ccPlants = cc %>%
 plantList = officialPlantList %>%
   distinct(sciName, rank)
 
+treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Aceraceae', 'Caprifoliaceae', 'Juglandaceae'),
+                                 #'Ericaceae', 'Hippocastanaceae', 
+                                 #'Oleaceae', 'Rosaceae'),
+                      famcolor = c(#rgb(0,0,0),
+                                rgb(230/255, 159/255, 0),
+                                rgb(86/255, 180/255, 233/255),
+                                rgb(0, 158/255, 115/255),
+                                rgb(240/255, 228/255, 66/255),
+                                rgb(213/255, 94/255, 0)))
+                                #rgb(0, 114/255, 178/255)))
+                                #rgb(204/255, 121/255, 167/255),
+                                #'magenta'))
+
 # Tree species with at least 50 surveys, ranked by % of surveys with caterpillars
 byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar', jdRange = c(152, 194)) %>%
   left_join(plantList, by = 'sciName') %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   filter(rank == 'species',
-         nSurveys >= 50) %>%
+         nSurveys >= 50,
+         nBranches >= 5) %>%
   mutate(color = ifelse(plantOrigin == 'native', 'gray70', 'firebrick2')) %>%
-  arrange(desc(fracSurveys))
+  arrange(desc(fracSurveys)) %>%
+  left_join(treeFams, by = 'Family')
+
+byTreeSpp$famcolor[is.na(byTreeSpp$famcolor)] = 'gray50'
+
+                                
 
 
-par(mar = c(6, 8, 1, 1), mgp = c(3, 1, 0), mfrow = c(1,1), oma = c(0, 0, 0, 0))
+
+par(mar = c(6, 8, 1, 1), mgp = c(3, 1, 0), mfrow = c(1,1), oma = c(0, 0, 0, 0), xpd = NA)
 plot(byTreeSpp$fracSurveys, nrow(byTreeSpp):1, yaxt = 'n', ylab = '', xlab = '% of surveys with caterpillars',
-     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color, xlim = c(0, 32), ylim = c(5, nrow(byTreeSpp))-2)
+     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color, xlim = c(0, 32), ylim = c(5, nrow(byTreeSpp))-2,
+     cex = 2*log10(byTreeSpp$nSurveys)/max(log10(byTreeSpp$nSurveys)))
 segments(byTreeSpp$LL95frac, nrow(byTreeSpp):1, byTreeSpp$UL95frac, nrow(byTreeSpp):1,
          lwd = 2, col = byTreeSpp$color)
 mtext(byTreeSpp$sciName, 2, at = nrow(byTreeSpp):1, line = 1, adj = 1, las = 1, cex = .6)
-legend("bottomright", c("native", "alien"), col = c('gray70', 'firebrick2'), 
-       pch = 16, lty = 'solid', cex = 1.75, lwd = 2)
+points(rep(-2, nrow(byTreeSpp)), nrow(byTreeSpp):1, pch = 15, col = byTreeSpp$famcolor)    # color coding by family doesn't add much
+
+legend("bottomright", c("native", "alien", "", "Fagaceae", "Betulaceae", "Aceraceae", "Caprifoliaceae", "Juglandaceae", "Other"), 
+       col = c('gray70', 'firebrick2', NA, rgb(230/255, 159/255, 0),
+               rgb(86/255, 180/255, 233/255),
+               rgb(0, 158/255, 115/255),
+               rgb(240/255, 228/255, 66/255),
+               rgb(213/255, 94/255, 0),
+               'gray50'), 
+       pch = c(16, 16, NA, rep(15, 6)), lty = c(rep('solid', 2), rep('blank', 7)), 
+       cex = c(rep(1.75, 2), rep(1.3, 7)), pt.cex = c(rep(2, 2), rep(1.8, 7)), lwd = c(rep(2, 2), rep(0, 7)))
 
 caterpillar = readPNG('images/caterpillar.png')
-rasterImage(caterpillar, 18, 15, 34, 30)
+rasterImage(caterpillar, 16, 40, 32, 55)
 
 
 
