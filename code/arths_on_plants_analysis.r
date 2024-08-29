@@ -84,7 +84,7 @@ byTreeSpp$famcolor[is.na(byTreeSpp$famcolor)] = 'gray50'
                                 
 
 
-
+pdf('Figures/Figure1_ranking_tree_spp.pdf', height = 10, width = 6)
 par(mar = c(6, 8, 1, 1), mgp = c(3, 1, 0), mfrow = c(1,1), oma = c(0, 0, 0, 0), xpd = NA)
 plot(byTreeSpp$fracSurveys, nrow(byTreeSpp):1, yaxt = 'n', ylab = '', xlab = '% of surveys with caterpillars',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color, xlim = c(0, 32), ylim = c(5, nrow(byTreeSpp))-2,
@@ -105,8 +105,8 @@ legend("bottomright", c("native", "alien", "", "Fagaceae", "Betulaceae", "Acerac
        cex = c(rep(1.75, 2), rep(1.3, 7)), pt.cex = c(rep(2, 2), rep(1.8, 7)), lwd = c(rep(2, 2), rep(0, 7)))
 
 caterpillar = readPNG('images/caterpillar.png')
-rasterImage(caterpillar, 16, 40, 32, 55)
-
+rasterImage(caterpillar, 16, 35, 32, 49)
+dev.off()
 
 
 
@@ -191,6 +191,8 @@ comparisons = comparisons %>%
 ###############################################################################################
 # Comparing % of surveys with arthropod (+- 95% CI) for all plant families and arthropod groups
 
+
+pdf('Figures/Figure2_plant_family_comparison.pdf', height = 6, width = 10)
 par(mar = c(2, 0, 2, 0), oma = c(3, 18, 0, 1), mfrow = c(1,6), mgp = c(3, .5, 0))
 
 vertOffset = 0.1
@@ -253,11 +255,13 @@ for (a in arthropods$Group) {
 }
 mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 1.5)
 
+dev.off()
 
 
 
-#######################################################################################################
-# Controlling for geographic variation by focusing on a single family, Aceraceae, with the most surveys
+
+#################################################################################################################
+# Figure 3. Controlling for geographic variation by focusing on a single family, Aceraceae, with the most surveys
 
 ccPlants %>% 
   filter(Family=="Aceraceae", julianday >= 152, julianday <=194) %>% 
@@ -272,7 +276,12 @@ regions = list('ON',
                'NC')
 
 acerComparisons = data.frame(Region = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
-                             nAlienBranches = NULL, nNativeBranches = NULL, estimate = NULL, se = NULL, 
+                             nAlienBranches = NULL, nNativeBranches = NULL, nAlienSurvsWithArth = NULL,
+                             nNativeSurvsWithArth = NULL, propAlienSurvsWithArth = NULL,
+                             propNativeSurvsWithArth = NULL, errorAlienSurvsWithArth = NULL,
+                             errorNativeSurvsWithArth = NULL, propTestZ = NULL,
+                             propTestP = NULL,
+                             estimate = NULL, se = NULL, 
                              l95 = NULL, u95 = NULL, p = NULL)
 
 for (r in 1:length(regions)) {
@@ -294,6 +303,12 @@ for (r in 1:length(regions)) {
                            nNativeBranches = acerTmp$nNativeBranches,
                            nAlienSurvsWithArth = acerTmp$nAlienSurvsWithArth,
                            nNativeSurvsWithArth = acerTmp$nNativeSurvsWithArth,
+                           propAlienSurvsWithArth = acerTmp$propAlienSurvsWithArth,
+                           propNativeSurvsWithArth = acerTmp$propNativeSurvsWithArth,
+                           errorAlienSurvsWithArth = acerTmp$errorAlienSurvsWithArth,
+                           errorNativeSurvsWithArth = acerTmp$errorNativeSurvsWithArth,
+                           propTestZ = acerTmp$propTestZ,
+                           propTestP = acerTmp$propTestP,
                            estimate = acerTmp$model$coefficients$cond[2,1],
                            se = acerTmp$model$coefficients$cond[2,2],
                            l95 = acerTmp$confint[1],
@@ -301,7 +316,7 @@ for (r in 1:length(regions)) {
                            p = acerTmp$model$coefficients$cond[2,4])
   
   if (is.nan(acerTmpcomp$se)) {
-    tmpcomp$estimate = NA
+    acerTmpcomp$estimate = NA
   }
   
   acerComparisons = rbind(acerComparisons, acerTmpcomp)
@@ -309,23 +324,7 @@ for (r in 1:length(regions)) {
 }
 
 acerComparisons = acerComparisons %>%
-  mutate(propAlienSurvsWithArth = nAlienSurvsWithArth/nAlienSurveys,
-         propNativeSurvsWithArth = nNativeSurvsWithArth/nNativeSurveys,
-         # Below, multiplying by 1.96 to get half-width of 95% CI
-         errorAlienSurvsWithArth = 1.96*((propAlienSurvsWithArth)*(1 - propAlienSurvsWithArth)/
-                                           nAlienSurveys)^.5,
-         errorNativeSurvsWithArth = 1.96*((propNativeSurvsWithArth)*(1 - propNativeSurvsWithArth)/
-                                            nNativeSurveys)^.5,
-         
-         # z = (p1 - p2)/((p1*(1-p1)/n1) + (p2*(1-p2)/n2))^.5 
-         # which I think is preferable when n1 and n2 might differ substantially and/or if p1 or p2 = 0
-         
-         # As opposed to also commonly used z = (p1 - p2)/((p*(1-p)*(1/n1 + 1/n2)))^.5
-         propTestZ = (propNativeSurvsWithArth - propAlienSurvsWithArth)/
-           ((propNativeSurvsWithArth*(1-propNativeSurvsWithArth)/nNativeSurveys) + 
-              (propAlienSurvsWithArth*(1-propAlienSurvsWithArth)/nAlienSurveys))^.5,
-         propTestP = 2*pnorm(q=abs(propTestZ), lower.tail=FALSE),
-         pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
+  mutate(pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
                            propTestP > 0.001 & propTestP <= 0.01 & propTestZ >= 0 ~ '++',
                            propTestP > 0.01 & propTestP <= 0.05 & propTestZ >= 0 ~ '+',
                            propTestP <= 0.001 & propTestZ < 0 ~ '---',
@@ -334,7 +333,8 @@ acerComparisons = acerComparisons %>%
                            propTestP > 0.05 ~ ''))
 
 # Plot - vertical - caterpillars on Aceraceae
-par(mar = c(6, 6, 1, 1), mfrow = c(1,1), mgp = c(3, 1.2, 0), oma = c(0,0,0,0), xpd = FALSE)
+pdf('Figures/Figure3_Aceraceae_across_regions.pdf', height = 6, width = 8)
+par(mar = c(7, 6, 1, 1), mfrow = c(1,1), mgp = c(3, 1.2, 0), oma = c(0,0,0,0), xpd = FALSE)
 
 horizOffset = 0.05
 
@@ -365,8 +365,15 @@ text(4:1, 13, labels = acerComparisons$pText,
 mtext(paste0(acerComparisons$Region, 
              "\n(", acerComparisons$nNativeSurveys, ", ", 
              acerComparisons$nAlienSurveys, ")"),
-      1, at = 4:1, las = 1, line = 3, cex = 1.5)
+      1, at = 4:1, las = 1, line = 2, cex = 1.5)
+
+mtext("Region", 1, line = 5, cex = 2)
 
 legend("topleft", legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
        xpd = NA, cex = 1.5)
 
+maple = readPNG("images/maple.png")
+rasterImage(maple, 3.9, 14, 4.6, 19)
+rasterImage(caterpillar, 3.3, 15, 4.1, 18)
+
+dev.off()
