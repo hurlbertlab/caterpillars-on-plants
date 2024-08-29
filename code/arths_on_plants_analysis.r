@@ -50,7 +50,8 @@ ccPlants = cc %>%
   filter(!is.na(sciName))
 
 
-# Comparison across tree species
+##########################################################################################################
+# Figure 1. Comparison of % surveys with caterpillars across tree species
 
 plantList = officialPlantList %>%
   distinct(sciName, rank)
@@ -83,8 +84,8 @@ byTreeSpp$famcolor[is.na(byTreeSpp$famcolor)] = 'gray50'
 
                                 
 
-
-pdf('Figures/Figure1_ranking_tree_spp.pdf', height = 10, width = 6)
+# See alternate plot below
+#pdf('Figures/Figure1_ranking_tree_spp.pdf', height = 10, width = 6)
 par(mar = c(6, 8, 1, 1), mgp = c(3, 1, 0), mfrow = c(1,1), oma = c(0, 0, 0, 0), xpd = NA)
 plot(byTreeSpp$fracSurveys, nrow(byTreeSpp):1, yaxt = 'n', ylab = '', xlab = '% of surveys with caterpillars',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color, xlim = c(0, 32), ylim = c(5, nrow(byTreeSpp))-2,
@@ -106,11 +107,57 @@ legend("bottomright", c("native", "alien", "", "Fagaceae", "Betulaceae", "Acerac
 
 caterpillar = readPNG('images/caterpillar.png')
 rasterImage(caterpillar, 16, 35, 32, 49)
+#dev.off()
+
+
+
+# Alternative two column figure
+
+numspp = nrow(byTreeSpp)
+if (numspp %% 2 != 0) { numspp = numspp + 1 } # add 1 to make numspp even if necessary
+
+pdf('Figures/Figure1_ranking_tree_spp_2col.pdf', height = 7, width = 12)
+par(mar = c(6, 7, 3, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
+plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
+     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[1:(numspp/2)], 
+     xlim = c(0, 32), ylim = c(1, numspp/2),
+     cex = 2*log10(byTreeSpp$nSurveys[1:(numspp/2)])/max(log10(byTreeSpp$nSurveys[1:(numspp/2)])),
+     main = "Species rank 1-44")
+segments(byTreeSpp$LL95frac[1:(numspp/2)], (numspp/2):1, byTreeSpp$UL95frac[1:(numspp/2)], (numspp/2):1,
+         lwd = 2, col = byTreeSpp$color[1:(numspp/2)])
+mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1, line = 1, adj = 1, las = 1, cex = .6)
+points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[1:(numspp/2)], cex = 1.2)
+
+legend("bottomright", c("Fagaceae", "Betulaceae", "Aceraceae", "Caprifoliaceae", "Juglandaceae", "Other"), 
+       col = c(rgb(230/255, 159/255, 0),
+               rgb(86/255, 180/255, 233/255),
+               rgb(0, 158/255, 115/255),
+               rgb(240/255, 228/255, 66/255),
+               rgb(213/255, 94/255, 0),
+               'gray50'), 
+       pch = 15, cex = 1, pt.cex = 1.5)
+
+plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
+     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[(numspp/2 + 1):numspp], 
+     xlim = c(0, 32), ylim = c(1, numspp/2),
+     cex = 2*log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])/max(log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])),
+     main = "Species rank 45-88")
+segments(byTreeSpp$LL95frac[(numspp/2 + 1):numspp], (numspp/2):1, byTreeSpp$UL95frac[(numspp/2 + 1):numspp], (numspp/2):1,
+         lwd = 2, col = byTreeSpp$color[(numspp/2 + 1):numspp])
+mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1, line = 1, adj = 1, las = 1, cex = .6)
+points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[(numspp/2 + 1):numspp], cex = 1.2)    # 
+
+legend("bottomright", c("native", "alien"), 
+       col = c('gray70', 'firebrick2'), 
+       pch = 16, cex = 1.25, pt.cex = 1.8, lwd = 2, lty = 'solid')
+
+caterpillar = readPNG('images/caterpillar.png')
+rasterImage(caterpillar, 16, 35, 32, 45)
 dev.off()
 
 
 
-
+###############################################################################
 # Find set of plant families with sufficient data for comparisons
 jdRange = c(152, 194) # 3 weeks before to 3 weeks after summer solstice (173)
 
@@ -376,4 +423,57 @@ maple = readPNG("images/maple.png")
 rasterImage(maple, 3.9, 14, 4.6, 19)
 rasterImage(caterpillar, 3.3, 15, 4.1, 18)
 
+dev.off()
+
+
+
+#################################################################################################
+# Figure 4. Analysis of caterpillar species richness by plant species based on iNat identifications
+
+github_raw <- "https://raw.githubusercontent.com/hurlbertlab/caterpillars-count-data/master/"
+
+cc_data_repo <- "https://github.com/hurlbertlab/caterpillars-count-data"
+cc_webpage <- read_html(cc_data_repo)
+cc_repo_links <- html_attr(html_nodes(cc_webpage, "a"), "href")
+cc_data_links <- tibble(link = cc_repo_links[grepl(".csv", cc_repo_links)]) %>%
+  mutate(file_name = word(link, 6, 6, sep = "/")) %>%
+  distinct()
+
+expert = read.csv(paste(github_raw, filter(cc_data_links, grepl("ExpertIdentification.csv", file_name))$file_name, sep = ''), header = TRUE, stringsAsFactors = FALSE)
+
+catSpecies = ccPlants %>% 
+  select(ID, Name, Region, Year, LocalDate, julianday, Code, sciName, arthID, Group, Quantity) %>%
+  right_join(expert, by = c('arthID' = 'ArthropodSightingFK')) %>%
+  rename(ID = ID.x, expertID = ID.y) %>%
+  group_by(sciName) %>%
+  summarize(nTaxa = n_distinct(TaxonName[Group == 'caterpillar' & Rank != 'order']),
+            nSurveysWithPhotos = n_distinct(ID),
+            nBranches = n_distinct(Code),
+            Regions = paste(unique(Region), collapse = '-')) %>%
+  arrange(desc(nTaxa)) %>%
+  mutate(label = paste0(substr(sciName, 1, 1), ". ", word(sciName, 2))) %>%
+  left_join(plantOrigin[, c('scientificName', 'plantOrigin', 'Family')], by = c('sciName' = 'scientificName')) %>%
+  mutate(color = ifelse(plantOrigin == 'native', 'gray50', 'firebrick2'))
+  
+
+
+# Linear models
+lm.native = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'native' & catSpecies$nTaxa > 0]) ~ 
+                 log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'native' & catSpecies$nTaxa > 0]))
+
+lm.alien = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'alien' & catSpecies$nTaxa > 0]) ~ 
+                log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'alien' & catSpecies$nTaxa > 0]))
+
+# Plot
+pdf('Figures/Figure4_caterpillar_taxa.pdf', height = 6, width = 8)
+par(mgp = c(4, 1, 0), tck = -0.03, mar = c(5, 7, 1, 1))
+plot(log10(catSpecies$nSurveysWithPhotos), log10(catSpecies$nTaxa), pch = ifelse(catSpecies$plantOrigin == 'native', 16, 17), 
+     xlab = expression(log[10] ~ "#" ~ surveys ~ with ~ photos), 
+     ylab = expression(log[10] ~ "#" ~ caterpillar ~ taxa), las = 1, 
+     cex.axis = 1.5, cex.lab = 2, col = catSpecies$color, cex = ifelse(catSpecies$plantOrigin == 'native', 1.3, 1.5))
+
+abline(lm.native, lwd = 2, col = 'gray30')
+abline(lm.alien, col = 'firebrick2', lwd = 2)
+
+legend("topleft", c("native", "alien"), pch = c(16, 17), col = c('gray50', 'firebrick2'), cex = 1.5)
 dev.off()
