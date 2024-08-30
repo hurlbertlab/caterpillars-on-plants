@@ -183,3 +183,63 @@ comparingNativeAlien = function(surveyData,
               model = summary(zinfmodel),
               confint = ci[2, 1:2]))
 }
+
+
+
+####################################
+# Function for comparing % of surveys with an arthropod group between native and non-native members of a plant family
+nativeAlienAcrossRegions = function(ccPlants, # dataframe in which fullDataset is joined with officialPlantList and plantOrigin
+                                    plantFamily, # plant family for comparison
+                                    regions, # a list where each element is a vector of region abbrevs that should be treated together
+                                             # for example list(c('MA', 'CT', 'RI'), c('VA', 'MD'), 'NC', c('AL', 'FL')).
+                                    arthGroup = 'caterpillar',
+                                    jdRange = c(152, 212), # this default spans all of June + July
+                                    minSurveys = 10,  # min # of surveys conducted
+                                    minBranches = 5,  # min # of unique survey branches
+                                    minArths = 5)     # min # of arthropod observations
+  {
+  
+  comparisons = data.frame(Region = NULL, Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
+                           nAlienBranches = NULL, nNativeBranches = NULL, estimate = NULL, se = NULL, 
+                           l95 = NULL, u95 = NULL, p = NULL)
+  
+  for (r in 1:length(regions)) {
+    
+    ccPlantsTmp = ccPlants %>% 
+      filter(Region %in% regions[[r]])
+    
+    tmp = comparingNativeAlien(ccPlantsTmp, arthGroup = arthGroup, plantFamily = plantFamily, 
+                               jdRange = jdRange, minSurveys = minSurveys, minBranches = minBranches,
+                               minArths = minArths)
+    
+    tmpcomp = data.frame(Region = paste(regions[[r]], collapse = "-"),
+                         Family = tmp$Family,
+                         Group = tmp$Group,
+                         nAlienSurveys = tmp$nAlienSurveys,
+                         nNativeSurveys = tmp$nNativeSurveys,
+                         nAlienBranches = tmp$nAlienBranches,
+                         nNativeBranches = tmp$nNativeBranches,
+                         nAlienSurvsWithArth = tmp$nAlienSurvsWithArth,
+                         nNativeSurvsWithArth = tmp$nNativeSurvsWithArth,
+                         propAlienSurvsWithArth = tmp$propAlienSurvsWithArth,
+                         propNativeSurvsWithArth = tmp$propNativeSurvsWithArth,
+                         errorAlienSurvsWithArth = tmp$errorAlienSurvsWithArth,
+                         errorNativeSurvsWithArth = tmp$errorNativeSurvsWithArth,
+                         propTestZ = tmp$propTestZ,
+                         propTestP = tmp$propTestP,
+                         estimate = tmp$model$coefficients$cond[2,1],
+                         se = tmp$model$coefficients$cond[2,2],
+                         l95 = tmp$confint[1],
+                         u95 = tmp$confint[2],
+                         p = tmp$model$coefficients$cond[2,4])
+    
+    if (is.nan(tmpcomp$se)) {
+      tmpcomp$estimate = NA
+    }
+    
+    comparisons = rbind(comparisons, tmpcomp)
+    
+  } # end region loop
+  
+  return(comparisons)
+}
