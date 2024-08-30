@@ -70,7 +70,8 @@ treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Aceraceae', 'Caprifo
                                 #'magenta'))
 
 # Tree species with at least 50 surveys, ranked by % of surveys with caterpillars
-byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar', jdRange = c(152, 194)) %>%
+byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar', 
+                              jdRange = c(152, 212)) %>%   # June + July
   left_join(plantList, by = 'sciName') %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   filter(rank == 'species',
@@ -114,15 +115,18 @@ rasterImage(caterpillar, 16, 35, 32, 49)
 # Alternative two column figure
 
 numspp = nrow(byTreeSpp)
-if (numspp %% 2 != 0) { numspp = numspp + 1 } # add 1 to make numspp even if necessary
+if (numspp %% 2 != 0) { 
+  numspp = numspp + 1 # add 1 to make numspp even if necessary
+  byTreeSpp = rbind(byTreeSpp, NA)
+}
 
 pdf('Figures/Figure1_ranking_tree_spp_2col.pdf', height = 7, width = 12)
-par(mar = c(6, 7, 3, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
+par(mar = c(5, 7, 2, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
 plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[1:(numspp/2)], 
      xlim = c(0, 32), ylim = c(1, numspp/2),
      cex = 2*log10(byTreeSpp$nSurveys[1:(numspp/2)])/max(log10(byTreeSpp$nSurveys[1:(numspp/2)])),
-     main = "Species rank 1-44")
+     main = paste0("Species rank 1-", numspp/2))
 segments(byTreeSpp$LL95frac[1:(numspp/2)], (numspp/2):1, byTreeSpp$UL95frac[1:(numspp/2)], (numspp/2):1,
          lwd = 2, col = byTreeSpp$color[1:(numspp/2)])
 mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1, line = 1, adj = 1, las = 1, cex = .6)
@@ -140,8 +144,8 @@ legend("bottomright", c("Fagaceae", "Betulaceae", "Aceraceae", "Caprifoliaceae",
 plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[(numspp/2 + 1):numspp], 
      xlim = c(0, 32), ylim = c(1, numspp/2),
-     cex = 2*log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])/max(log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])),
-     main = "Species rank 45-88")
+     cex = 2*log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])/max(log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp]), na.rm = T),
+     main = paste0("Species rank ", numspp/2 + 1, "-", numspp))
 segments(byTreeSpp$LL95frac[(numspp/2 + 1):numspp], (numspp/2):1, byTreeSpp$UL95frac[(numspp/2 + 1):numspp], (numspp/2):1,
          lwd = 2, col = byTreeSpp$color[(numspp/2 + 1):numspp])
 mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1, line = 1, adj = 1, las = 1, cex = .6)
@@ -177,6 +181,7 @@ catSpecies = ccPlants %>%
   select(ID, Name, Region, Year, LocalDate, julianday, Code, sciName, arthID, Group, Quantity) %>%
   right_join(expert, by = c('arthID' = 'ArthropodSightingFK')) %>%
   rename(ID = ID.x, expertID = ID.y) %>%
+  filter(julianday >= 152, julianday <= 212) %>% # all of June and July
   group_by(sciName) %>%
   summarize(nTaxa = n_distinct(TaxonName[Group == 'caterpillar' & Rank != 'order']),
             nSurveysWithPhotos = n_distinct(ID),
@@ -198,7 +203,7 @@ lm.alien = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'alien' & catSpec
 
 # Plot
 pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 6, width = 8)
-par(mgp = c(4, 1, 0), tck = -0.03, mar = c(5, 7, 1, 1))
+par(mgp = c(4, 1, 0), tck = -0.03, mar = c(5, 7, 1, 1), mfrow = c(1,1), xpd = FALSE)
 plot(log10(catSpecies$nSurveysWithPhotos), log10(catSpecies$nTaxa), pch = ifelse(catSpecies$plantOrigin == 'native', 16, 17), 
      xlab = expression(log[10] ~ "#" ~ surveys ~ with ~ photos), 
      ylab = expression(log[10] ~ "#" ~ caterpillar ~ taxa), las = 1, 
@@ -216,7 +221,7 @@ dev.off()
 ###############################################################################
 # Find set of plant families with sufficient data for native-alien comparisons
 
-jdRange = c(152, 194) # 3 weeks before to 3 weeks after summer solstice (173)
+jdRange = c(152, 212) # June + July
 
 familyStats = ccPlants %>%
   filter(julianday >= jdRange[1], 
@@ -250,7 +255,9 @@ comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNat
 for (f in c('All', familyStats$Family)) {
   for (a in arthropods$Group) {
     
-    tmp = comparingNativeAlien(ccPlants, arthGroup = a, plantFamily = f, jdRange = c(152, 194), minArths = 5)
+    tmp = comparingNativeAlien(ccPlants, arthGroup = a, plantFamily = f, 
+                               jdRange = c(152, 212), # June + July
+                               minArths = 5)
     
     tmpcomp = data.frame(Family = tmp$Family,
                          Group = tmp$Group,
@@ -368,7 +375,8 @@ dev.off()
 # Figure 4. Controlling for geographic variation by focusing on a single family, Aceraceae, with the most surveys
 
 ccPlants %>% 
-  filter(Family=="Aceraceae", julianday >= 152, julianday <=194) %>% 
+  filter(Family=="Aceraceae", 
+         julianday >= 152, julianday <= 212) %>% # June + July
   distinct(ID, sciName, plantOrigin, Region) %>% 
   count(sciName, plantOrigin, Region) %>% 
   arrange(Region, desc(n))
@@ -377,7 +385,7 @@ ccPlants %>%
 regions = list('ON',
                c('MA','RI'),
                c('DC', 'MD', 'VA'),
-               'NC')
+               c('NC', 'SC'))
 
 acerComparisons = data.frame(Region = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
                              nAlienBranches = NULL, nNativeBranches = NULL, nAlienSurvsWithArth = NULL,
@@ -396,7 +404,7 @@ for (r in 1:length(regions)) {
   acerTmp = comparingNativeAlien(ccPlantsTmp, 
                                  arthGroup = 'caterpillar', 
                                  plantFamily = 'Aceraceae', 
-                                 jdRange = c(145, 201), 
+                                 jdRange = c(152, 212), 
                                  minArths = 5)
   
   acerTmpcomp = data.frame(Region = paste(regions[[r]], collapse = "-"),
@@ -437,7 +445,7 @@ acerComparisons = acerComparisons %>%
                            propTestP > 0.05 ~ ''))
 
 # Plot - vertical - caterpillars on Aceraceae
-pdf('Figures/Figure3_Aceraceae_across_regions.pdf', height = 6, width = 8)
+pdf('Figures/Figure4_Aceraceae_across_regions.pdf', height = 6, width = 8)
 par(mar = c(7, 6, 1, 1), mfrow = c(1,1), mgp = c(3, 1.2, 0), oma = c(0,0,0,0), xpd = FALSE)
 
 horizOffset = 0.05
