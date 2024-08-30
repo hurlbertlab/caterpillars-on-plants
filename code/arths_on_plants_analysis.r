@@ -376,66 +376,25 @@ dev.off()
 
 ccPlants %>% 
   filter(Family=="Aceraceae", 
+         grepl(" ", sciName),    #only return names with spaces, i.e. full scientific names, not just genera
          julianday >= 152, julianday <= 212) %>% # June + July
-  distinct(ID, sciName, plantOrigin, Region) %>% 
-  count(sciName, plantOrigin, Region) %>% 
+  distinct(ID, sciName, plantRank, plantOrigin, Region) %>% 
+  count(sciName, plantOrigin, plantRank, Region) %>% 
   arrange(Region, desc(n))
 
-# This shows that the following regions have sufficient surveys (>50 per plantOrigin) for a comparison:
-regions = list('ON',
-               c('MA','RI'),
+# This shows that the following regions have sufficient surveys on Aceraceae (>50 per plantOrigin) for a comparison:
+aceraceaeRegions = list('ON',
+               c('MA', 'CT','RI'),
                c('DC', 'MD', 'VA'),
                c('NC', 'SC'))
 
-acerComparisons = data.frame(Region = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
-                             nAlienBranches = NULL, nNativeBranches = NULL, nAlienSurvsWithArth = NULL,
-                             nNativeSurvsWithArth = NULL, propAlienSurvsWithArth = NULL,
-                             propNativeSurvsWithArth = NULL, errorAlienSurvsWithArth = NULL,
-                             errorNativeSurvsWithArth = NULL, propTestZ = NULL,
-                             propTestP = NULL,
-                             estimate = NULL, se = NULL, 
-                             l95 = NULL, u95 = NULL, p = NULL)
+# Similarly, for Rosaceae (although it turns out several of these regions are only represented by 4-8 unique branches):
+rosaceaeRegions = list('PA',
+                       c('MA', 'CT', 'RI'),
+                       c('DC', 'MD', 'VA'),
+                       c('NC', 'SC'))
 
-for (r in 1:length(regions)) {
-  
-  ccPlantsTmp = ccPlants %>% 
-    filter(Region %in% regions[[r]])
-  
-  acerTmp = comparingNativeAlien(ccPlantsTmp, 
-                                 arthGroup = 'caterpillar', 
-                                 plantFamily = 'Aceraceae', 
-                                 jdRange = c(152, 212), 
-                                 minArths = 5)
-  
-  acerTmpcomp = data.frame(Region = paste(regions[[r]], collapse = "-"),
-                           Group = 'caterpillar',
-                           nAlienSurveys = acerTmp$nAlienSurveys,
-                           nNativeSurveys = acerTmp$nNativeSurveys,
-                           nAlienBranches = acerTmp$nAlienBranches,
-                           nNativeBranches = acerTmp$nNativeBranches,
-                           nAlienSurvsWithArth = acerTmp$nAlienSurvsWithArth,
-                           nNativeSurvsWithArth = acerTmp$nNativeSurvsWithArth,
-                           propAlienSurvsWithArth = acerTmp$propAlienSurvsWithArth,
-                           propNativeSurvsWithArth = acerTmp$propNativeSurvsWithArth,
-                           errorAlienSurvsWithArth = acerTmp$errorAlienSurvsWithArth,
-                           errorNativeSurvsWithArth = acerTmp$errorNativeSurvsWithArth,
-                           propTestZ = acerTmp$propTestZ,
-                           propTestP = acerTmp$propTestP,
-                           estimate = acerTmp$model$coefficients$cond[2,1],
-                           se = acerTmp$model$coefficients$cond[2,2],
-                           l95 = acerTmp$confint[1],
-                           u95 = acerTmp$confint[2],
-                           p = acerTmp$model$coefficients$cond[2,4])
-  
-  if (is.nan(acerTmpcomp$se)) {
-    acerTmpcomp$estimate = NA
-  }
-  
-  acerComparisons = rbind(acerComparisons, acerTmpcomp)
-  
-}
-
-acerComparisons = acerComparisons %>%
+acerComparisons = nativeAlienAcrossRegions(ccPlants, "Aceraceae", regions = aceraceaeRegions, minSurveys = 50, minBranches = 10) %>%
   mutate(pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
                            propTestP > 0.001 & propTestP <= 0.01 & propTestZ >= 0 ~ '++',
                            propTestP > 0.01 & propTestP <= 0.05 & propTestZ >= 0 ~ '+',
