@@ -6,6 +6,8 @@ library(rvest)
 library(xml2)
 library(glmmTMB)
 library(png)
+library(lme4)
+library(interactions)
 
 # load functions
 source('code/plant_analysis_functions.r')
@@ -42,12 +44,14 @@ inferredPlantNames = read.csv(paste0(data_repo, inferred_data_links$file_name[nr
 plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv"))
 
 # The dataset for which we have plant species names with NameConfidence >= 2
-# NOTE: sciName is the field that includes inferred scientific names in addition to official ones
+# NOTE: sciName is the field that includes inferred scientific names in addition to official ones.
+# Exclude data from Coweeta sites, where non-caterpillars were not recorded
 ccPlants = cc %>%
   left_join(inferredPlantNames[, c('PlantFK', 'InferredSciName', 'NameConfidence')], by = 'PlantFK') %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   mutate(sciName = ifelse(Species == "N/A" & NameConfidence >= 2, InferredSciName, sciName)) %>%
-  filter(!is.na(sciName))
+  filter(!is.na(sciName),
+         !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'))
 
 
 ##########################################################################################################
@@ -450,3 +454,77 @@ rasterImage(caterpillar, 3.3, 15, 4.1, 18)
 dev.off()
 
 
+#################################################################################
+# Site-level analysis by latitude
+
+catPresences = ccPlants %>% 
+  filter(julianday >= 152, julianday <= 212, Group == 'caterpillar') %>% 
+  group_by(ID, Name, Latitude, sciName, plantOrigin) %>% 
+  summarize(presence = ifelse(sum(Quantity) > 0, 1, 0))
+
+catData = ccPlants %>% 
+  filter(julianday >= 152, julianday <=212) %>% 
+  distinct(ID, Name, Latitude, sciName, plantOrigin) %>%
+  left_join(catPresences)
+
+catData$presence[is.na(catData$presence)] = 0
+
+catDataBySiteAll = catData %>%
+  group_by(Name, Latitude) %>%
+  summarize(nSurvs = n_distinct(ID),
+            nSurvsAlien = n_distinct(ID[plantOrigin == 'alien']),
+            nSurvsNative = n_distinct(ID[plantOrigin == 'native']),
+            nSurvsCatsAlien = n_distinct(ID[plantOrigin == 'alien' & presence]),
+            nSurvsCatsNative = n_distinct(ID[plantOrigin == 'native' & presence]),
+            pctCatAlien = 100*nSurvsCatsAlien/nSurvsAlien,
+            pctCatNative = 100*nSurvsCatsNative/nSurvsNative,
+            pctAlienSurveys = 100*nSurvsAlien/(nSurvsAlien + nSurvsNative))
+
+# Based on this plot, sites above 45N latitude basically have no alien plant surveys, therefore they should be excluded from 
+# native / alien comparison
+plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
+     xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
+
+catDataBySite = catDataBySiteAll %>%
+  filter(nSurvsAlien >= 10, nSurvsNative >= 10, Latitude < 45)
+  
+catDataForAnalysis = catData %>%
+  filter(Name %in% catDataBySite$Name)
+  
+
+
+library(RColorBrewer)
+cols = brewer.pal(6, "YlGnBu")
+# Define colour pallete
+pal = colorRampPalette(cols)
+# Rank variable for colour assignment
+catDataBySite$LatIndex = round(99*(catDataBySite$Latitude - min(catDataBySite$Latitude, na.rm = TRUE))/
+  (max(catDataBySite$Latitude, na.rm = TRUE) - min(catDataBySite$Latitude))) + 1
+
+par(mfrow = c(1,1), mar = c(5, 5, 1, 1), oma = c(0,0,0,0))
+plot(catDataBySite$pctCatNative, catDataBySite$pctCatAlien, cex = log10(catDataBySite$nSurvsAlien),
+     col = pal(100)[catDataBySite$LatIndex], pch = 16, xlab = "% of native surveys with caterpillars", 
+     ylab = "% of alien surveys with caterpillars", cex.lab = 1.5)
+abline(a=0, b= 1, col = 'red')
+legend("topleft", legend = c(round(min(catDataBySite$Latitude)), round((min(catDataBySite$Latitude)+max(catDataBySite$Latitude))/2),
+                             round(max(catDataBySite$Latitude))),
+       pch = 16, cex = 1.5, col = pal(100)[c(1, 50, 100)], pt.cex = 2, title = 'Latitude')
+                             
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) random effects.
+log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
+                                 data = catDataForAnalysis, family = "binomial")
+
+intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
+              interval = TRUE, int.type = 'confidence', int.width = .95,
+              y.label = "Proportion surveys with caterpillars",
+              legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+              colors = c('red', 'gray50'))
+intplot + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
