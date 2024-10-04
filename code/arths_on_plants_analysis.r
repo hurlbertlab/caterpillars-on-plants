@@ -8,6 +8,7 @@ library(glmmTMB)
 library(png)
 library(lme4)
 library(interactions)
+library(RColorBrewer)
 
 # load functions
 source('code/plant_analysis_functions.r')
@@ -41,37 +42,169 @@ inferred_data_links <- tibble(link = plants_repo_links[grepl("inferredPlantNames
 officialPlantList = read.csv(paste0(data_repo, official_data_links$file_name[nrow(official_data_links)]))
 inferredPlantNames = read.csv(paste0(data_repo, inferred_data_links$file_name[nrow(inferred_data_links)]))
 
-plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv"))
+plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv")) %>%
+  select(scientificName, nativeStatus, plantOrigin)
 
 # The dataset for which we have plant species names with NameConfidence >= 2
 # NOTE: sciName is the field that includes inferred scientific names in addition to official ones.
 # Exclude data from Coweeta sites, where non-caterpillars were not recorded
 ccPlants = cc %>%
   left_join(inferredPlantNames[, c('PlantFK', 'InferredSciName', 'NameConfidence')], by = 'PlantFK') %>%
-  left_join(plantOrigin[, c('scientificName', 'nativeStatus', 'plantOrigin')], by = c('sciName' = 'scientificName')) %>%
+  left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   mutate(sciName = ifelse(Species == "N/A" & NameConfidence >= 2, InferredSciName, sciName)) %>%
   filter(!is.na(sciName),
          !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'))
+
+# Color scheme for tree families
+treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Caprifoliaceae', 'Juglandaceae', 'Rosaceae'),
+                      #'Ericaceae', 'Hippocastanaceae', 
+                      #'Oleaceae'),
+                      famcolor = c(#rgb(0,0,0),
+                        rgb(230/255, 159/255, 0),
+                        rgb(86/255, 180/255, 233/255),
+                        rgb(0, 158/255, 115/255),
+                        rgb(240/255, 228/255, 66/255),
+                        rgb(213/255, 94/255, 0),
+                        'salmon'))
+#rgb(0, 114/255, 178/255)))
+#rgb(204/255, 121/255, 167/255),
+#'magenta'))
+
+
+#################################################################################
+# Site-level analysis by latitude
+
+catPresences = ccPlants %>% 
+  filter(julianday >= 152, julianday <= 212, Group == 'caterpillar') %>% 
+  group_by(ID, Name, Latitude, sciName, Family, plantOrigin) %>% 
+  summarize(presence = ifelse(sum(Quantity) > 0, 1, 0))
+
+catData = ccPlants %>% 
+  filter(julianday >= 152, julianday <=212) %>% 
+  distinct(ID, Name, Latitude, sciName, Family, plantOrigin) %>%
+  left_join(catPresences)
+
+catData$presence[is.na(catData$presence)] = 0
+
+catDataBySiteAll = catData %>%
+  group_by(Name, Latitude) %>%
+  summarize(nSurvs = n_distinct(ID),
+            nSurvsAlien = n_distinct(ID[plantOrigin == 'alien']),
+            nSurvsNative = n_distinct(ID[plantOrigin == 'native']),
+            nSurvsCatsAlien = n_distinct(ID[plantOrigin == 'alien' & presence]),
+            nSurvsCatsNative = n_distinct(ID[plantOrigin == 'native' & presence]),
+            pctCatAlien = 100*nSurvsCatsAlien/nSurvsAlien,
+            pctCatNative = 100*nSurvsCatsNative/nSurvsNative,
+            pctAlienSurveys = 100*nSurvsAlien/(nSurvsAlien + nSurvsNative))
+
+# Based on this plot, sites above 45N latitude basically have no alien plant surveys, therefore they should be excluded from 
+# native / alien comparison
+par(mfrow = c(1,1))
+plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
+     xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
+
+catDataBySite = catDataBySiteAll %>%
+  filter(nSurvsAlien >= 10, nSurvsNative >= 10, Latitude < 45)
+
+catDataForAnalysis = catData %>%
+  filter(Name %in% catDataBySite$Name)
+
+ccPlantsForAlienNativeComparison = ccPlants %>%
+  filter(Latitude < 45)
+
+
+cols = brewer.pal(6, "YlGnBu")
+# Define colour pallete
+pal = colorRampPalette(cols)
+# Rank variable for colour assignment
+catDataBySite$LatIndex = round(99*(catDataBySite$Latitude - min(catDataBySite$Latitude, na.rm = TRUE))/
+                                 (max(catDataBySite$Latitude, na.rm = TRUE) - min(catDataBySite$Latitude))) + 1
+
+par(mfrow = c(1,1), mar = c(5, 5, 1, 1), oma = c(0,0,0,0))
+plot(catDataBySite$pctCatNative, catDataBySite$pctCatAlien, cex = log10(catDataBySite$nSurvsAlien),
+     col = pal(100)[catDataBySite$LatIndex], pch = 16, xlab = "% of native surveys with caterpillars", 
+     ylab = "% of alien surveys with caterpillars", cex.lab = 1.5)
+abline(a=0, b= 1, col = 'red')
+legend("topleft", legend = c(round(min(catDataBySite$Latitude)), round((min(catDataBySite$Latitude)+max(catDataBySite$Latitude))/2),
+                             round(max(catDataBySite$Latitude))),
+       pch = 16, cex = 1.5, col = pal(100)[c(1, 50, 100)], pt.cex = 2, title = 'Latitude')
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) random effects.
+log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
+                                 data = catDataForAnalysis, family = "binomial")
+
+intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
+                        interval = TRUE, int.type = 'confidence', int.width = .95,
+                        y.label = "Proportion surveys with caterpillars",
+                        legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                        colors = c('red', 'gray50'))
+intplot + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+
+
+# Same as above, but for Sapindaceae only
+catDataSapindaceae = catData %>%
+  filter(Name %in% catDataBySite$Name,
+         Family == 'Sapindaceae')
+
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) random effects for Sapindaceae--NO EFFECTS OF ORIGIN, LATITUDE
+log.Origin.Latitude.Name.Sapindaceae = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
+                                 data = catDataSapindaceae, family = "binomial")
+
+intplotSap = interact_plot(log.Origin.Latitude.Name.Sapindaceae, pred = 'Latitude', modx = 'plantOrigin', 
+                        interval = TRUE, int.type = 'confidence', int.width = .95,
+                        y.label = "Proportion surveys with caterpillars",
+                        legend.main = "Sapindaceae", line.thickness = 2, cex.lab = 1.5,
+                        colors = c('red', 'gray50'))
+intplotSap + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+
+
+# Latitudinal range of alien plant species in our dataset
+alienRanges = ccPlantsForAlienNativeComparison %>%
+  filter(plantOrigin == 'alien') %>%
+  group_by(sciName, Family) %>%
+  summarize(nSurvs = n_distinct(ID),
+            nBranches = n_distinct(PlantFK),
+            minLat = min(Latitude),
+            maxLat = max(Latitude)) %>%
+  ungroup() %>%
+  filter(nSurvs >= 10, nBranches >= 5) %>%
+  left_join(treeFams) %>%
+  arrange(desc(maxLat), desc(minLat))
+
+alienRanges$famcolor[is.na(alienRanges$famcolor)] = 'gray50'
+
+par(mfrow = c(1,1), mar = c(5, 12, 1, 1))
+plot(range(c(alienRanges$minLat, alienRanges$maxLat)), c(0, nrow(alienRanges)), type = 'n', xlab = 'Latitudinal Range', yaxt = 'n', ylab = '')
+for (i in 1:nrow(alienRanges)) {
+  
+  lines(c(alienRanges$minLat[i], alienRanges$maxLat[i]), c(i, i), col = alienRanges$famcolor[i], lwd = 3)
+}
+mtext(alienRanges$sciName, 2, at = 1:nrow(alienRanges), col = alienRanges$famcolor, las = 1, line = 1)
 
 
 ##########################################################################################################
 # Figure 1. Comparison of % surveys with caterpillars across tree species
 
 plantList = officialPlantList %>%
-  distinct(sciName, rank)
+  distinct(sciName, rank, Family)
 
-treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Aceraceae', 'Caprifoliaceae', 'Juglandaceae'),
-                                 #'Ericaceae', 'Hippocastanaceae', 
-                                 #'Oleaceae', 'Rosaceae'),
-                      famcolor = c(#rgb(0,0,0),
-                                rgb(230/255, 159/255, 0),
-                                rgb(86/255, 180/255, 233/255),
-                                rgb(0, 158/255, 115/255),
-                                rgb(240/255, 228/255, 66/255),
-                                rgb(213/255, 94/255, 0)))
-                                #rgb(0, 114/255, 178/255)))
-                                #rgb(204/255, 121/255, 167/255),
-                                #'magenta'))
 
 # Tree species with at least 50 surveys, ranked by % of surveys with caterpillars
 byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar', 
@@ -86,37 +219,6 @@ byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar',
   left_join(treeFams, by = 'Family')
 
 byTreeSpp$famcolor[is.na(byTreeSpp$famcolor)] = 'gray50'
-
-                                
-
-# See alternate plot below
-#pdf('Figures/Figure1_ranking_tree_spp.pdf', height = 10, width = 6)
-par(mar = c(6, 8, 1, 1), mgp = c(3, 1, 0), mfrow = c(1,1), oma = c(0, 0, 0, 0), xpd = NA)
-plot(byTreeSpp$fracSurveys, nrow(byTreeSpp):1, yaxt = 'n', ylab = '', xlab = '% of surveys with caterpillars',
-     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color, xlim = c(0, 32), ylim = c(5, nrow(byTreeSpp))-2,
-     cex = 2*log10(byTreeSpp$nSurveys)/max(log10(byTreeSpp$nSurveys)))
-segments(byTreeSpp$LL95frac, nrow(byTreeSpp):1, byTreeSpp$UL95frac, nrow(byTreeSpp):1,
-         lwd = 2, col = byTreeSpp$color)
-mtext(byTreeSpp$sciName, 2, at = nrow(byTreeSpp):1, line = 1, adj = 1, las = 1, cex = .6)
-points(rep(-2, nrow(byTreeSpp)), nrow(byTreeSpp):1, pch = 15, col = byTreeSpp$famcolor)    # color coding by family doesn't add much
-
-legend("bottomright", c("native", "alien", "", "Fagaceae", "Betulaceae", "Aceraceae", "Caprifoliaceae", "Juglandaceae", "Other"), 
-       col = c('gray70', 'firebrick2', NA, rgb(230/255, 159/255, 0),
-               rgb(86/255, 180/255, 233/255),
-               rgb(0, 158/255, 115/255),
-               rgb(240/255, 228/255, 66/255),
-               rgb(213/255, 94/255, 0),
-               'gray50'), 
-       pch = c(16, 16, NA, rep(15, 6)), lty = c(rep('solid', 2), rep('blank', 7)), 
-       cex = c(rep(1.75, 2), rep(1.3, 7)), pt.cex = c(rep(2, 2), rep(1.8, 7)), lwd = c(rep(2, 2), rep(0, 7)))
-
-caterpillar = readPNG('images/caterpillar.png')
-rasterImage(caterpillar, 16, 35, 32, 49)
-#dev.off()
-
-
-
-# Alternative two column figure
 
 numspp = nrow(byTreeSpp)
 if (numspp %% 2 != 0) { 
@@ -133,15 +235,16 @@ plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', x
      main = paste0("Species rank 1-", numspp/2))
 segments(byTreeSpp$LL95frac[1:(numspp/2)], (numspp/2):1, byTreeSpp$UL95frac[1:(numspp/2)], (numspp/2):1,
          lwd = 2, col = byTreeSpp$color[1:(numspp/2)])
-mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1, line = 1, adj = 1, las = 1, cex = .6)
+mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .6)
 points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[1:(numspp/2)], cex = 1.2)
 
-legend("bottomright", c("Fagaceae", "Betulaceae", "Aceraceae", "Caprifoliaceae", "Juglandaceae", "Other"), 
+legend("bottomright", c("Fagaceae", "Betulaceae", "Sapindaceae", "Caprifoliaceae", "Juglandaceae", "Rosaceae", "Other"), 
        col = c(rgb(230/255, 159/255, 0),
                rgb(86/255, 180/255, 233/255),
                rgb(0, 158/255, 115/255),
                rgb(240/255, 228/255, 66/255),
                rgb(213/255, 94/255, 0),
+               'salmon',
                'gray50'), 
        pch = 15, cex = 1, pt.cex = 1.5)
 
@@ -152,7 +255,7 @@ plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', yla
      main = paste0("Species rank ", numspp/2 + 1, "-", numspp))
 segments(byTreeSpp$LL95frac[(numspp/2 + 1):numspp], (numspp/2):1, byTreeSpp$UL95frac[(numspp/2 + 1):numspp], (numspp/2):1,
          lwd = 2, col = byTreeSpp$color[(numspp/2 + 1):numspp])
-mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1, line = 1, adj = 1, las = 1, cex = .6)
+mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .6)
 points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[(numspp/2 + 1):numspp], cex = 1.2)    # 
 
 legend("bottomright", c("native", "alien"), 
@@ -454,103 +557,3 @@ rasterImage(caterpillar, 3.3, 15, 4.1, 18)
 dev.off()
 
 
-#################################################################################
-# Site-level analysis by latitude
-
-catPresences = ccPlants %>% 
-  filter(julianday >= 152, julianday <= 212, Group == 'caterpillar') %>% 
-  group_by(ID, Name, Latitude, sciName, Family, plantOrigin) %>% 
-  summarize(presence = ifelse(sum(Quantity) > 0, 1, 0))
-
-catData = ccPlants %>% 
-  filter(julianday >= 152, julianday <=212) %>% 
-  distinct(ID, Name, Latitude, sciName, Family, plantOrigin) %>%
-  left_join(catPresences)
-
-catData$presence[is.na(catData$presence)] = 0
-
-catDataBySiteAll = catData %>%
-  group_by(Name, Latitude) %>%
-  summarize(nSurvs = n_distinct(ID),
-            nSurvsAlien = n_distinct(ID[plantOrigin == 'alien']),
-            nSurvsNative = n_distinct(ID[plantOrigin == 'native']),
-            nSurvsCatsAlien = n_distinct(ID[plantOrigin == 'alien' & presence]),
-            nSurvsCatsNative = n_distinct(ID[plantOrigin == 'native' & presence]),
-            pctCatAlien = 100*nSurvsCatsAlien/nSurvsAlien,
-            pctCatNative = 100*nSurvsCatsNative/nSurvsNative,
-            pctAlienSurveys = 100*nSurvsAlien/(nSurvsAlien + nSurvsNative))
-
-# Based on this plot, sites above 45N latitude basically have no alien plant surveys, therefore they should be excluded from 
-# native / alien comparison
-plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
-     xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
-
-catDataBySite = catDataBySiteAll %>%
-  filter(nSurvsAlien >= 10, nSurvsNative >= 10, Latitude < 45)
-  
-catDataForAnalysis = catData %>%
-  filter(Name %in% catDataBySite$Name)
-  
-
-
-library(RColorBrewer)
-cols = brewer.pal(6, "YlGnBu")
-# Define colour pallete
-pal = colorRampPalette(cols)
-# Rank variable for colour assignment
-catDataBySite$LatIndex = round(99*(catDataBySite$Latitude - min(catDataBySite$Latitude, na.rm = TRUE))/
-  (max(catDataBySite$Latitude, na.rm = TRUE) - min(catDataBySite$Latitude))) + 1
-
-par(mfrow = c(1,1), mar = c(5, 5, 1, 1), oma = c(0,0,0,0))
-plot(catDataBySite$pctCatNative, catDataBySite$pctCatAlien, cex = log10(catDataBySite$nSurvsAlien),
-     col = pal(100)[catDataBySite$LatIndex], pch = 16, xlab = "% of native surveys with caterpillars", 
-     ylab = "% of alien surveys with caterpillars", cex.lab = 1.5)
-abline(a=0, b= 1, col = 'red')
-legend("topleft", legend = c(round(min(catDataBySite$Latitude)), round((min(catDataBySite$Latitude)+max(catDataBySite$Latitude))/2),
-                             round(max(catDataBySite$Latitude))),
-       pch = 16, cex = 1.5, col = pal(100)[c(1, 50, 100)], pt.cex = 2, title = 'Latitude')
-                             
-# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
-# with site-level (Name) random effects.
-log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
-                                 data = catDataForAnalysis, family = "binomial")
-
-intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
-              interval = TRUE, int.type = 'confidence', int.width = .95,
-              y.label = "Proportion surveys with caterpillars",
-              legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
-              colors = c('red', 'gray50'))
-intplot + 
-  theme_bw() +
-  theme(axis.title = element_text(size = 15),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13),
-        legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
-
-
-# Same as above, but for Aceraceae only
-catDataAceraceae = catData %>%
-  filter(Name %in% catDataBySite$Name,
-         Family == 'Aceraceae')
-
-
-# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
-# with site-level (Name) random effects.
-log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
-                                 data = catDataForAnalysis, family = "binomial")
-
-intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
-                        interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion surveys with caterpillars",
-                        legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
-                        colors = c('red', 'gray50'))
-intplot + 
-  theme_bw() +
-  theme(axis.title = element_text(size = 15),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13),
-        legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
