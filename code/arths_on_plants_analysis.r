@@ -48,7 +48,7 @@ plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv"))
 # Exclude data from Coweeta sites, where non-caterpillars were not recorded
 ccPlants = cc %>%
   left_join(inferredPlantNames[, c('PlantFK', 'InferredSciName', 'NameConfidence')], by = 'PlantFK') %>%
-  left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
+  left_join(plantOrigin[, c('scientificName', 'nativeStatus', 'plantOrigin')], by = c('sciName' = 'scientificName')) %>%
   mutate(sciName = ifelse(Species == "N/A" & NameConfidence >= 2, InferredSciName, sciName)) %>%
   filter(!is.na(sciName),
          !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'))
@@ -459,12 +459,12 @@ dev.off()
 
 catPresences = ccPlants %>% 
   filter(julianday >= 152, julianday <= 212, Group == 'caterpillar') %>% 
-  group_by(ID, Name, Latitude, sciName, plantOrigin) %>% 
+  group_by(ID, Name, Latitude, sciName, Family, plantOrigin) %>% 
   summarize(presence = ifelse(sum(Quantity) > 0, 1, 0))
 
 catData = ccPlants %>% 
   filter(julianday >= 152, julianday <=212) %>% 
-  distinct(ID, Name, Latitude, sciName, plantOrigin) %>%
+  distinct(ID, Name, Latitude, sciName, Family, plantOrigin) %>%
   left_join(catPresences)
 
 catData$presence[is.na(catData$presence)] = 0
@@ -520,6 +520,32 @@ intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'pla
               y.label = "Proportion surveys with caterpillars",
               legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
               colors = c('red', 'gray50'))
+intplot + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+
+
+# Same as above, but for Aceraceae only
+catDataAceraceae = catData %>%
+  filter(Name %in% catDataBySite$Name,
+         Family == 'Aceraceae')
+
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) random effects.
+log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
+                                 data = catDataForAnalysis, family = "binomial")
+
+intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
+                        interval = TRUE, int.type = 'confidence', int.width = .95,
+                        y.label = "Proportion surveys with caterpillars",
+                        legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                        colors = c('red', 'gray50'))
 intplot + 
   theme_bw() +
   theme(axis.title = element_text(size = 15),
