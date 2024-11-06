@@ -149,6 +149,29 @@ intplot +
         axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
 
 
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) random effects.
+log.Origin.Latitude.Name.Family = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name) + (1 | Family), 
+                                 data = catDataForAnalysis, family = "binomial")
+
+intplot = interact_plot(log.Origin.Latitude.Name.Family, pred = 'Latitude', modx = 'plantOrigin', 
+                        interval = TRUE, int.type = 'confidence', int.width = .95,
+                        y.label = "Proportion surveys with caterpillars",
+                        legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                        colors = c('red', 'gray50'))
+intplot + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+
+
+
+
+
 # Same as above, but for Sapindaceae only
 catDataSapindaceae = catData %>%
   filter(Name %in% catDataBySite$Name,
@@ -194,7 +217,7 @@ par(mfrow = c(1,1), mar = c(5, 12, 1, 1))
 plot(range(c(alienRanges$minLat, alienRanges$maxLat)), c(0, nrow(alienRanges)), type = 'n', xlab = 'Latitudinal Range', yaxt = 'n', ylab = '')
 for (i in 1:nrow(alienRanges)) {
   
-  lines(c(alienRanges$minLat[i], alienRanges$maxLat[i]), c(i, i), col = alienRanges$famcolor[i], lwd = 3)
+  lines(c(alienRanges$minLat[i], alienRanges$maxLat[i]), c(i, i), col = alienRanges$famcolor[i], lwd = log(alienRanges$nSurvs[i]))
 }
 mtext(alienRanges$sciName, 2, at = 1:nrow(alienRanges), col = alienRanges$famcolor, las = 1, line = 1)
 
@@ -408,6 +431,36 @@ comparisons = comparisons %>%
 
 ###############################################################################################
 # Figure 3. Comparing % of surveys with arthropod (+- 95% CI) for all plant families and arthropod groups
+par(mfrow = c(1,1), mgp = c(3, 1, 0), oma = c(0,0,0,0), mar = c(5, 5, 0, 0))
+plot(100*all$propNativeSurvsWithArth, 100*all$propAlienSurvsWithArth, col = all$color, cex = 3, 
+     xlab = "% of native surveys", ylab = "% of alien surveys", cex.lab = 2, cex.axis = 1.75, las = 1, pch = 16, 
+     xlim = c(0, 25), ylim = c(0, 25))
+abline(a=0, b=1, lty = 'dotted', lwd = 2, col = 'gray30')
+
+# asterisks
+asteriskOffset = 0.8
+text(100*all$propNativeSurvsWithArth[all$Group %in% c('caterpillar', 'spider', 'beetle')], 
+     100*all$propAlienSurvsWithArth[all$Group %in% c('caterpillar', 'spider', 'beetle')] - asteriskOffset,
+     '***', cex = 2)
+text(100*all$propNativeSurvsWithArth[all$Group == 'leafhopper'], 
+     100*all$propAlienSurvsWithArth[all$Group == 'leafhopper'] - asteriskOffset,
+     '*', cex = 2)
+
+# bug icons
+for(a in arthropods$Group) {
+  bug = readPNG(paste0('images/', a, '.png'))
+  
+  xoffset = ifelse(a == 'beetle', 1, 1.5)
+  yheight = ifelse(a %in%  c('beetle', 'caterpillar'), 2, 3)
+
+  rasterImage(bug, 100*all$propNativeSurvsWithArth[all$Group == a] - xoffset, 
+              100*all$propAlienSurvsWithArth[all$Group == a] + .5, 
+              100*all$propNativeSurvsWithArth[all$Group == a] + xoffset,
+              100*all$propAlienSurvsWithArth[all$Group == a] + .5 + yheight)
+}
+
+legend("bottomright", legend = c(" *   p < 0.02", "*** p < 0.00001"), cex = 1.5)
+
 
 
 pdf('Figures/Figure3_plant_family_comparison.pdf', height = 6, width = 10)
@@ -482,7 +535,7 @@ dev.off()
 # Figure 4. Controlling for geographic variation by focusing on a single family, Aceraceae, with the most surveys
 
 ccPlants %>% 
-  filter(Family=="Aceraceae", 
+  filter(Family=="Sapindaceae", 
          grepl(" ", sciName),    #only return names with spaces, i.e. full scientific names, not just genera
          julianday >= 152, julianday <= 212) %>% # June + July
   distinct(ID, sciName, plantRank, plantOrigin, Region) %>% 
@@ -501,7 +554,7 @@ rosaceaeRegions = list('PA',
                        c('DC', 'MD', 'VA'),
                        c('NC', 'SC'))
 
-acerComparisons = nativeAlienAcrossRegions(ccPlants, "Aceraceae", regions = aceraceaeRegions, minSurveys = 50, minBranches = 10) %>%
+acerComparisons = nativeAlienAcrossRegions(ccPlants, "Sapindaceae", regions = aceraceaeRegions, minSurveys = 50, minBranches = 10) %>%
   mutate(pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
                            propTestP > 0.001 & propTestP <= 0.01 & propTestZ >= 0 ~ '++',
                            propTestP > 0.01 & propTestP <= 0.05 & propTestZ >= 0 ~ '+',
@@ -516,23 +569,25 @@ par(mar = c(7, 6, 1, 1), mfrow = c(1,1), mgp = c(3, 1.2, 0), oma = c(0,0,0,0), x
 
 horizOffset = 0.05
 
+# Native
 plot(4:1 + horizOffset, 100*acerComparisons$propNativeSurvsWithArth, 
      xlab = "", ylab = "% of surveys", xaxt = "n", tck = -0.02, xlim = c(0.5, 4.5), ylim = c(0, 18),
-     pch = 16, col = 'black', cex = 2, cex.axis = 1.5, las = 1, cex.lab = 2)
+     pch = 16, col = 'gray50', cex = 2, cex.axis = 1.5, las = 1, cex.lab = 2)
 segments(4:1 + horizOffset, 100*acerComparisons$propNativeSurvsWithArth - 
            100*acerComparisons$errorNativeSurvsWithArth, 
          4:1 + horizOffset,
          100*acerComparisons$propNativeSurvsWithArth + 
            100*acerComparisons$errorNativeSurvsWithArth, 
-         lwd = 2)
+         lwd = 2, col = 'gray50')
 
-points(4:1 - horizOffset, 100*acerComparisons$propAlienSurvsWithArth, pch = 1, cex = 2)
+# Alien
+points(4:1 - horizOffset, 100*acerComparisons$propAlienSurvsWithArth, pch = 16, cex = 2, col = 'red')
 segments(4:1 - horizOffset, 100*acerComparisons$propAlienSurvsWithArth - 
            100*acerComparisons$errorAlienSurvsWithArth, 
          4:1 - horizOffset,
          100*acerComparisons$propAlienSurvsWithArth + 
            100*acerComparisons$errorAlienSurvsWithArth, 
-         lwd = 2)
+         lwd = 2, col = 'red')
 
 #abline(h = 1.5, lwd = 2)
 
@@ -547,7 +602,7 @@ mtext(paste0(acerComparisons$Region,
 
 mtext("Region", 1, line = 5, cex = 2)
 
-legend("topleft", legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
+legend("topleft", legend=c("native","alien"), pch=c(16,16), lty = 'solid', col = c('gray50', 'red'),
        xpd = NA, cex = 1.5)
 
 maple = readPNG("images/maple.png")
