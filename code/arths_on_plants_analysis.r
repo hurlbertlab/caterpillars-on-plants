@@ -431,6 +431,8 @@ comparisons = comparisons %>%
 
 ###############################################################################################
 # Figure 3. Comparing % of surveys with arthropod (+- 95% CI) for all plant families and arthropod groups
+
+pdf('Figures/alien_vs_native.pdf', height = 6, width = 8)
 par(mfrow = c(1,1), mgp = c(3, 1, 0), oma = c(0,0,0,0), mar = c(5, 5, 0, 0))
 plot(100*all$propNativeSurvsWithArth, 100*all$propAlienSurvsWithArth, col = all$color, cex = 3, 
      xlab = "% of native surveys", ylab = "% of alien surveys", cex.lab = 2, cex.axis = 1.75, las = 1, pch = 16, 
@@ -460,6 +462,7 @@ for(a in arthropods$Group) {
 }
 
 legend("bottomright", legend = c(" *   p < 0.02", "*** p < 0.00001"), cex = 1.5)
+dev.off()
 
 
 
