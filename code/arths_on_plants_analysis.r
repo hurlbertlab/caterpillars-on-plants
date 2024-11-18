@@ -319,8 +319,11 @@ catSpecies = ccPlants %>%
             Regions = paste(unique(Region), collapse = '-')) %>%
   arrange(desc(nTaxa)) %>%
   mutate(label = paste0(substr(sciName, 1, 1), ". ", word(sciName, 2))) %>%
-  left_join(plantOrigin[, c('scientificName', 'plantOrigin', 'Family')], by = c('sciName' = 'scientificName')) %>%
-  mutate(color = ifelse(plantOrigin == 'native', 'gray50', 'firebrick2'))
+  left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
+  mutate(color = ifelse(plantOrigin == 'native', 'gray50', 'firebrick2'),
+         native = ifelse(plantOrigin == 'native', 1, 0),
+         logTaxa = log10(nTaxa),
+         logPhotos = log10(nSurveysWithPhotos))
 
 
 
@@ -331,8 +334,33 @@ lm.native = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'native' & catSp
 lm.alien = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'alien' & catSpecies$nTaxa > 0]) ~ 
                 log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'alien' & catSpecies$nTaxa > 0]))
 
-# Plot
+catSpeciesWithTaxa = catSpecies[catSpecies$nTaxa > 0, ]
+
+lm.native.alien = lm(logTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                           data = catSpeciesWithTaxa)
+
+taxaIntPlot = interact_plot(lm.native.alien, pred = 'logPhotos', modx = 'plantOrigin', 
+                           interval = TRUE, int.type = 'confidence', int.width = .95,
+                           y.label = expression(log[10]~~"#"~ caterpillar~taxa),
+                           x.label = expression(log[10]~~"#"~surveys~with~photos),
+                           legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                           colors = c('red', 'gray50'), plot.points = TRUE, #vary.lty = FALSE,
+                           point.shape = TRUE, point.size = 2.5, show.legend = FALSE)
+
 pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 6, width = 8)
+taxaIntPlot + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 20),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+dev.off()
+
+
+# Old basic plot
+#pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 6, width = 8)
 par(mgp = c(4, 1, 0), tck = -0.03, mar = c(5, 7, 1, 1), mfrow = c(1,1), xpd = FALSE)
 plot(log10(catSpecies$nSurveysWithPhotos), log10(catSpecies$nTaxa), pch = ifelse(catSpecies$plantOrigin == 'native', 16, 17), 
      xlab = expression(log[10] ~ "#" ~ surveys ~ with ~ photos), 
@@ -343,7 +371,7 @@ abline(lm.native, lwd = 2, col = 'gray30')
 abline(lm.alien, col = 'firebrick2', lwd = 2)
 
 legend("topleft", c("native", "alien"), pch = c(16, 17), col = c('gray50', 'firebrick2'), cex = 1.5)
-dev.off()
+#dev.off()
 
 
 
