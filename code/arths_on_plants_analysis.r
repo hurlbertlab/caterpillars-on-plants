@@ -83,6 +83,8 @@ treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Capri
                         rgb(213/255, 94/255, 0),
                         'salmon'))
 
+# Caterpillar images
+caterpillar = readPNG('images/caterpillar.png')
 
 
 #################################################################################
@@ -150,18 +152,9 @@ log.Origin.Latitude = glm(presence ~ plantOrigin + Latitude + plantOrigin*Latitu
 
 intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion surveys with caterpillars",
+                        y.label = "Proportion of surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                         colors = c('red', 'gray50'))
-intplotLatOrigin + 
-  theme_bw() +
-  theme(axis.title = element_text(size = 15),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13),
-        legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
-
 
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
@@ -169,20 +162,23 @@ intplotLatOrigin +
 log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
                                  data = catDataForAnalysis, family = "binomial")
 
-intplot = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
+intplotOriginLatitudeName = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion surveys with caterpillars",
+                        y.label = "Proportion of surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                         colors = c('red', 'gray50'))
-intplot + 
+
+png('Figures/nativeStatus_by_latitude.png', height = 500, width = 800)
+intplotOriginLatitudeName + 
   theme_bw() +
-  theme(axis.title = element_text(size = 15),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13),
-        legend.title = element_text(size = 15),
+  annotation_raster(caterpillar, ymin = .041, ymax= .052,xmin = 40, xmax = 43.4) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 18),
         axis.title.x = element_text(margin = margin(t = 10)), 
         axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
-
+dev.off()
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
 # with site-level (Name) random effects.
@@ -257,6 +253,37 @@ for (i in 1:nrow(alienRanges)) {
 mtext(alienRanges$sciName, 2, at = 1:nrow(alienRanges), col = alienRanges$famcolor, las = 1, line = 1)
 
 
+# Latitudinal variation within individual host plant species
+hostplants = c('Fagus grandifolia', 'Acer negundo', 'Acer rubrum', 
+               'Carpinus caroliniana', 'Cercis canadensis', 'Prunus serotina')
+
+# Plotting % of surveys by half degree band
+
+pdf('Figures/latitude_within_species.pdf', height = 6, width = 10)
+par(mfrow = c(2, 3), mar = c(6, 6, 3, 1), mgp = c(3, 1, 0))
+for (h in hostplants) {
+  tmp = catDataForAnalysis %>%
+    filter(sciName == h) %>%
+    mutate(latBand = round(2*Latitude)/2) %>%  # half degree bands
+    group_by(latBand) %>%
+    summarize(nSurvs = n(),
+              nSurvsWithCats = sum(presence == 1),
+              pctCats = 100*nSurvsWithCats/nSurvs)
+  
+  plot(tmp$latBand, tmp$pctCats, pch = 16, cex = log10(tmp$nSurvs) + 0.5, xlab = 'Latitude band', 
+       ylab = '% of surveys', main = paste0(h, " (", formatC(sum(tmp$nSurvs), big.mark = ","), ")"),
+       las = 1, cex.lab = 2, cex.axis = 1.5, cex.main = 1.5, col = 'gray50')
+  
+  tmp.lm = lm(pctCats ~ latBand, data = tmp, weights = log10(nSurvs))
+  abline(tmp.lm, lty = 'dashed', lwd = 2, xpd = FALSE)
+  
+}
+dev.off()
+
+
+
+
+
 ##########################################################################################################
 # Figure 1. Comparison of % surveys with caterpillars across tree species
 
@@ -320,7 +347,6 @@ legend("bottomright", c("native", "alien"),
        col = c('gray70', 'firebrick2'), 
        pch = 16, cex = 1.4, pt.cex = 2, lwd = 2, lty = 'solid')
 
-caterpillar = readPNG('images/caterpillar.png')
 rasterImage(caterpillar, 16, 35, 32, 45)
 dev.off()
 
