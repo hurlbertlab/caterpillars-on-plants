@@ -376,13 +376,13 @@ lm.native.alien = lm(logTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos,
 
 taxaIntPlot = interact_plot(lm.native.alien, pred = 'logPhotos', modx = 'plantOrigin', 
                            interval = TRUE, int.type = 'confidence', int.width = .95,
-                           y.label = expression(log[10]~~"#"~ caterpillar~taxa),
+                           y.label = expression(log[10]~~species~richness),
                            x.label = expression(log[10]~~"#"~surveys~with~photos),
                            legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                            colors = c('red', 'gray50'), plot.points = TRUE, #vary.lty = FALSE,
                            point.shape = TRUE, point.size = 2.5, show.legend = FALSE)
 
-pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 6, width = 8)
+pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 5, width = 8)
 taxaIntPlot + 
   theme_bw() +
   theme(axis.title = element_text(size = 20),
@@ -390,7 +390,8 @@ taxaIntPlot +
         legend.text = element_text(size = 13),
         legend.title = element_text(size = 15),
         axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5)) +
+  annotation_raster(caterpillar, ymin = 1,ymax= 1.4,xmin = 0,xmax = .8)
 dev.off()
 
 
