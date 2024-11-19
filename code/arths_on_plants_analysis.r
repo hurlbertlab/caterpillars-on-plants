@@ -55,20 +55,34 @@ ccPlants = cc %>%
   filter(!is.na(sciName),
          !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'))
 
+# Some summary statistics for the dataset used in analysis
+analysisdata = ccPlants %>%
+                 filter(julianday >= jdRange[1], 
+                        julianday <= jdRange[2],
+                        !WetLeaves)
+nSurvs = length(unique(analysisdata$ID)) # 69598
+nSites = length(unique(analysisdata$Name)) # 218
+range(analysisdata$Latitude) # 32.33, 55.43 (47.78 east of -100W)
+range(analysisdata$Year) # 2010, 2024
+nBranches = length(unique(analysisdata$Code)) # 5559
+nPlantSpecies = length(unique(analysisdata$sciName)) # 396
+nNativePlantSpecies = length(unique(analysisdata$sciName[analysisdata$plantOrigin == 'native'])) # 284
+nAlienPlantSpecies = length(unique(analysisdata$sciName[analysisdata$plantOrigin == 'alien'])) # 107
+analysisdata %>% 
+  distinct(ID, ObservationMethod) %>% 
+  count(ObservationMethod)                 # 30646 beat sheet surveys, 38952 visual surveys
+
+
+
 # Color scheme for tree families
 treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Caprifoliaceae', 'Juglandaceae', 'Rosaceae'),
-                      #'Ericaceae', 'Hippocastanaceae', 
-                      #'Oleaceae'),
-                      famcolor = c(#rgb(0,0,0),
-                        rgb(230/255, 159/255, 0),
+                      famcolor = rgb(230/255, 159/255, 0),
                         rgb(86/255, 180/255, 233/255),
                         rgb(0, 158/255, 115/255),
                         rgb(240/255, 228/255, 66/255),
                         rgb(213/255, 94/255, 0),
                         'salmon'))
-#rgb(0, 114/255, 178/255)))
-#rgb(204/255, 121/255, 167/255),
-#'magenta'))
+
 
 
 #################################################################################
@@ -129,6 +143,27 @@ legend("topleft", legend = c(round(min(catDataBySite$Latitude)), round((min(catD
                              round(max(catDataBySite$Latitude))),
        pch = 16, cex = 1.5, col = pal(100)[c(1, 50, 100)], pt.cex = 2, title = 'Latitude')
 
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction
+log.Origin.Latitude = glm(presence ~ plantOrigin + Latitude + plantOrigin*Latitude, 
+                                 data = catDataForAnalysis, family = "binomial")
+
+intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 'plantOrigin', 
+                        interval = TRUE, int.type = 'confidence', int.width = .95,
+                        y.label = "Proportion surveys with caterpillars",
+                        legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                        colors = c('red', 'gray50'))
+intplotLatOrigin + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 13),
+        legend.text = element_text(size = 13),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+
+
+
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
 # with site-level (Name) random effects.
 log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
@@ -154,12 +189,12 @@ intplot +
 log.Origin.Latitude.Name.Family = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name) + (1 | Family), 
                                  data = catDataForAnalysis, family = "binomial")
 
-intplot = interact_plot(log.Origin.Latitude.Name.Family, pred = 'Latitude', modx = 'plantOrigin', 
+intplotFamily = interact_plot(log.Origin.Latitude.Name.Family, pred = 'Latitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
                         y.label = "Proportion surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                         colors = c('red', 'gray50'))
-intplot + 
+intplotFamily + 
   theme_bw() +
   theme(axis.title = element_text(size = 15),
         axis.text = element_text(size = 13),
@@ -459,22 +494,35 @@ comparisons = comparisons %>%
 
 ###############################################################################################
 # Figure 3. Comparing % of surveys with arthropod (+- 95% CI) for all plant families and arthropod groups
+all = comparisons %>%
+  left_join(arthropods, by = 'Group') %>%
+  filter(Family == 'All')
+
 
 pdf('Figures/alien_vs_native.pdf', height = 6, width = 8)
 par(mfrow = c(1,1), mgp = c(3, 1, 0), oma = c(0,0,0,0), mar = c(5, 5, 0, 0))
-plot(100*all$propNativeSurvsWithArth, 100*all$propAlienSurvsWithArth, col = all$color, cex = 3, 
+plot(100*all$propNativeSurvsWithArth, 100*all$propAlienSurvsWithArth, col = all$color, cex = 2.5, 
      xlab = "% of native surveys", ylab = "% of alien surveys", cex.lab = 2, cex.axis = 1.75, las = 1, pch = 16, 
      xlim = c(0, 25), ylim = c(0, 25))
 abline(a=0, b=1, lty = 'dotted', lwd = 2, col = 'gray30')
 
+# adding 95% CI line segments
+segments(100*all$propNativeSurvsWithArth - 100*all$errorNativeSurvsWithArth, 100*all$propAlienSurvsWithArth,
+         100*all$propNativeSurvsWithArth + 100*all$errorNativeSurvsWithArth, 100*all$propAlienSurvsWithArth,
+         col = all$color, lwd = 3)
+
+segments(100*all$propNativeSurvsWithArth, 100*all$propAlienSurvsWithArth - 100*all$errorAlienSurvsWithArth,
+         100*all$propNativeSurvsWithArth, 100*all$propAlienSurvsWithArth + 100*all$errorAlienSurvsWithArth,
+         col = all$color, lwd = 3)
+
 # asterisks
-asteriskOffset = 0.8
+asteriskOffset = 1.5
 text(100*all$propNativeSurvsWithArth[all$Group %in% c('caterpillar', 'spider', 'beetle')], 
      100*all$propAlienSurvsWithArth[all$Group %in% c('caterpillar', 'spider', 'beetle')] - asteriskOffset,
-     '***', cex = 2)
+     '***', cex = 3)
 text(100*all$propNativeSurvsWithArth[all$Group == 'leafhopper'], 
      100*all$propAlienSurvsWithArth[all$Group == 'leafhopper'] - asteriskOffset,
-     '*', cex = 2)
+     '*', cex = 3)
 
 # bug icons
 for(a in arthropods$Group) {
@@ -484,9 +532,9 @@ for(a in arthropods$Group) {
   yheight = ifelse(a %in%  c('beetle', 'caterpillar'), 2, 3)
 
   rasterImage(bug, 100*all$propNativeSurvsWithArth[all$Group == a] - xoffset, 
-              100*all$propAlienSurvsWithArth[all$Group == a] + .5, 
+              100*all$propAlienSurvsWithArth[all$Group == a] + .8, 
               100*all$propNativeSurvsWithArth[all$Group == a] + xoffset,
-              100*all$propAlienSurvsWithArth[all$Group == a] + .5 + yheight)
+              100*all$propAlienSurvsWithArth[all$Group == a] + .8 + yheight)
 }
 
 legend("bottomright", legend = c(" *   p < 0.02", "*** p < 0.00001"), cex = 1.5)
@@ -495,7 +543,7 @@ dev.off()
 
 
 pdf('Figures/Figure3_plant_family_comparison.pdf', height = 6, width = 10)
-par(mar = c(2, 0, 2, 0), oma = c(3, 18, 0, 1), mfrow = c(1,6), mgp = c(3, .5, 0))
+par(mar = c(2, 0, 3, 0), oma = c(3, 24, 0, 1), mfrow = c(1,6), mgp = c(3, .5, 0))
 
 vertOffset = 0.1
 
@@ -509,7 +557,7 @@ for (a in arthropods$Group) {
        xlab = "", ylab = "", yaxt = "n", tck = -0.03, xlim = c(0, ifelse(a == 'caterpillar', 22, 44)), 
        ylim = c(1, nrow(familyStats) + 3),
        pch = 16, col = arthropods$color[arthropods$Group == a], cex = 1.8, cex.axis = 1,
-       main = arthropods$GroupLabel[arthropods$Group == a])
+       main = arthropods$GroupLabel[arthropods$Group == a], cex.main = 1.7)
   segments(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] - 
              100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
            famOrder + vertOffset,
@@ -550,12 +598,12 @@ for (a in arthropods$Group) {
                  " (", comparisons$nNativeSurveys[comparisons$Group == a], ", ", 
                  comparisons$nAlienSurveys[comparisons$Group == a], ")"),
           2, at = famOrder, 
-          las = 1, line = 1)
-    legend("topleft", inset=c(-1,0), legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
-           xpd = NA, cex = 1.5)
+          las = 1, line = 1, cex = 1.5)
+    legend("topleft", inset=c(-1.4,0), legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
+           xpd = NA, cex = 2)
   }
 }
-mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 1.5)
+mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 2)
 
 dev.off()
 
