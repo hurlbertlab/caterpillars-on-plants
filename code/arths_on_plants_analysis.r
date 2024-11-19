@@ -270,7 +270,7 @@ byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar',
   left_join(plantList, by = 'sciName') %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   filter(rank == 'species',
-         nSurveys >= 50,
+         nSurveys >= 40,
          nBranches >= 5) %>%
   mutate(color = ifelse(plantOrigin == 'native', 'gray70', 'firebrick2')) %>%
   arrange(desc(fracSurveys)) %>%
@@ -284,17 +284,17 @@ if (numspp %% 2 != 0) {
   byTreeSpp = rbind(byTreeSpp, NA)
 }
 
-pdf('Figures/Figure1_ranking_tree_spp_2col.pdf', height = 7, width = 12)
-par(mar = c(5, 7, 2, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
+pdf('Figures/Figure1_ranking_tree_spp_2col.pdf', height = 9, width = 12)
+par(mar = c(5, 10, 2, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
 plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[1:(numspp/2)], 
      xlim = c(0, 32), ylim = c(1, numspp/2),
      cex = 2*log10(byTreeSpp$nSurveys[1:(numspp/2)])/max(log10(byTreeSpp$nSurveys[1:(numspp/2)])),
-     main = paste0("Species rank 1-", numspp/2))
+     main = paste0("Species rank 1-", numspp/2), cex.main = 1.5)
 segments(byTreeSpp$LL95frac[1:(numspp/2)], (numspp/2):1, byTreeSpp$UL95frac[1:(numspp/2)], (numspp/2):1,
          lwd = 2, col = byTreeSpp$color[1:(numspp/2)])
-mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .6)
-points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[1:(numspp/2)], cex = 1.2)
+mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .9)
+points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[1:(numspp/2)], cex = 1.4)
 
 legend("bottomright", c("Fagaceae", "Betulaceae", "Sapindaceae", "Caprifoliaceae", "Juglandaceae", "Rosaceae", "Other"), 
        col = c(rgb(230/255, 159/255, 0),
@@ -304,21 +304,21 @@ legend("bottomright", c("Fagaceae", "Betulaceae", "Sapindaceae", "Caprifoliaceae
                rgb(213/255, 94/255, 0),
                'salmon',
                'gray50'), 
-       pch = 15, cex = 1, pt.cex = 1.5)
+       pch = 15, cex = 1.3, pt.cex = 2)
 
 plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[(numspp/2 + 1):numspp], 
      xlim = c(0, 32), ylim = c(1, numspp/2),
      cex = 2*log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])/max(log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp]), na.rm = T),
-     main = paste0("Species rank ", numspp/2 + 1, "-", numspp))
+     main = paste0("Species rank ", numspp/2 + 1, "-", numspp), cex.main = 1.5)
 segments(byTreeSpp$LL95frac[(numspp/2 + 1):numspp], (numspp/2):1, byTreeSpp$UL95frac[(numspp/2 + 1):numspp], (numspp/2):1,
          lwd = 2, col = byTreeSpp$color[(numspp/2 + 1):numspp])
-mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .6)
-points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[(numspp/2 + 1):numspp], cex = 1.2)    # 
+mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .9)
+points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[(numspp/2 + 1):numspp], cex = 1.4)    # 
 
 legend("bottomright", c("native", "alien"), 
        col = c('gray70', 'firebrick2'), 
-       pch = 16, cex = 1.25, pt.cex = 1.8, lwd = 2, lty = 'solid')
+       pch = 16, cex = 1.4, pt.cex = 2, lwd = 2, lty = 'solid')
 
 caterpillar = readPNG('images/caterpillar.png')
 rasterImage(caterpillar, 16, 35, 32, 45)
