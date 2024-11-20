@@ -9,6 +9,7 @@ library(png)
 library(lme4)
 library(interactions)
 library(RColorBrewer)
+library(ggpubr)
 
 # load functions
 source('code/plant_analysis_functions.r')
@@ -152,7 +153,7 @@ log.Origin.Latitude = glm(presence ~ plantOrigin + Latitude + plantOrigin*Latitu
 
 intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion of surveys with caterpillars",
+                        y.label = "Prop. of surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                         colors = c('red', 'gray50'))
 
@@ -164,69 +165,53 @@ log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin
 
 intplotOriginLatitudeName = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion of surveys with caterpillars",
+                        y.label = "Prop. of surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                         colors = c('red', 'gray50'))
 
-png('Figures/nativeStatus_by_latitude.png', height = 500, width = 800)
-intplotOriginLatitudeName + 
+plot1 = intplotOriginLatitudeName + 
   theme_bw() +
-  annotation_raster(caterpillar, ymin = .041, ymax= .052,xmin = 40, xmax = 43.4) +
-  theme(axis.title = element_text(size = 18),
-        axis.text = element_text(size = 15),
-        legend.text = element_text(size = 15),
-        legend.title = element_text(size = 18),
+  annotation_raster(caterpillar, ymin = .041, ymax= .052,xmin = 39, xmax = 43.4) +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
         axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+  labs(tag = "A") +
+  theme(plot.tag = element_text(size = 20))
+
+
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) and plant species (sciName) random effects.
+log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + 
+                                           (1 | Name) + (1 | sciName), 
+                                        data = catDataForAnalysis, family = "binomial")
+
+intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'Latitude', modx = 'plantOrigin', 
+                              interval = TRUE, int.type = 'confidence', int.width = .95,
+                              y.label = "Prop. of surveys with caterpillars",
+                              legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                              colors = c('red', 'gray50'))
+plot2 = intplotsciName + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        axis.title.x = element_text(margin = margin(t = 10)), 
+        axis.title.y = element_text(margin = margin(l = 20), vjust = 5),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+  labs(tag = "B") +
+  theme(plot.tag = element_text(size = 20))
+
+
+# Figure displaying analyses with and without including plant sciName as a random effect
+pdf('Figures/nativeStatus_by_latitude.pdf', height = 4, width = 8)
+ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = TRUE, legend="bottom")
 dev.off()
-
-# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
-# with site-level (Name) random effects.
-log.Origin.Latitude.Name.Family = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name) + (1 | Family), 
-                                 data = catDataForAnalysis, family = "binomial")
-
-intplotFamily = interact_plot(log.Origin.Latitude.Name.Family, pred = 'Latitude', modx = 'plantOrigin', 
-                        interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion surveys with caterpillars",
-                        legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
-                        colors = c('red', 'gray50'))
-intplotFamily + 
-  theme_bw() +
-  theme(axis.title = element_text(size = 15),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13),
-        legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
-
-
-
-
-
-# Same as above, but for Sapindaceae only
-catDataSapindaceae = catData %>%
-  filter(Name %in% catDataBySite$Name,
-         Family == 'Sapindaceae')
-
-
-# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
-# with site-level (Name) random effects for Sapindaceae--NO EFFECTS OF ORIGIN, LATITUDE
-log.Origin.Latitude.Name.Sapindaceae = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
-                                 data = catDataSapindaceae, family = "binomial")
-
-intplotSap = interact_plot(log.Origin.Latitude.Name.Sapindaceae, pred = 'Latitude', modx = 'plantOrigin', 
-                        interval = TRUE, int.type = 'confidence', int.width = .95,
-                        y.label = "Proportion surveys with caterpillars",
-                        legend.main = "Sapindaceae", line.thickness = 2, cex.lab = 1.5,
-                        colors = c('red', 'gray50'))
-intplotSap + 
-  theme_bw() +
-  theme(axis.title = element_text(size = 15),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13),
-        legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5))
 
 
 # Latitudinal range of alien plant species in our dataset
