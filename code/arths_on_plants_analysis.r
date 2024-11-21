@@ -267,6 +267,96 @@ dev.off()
 
 
 
+# Site-specific alien-native comparisons for the sites with sufficient surveys of each group
+nSurvsThreshold = 100
+
+alienNativeSites = catDataForAnalysis %>% 
+  count(Name, plantOrigin) %>% 
+  filter(n > nSurvsThreshold) %>% 
+  count(Name) %>%
+  filter(n == 2) 
+
+
+withinSiteComparisons = data.frame(Name = NULL, Family = NULL, Group = NULL, nAlienSurveys = NULL, 
+                                 nNativeSurveys = NULL, nAlienBranches = NULL, nNativeBranches = NULL, 
+                                 estimate = NULL, se = NULL, l95 = NULL, u95 = NULL, p = NULL)
+
+for (n in alienNativeSites$Name) {
+  for (a in arthropods$Group) {
+    
+    tmp = comparingNativeAlien(ccPlants[ccPlants$Name == n, ], arthGroup = a, plantFamily = 'All', 
+                               jdRange = c(152, 212), # June + July
+                               minArths = 0, minBranches = 2)
+    
+    tmpcomp = data.frame(Name = n,
+                         Family = tmp$Family,
+                         Group = tmp$Group,
+                         nAlienSurveys = tmp$nAlienSurveys,
+                         nNativeSurveys = tmp$nNativeSurveys,
+                         nAlienBranches = tmp$nAlienBranches,
+                         nNativeBranches = tmp$nNativeBranches,
+                         nAlienSurvsWithArth = tmp$nAlienSurvsWithArth,
+                         nNativeSurvsWithArth = tmp$nNativeSurvsWithArth,
+                         propAlienSurvsWithArth = tmp$propAlienSurvsWithArth,
+                         propNativeSurvsWithArth = tmp$propNativeSurvsWithArth,
+                         errorAlienSurvsWithArth = tmp$errorAlienSurvsWithArth,
+                         errorNativeSurvsWithArth = tmp$errorNativeSurvsWithArth,
+                         propTestZ = tmp$propTestZ,
+                         propTestP = tmp$propTestP,
+                         estimate = tmp$model$coefficients$cond[2,1],
+                         se = tmp$model$coefficients$cond[2,2],
+                         l95 = tmp$confint[1],
+                         u95 = tmp$confint[2],
+                         p = tmp$model$coefficients$cond[2,4])
+    
+    if (is.nan(tmpcomp$se)) {
+      tmpcomp$estimate = NA
+    }
+    
+    withinSiteComparisons = rbind(withinSiteComparisons, tmpcomp)
+    
+  }
+}
+
+pdf('Figures/withinSite_native_alien_comparisons.pdf', height = 5, width = 8)
+par(mfrow = c(2, 3), mar = c(5, 5, 1, .5), mgp = c(3, 1, 0), tck = -0.03)
+for (a in arthropods$Group) {
+  
+  tmp.df = withinSiteComparisons[withinSiteComparisons$Group == a, ]
+  
+  maxProp = 1.2*100*max(c(tmp.df$propNativeSurvsWithArth, tmp.df$propAlienSurvsWithArth))
+  
+  plot(100*tmp.df$propNativeSurvsWithArth, 100*tmp.df$propAlienSurvsWithArth, 
+       col = arthropods$color[arthropods$Group == a], pch = 16, las = 1,
+       cex = log10(tmp.df$nAlienSurveys + tmp.df$nNativeSurveys), cex.lab = 1.5,
+       xlab = '% of native surveys', cex.axis = 1.2,
+       ylab = '% of alien surveys',
+       ylim = c(0, maxProp),
+       xlim = c(0, maxProp))
+  
+  abline(a=0, b = 1, xpd = FALSE)
+  
+  # 95% CI segments
+  # adding 95% CI line segments
+  segments(100*tmp.df$propNativeSurvsWithArth - 100*tmp.df$errorNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth,
+           100*tmp.df$propNativeSurvsWithArth + 100*tmp.df$errorNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth,
+           col = arthropods$color[arthropods$Group == a], lwd = 2)
+  
+  segments(100*tmp.df$propNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth - 100*tmp.df$errorAlienSurvsWithArth,
+           100*tmp.df$propNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth + 100*tmp.df$errorAlienSurvsWithArth,
+           col = arthropods$color[arthropods$Group == a], lwd = 2)
+
+  # Add bug icon
+  bug = readPNG(paste0('images/', a, '.png'))
+  rasterImage(bug, 0.02*maxProp, .75*maxProp, .3*maxProp, maxProp)
+  
+}
+dev.off()
+
 
 
 ##########################################################################################################
@@ -622,8 +712,27 @@ dev.off()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+####################################################################################
+
+# OLD PLOTS
+
 ############################################################################################################
-# Figure 4. Controlling for geographic variation by focusing on a single family, Aceraceae, with the most surveys
+# Figure 4. Controlling for geographic variation by focusing on a single family, Sapindaceae, with the most surveys
 
 ccPlants %>% 
   filter(Family=="Sapindaceae", 
