@@ -82,7 +82,7 @@ treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Capri
                         rgb(0, 158/255, 115/255),
                         rgb(240/255, 228/255, 66/255),
                         rgb(213/255, 94/255, 0),
-                        'salmon'))
+                        'salmon')
 
 # Caterpillar images
 caterpillar = readPNG('images/caterpillar.png')
