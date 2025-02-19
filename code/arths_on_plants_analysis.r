@@ -57,6 +57,8 @@ ccPlants = cc %>%
          !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'))
 
 # Some summary statistics for the dataset used in analysis
+jdRange = c(152,212)
+
 analysisdata = ccPlants %>%
                  filter(julianday >= jdRange[1], 
                         julianday <= jdRange[2],
@@ -86,7 +88,11 @@ treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Capri
 
 # Caterpillar images
 caterpillar = readPNG('images/caterpillar.png')
-
+antImage = readPNG('images/ant.png')
+beetleImage = readPNG('images/beetle.png')
+spiderImage = readPNG('images/spider.png')
+hopperImage = readPNG('images/leafhopper.png')
+truebugImage = readPNG('images/truebugs.png')
 
 #################################################################################
 # Site-level analysis by latitude
@@ -176,8 +182,8 @@ plot1 = intplotOriginLatitudeName +
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
   labs(tag = "A") +
   theme(plot.tag = element_text(size = 20))
@@ -201,8 +207,8 @@ plot2 = intplotsciName +
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
   labs(tag = "B") +
   theme(plot.tag = element_text(size = 20))
@@ -449,33 +455,54 @@ catSpecies = ccPlants %>%
   rename(ID = ID.x, expertID = ID.y) %>%
   filter(julianday >= 152, julianday <= 212) %>% # all of June and July
   group_by(sciName) %>%
-  summarize(nTaxa = n_distinct(TaxonName[Group == 'caterpillar' & Rank != 'order']),
+  summarize(nCatTaxa = n_distinct(TaxonName[Group == 'caterpillar' & Rank != 'order']),
+            nBeetleTaxa = n_distinct(TaxonName[Group == 'beetle' & Rank != 'order']),
+            nSpiderTaxa = n_distinct(TaxonName[Group == 'spider' & Rank != 'order']),
+            nHopperTaxa = n_distinct(TaxonName[Group == 'leafhopper' & Rank != 'order']),
+            nTruebugTaxa = n_distinct(TaxonName[Group == 'truebugs' & Rank != 'order']),
+            nAntTaxa = n_distinct(TaxonName[Group == 'ant' & Rank != 'order']),
             nSurveysWithPhotos = n_distinct(ID),
             nBranches = n_distinct(Code),
             Regions = paste(unique(Region), collapse = '-')) %>%
-  arrange(desc(nTaxa)) %>%
+  arrange(desc(nCatTaxa)) %>%
   mutate(label = paste0(substr(sciName, 1, 1), ". ", word(sciName, 2))) %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   mutate(color = ifelse(plantOrigin == 'native', 'gray50', 'firebrick2'),
          native = ifelse(plantOrigin == 'native', 1, 0),
-         logTaxa = log10(nTaxa),
+         logCatTaxa = log10(nCatTaxa),
          logPhotos = log10(nSurveysWithPhotos))
 
 
 
 # Linear models
-lm.native = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'native' & catSpecies$nTaxa > 0]) ~ 
-                 log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'native' & catSpecies$nTaxa > 0]))
+lm.native = lm(log10(catSpecies$nCatTaxa[catSpecies$plantOrigin == 'native' & catSpecies$nCatTaxa > 0]) ~ 
+                 log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'native' & catSpecies$nCatTaxa > 0]))
 
-lm.alien = lm(log10(catSpecies$nTaxa[catSpecies$plantOrigin == 'alien' & catSpecies$nTaxa > 0]) ~ 
-                log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'alien' & catSpecies$nTaxa > 0]))
+lm.alien = lm(log10(catSpecies$nCatTaxa[catSpecies$plantOrigin == 'alien' & catSpecies$nCatTaxa > 0]) ~ 
+                log10(catSpecies$nSurveysWithPhotos[catSpecies$plantOrigin == 'alien' & catSpecies$nCatTaxa > 0]))
 
-catSpeciesWithTaxa = catSpecies[catSpecies$nTaxa > 0, ]
+catSpeciesWithTaxa = catSpecies[catSpecies$nCatTaxa > 0, ]
 
-lm.native.alien = lm(logTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+lm.native.alien.cat = lm(logCatTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                            data = catSpeciesWithTaxa)
 
-taxaIntPlot = interact_plot(lm.native.alien, pred = 'logPhotos', modx = 'plantOrigin', 
+lm.native.alien.beetle = lm(log10(nBeetleTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                     data = catSpecies[catSpecies$nBeetleTaxa > 0, ])
+
+lm.native.alien.spider = lm(log10(nSpiderTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                            data = catSpecies[catSpecies$nSpiderTaxa > 0, ])
+
+lm.native.alien.hopper = lm(log10(nHopperTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                            data = catSpecies[catSpecies$nHopperTaxa > 0, ])
+
+lm.native.alien.truebug = lm(log10(nTruebugTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                            data = catSpecies[catSpecies$nTruebugTaxa > 0, ])
+
+lm.native.alien.ant = lm(log10(nAntTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                             data = catSpecies[catSpecies$nAntTaxa > 0, ])
+
+
+taxaIntPlotCat = interact_plot(lm.native.alien.cat, pred = 'logPhotos', modx = 'plantOrigin', 
                            interval = TRUE, int.type = 'confidence', int.width = .95,
                            y.label = expression(log[10]~~species~richness),
                            x.label = expression(log[10]~~"#"~surveys~with~photos),
@@ -484,22 +511,121 @@ taxaIntPlot = interact_plot(lm.native.alien, pred = 'logPhotos', modx = 'plantOr
                            point.shape = TRUE, point.size = 2.5, show.legend = FALSE)
 
 pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 5, width = 8)
-taxaIntPlot + 
+taxaIntPlotCat + 
   theme_bw() +
   theme(axis.title = element_text(size = 20),
         axis.text = element_text(size = 15),
         legend.text = element_text(size = 13),
         legend.title = element_text(size = 15),
-        axis.title.x = element_text(margin = margin(t = 10)), 
-        axis.title.y = element_text(margin = margin(l = 20), vjust = 5)) +
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
   annotation_raster(caterpillar, ymin = 1,ymax= 1.4,xmin = 0,xmax = .8)
+dev.off()
+
+
+catfig = interact_plot(lm.native.alien.cat, pred = 'logPhotos', modx = 'plantOrigin', 
+                       interval = TRUE, int.type = 'confidence', int.width = .95,
+                       y.label = expression(log[10]~~species~richness),
+                       x.label = expression(log[10]~~surveys~with~photos),
+                       line.thickness = 2, cex.lab = 1.5,
+                       colors = c('red', 'gray50'), plot.points = TRUE,
+                       point.shape = TRUE, point.size = 2.5) + 
+           theme_bw() +
+           theme(axis.title = element_text(size = 14),
+           axis.text = element_text(size = 10),
+           axis.title.x = element_text(margin = margin(t = 6)), 
+           axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+           theme(legend.position = "none") +
+  annotation_raster(caterpillar, ymin = 1,ymax= 1.4,xmin = 0,xmax = .8)
+
+beetfig = interact_plot(lm.native.alien.beetle, pred = 'logPhotos', modx = 'plantOrigin', 
+                       interval = TRUE, int.type = 'confidence', int.width = .95,
+                       y.label = expression(log[10]~~species~richness),
+                       x.label = expression(log[10]~~surveys~with~photos),
+                       line.thickness = 2, cex.lab = 1.5,
+                       colors = c('red', 'gray50'), plot.points = TRUE,
+                       point.shape = TRUE, point.size = 2.5) + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 10),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+  theme(legend.position = "none") +
+  annotation_raster(beetleImage, ymin = 1.25, ymax= 1.7,xmin = 0,xmax = .8)
+
+
+hopfig = interact_plot(lm.native.alien.hopper, pred = 'logPhotos', modx = 'plantOrigin', 
+                       interval = TRUE, int.type = 'confidence', int.width = .95,
+                       y.label = expression(log[10]~~species~richness),
+                       x.label = expression(log[10]~~surveys~with~photos),
+                       line.thickness = 2, cex.lab = 1.5,
+                       colors = c('red', 'gray50'), plot.points = TRUE,
+                       point.shape = TRUE, point.size = 2.5) + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 10),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+  theme(legend.position = "none") +
+  annotation_raster(hopperImage, ymin = 1,ymax= 1.5,xmin = 0,xmax = .8)
+
+
+spiderfig = interact_plot(lm.native.alien.spider, pred = 'logPhotos', modx = 'plantOrigin', 
+                       interval = TRUE, int.type = 'confidence', int.width = .95,
+                       y.label = expression(log[10]~~species~richness),
+                       x.label = expression(log[10]~~surveys~with~photos),
+                       line.thickness = 2, cex.lab = 1.5,
+                       colors = c('red', 'gray50'), plot.points = TRUE,
+                       point.shape = TRUE, point.size = 2.5) + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 10),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+  theme(legend.position = "none") +
+  annotation_raster(spiderImage, ymin = 1,ymax= 1.6,xmin = 0,xmax = 1)
+
+
+bugfig = interact_plot(lm.native.alien.truebug, pred = 'logPhotos', modx = 'plantOrigin', 
+                       interval = TRUE, int.type = 'confidence', int.width = .95,
+                       y.label = expression(log[10]~~species~richness),
+                       x.label = expression(log[10]~~surveys~with~photos),
+                       line.thickness = 2, cex.lab = 1.5,
+                       colors = c('red', 'gray50'), plot.points = TRUE,
+                       point.shape = TRUE, point.size = 2.5) + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 10),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+  theme(legend.position = "none") +
+  annotation_raster(truebugImage, ymin = 1,ymax= 1.5,xmin = 0,xmax = .9)
+
+
+antfig = interact_plot(lm.native.alien.ant, pred = 'logPhotos', modx = 'plantOrigin', 
+                       interval = TRUE, int.type = 'confidence', int.width = .95,
+                       y.label = expression(log[10]~~species~richness),
+                       x.label = expression(log[10]~~surveys~with~photos),
+                       line.thickness = 2, cex.lab = 1.5,
+                       colors = c('red', 'gray50'), plot.points = TRUE,
+                       point.shape = TRUE, point.size = 2.5) + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 10),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+  theme(legend.position = "none") +
+  annotation_raster(antImage, ymin = 1,ymax= 1.4,xmin = 0,xmax = .9)
+
+pdf('Figures/Figure4_speciesrichness.pdf', height = 6, width = 10)
+ggarrange(catfig, spiderfig, hopfig, beetfig, bugfig, antfig, nrow = 2, ncol = 3)
 dev.off()
 
 
 # Old basic plot
 #pdf('Figures/Figure2_caterpillar_taxa.pdf', height = 6, width = 8)
 par(mgp = c(4, 1, 0), tck = -0.03, mar = c(5, 7, 1, 1), mfrow = c(1,1), xpd = FALSE)
-plot(log10(catSpecies$nSurveysWithPhotos), log10(catSpecies$nTaxa), pch = ifelse(catSpecies$plantOrigin == 'native', 16, 17), 
+plot(log10(catSpecies$nSurveysWithPhotos), log10(catSpecies$nCatTaxa), pch = ifelse(catSpecies$plantOrigin == 'native', 16, 17), 
      xlab = expression(log[10] ~ "#" ~ surveys ~ with ~ photos), 
      ylab = expression(log[10] ~ "#" ~ caterpillar ~ taxa), las = 1, 
      cex.axis = 1.5, cex.lab = 2, col = catSpecies$color, cex = ifelse(catSpecies$plantOrigin == 'native', 1.3, 1.5))
@@ -511,6 +637,12 @@ legend("topleft", c("native", "alien"), pch = c(16, 17), col = c('gray50', 'fire
 #dev.off()
 
 
+# Number of taxa of other arthropod groups
+
+SpeciesWithTaxa = catSpecies[catSpecies$nCatTaxa > 0, ]
+
+lm.native.alien = lm(logCatTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
+                     data = catSpeciesWithTaxa)
 
 
 ###############################################################################
