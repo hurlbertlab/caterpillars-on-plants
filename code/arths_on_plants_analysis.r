@@ -183,7 +183,7 @@ plot1 = intplotOriginLatitudeName +
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5),
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
   labs(tag = "A") +
   theme(plot.tag = element_text(size = 20))
@@ -208,7 +208,7 @@ plot2 = intplotsciName +
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5),
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
   labs(tag = "B") +
   theme(plot.tag = element_text(size = 20))
@@ -518,7 +518,7 @@ taxaIntPlotCat +
         legend.text = element_text(size = 13),
         legend.title = element_text(size = 15),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
   annotation_raster(caterpillar, ymin = 1,ymax= 1.4,xmin = 0,xmax = .8)
 dev.off()
 
@@ -532,9 +532,9 @@ catfig = interact_plot(lm.native.alien.cat, pred = 'logPhotos', modx = 'plantOri
                        point.shape = TRUE, point.size = 2.5) + 
            theme_bw() +
            theme(axis.title = element_text(size = 14),
-           axis.text = element_text(size = 10),
+           axis.text = element_text(size = 12),
            axis.title.x = element_text(margin = margin(t = 6)), 
-           axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+           axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
            theme(legend.position = "none") +
   annotation_raster(caterpillar, ymin = 1,ymax= 1.4,xmin = 0,xmax = .8)
 
@@ -547,9 +547,9 @@ beetfig = interact_plot(lm.native.alien.beetle, pred = 'logPhotos', modx = 'plan
                        point.shape = TRUE, point.size = 2.5) + 
   theme_bw() +
   theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 10),
+        axis.text = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
   theme(legend.position = "none") +
   annotation_raster(beetleImage, ymin = 1.25, ymax= 1.7,xmin = 0,xmax = .8)
 
@@ -563,9 +563,9 @@ hopfig = interact_plot(lm.native.alien.hopper, pred = 'logPhotos', modx = 'plant
                        point.shape = TRUE, point.size = 2.5) + 
   theme_bw() +
   theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 10),
+        axis.text = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
   theme(legend.position = "none") +
   annotation_raster(hopperImage, ymin = 1,ymax= 1.5,xmin = 0,xmax = .8)
 
@@ -579,9 +579,9 @@ spiderfig = interact_plot(lm.native.alien.spider, pred = 'logPhotos', modx = 'pl
                        point.shape = TRUE, point.size = 2.5) + 
   theme_bw() +
   theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 10),
+        axis.text = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
   theme(legend.position = "none") +
   annotation_raster(spiderImage, ymin = 1,ymax= 1.6,xmin = 0,xmax = 1)
 
@@ -595,9 +595,9 @@ bugfig = interact_plot(lm.native.alien.truebug, pred = 'logPhotos', modx = 'plan
                        point.shape = TRUE, point.size = 2.5) + 
   theme_bw() +
   theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 10),
+        axis.text = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
   theme(legend.position = "none") +
   annotation_raster(truebugImage, ymin = 1,ymax= 1.5,xmin = 0,xmax = .9)
 
@@ -611,14 +611,15 @@ antfig = interact_plot(lm.native.alien.ant, pred = 'logPhotos', modx = 'plantOri
                        point.shape = TRUE, point.size = 2.5) + 
   theme_bw() +
   theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 10),
+        axis.text = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
-        axis.title.y = element_text(margin = margin(l = 12), vjust = 5)) +
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 2)) +
   theme(legend.position = "none") +
   annotation_raster(antImage, ymin = 1,ymax= 1.4,xmin = 0,xmax = .9)
 
 pdf('Figures/Figure4_speciesrichness.pdf', height = 6, width = 10)
-ggarrange(catfig, spiderfig, hopfig, beetfig, bugfig, antfig, nrow = 2, ncol = 3)
+ggarrange(catfig, spiderfig, hopfig, beetfig, bugfig, antfig, nrow = 2, ncol = 3,
+          labels = c('A', 'B', 'C', 'D', 'E', 'F'))
 dev.off()
 
 
