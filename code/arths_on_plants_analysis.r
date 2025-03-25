@@ -267,7 +267,30 @@ rasterImage(caterpillar, 16, 35, 32, 45)
 dev.off()
 
 
+# Phylogenetic signal of fracSurveys across plant species
+# install.packages('rtrees', repos=c(rtrees='https://daijiang.r-universe.dev', CRAN='https://cloud.r-project.org'))
 
+library(rtrees)
+library(ape)
+library(phytools)
+
+# Create a dataframe of species, genus, and family for generating a phylogeny
+speciesList = speciesList = data.frame(species = byTreeSpp$sciName, 
+                                       genus = word(byTreeSpp$sciName, 1), 
+                                       family= byTreeSpp$Family, 
+                                       fracSurveys = byTreeSpp$fracSurveys)
+
+plantTree = rtrees::get_tree(speciesList[, 1:3], taxon = 'plant')
+phyloSpeciesList = gsub("_", " ", plantTree$tip.label)
+
+# Now get the tree species dataframe in the same phylogenetic order as the tip labels
+speciesList$species = factor(speciesList$species, levels = phyloSpeciesList)
+speciesList = speciesList[order(speciesList$species),]
+speciesList$species = as.character(speciesList$species)
+
+# Calculate Blomberg's K and Pagel's lambda
+blomK = phylosig(plantTree, speciesList$fracSurveys, method = 'K', nsim = 999, test = TRUE)       # p = 0.62
+lambda = phylosig(plantTree, speciesList$fracSurveys, method = 'lambda', nsim = 999, test = TRUE) # p = 1
 
 
 #################################################################################################
