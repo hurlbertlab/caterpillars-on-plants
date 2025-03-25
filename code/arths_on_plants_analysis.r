@@ -365,6 +365,62 @@ dev.off()
 
 
 
+
+# Native vs alien within-family comparisons
+pdf('Figures/withinFamily_native_alien_comparisons.pdf', height = 5, width = 8)
+par(mfrow = c(2, 3), mar = c(5, 5, 1, .5), mgp = c(3, 1, 0), tck = -0.03)
+for (a in arthropods$Group) {
+  
+  tmp.df = comparisons[comparisons$Group == a & comparisons$Family != 'All', ]
+  #tmp.df$col = ifelse(tmp.df$propTestP <= 0.01, arthropods$color[arthropods$Group == a],
+  #                    ifelse(tmp.df$propTestP > 0.01 & tmp.df$propTestP < 0.05,
+  #                           arthropods$color2[arthropods$Group == a], 'gray80'))
+  tmp.df$col = ifelse(tmp.df$propTestP < 0.05, arthropods$color[arthropods$Group == a], 'gray80')
+  tmp.df$pch = ifelse(tmp.df$propTestP < 0.01, 16, 1)
+  
+  maxProp = 1.2*100*max(c(tmp.df$propNativeSurvsWithArth, tmp.df$propAlienSurvsWithArth))
+  
+  plot(100*tmp.df$propNativeSurvsWithArth, 100*tmp.df$propAlienSurvsWithArth, 
+       pch = tmp.df$pch, las = 1, 
+       col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
+       cex = log10(tmp.df$nAlienSurveys + tmp.df$nNativeSurveys), cex.lab = 1.8,
+       xlab = '% of native surveys', cex.axis = 1.3,
+       ylab = '% of alien surveys',
+       ylim = c(0, maxProp),
+       xlim = c(0, maxProp))
+  
+  
+  abline(a=0, b = 1, xpd = FALSE)
+  
+  # 95% CI segments
+  # adding 95% CI line segments
+  segments(100*tmp.df$propNativeSurvsWithArth - 100*tmp.df$errorNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth,
+           100*tmp.df$propNativeSurvsWithArth + 100*tmp.df$errorNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth,
+           col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
+           lwd = 2)
+  
+  segments(100*tmp.df$propNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth - 100*tmp.df$errorAlienSurvsWithArth,
+           100*tmp.df$propNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth + 100*tmp.df$errorAlienSurvsWithArth,
+           col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
+           lwd = 2)
+  
+  text(100*tmp.df$propNativeSurvsWithArth, 100*tmp.df$propAlienSurvsWithArth, 
+       substr(tmp.df$Family, 1, 2), cex = 1.6)
+  
+  # Add bug icon
+  bug = readPNG(paste0('images/', a, '.png'))
+  rasterImage(bug, 0.02*maxProp, .75*maxProp, .3*maxProp, maxProp)
+  
+}
+dev.off()
+
+
+
+
 ##########################################################################################################
 # Figure 1. Comparison of % surveys with caterpillars across tree species
 
@@ -672,8 +728,10 @@ familyStats = ccPlants %>%
 
 arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
                         GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
-                        color = c('limegreen', 'gray50', 'dodgerblue', 'salmon', 'magenta3', 'orange'),
-                        color2 = c('darkgreen', 'black', 'darkblue', 'red', 'purple3', 'orange4'))
+                        color = c('limegreen', 'turquoise2', 'dodgerblue', 
+                                  'salmon', 'magenta3', 'orange'),
+                        color2 = c(rgb(.6, .9, .6), rgb(.6, .96, .98), rgb(.56, .78, 1),
+                                   rgb(.99, .75, .72), rgb(.93, 0.6, .93), rgb(1, .85, .4)))
 
 
 comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
