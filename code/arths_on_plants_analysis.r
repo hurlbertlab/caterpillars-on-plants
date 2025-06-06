@@ -88,6 +88,16 @@ analysisdata %>%
   count(ObservationMethod)                 # 30646 beat sheet surveys, 38952 visual surveys
 
 
+# Labels and plot colors for arthropod groups
+arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
+                        GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
+                        color = c('limegreen', 'turquoise2', 'dodgerblue', 
+                                  'salmon', 'magenta3', 'orange'),
+                        color2 = c(rgb(.6, .9, .6), rgb(.6, .96, .98), rgb(.56, .78, 1),
+                                   rgb(.99, .75, .72), rgb(.93, 0.6, .93), rgb(1, .85, .4)))
+
+
+
 
 # Color scheme for tree families
 treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Caprifoliaceae', 'Juglandaceae', 'Rosaceae'),
@@ -761,13 +771,6 @@ familyStats = ccPlants %>%
          nSurveysN >= 50)
 
 
-arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
-                        GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
-                        color = c('limegreen', 'turquoise2', 'dodgerblue', 
-                                  'salmon', 'magenta3', 'orange'),
-                        color2 = c(rgb(.6, .9, .6), rgb(.6, .96, .98), rgb(.56, .78, 1),
-                                   rgb(.99, .75, .72), rgb(.93, 0.6, .93), rgb(1, .85, .4)))
-
 
 comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
                          nAlienBranches = NULL, nNativeBranches = NULL, estimate = NULL, se = NULL, 
@@ -1038,3 +1041,16 @@ rasterImage(caterpillar, 3.3, 15, 4.1, 18)
 dev.off()
 
 
+# Supplemental table on the plant species examined, organized by family and plant origin
+
+survsByFamilyOrigin = ccPlants %>% 
+  group_by(Family, plantOrigin) %>% 
+  summarize(nSurvs = n_distinct(ID))
+
+familyComparisonSpecies = ccPlants %>% 
+  filter(Family %in% familyStats$Family) %>%
+  group_by(sciName, Family, plantOrigin) %>% 
+  summarize(n = n_distinct(ID)) %>% 
+  arrange(Family, plantOrigin, desc(n)) %>%
+  left_join(survsByFamilyOrigin, by = c('Family', 'plantOrigin')) %>%
+  mutate(pct = round(100*n/nSurvs,2))
