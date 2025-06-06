@@ -584,21 +584,27 @@ lm.alien = lm(log10(catSpecies$nCatTaxa[catSpecies$plantOrigin == 'alien' & catS
 
 catSpeciesWithTaxa = catSpecies[catSpecies$nCatTaxa > 0, ]
 
+# slope difference, p = 0.014
 lm.native.alien.cat = lm(logCatTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                            data = catSpeciesWithTaxa)
 
+# slope difference, p = 9.6e-5
 lm.native.alien.beetle = lm(log10(nBeetleTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                      data = catSpecies[catSpecies$nBeetleTaxa > 0, ])
 
+# slope difference, p = 5.0e-5
 lm.native.alien.spider = lm(log10(nSpiderTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                             data = catSpecies[catSpecies$nSpiderTaxa > 0, ])
 
+# slope difference, p = 0.027
 lm.native.alien.hopper = lm(log10(nHopperTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                             data = catSpecies[catSpecies$nHopperTaxa > 0, ])
 
+# slope difference, p = 0.49
 lm.native.alien.truebug = lm(log10(nTruebugTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                             data = catSpecies[catSpecies$nTruebugTaxa > 0, ])
 
+# slope difference, p = 0.048
 lm.native.alien.ant = lm(log10(nAntTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                              data = catSpecies[catSpecies$nAntTaxa > 0, ])
 
