@@ -10,40 +10,52 @@ library(lme4)
 library(interactions)
 library(RColorBrewer)
 library(ggpubr)
+library(httr)
+library(jsonlite)
 
 # load functions
 source('code/plant_analysis_functions.r')
 
-# Read in latest CC fullDataset
-fd_data_repo <- "https://github.com/hurlbertlab/caterpillars-analysis-public/blob/master/data/"
-fd_webpage <- read_html(fd_data_repo)
-fd_repo_links <- html_attr(html_nodes(fd_webpage, "a"), "href")
-fd_data_links <- tibble(link = fd_repo_links[grepl("fullDataset", fd_repo_links)]) %>%
-  mutate(file_name = word(link, 7, 7, sep = "/")) %>%
-  distinct()
-
-mostRecentFullDataset = fd_data_links$file_name[nrow(fd_data_links)]
-
-cc = read.csv(paste0("https://raw.githubusercontent.com/hurlbertlab/caterpillars-analysis-public/master/data/", mostRecentFullDataset), header = T, quote = '\"', fill = TRUE)
-
+# Read in latest CC fullDataset through 2024
+cc = read.csv('data/fullDataset_2025-04-18.csv', header = T, quote = '\"')
 
 # Loading plant files from data_repo
-data_repo = "https://raw.githubusercontent.com/hurlbertlab/caterpillars-count-data/master/plantSpecies/"
 
-plants_webpage <- read_html("https://github.com/hurlbertlab/caterpillars-count-data/tree/master/plantSpecies")
-plants_repo_links <- html_attr(html_nodes(plants_webpage, "a"), "href")
-official_data_links <- tibble(link = plants_repo_links[grepl("officialPlantList", plants_repo_links)]) %>%
-  mutate(file_name = word(link, 7, 7, sep = "/")) %>%
-  distinct()
+# GitHub API URL to list contents of a repo directory
+api_url <- "https://api.github.com/repos/hurlbertlab/caterpillars-count-data/contents/plantSpecies"
 
-inferred_data_links <- tibble(link = plants_repo_links[grepl("inferredPlantNames", plants_repo_links)]) %>%
-  mutate(file_name = word(link, 7, 7, sep = "/")) %>%
-  distinct()
+# Send GET request
+res <- GET(api_url)
 
-officialPlantList = read.csv(paste0(data_repo, official_data_links$file_name[nrow(official_data_links)]))
-inferredPlantNames = read.csv(paste0(data_repo, inferred_data_links$file_name[nrow(inferred_data_links)]))
+# Parse JSON response
+files_info <- fromJSON(content(res, "text"))
 
-plantOrigin = read.csv(paste0(data_repo, "plant_origin_status.csv")) %>%
+# Filter for files with "officialPlantList" in the name
+official_data_links <- files_info %>%
+  filter(grepl("officialPlantList", name)) %>%
+  transmute(
+    file_name = name,
+    download_url = download_url
+  )
+
+inferred_data_links <- files_info %>%
+  filter(grepl("inferredPlantNames", name)) %>%
+  transmute(
+    file_name = name,
+    download_url = download_url
+  )
+
+plant_origin_links <- files_info %>%
+  filter(grepl("plant_origin_status.csv", name)) %>%
+  transmute(
+    file_name = name,
+    download_url = download_url
+  )
+
+officialPlantList = read.csv(official_data_links$download_url[nrow(official_data_links)])
+inferredPlantNames = read.csv(inferred_data_links$download_url[nrow(inferred_data_links)])
+
+plantOrigin = read.csv(plant_origin_links$download_url) %>%
   select(scientificName, nativeStatus, plantOrigin)
 
 # The dataset for which we have plant species names with NameConfidence >= 2
@@ -74,6 +86,16 @@ nAlienPlantSpecies = length(unique(analysisdata$sciName[analysisdata$plantOrigin
 analysisdata %>% 
   distinct(ID, ObservationMethod) %>% 
   count(ObservationMethod)                 # 30646 beat sheet surveys, 38952 visual surveys
+
+
+# Labels and plot colors for arthropod groups
+arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
+                        GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
+                        color = c('limegreen', 'turquoise2', 'dodgerblue', 
+                                  'salmon', 'magenta3', 'orange'),
+                        color2 = c(rgb(.6, .9, .6), rgb(.6, .96, .98), rgb(.56, .78, 1),
+                                   rgb(.99, .75, .72), rgb(.93, 0.6, .93), rgb(1, .85, .4)))
+
 
 
 
@@ -562,21 +584,27 @@ lm.alien = lm(log10(catSpecies$nCatTaxa[catSpecies$plantOrigin == 'alien' & catS
 
 catSpeciesWithTaxa = catSpecies[catSpecies$nCatTaxa > 0, ]
 
+# slope difference, p = 0.014
 lm.native.alien.cat = lm(logCatTaxa ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                            data = catSpeciesWithTaxa)
 
+# slope difference, p = 9.6e-5
 lm.native.alien.beetle = lm(log10(nBeetleTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                      data = catSpecies[catSpecies$nBeetleTaxa > 0, ])
 
+# slope difference, p = 5.0e-5
 lm.native.alien.spider = lm(log10(nSpiderTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                             data = catSpecies[catSpecies$nSpiderTaxa > 0, ])
 
+# slope difference, p = 0.027
 lm.native.alien.hopper = lm(log10(nHopperTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                             data = catSpecies[catSpecies$nHopperTaxa > 0, ])
 
+# slope difference, p = 0.49
 lm.native.alien.truebug = lm(log10(nTruebugTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                             data = catSpecies[catSpecies$nTruebugTaxa > 0, ])
 
+# slope difference, p = 0.048
 lm.native.alien.ant = lm(log10(nAntTaxa) ~ logPhotos + plantOrigin + plantOrigin*logPhotos, 
                              data = catSpecies[catSpecies$nAntTaxa > 0, ])
 
@@ -748,13 +776,6 @@ familyStats = ccPlants %>%
          nSurveysA >= 50,
          nSurveysN >= 50)
 
-
-arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle', 'truebugs', 'ant'),
-                        GroupLabel = c('caterpillars', 'spiders', 'hoppers', 'beetles', 'true bugs', 'ants'),
-                        color = c('limegreen', 'turquoise2', 'dodgerblue', 
-                                  'salmon', 'magenta3', 'orange'),
-                        color2 = c(rgb(.6, .9, .6), rgb(.6, .96, .98), rgb(.56, .78, 1),
-                                   rgb(.99, .75, .72), rgb(.93, 0.6, .93), rgb(1, .85, .4)))
 
 
 comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
@@ -1026,3 +1047,16 @@ rasterImage(caterpillar, 3.3, 15, 4.1, 18)
 dev.off()
 
 
+# Supplemental table on the plant species examined, organized by family and plant origin
+
+survsByFamilyOrigin = ccPlants %>% 
+  group_by(Family, plantOrigin) %>% 
+  summarize(nSurvs = n_distinct(ID))
+
+familyComparisonSpecies = ccPlants %>% 
+  filter(Family %in% familyStats$Family) %>%
+  group_by(sciName, Family, plantOrigin) %>% 
+  summarize(n = n_distinct(ID)) %>% 
+  arrange(Family, plantOrigin, desc(n)) %>%
+  left_join(survsByFamilyOrigin, by = c('Family', 'plantOrigin')) %>%
+  mutate(pct = round(100*n/nSurvs,2))
