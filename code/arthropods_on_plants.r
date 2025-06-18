@@ -321,10 +321,9 @@ dev.off()
 
 
 
-
-
-
-
+###############################################################################
+# Figure 3. Arthropod occurrence on native vs alien plants for 6 arthropod groups
+#           BY PLANT FAMILY
 
 familyStats = ccPlants %>%
   distinct(ID, PlantFK, Family, sciName, plantOrigin, ObservationMethod) %>%
@@ -342,12 +341,11 @@ familyStats = ccPlants %>%
          nSurveysN >= 50)
 
 
-
 comparisons = data.frame(Family = NULL, Group = NULL, nAlienSurveys = NULL, nNativeSurveys = NULL,
                          nAlienBranches = NULL, nNativeBranches = NULL, estimate = NULL, se = NULL, 
                          l95 = NULL, u95 = NULL, p = NULL)
 
-for (f in c('All', familyStats$Family)) {
+for (f in familyStats$Family) {
   for (a in arthropods$Group) {
     
     tmp = comparingNativeAlien(ccPlants, arthGroup = a, plantFamily = f, 
@@ -383,81 +381,55 @@ for (f in c('All', familyStats$Family)) {
   }
 }
 
-# Add text symbols for reflecting p-values
-comparisons = comparisons %>%
-  mutate(pText = case_when(propTestP <= 0.001 & propTestZ >= 0 ~ '+++',
-                           propTestP > 0.001 & propTestP <= 0.01 & propTestZ >= 0 ~ '++',
-                           propTestP > 0.01 & propTestP <= 0.05 & propTestZ >= 0 ~ '+',
-                           propTestP <= 0.001 & propTestZ < 0 ~ '---',
-                           propTestP > 0.001 & propTestP <= 0.01 & propTestZ < 0 ~ '--',
-                           propTestP > 0.01 & propTestP <= 0.05 & propTestZ < 0 ~ '-',
-                           propTestP > 0.05 ~ '')
-  )
 
-
-
-
-pdf('Figures/Figure3_plant_family_comparison.pdf', height = 6, width = 10)
-par(mar = c(2, 0, 3, 0), oma = c(3, 24, 0, 1), mfrow = c(1,6), mgp = c(3, .5, 0))
-
-vertOffset = 0.1
-
-# Order of plant families
-famOrder = c(1, length(unique(comparisons$Family)):2) # alphabetical, but with "All" at the bottom
-#famOrder = 1:length(unique(comparisons$Family)) 
-
+# Native vs alien within-family comparisons
+pdf('Figures/Figure3_withinFamily_native_alien_occurrence.pdf', height = 5, width = 8)
+par(mfrow = c(2, 3), mar = c(5, 5, 1, .5), mgp = c(3, 1, 0), tck = -0.03)
 for (a in arthropods$Group) {
-  plot(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a], 
-       famOrder + vertOffset,
-       xlab = "", ylab = "", yaxt = "n", tck = -0.03, xlim = c(0, ifelse(a == 'caterpillar', 22, 44)), 
-       ylim = c(1, nrow(familyStats) + 3),
-       pch = 16, col = arthropods$color[arthropods$Group == a], cex = 1.8, cex.axis = 1,
-       main = arthropods$GroupLabel[arthropods$Group == a], cex.main = 1.7)
-  segments(100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] - 
-             100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
-           famOrder + vertOffset,
-           100*comparisons$propNativeSurvsWithArth[comparisons$Group == a] + 
-             100*comparisons$errorNativeSurvsWithArth[comparisons$Group == a], 
-           famOrder + vertOffset, 
-           col = arthropods$color[arthropods$Group == a])
   
-  points(100*comparisons$propAlienSurvsWithArth[comparisons$Group == a], 
-         famOrder - vertOffset,
-         pch = 1, col = arthropods$color[arthropods$Group == a], cex = 1.8)
-  segments(100*comparisons$propAlienSurvsWithArth[comparisons$Group == a] - 
-             100*comparisons$errorAlienSurvsWithArth[comparisons$Group == a], 
-           famOrder - vertOffset,
-           100*comparisons$propAlienSurvsWithArth[comparisons$Group == a] + 
-             100*comparisons$errorAlienSurvsWithArth[comparisons$Group == a], 
-           famOrder - vertOffset, 
-           col = arthropods$color[arthropods$Group == a])
+  tmp.df = comparisons[comparisons$Group == a & comparisons$Family != 'All', ]
+  #tmp.df$col = ifelse(tmp.df$propTestP <= 0.01, arthropods$color[arthropods$Group == a],
+  #                    ifelse(tmp.df$propTestP > 0.01 & tmp.df$propTestP < 0.05,
+  #                           arthropods$color2[arthropods$Group == a], 'gray80'))
+  tmp.df$col = ifelse(tmp.df$propTestP < 0.05, arthropods$color[arthropods$Group == a], 'gray80')
+  tmp.df$pch = ifelse(tmp.df$propTestP < 0.01, 16, 1)
   
-  abline(h = 1.5, lwd = 2)
+  maxProp = 1.2*100*max(c(tmp.df$propNativeSurvsWithArth, tmp.df$propAlienSurvsWithArth))
   
-  text(# Commented out line below makes horizontal placement relative to largest values
-    #100*max(c(comparisons$propAlienSurvsWithArth[comparisons$Group == a], 
-    #       comparisons$propNativeSurvsWithArth[comparisons$Group == a])) + 2,
-    ifelse(a == 'caterpillar', 20, 40),
-    famOrder,
-    labels = comparisons$pText[comparisons$Group == a], 
-    # - symbols are much smaller than +, so making them a larger font size (2 vs 1.5)
-    cex = ifelse(comparisons$propTestZ[comparisons$Group == a] < 0, 2, 1.5))
+  plot(100*tmp.df$propNativeSurvsWithArth, 100*tmp.df$propAlienSurvsWithArth, 
+       pch = tmp.df$pch, las = 1, 
+       col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
+       cex = log10(tmp.df$nAlienSurveys + tmp.df$nNativeSurveys), cex.lab = 1.8,
+       xlab = '% of native surveys', cex.axis = 1.3,
+       ylab = '% of alien surveys',
+       ylim = c(0, maxProp),
+       xlim = c(0, maxProp))
+  
+  
+  abline(a=0, b = 1, xpd = FALSE)
+  
+  # 95% CI segments
+  # adding 95% CI line segments
+  segments(100*tmp.df$propNativeSurvsWithArth - 100*tmp.df$errorNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth,
+           100*tmp.df$propNativeSurvsWithArth + 100*tmp.df$errorNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth,
+           col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
+           lwd = 2)
+  
+  segments(100*tmp.df$propNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth - 100*tmp.df$errorAlienSurvsWithArth,
+           100*tmp.df$propNativeSurvsWithArth, 
+           100*tmp.df$propAlienSurvsWithArth + 100*tmp.df$errorAlienSurvsWithArth,
+           col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
+           lwd = 2)
+  
+  text(100*tmp.df$propNativeSurvsWithArth, 100*tmp.df$propAlienSurvsWithArth, 
+       substr(tmp.df$Family, 1, 2), cex = 1.6)
   
   # Add bug icon
   bug = readPNG(paste0('images/', a, '.png'))
-  rasterImage(bug, 3, nrow(familyStats) + 1.5, ifelse(a == 'caterpillar', 20, 40), nrow(familyStats) + 3)
+  rasterImage(bug, 0.02*maxProp, .75*maxProp, .3*maxProp, maxProp)
   
-  # Put plant Family labels along the y-axis for the first plot
-  if (a == arthropods$Group[1]) {
-    mtext(paste0(comparisons$Family[comparisons$Group == a], 
-                 " (", comparisons$nNativeSurveys[comparisons$Group == a], ", ", 
-                 comparisons$nAlienSurveys[comparisons$Group == a], ")"),
-          2, at = famOrder, 
-          las = 1, line = 1, cex = 1.5)
-    legend("topleft", inset=c(-1.4,0), legend=c("native","alien"), pch=c(16,1), lty = 'solid', 
-           xpd = NA, cex = 2)
-  }
 }
-mtext("% of surveys", 1, outer = TRUE, line = 1.5, cex = 2)
-
 dev.off()
