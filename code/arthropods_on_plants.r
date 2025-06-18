@@ -5,6 +5,9 @@ library(png)
 library(glmmTMB)
 library(interactions)
 library(ggpubr)
+library(rtrees) #install.packages('rtrees', repos=c(rtrees='https://daijiang.r-universe.dev', CRAN='https://cloud.r-project.org'))
+library(ape)
+library(phytools)
 
 # Load analysis functions
 source('code/plant_analysis_functions.r')
@@ -63,12 +66,12 @@ arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle
 
 # Color scheme for tree families
 treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Caprifoliaceae', 'Juglandaceae', 'Rosaceae'),
-                      famcolor = rgb(230/255, 159/255, 0),
+                      famcolor = c(rgb(230/255, 159/255, 0),
                       rgb(86/255, 180/255, 233/255),
                       rgb(0, 158/255, 115/255),
                       rgb(240/255, 228/255, 66/255),
                       rgb(213/255, 94/255, 0),
-                      'salmon')
+                      'salmon'))
 
 # Arthropod images
 caterpillar = readPNG('images/caterpillar.png')
@@ -433,3 +436,94 @@ for (a in arthropods$Group) {
   
 }
 dev.off()
+
+
+
+
+#####################################################################################
+# Figure 4. Comparison of % surveys with caterpillars across tree species
+
+plantList = officialPlantList %>%
+  distinct(sciName, rank, Family)
+
+
+# Tree species with at least 50 surveys, ranked by % of surveys with caterpillars
+byTreeSpp = AnalysisBySciName(ccPlants, ordersToInclude = 'caterpillar', 
+                              jdRange = c(152, 212)) %>%   # June + July
+  left_join(plantList, by = 'sciName') %>%
+  left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
+  filter(rank == 'species',
+         nSurveys >= 40,
+         nBranches >= 5) %>%
+  mutate(color = ifelse(plantOrigin == 'native', 'gray70', 'firebrick2')) %>%
+  arrange(desc(fracSurveys)) %>%
+  left_join(treeFams, by = 'Family')
+
+byTreeSpp$famcolor[is.na(byTreeSpp$famcolor)] = 'gray50'
+
+numspp = nrow(byTreeSpp)
+if (numspp %% 2 != 0) { 
+  numspp = numspp + 1 # add 1 to make numspp even if necessary
+  byTreeSpp = rbind(byTreeSpp, NA)
+}
+
+pdf('Figures/Figure4_ranking_tree_spp_2col.pdf', height = 9, width = 12)
+par(mar = c(5, 10, 2, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
+plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
+     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[1:(numspp/2)], 
+     xlim = c(0, 32), ylim = c(1, numspp/2),
+     cex = 2*log10(byTreeSpp$nSurveys[1:(numspp/2)])/max(log10(byTreeSpp$nSurveys[1:(numspp/2)])),
+     main = paste0("Species rank 1-", numspp/2), cex.main = 1.5)
+segments(byTreeSpp$LL95frac[1:(numspp/2)], (numspp/2):1, byTreeSpp$UL95frac[1:(numspp/2)], (numspp/2):1,
+         lwd = 2, col = byTreeSpp$color[1:(numspp/2)])
+mtext(byTreeSpp$sciName[1:(numspp/2)], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .9)
+points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[1:(numspp/2)], cex = 1.4)
+
+legend("bottomright", c("Fagaceae", "Betulaceae", "Sapindaceae", "Caprifoliaceae", "Juglandaceae", "Rosaceae", "Other"), 
+       col = c(rgb(230/255, 159/255, 0),
+               rgb(86/255, 180/255, 233/255),
+               rgb(0, 158/255, 115/255),
+               rgb(240/255, 228/255, 66/255),
+               rgb(213/255, 94/255, 0),
+               'salmon',
+               'gray50'), 
+       pch = 15, cex = 1.3, pt.cex = 2)
+
+plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
+     cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[(numspp/2 + 1):numspp], 
+     xlim = c(0, 32), ylim = c(1, numspp/2),
+     cex = 2*log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])/max(log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp]), na.rm = T),
+     main = paste0("Species rank ", numspp/2 + 1, "-", numspp), cex.main = 1.5)
+segments(byTreeSpp$LL95frac[(numspp/2 + 1):numspp], (numspp/2):1, byTreeSpp$UL95frac[(numspp/2 + 1):numspp], (numspp/2):1,
+         lwd = 2, col = byTreeSpp$color[(numspp/2 + 1):numspp])
+mtext(byTreeSpp$sciName[(numspp/2 + 1):numspp], 2, at = (numspp/2):1 + .3, line = 1, adj = 1, las = 1, cex = .9)
+points(rep(-2, numspp/2), (numspp/2):1, pch = 15, col = byTreeSpp$famcolor[(numspp/2 + 1):numspp], cex = 1.4)    # 
+
+legend("bottomright", c("native", "alien"), 
+       col = c('gray70', 'firebrick2'), 
+       pch = 16, cex = 1.4, pt.cex = 2, lwd = 2, lty = 'solid')
+
+rasterImage(caterpillar, 16, 35, 32, 45)
+dev.off()
+
+
+# Phylogenetic signal of fracSurveys across plant species
+
+# Create a dataframe of species, genus, and family for generating a phylogeny
+speciesList = speciesList = data.frame(species = byTreeSpp$sciName, 
+                                       genus = word(byTreeSpp$sciName, 1), 
+                                       family= byTreeSpp$Family, 
+                                       fracSurveys = byTreeSpp$fracSurveys)
+
+plantTree = rtrees::get_tree(speciesList[, 1:3], taxon = 'plant')
+phyloSpeciesList = gsub("_", " ", plantTree$tip.label)
+
+# Now get the tree species dataframe in the same phylogenetic order as the tip labels
+speciesList$species = factor(speciesList$species, levels = phyloSpeciesList)
+speciesList = speciesList[order(speciesList$species),]
+speciesList$species = as.character(speciesList$species)
+
+# Calculate Blomberg's K and Pagel's lambda
+blomK = phylosig(plantTree, speciesList$fracSurveys, method = 'K', nsim = 999, test = TRUE)       # K = 0.04, p = 0.77
+lambda = phylosig(plantTree, speciesList$fracSurveys, method = 'lambda', nsim = 999, test = TRUE) # lambda = 7e-5, p = 1
+
