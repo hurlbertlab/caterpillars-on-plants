@@ -8,6 +8,8 @@ library(ggpubr)
 library(rtrees) #install.packages('rtrees', repos=c(rtrees='https://daijiang.r-universe.dev', CRAN='https://cloud.r-project.org'))
 library(ape)
 library(phytools)
+library(lme4)
+
 
 # Load analysis functions
 source('code/plant_analysis_functions.r')
@@ -527,3 +529,113 @@ speciesList$species = as.character(speciesList$species)
 blomK = phylosig(plantTree, speciesList$fracSurveys, method = 'K', nsim = 999, test = TRUE)       # K = 0.04, p = 0.77
 lambda = phylosig(plantTree, speciesList$fracSurveys, method = 'lambda', nsim = 999, test = TRUE) # lambda = 7e-5, p = 1
 
+
+
+
+######################################################################################
+# Figure 5. Caterpillar occurrence on native vs alien plants as a function of latitude
+
+catPresences = ccPlants %>% 
+  filter(Group == 'caterpillar') %>% 
+  group_by(ID, Name, Latitude, sciName, Family, plantOrigin) %>% 
+  summarize(presence = ifelse(sum(Quantity) > 0, 1, 0))
+
+catData = ccPlants %>% 
+  distinct(ID, Name, Latitude, sciName, Family, plantOrigin) %>%
+  left_join(catPresences)
+
+catData$presence[is.na(catData$presence)] = 0
+
+catDataBySiteAll = catData %>%
+  group_by(Name, Latitude) %>%
+  summarize(nSurvs = n_distinct(ID),
+            nSurvsAlien = n_distinct(ID[plantOrigin == 'alien']),
+            nSurvsNative = n_distinct(ID[plantOrigin == 'native']),
+            nSurvsCatsAlien = n_distinct(ID[plantOrigin == 'alien' & presence]),
+            nSurvsCatsNative = n_distinct(ID[plantOrigin == 'native' & presence]),
+            pctCatAlien = 100*nSurvsCatsAlien/nSurvsAlien,
+            pctCatNative = 100*nSurvsCatsNative/nSurvsNative,
+            pctAlienSurveys = 100*nSurvsAlien/(nSurvsAlien + nSurvsNative))
+
+# Based on this plot, sites above 46.75N latitude basically have no alien plant surveys, therefore they should be excluded from 
+# native / alien comparison
+par(mfrow = c(1,1))
+plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
+     xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
+
+treesp = catDataForAnalysis %>% 
+  count(sciName) %>% 
+  arrange(desc(n)) %>%
+  filter(n >= 40)
+
+catDataForAnalysis = catData %>%
+  filter(Latitude < 46.75,
+         sciName %in% treesp$sciName)
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction
+log.Origin.Latitude = glm(presence ~ plantOrigin + Latitude + plantOrigin*Latitude, 
+                          data = catDataForAnalysis, family = "binomial")
+
+intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 'plantOrigin', 
+                                 interval = TRUE, int.type = 'confidence', int.width = .95,
+                                 y.label = "Prop. of surveys with caterpillars",
+                                 legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                                 colors = c('red', 'gray50'))
+
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) random effects.
+log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
+                                 data = catDataForAnalysis, family = "binomial",
+                                 glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+
+intplotOriginLatitudeName = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
+                                          interval = TRUE, int.type = 'confidence', int.width = .95,
+                                          y.label = "Proportion of surveys with caterpillars",
+                                          legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                                          colors = c('red', 'gray50'))
+
+plot1 = intplotOriginLatitudeName + 
+  theme_bw() +
+  annotation_raster(caterpillar, ymin = .068, ymax= .082,xmin = 32, xmax = 37) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 18),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 4),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
+  #labs(tag = "A") +
+  #theme(plot.tag = element_text(size = 20))
+
+
+
+# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
+# with site-level (Name) and plant species (sciName) random effects did not converge.
+log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + 
+                                           (1 | Name) + (1 | sciName), 
+                                         data = catDataForAnalysis, family = "binomial",
+                                         glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+
+intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'Latitude', modx = 'plantOrigin', 
+                               interval = TRUE, int.type = 'confidence', int.width = .95,
+                               y.label = "Prop. of surveys with caterpillars",
+                               legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                               colors = c('red', 'gray50'))
+
+plot2 = intplotsciName + 
+  theme_bw() +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 18),
+        axis.title.x = element_text(margin = margin(t = 6)), 
+        axis.title.y = element_text(margin = margin(l = 12), vjust = 4),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+  labs(tag = "B") +
+  theme(plot.tag = element_text(size = 20))
+
+# Figure 
+pdf('Figures/Figure5_nativeStatus_by_latitude.pdf', height = 4, width = 8)
+ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = TRUE, legend="bottom")
+dev.off()
