@@ -583,6 +583,14 @@ log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + scaledLatitude + plant
                                          data = catDataForAnalysis, family = "binomial",
                                          glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
 
+#Fixed effects:
+#                                   Estimate Std. Error z value Pr(>|z|)    
+#  (Intercept)                       -3.7723     0.1421 -26.550  < 2e-16 ***
+#  plantOriginnative                  0.8930     0.1206   7.405 1.31e-13 ***
+#  scaledLatitude                     0.2823     0.1517   1.861   0.0627 .  
+#  plantOriginnative:scaledLatitude  -0.2388     0.1311  -1.822   0.0685 .  
+
+
 intplotName = interact_plot(log.Origin.Latitude.Name, pred = 'scaledLatitude', modx = 'plantOrigin', 
                                interval = TRUE, int.type = 'confidence', int.width = .95,
                                y.label = "Proportion of surveys with caterpillars",
@@ -627,6 +635,13 @@ log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + scaledLatitude
                                            (1 | Name) + (1 | sciName), 
                                          data = catDataForAnalysis, family = "binomial",
                                          glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+
+#Fixed effects:
+#                                   Estimate Std. Error z value Pr(>|z|)    
+#  (Intercept)                       -3.7266     0.1740 -21.422  < 2e-16 ***
+#  plantOriginnative                  0.6808     0.1628   4.183 2.88e-05 ***
+#  scaledLatitude                     0.1710     0.1679   1.019    0.308    
+#  plantOriginnative:scaledLatitude  -0.1415     0.1508  -0.938    0.348 
 
 intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'scaledLatitude', modx = 'plantOrigin', 
                                interval = TRUE, int.type = 'confidence', int.width = .95,
