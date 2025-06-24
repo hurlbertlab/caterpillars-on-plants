@@ -546,6 +546,7 @@ catData = ccPlants %>%
 
 catData$presence[is.na(catData$presence)] = 0
 
+# For analysis comparing across latitude (and sites)
 catDataBySiteAll = catData %>%
   group_by(Name, Latitude) %>%
   summarize(nSurvs = n_distinct(ID),
@@ -569,57 +570,83 @@ treesp = catDataForAnalysis %>%
   filter(n >= 40)
 
 catDataForAnalysis = catData %>%
-  filter(Latitude < 46.75,
-         sciName %in% treesp$sciName)
-
-# Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction
-log.Origin.Latitude = glm(presence ~ plantOrigin + Latitude + plantOrigin*Latitude, 
-                          data = catDataForAnalysis, family = "binomial")
-
-intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 'plantOrigin', 
-                                 interval = TRUE, int.type = 'confidence', int.width = .95,
-                                 y.label = "Prop. of surveys with caterpillars",
-                                 legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
-                                 colors = c('red', 'gray50'))
-
+  filter(Latitude < 46.75) %>%
+  mutate(scaledLatitude = scale(Latitude))
+         #sciName %in% treesp$sciName)
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
-# with site-level (Name) random effects.
-log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
-                                 data = catDataForAnalysis, family = "binomial",
-                                 glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+# with site-level (Name) random effects
+# Latitude is centered and scaled to help with convergence and better interpret plantOrigin effect at mean 
+# latitude rather than Latitude = 0.
+log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + scaledLatitude + plantOrigin*scaledLatitude + 
+                                           (1 | Name), 
+                                         data = catDataForAnalysis, family = "binomial",
+                                         glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
 
-intplotOriginLatitudeName = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
-                                          interval = TRUE, int.type = 'confidence', int.width = .95,
-                                          y.label = "Proportion of surveys with caterpillars",
-                                          legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
-                                          colors = c('red', 'gray50'))
+intplotName = interact_plot(log.Origin.Latitude.Name, pred = 'scaledLatitude', modx = 'plantOrigin', 
+                               interval = TRUE, int.type = 'confidence', int.width = .95,
+                               y.label = "Proportion of surveys with caterpillars",
+                               x.label = "Latitude (scaled)",
+                               legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                               colors = c('red', 'gray50'))
 
-plot1 = intplotOriginLatitudeName + 
+# The following model using raw latitude does not converge, but using it to generate a plot that
+# has raw latitude values on the x-axis, after confirming that plots are otherwise identical.
+# All p-values reported are from the original model above.
+log.Origin.Latitude.Name2 = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + 
+                                            (1 | Name), 
+                                          data = catDataForAnalysis, family = "binomial",
+                                          glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+
+intplotName2 = interact_plot(log.Origin.Latitude.Name2, pred = 'Latitude', modx = 'plantOrigin', 
+                                interval = TRUE, int.type = 'confidence', int.width = .95,
+                                y.label = "Proportion of surveys with caterpillars",
+                                x.label = "Latitude",
+                                legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                                colors = c('red', 'gray50'))
+
+plot1 = intplotName + 
   theme_bw() +
-  annotation_raster(caterpillar, ymin = .068, ymax= .082,xmin = 32, xmax = 37) +
   theme(axis.title = element_text(size = 18),
         axis.text = element_text(size = 15),
         legend.text = element_text(size = 15),
         legend.title = element_text(size = 18),
         axis.title.x = element_text(margin = margin(t = 6)), 
         axis.title.y = element_text(margin = margin(l = 12), vjust = 4),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) 
-  #labs(tag = "A") +
-  #theme(plot.tag = element_text(size = 20))
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
+  labs(tag = "A") +
+  theme(plot.tag = element_text(size = 20))
 
 
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
-# with site-level (Name) and plant species (sciName) random effects did not converge.
-log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + 
+# with site-level (Name) and plant species (sciName) random effects
+# Latitude is centered and scaled to help with convergence and better interpret plantOrigin effect at mean 
+# latitude rather than Latitude = 0.
+log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + scaledLatitude + plantOrigin*scaledLatitude + 
                                            (1 | Name) + (1 | sciName), 
                                          data = catDataForAnalysis, family = "binomial",
                                          glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
 
-intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'Latitude', modx = 'plantOrigin', 
+intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'scaledLatitude', modx = 'plantOrigin', 
                                interval = TRUE, int.type = 'confidence', int.width = .95,
-                               y.label = "Prop. of surveys with caterpillars",
+                               y.label = "Proportion of surveys with caterpillars",
+                               x.label = "Latitude (scaled)",
+                               legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
+                               colors = c('red', 'gray50'))
+
+# The following model using raw latitude does not converge, but using it to generate a plot that
+# has raw latitude values on the x-axis, after confirming that plots are otherwise identical.
+# All p-values reported are from the original model above.
+log.Origin.Latitude.Name.sciName2 = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + 
+                                           (1 | Name) + (1 | sciName), 
+                                         data = catDataForAnalysis, family = "binomial",
+                                         glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+
+intplotsciName2 = interact_plot(log.Origin.Latitude.Name.sciName2, pred = 'Latitude', modx = 'plantOrigin', 
+                               interval = TRUE, int.type = 'confidence', int.width = .95,
+                               y.label = "Proportion of surveys with caterpillars",
+                               x.label = "Latitude",
                                legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
                                colors = c('red', 'gray50'))
 
@@ -636,6 +663,6 @@ plot2 = intplotsciName +
   theme(plot.tag = element_text(size = 20))
 
 # Figure 
-pdf('Figures/Figure5_nativeStatus_by_latitude.pdf', height = 4, width = 8)
+pdf('Figures/Figure5_nativeStatus_by_latitude.pdf', height = 4, width = 5)
 ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = TRUE, legend="bottom")
 dev.off()
