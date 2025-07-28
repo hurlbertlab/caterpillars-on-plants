@@ -101,12 +101,12 @@ arthropods = data.frame(Group = c('caterpillar', 'spider', 'leafhopper', 'beetle
 
 # Color scheme for tree families
 treeFams = data.frame(Family = c('Fagaceae', 'Betulaceae', 'Sapindaceae', 'Caprifoliaceae', 'Juglandaceae', 'Rosaceae'),
-                      famcolor = rgb(230/255, 159/255, 0),
+                      famcolor = c(rgb(230/255, 159/255, 0),
                         rgb(86/255, 180/255, 233/255),
                         rgb(0, 158/255, 115/255),
                         rgb(240/255, 228/255, 66/255),
                         rgb(213/255, 94/255, 0),
-                        'salmon')
+                        'salmon'))
 
 # Caterpillar images
 caterpillar = readPNG('images/caterpillar.png')
