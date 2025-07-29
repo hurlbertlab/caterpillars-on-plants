@@ -513,6 +513,27 @@ rasterImage(caterpillar, 16, 35, 32, 45)
 dev.off()
 
 
+# Supplemental Table S1
+
+tableS1 = byTreeSpp %>%
+  mutate(fracSurveys = round(fracSurveys, 2),
+         LL95frac = round(LL95frac, 2),
+         UL95frac = round(UL95frac, 2)) %>%
+  select(sciName, nativeStatus, plantOrigin, nSurveys, nBranches, nSites, fracSurveys, LL95frac, UL95frac) %>%
+  rename(`Plant species` = sciName,
+         `USDA Native Status` = nativeStatus,
+         Origin = plantOrigin,
+         n_Surveys = nSurveys,
+         n_Branches = nBranches,
+         n_Sites = nSites,
+         `Pct with caterpillars` = fracSurveys,
+         `95%CI Lower limit` = LL95frac,
+         `95%CI Upper limit` = UL95frac)
+
+write.csv(tableS1, 'data/Table_S1.csv', row.names = F)
+
+
+
 # Phylogenetic signal of fracSurveys across plant species
 # install.packages('rtrees', repos=c(rtrees='https://daijiang.r-universe.dev', CRAN='https://cloud.r-project.org'))
 
