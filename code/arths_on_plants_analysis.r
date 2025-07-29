@@ -66,7 +66,9 @@ ccPlants = cc %>%
   left_join(plantOrigin, by = c('sciName' = 'scientificName')) %>%
   mutate(sciName = ifelse(Species == "N/A" & NameConfidence >= 2, InferredSciName, sciName)) %>%
   filter(!is.na(sciName),
-         !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'))
+         !Name %in% c('Coweeta - BB', 'Coweeta - BS', 'Coweeta - RK'),
+         Year <= 2024,
+         Longitude > -100)
 
 # Some summary statistics for the dataset used in analysis
 jdRange = c(152,212)
@@ -75,17 +77,18 @@ analysisdata = ccPlants %>%
                  filter(julianday >= jdRange[1], 
                         julianday <= jdRange[2],
                         !WetLeaves)
-nSurvs = length(unique(analysisdata$ID)) # 69598
-nSites = length(unique(analysisdata$Name)) # 218
+nSurvs = length(unique(analysisdata$ID)) # 68741
+nSites = length(unique(analysisdata$Name)) # 212
 range(analysisdata$Latitude) # 32.33, 55.43 (47.78 east of -100W)
+range(analysisdata$Longitude) # -97.41, -68.05
 range(analysisdata$Year) # 2010, 2024
-nBranches = length(unique(analysisdata$Code)) # 5559
-nPlantSpecies = length(unique(analysisdata$sciName)) # 396
+nBranches = length(unique(analysisdata$Code)) # 5438
+nPlantSpecies = length(unique(analysisdata$sciName)) # 363
 nNativePlantSpecies = length(unique(analysisdata$sciName[analysisdata$plantOrigin == 'native'])) # 284
 nAlienPlantSpecies = length(unique(analysisdata$sciName[analysisdata$plantOrigin == 'alien'])) # 107
 analysisdata %>% 
   distinct(ID, ObservationMethod) %>% 
-  count(ObservationMethod)                 # 30646 beat sheet surveys, 38952 visual surveys
+  count(ObservationMethod)                 # 29812 beat sheet surveys, 38929 visual surveys
 
 
 # Labels and plot colors for arthropod groups
