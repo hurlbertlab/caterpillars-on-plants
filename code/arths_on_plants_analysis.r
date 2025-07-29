@@ -155,7 +155,8 @@ catDataBySite = catDataBySiteAll %>%
   filter(nSurvsAlien >= 10, nSurvsNative >= 10, Latitude < 45)
 
 catDataForAnalysis = catData %>%
-  filter(Name %in% catDataBySite$Name)
+  filter(Name %in% catDataBySite$Name) %>%
+  mutate(scaledLatitude = scale(Latitude))
 
 ccPlantsForAlienNativeComparison = ccPlants %>%
   filter(Latitude < 45)
@@ -179,10 +180,10 @@ legend("topleft", legend = c(round(min(catDataBySite$Latitude)), round((min(catD
 
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction
-log.Origin.Latitude = glm(presence ~ plantOrigin + Latitude + plantOrigin*Latitude, 
+log.Origin.Latitude = glm(presence ~ plantOrigin + scaledLatitude + plantOrigin*scaledLatitude, 
                                  data = catDataForAnalysis, family = "binomial")
 
-intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 'plantOrigin', 
+intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'scaledLatitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
                         y.label = "Prop. of surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
@@ -191,10 +192,10 @@ intplotLatOrigin = interact_plot(log.Origin.Latitude, pred = 'Latitude', modx = 
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
 # with site-level (Name) random effects.
-log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + (1 | Name), 
+log.Origin.Latitude.Name = glmer(presence ~ plantOrigin + scaledLatitude + plantOrigin*scaledLatitude + (1 | Name), 
                                  data = catDataForAnalysis, family = "binomial")
 
-intplotOriginLatitudeName = interact_plot(log.Origin.Latitude.Name, pred = 'Latitude', modx = 'plantOrigin', 
+intplotOriginLatitudeName = interact_plot(log.Origin.Latitude.Name, pred = 'scaledLatitude', modx = 'plantOrigin', 
                         interval = TRUE, int.type = 'confidence', int.width = .95,
                         y.label = "Prop. of surveys with caterpillars",
                         legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
@@ -217,11 +218,11 @@ plot1 = intplotOriginLatitudeName +
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
 # with site-level (Name) and plant species (sciName) random effects.
-log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + Latitude + plantOrigin*Latitude + 
+log.Origin.Latitude.Name.sciName = glmer(presence ~ plantOrigin + scaledLatitude + plantOrigin*scaledLatitude + 
                                            (1 | Name) + (1 | sciName), 
                                         data = catDataForAnalysis, family = "binomial")
 
-intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'Latitude', modx = 'plantOrigin', 
+intplotsciName = interact_plot(log.Origin.Latitude.Name.sciName, pred = 'scaledLatitude', modx = 'plantOrigin', 
                               interval = TRUE, int.type = 'confidence', int.width = .95,
                               y.label = "Prop. of surveys with caterpillars",
                               legend.main = "Plant origin", line.thickness = 2, cex.lab = 1.5,
