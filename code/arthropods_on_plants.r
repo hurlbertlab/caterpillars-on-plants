@@ -564,15 +564,9 @@ par(mfrow = c(1,1))
 plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
      xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
 
-treesp = catDataForAnalysis %>% 
-  count(sciName) %>% 
-  arrange(desc(n)) %>%
-  filter(n >= 40)
-
 catDataForAnalysis = catData %>%
   filter(Latitude < 46.75) %>%
   mutate(scaledLatitude = scale(Latitude))
-         #sciName %in% treesp$sciName)
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
 # with site-level (Name) random effects
