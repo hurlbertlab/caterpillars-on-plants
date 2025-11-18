@@ -564,15 +564,9 @@ par(mfrow = c(1,1))
 plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
      xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
 
-treesp = catDataForAnalysis %>% 
-  count(sciName) %>% 
-  arrange(desc(n)) %>%
-  filter(n >= 40)
-
 catDataForAnalysis = catData %>%
   filter(Latitude < 46.75) %>%
   mutate(scaledLatitude = scale(Latitude))
-         #sciName %in% treesp$sciName)
 
 # Logistic regression of caterpillar presence as predicted by latitude, plant origin, and their interaction,
 # with site-level (Name) random effects
@@ -743,3 +737,24 @@ for (h in hostplants) {
   
 }
 dev.off()
+
+
+# Supplemental Table S1 on the plant species examined, organized by family and plant origin
+
+tableS1 = byTreeSpp %>%
+  mutate(fracSurveys = round(fracSurveys, 2),
+         LL95frac = round(LL95frac, 2),
+         UL95frac = round(UL95frac, 2)) %>%
+  select(sciName, Family, nativeStatus, plantOrigin, nSurveys, nBranches, nSites, fracSurveys, LL95frac, UL95frac) %>%
+  rename(`Plant species` = sciName,
+         `USDA Native Status` = nativeStatus,
+         Origin = plantOrigin,
+         n_Surveys = nSurveys,
+         n_Branches = nBranches,
+         n_Sites = nSites,
+         `Pct with caterpillars` = fracSurveys,
+         `95%CI Lower limit` = LL95frac,
+         `95%CI Upper limit` = UL95frac) %>%
+  arrange(Family, Origin, `Plant species`)
+
+write.csv(tableS1, 'data/Table_S1.csv', row.names = F)
