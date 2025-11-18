@@ -143,16 +143,16 @@ catDataBySiteAll = catData %>%
             nSurvsCatsNative = n_distinct(ID[plantOrigin == 'native' & presence]),
             pctCatAlien = 100*nSurvsCatsAlien/nSurvsAlien,
             pctCatNative = 100*nSurvsCatsNative/nSurvsNative,
-            pctAlienSurveys = 100*nSurvsAlien/(nSurvsAlien + nSurvsNative))
+            pctAlienSurveys = 100*nSurvsAlien/(nSurvsAlien + nSurvsNative)) %>% 
+  arrange(Latitude)
 
-# Based on this plot, sites above 45N latitude basically have no alien plant surveys, therefore they should be excluded from 
-# native / alien comparison
+
 par(mfrow = c(1,1))
 plot(catDataBySiteAll$Latitude, catDataBySiteAll$pctAlienSurveys, cex = log10(catDataBySiteAll$nSurvs), 
      xlab = "Latitude", ylab = "% of surveys on alien plants", las = 1, cex.lab = 1.5)
 
 catDataBySite = catDataBySiteAll %>%
-  filter(nSurvsAlien >= 10, nSurvsNative >= 10, Latitude < 45)
+  filter(nSurvsAlien >= 10, nSurvsNative >= 10)
 
 catDataForAnalysis = catData %>%
   filter(Name %in% catDataBySite$Name) %>%
@@ -271,25 +271,27 @@ mtext(alienRanges$sciName, 2, at = 1:nrow(alienRanges), col = alienRanges$famcol
 
 
 # Latitudinal variation within individual host plant species
-hostplants = c('Fagus grandifolia', 'Acer negundo', 'Acer rubrum', 
-               'Carpinus caroliniana', 'Cercis canadensis', 'Prunus serotina')
+hostplants = c('Fagus grandifolia', 'Acer negundo', 'Acer rubrum', 'Acer platanoides',
+               'Carpinus caroliniana', 'Cercis canadensis', 'Prunus serotina', 'Ligustrum')
 
 # Plotting % of surveys by half degree band
 
 pdf('Figures/latitude_within_species.pdf', height = 6, width = 10)
-par(mfrow = c(2, 3), mar = c(6, 6, 3, 1), mgp = c(3, 1, 0))
+par(mfrow = c(2, 4), mar = c(6, 6, 3, 1), mgp = c(3, 1, 0))
 for (h in hostplants) {
   tmp = catDataForAnalysis %>%
-    filter(sciName == h) %>%
+    filter(grepl(h, sciName)) %>%
     mutate(latBand = round(2*Latitude)/2) %>%  # half degree bands
     group_by(latBand) %>%
     summarize(nSurvs = n(),
               nSurvsWithCats = sum(presence == 1),
               pctCats = 100*nSurvsWithCats/nSurvs)
   
-  plot(tmp$latBand, tmp$pctCats, pch = 16, cex = log10(tmp$nSurvs) + 0.5, xlab = 'Latitude band', 
+  pt.color = ifelse(h %in% c('Acer platanoides', 'Ligustrum'), 'red', 'gray50')
+  
+  plot(tmp$latBand, tmp$pctCats, pch = 16, cex = log10(tmp$nSurvs) + 0.5, xlab = 'Latitude Band', 
        ylab = '% of surveys', main = paste0(h, " (", formatC(sum(tmp$nSurvs), big.mark = ","), ")"),
-       las = 1, cex.lab = 2, cex.axis = 1.5, cex.main = 1.5, col = 'gray50')
+       las = 1, cex.lab = 2, cex.axis = 1.5, cex.main = 1.5, col = pt.color)
   
   tmp.lm = lm(pctCats ~ latBand, data = tmp, weights = log10(nSurvs))
   abline(tmp.lm, lty = 'dashed', lwd = 2, xpd = FALSE)
