@@ -429,8 +429,13 @@ for (a in arthropods$Group) {
            col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
            lwd = 2)
   
+  # Bold (value = 2) the family label abbreviation if p < 0.01, italic (value = 3) if p < 0.05
+  tmp.df = tmp.df %>% 
+    mutate(bold2 = ifelse(propTestP < 0.01, 2, 
+                          ifelse(propTestP < 0.05, 3, 1)))
+  
   text(100*tmp.df$propNativeSurvsWithArth, 100*tmp.df$propAlienSurvsWithArth, 
-       substr(tmp.df$Family, 1, 2), cex = 1.6)
+       substr(tmp.df$Family, 1, 2), font = tmp.df$bold2, cex = 1.6)
   
   # Add bug icon
   bug = readPNG(paste0('images/', a, '.png'))
