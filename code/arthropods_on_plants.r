@@ -746,7 +746,24 @@ dev.off()
 
 # Supplemental Table S1 on the plant species examined, organized by family and plant origin
 
-tableS1 = byTreeSpp %>%
+tableS1 = comparisons %>%
+  mutate(prop_AlienSurveys = round(propAlienSurvsWithArth, 2),
+         prop_NativeSurveys = round(propNativeSurvsWithArth, 2),
+         p = ifelse(propTestP < 0.001, as.character(formatC(propTestP, format = "e", digits = 2)), 
+                    as.character(round(propTestP, 3)))) %>%
+  select(Family, Group, nAlienSurveys, nNativeSurveys, prop_AlienSurveys, prop_NativeSurveys, p) %>%
+  rename(`Plant family` = Family,
+         Taxon = Group,
+         n_AlienSurveys = nAlienSurveys,
+         n_NativeSurveys = nNativeSurveys) %>%
+  arrange(Taxon, `Plant family`)
+
+write.csv(tableS1, 'data/Table_S1.csv', row.names = F)
+
+
+# Supplemental Table S2 on the plant species examined, organized by family and plant origin
+
+tableS2 = byTreeSpp %>%
   mutate(fracSurveys = round(fracSurveys, 2),
          LL95frac = round(LL95frac, 2),
          UL95frac = round(UL95frac, 2)) %>%
@@ -762,4 +779,4 @@ tableS1 = byTreeSpp %>%
          `95%CI Upper limit` = UL95frac) %>%
   arrange(Family, Origin, `Plant species`)
 
-write.csv(tableS1, 'data/Table_S1.csv', row.names = F)
+write.csv(tableS2, 'data/Table_S2.csv', row.names = F)
