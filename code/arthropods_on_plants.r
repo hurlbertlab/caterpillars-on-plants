@@ -780,3 +780,18 @@ tableS2 = byTreeSpp %>%
   arrange(Family, Origin, `Plant species`)
 
 write.csv(tableS2, 'data/Table_S2.csv', row.names = F)
+
+
+## Other supplemental analyses
+
+# Testing effect of average leaf length on caterpillar occurrence
+aveLeaf = ccPlants %>% 
+  filter(AverageLeafLength > 0) %>% 
+  group_by(sciName) %>% 
+  summarize(leafLength = mean(AverageLeafLength, na.rm = T))
+
+byTreeSpp2 = byTreeSpp %>%
+  left_join(aveLeaf, by = 'sciName')
+
+lmLeaf = lm(fracSurveys ~ leafLength, data = byTreeSpp2)
+# 7% of variance across plant species in caterpillar occurrence is explained by leaf length
