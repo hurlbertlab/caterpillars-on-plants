@@ -143,11 +143,19 @@ segments(100*allSpeciesComp$propNativeSurvsWithArth, 100*allSpeciesComp$propAlie
          100*allSpeciesComp$propNativeSurvsWithArth, 100*allSpeciesComp$propAlienSurvsWithArth + 100*allSpeciesComp$errorAlienSurvsWithArth,
          col = allSpeciesComp$color, lwd = 3)
 
-# asterisks
+# asterisks added manually
 asteriskOffset = 1.5
-text(100*allSpeciesComp$propNativeSurvsWithArth[allSpeciesComp$Group %in% c('caterpillar', 'spider', 'beetle')], 
-     100*allSpeciesComp$propAlienSurvsWithArth[allSpeciesComp$Group %in% c('caterpillar', 'spider', 'beetle')] - asteriskOffset,
+
+# p < 1e-10
+text(100*allSpeciesComp$propNativeSurvsWithArth[allSpeciesComp$Group %in% c('caterpillar', 'beetle')], 
+     100*allSpeciesComp$propAlienSurvsWithArth[allSpeciesComp$Group %in% c('caterpillar', 'beetle')] - asteriskOffset,
      '***', cex = 3)
+
+# p < 1e-4
+text(100*allSpeciesComp$propNativeSurvsWithArth[allSpeciesComp$Group == 'spider'], 
+     100*allSpeciesComp$propAlienSurvsWithArth[allSpeciesComp$Group == 'spider'] - asteriskOffset,
+     '**', cex = 3)
+
 text(100*allSpeciesComp$propNativeSurvsWithArth[allSpeciesComp$Group == 'leafhopper'], 
      100*allSpeciesComp$propAlienSurvsWithArth[allSpeciesComp$Group == 'leafhopper'] - asteriskOffset,
      '*', cex = 3)
@@ -165,7 +173,7 @@ for(a in arthropods$Group) {
               100*allSpeciesComp$propAlienSurvsWithArth[allSpeciesComp$Group == a] + .8 + yheight)
 }
 
-legend("bottomright", legend = c(" *   p < 0.02", "*** p < 0.0001"), cex = 1.5)
+legend("bottomright", legend = c(" *   p < 0.02", "**  p < 1e-4", "*** p < 1e-10"), cex = 1.5)
 dev.off()
 
 
