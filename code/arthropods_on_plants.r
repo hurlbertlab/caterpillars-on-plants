@@ -622,15 +622,15 @@ intplotName2 = interact_plot(log.Origin.Latitude.Name2, pred = 'Latitude', modx 
 
 plot1 = intplotName + 
   theme_bw() +
-  theme(axis.title = element_text(size = 18),
-        axis.text = element_text(size = 15),
-        legend.text = element_text(size = 15),
-        legend.title = element_text(size = 18),
+  theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 11),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
         axis.title.y = element_text(margin = margin(l = 12), vjust = 4),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
   labs(tag = "A") +
-  theme(plot.tag = element_text(size = 20))
+  theme(plot.tag = element_text(size = 18))
 
 
 
@@ -674,18 +674,18 @@ intplotsciName2 = interact_plot(log.Origin.Latitude.Name.sciName2, pred = 'Latit
 
 plot2 = intplotsciName + 
   theme_bw() +
-  theme(axis.title = element_text(size = 18),
-        axis.text = element_text(size = 15),
-        legend.text = element_text(size = 15),
-        legend.title = element_text(size = 18),
+  theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 11),
+        legend.text = element_text(size = 11),
+        legend.title = element_text(size = 12),
         axis.title.x = element_text(margin = margin(t = 6)), 
         axis.title.y = element_text(margin = margin(l = 12), vjust = 4),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + 
   labs(tag = "B") +
-  theme(plot.tag = element_text(size = 20))
+  theme(plot.tag = element_text(size = 18))
 
 # Figure 
-pdf('Figures/Figure5_nativeStatus_by_latitude.pdf', height = 4, width = 5)
+pdf('Figures/Figure5_nativeStatus_by_latitude.pdf', height = 4, width = 8)
 ggarrange(plot1, plot2, ncol=2, nrow=1, common.legend = TRUE, legend="bottom")
 dev.off()
 
