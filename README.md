@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/17714944.svg)](https://doi.org/10.5281/zenodo.1243901)
+
 This repository includes the data and code associated with the following publication:
 
 Whitener, C. and Hurlbert, A. H. 2026. Arthropods on native versus alien woody plants: understanding variation across host plant taxonomy and geography. *Ecosphere* ...
