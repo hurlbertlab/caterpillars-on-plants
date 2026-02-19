@@ -130,7 +130,7 @@ allSpeciesComp = allSpeciesComparison %>%
 pdf('Figures/Figure1_alien_vs_native_occurrence.pdf', height = 7, width = 8)
 par(mfrow = c(1,1), mgp = c(3, 1, 0), oma = c(0,0,0,0), mar = c(5, 5, 1, 1))
 plot(100*allSpeciesComp$propNativeSurvsWithArth, 100*allSpeciesComp$propAlienSurvsWithArth, col = allSpeciesComp$color, cex = 2.5, 
-     xlab = "% of native surveys", ylab = "% of alien surveys", cex.lab = 2, cex.axis = 1.75, las = 1, pch = 16, 
+     xlab = "Percentage of native surveys", ylab = "Percentage of alien surveys", cex.lab = 2, cex.axis = 1.75, las = 1, pch = 16, 
      xlim = c(0, 23), ylim = c(0, 23))
 abline(a=0, b=1, lty = 'dotted', lwd = 2, col = 'gray30')
 
@@ -396,8 +396,9 @@ for (f in familyStats$Family) {
 
 
 # Native vs alien within-family comparisons
-pdf('Figures/Figure3_withinFamily_native_alien_occurrence.pdf', height = 5, width = 8)
-par(mfrow = c(2, 3), mar = c(5, 5, 1, .5), mgp = c(3, 1, 0), tck = -0.03)
+pdf('Figures/Figure3_withinFamily_native_alien_occurrence.pdf', height = 5.5, width = 9.5)
+par(mfrow = c(2, 3), mar = c(3, 5, 1, .5), oma = c(3, 4, 0, 0), mgp = c(3, 1, 0), tck = -0.03)
+panel = 1
 for (a in arthropods$Group) {
   
   tmp.df = comparisons[comparisons$Group == a & comparisons$Family != 'All', ]
@@ -413,13 +414,13 @@ for (a in arthropods$Group) {
        pch = tmp.df$pch, las = 1, 
        col = tmp.df$col, #arthropods$color[arthropods$Group == a], 
        cex = log10(tmp.df$nAlienSurveys + tmp.df$nNativeSurveys), cex.lab = 1.8,
-       xlab = '% of native surveys', cex.axis = 1.3,
-       ylab = '% of alien surveys',
+       xlab = '', cex.axis = 1.3,
+       ylab = '',
        ylim = c(0, maxProp),
        xlim = c(0, maxProp))
   
   
-  abline(a=0, b = 1, xpd = FALSE)
+  abline(a=0, b = 1, lty = 'dotted', xpd = FALSE)
   
   # 95% CI segments
   # adding 95% CI line segments
@@ -449,7 +450,12 @@ for (a in arthropods$Group) {
   bug = readPNG(paste0('images/', a, '.png'))
   rasterImage(bug, 0.02*maxProp, .75*maxProp, .3*maxProp, maxProp)
   
+  mtext(LETTERS[panel], 2, line = 3, las = 1, cex = 1.5, at = maxProp)
+
+  panel = panel + 1        
 }
+mtext("Percentage of native surveys", 1, outer = TRUE, cex = 1.75, line = 1)
+mtext("Percentage of alien surveys", 2, outer = TRUE, cex = 1.75, line = 1.5)
 dev.off()
 
 
@@ -484,7 +490,7 @@ if (numspp %% 2 != 0) {
 
 pdf('Figures/Figure4_ranking_tree_spp_2col.pdf', height = 9, width = 12)
 par(mar = c(5, 10, 2, 1), mgp = c(3, 1, 0), mfrow = c(1,2), oma = c(0, 0, 0, 0), xpd = NA)
-plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
+plot(byTreeSpp$fracSurveys[1:(numspp/2)], (numspp/2):1, yaxt = 'n', ylab = '', xlab = 'Percentage of surveys',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[1:(numspp/2)], 
      xlim = c(0, 32), ylim = c(1, numspp/2),
      cex = 2*log10(byTreeSpp$nSurveys[1:(numspp/2)])/max(log10(byTreeSpp$nSurveys[1:(numspp/2)])),
@@ -504,7 +510,7 @@ legend("bottomright", c("Fagaceae", "Betulaceae", "Sapindaceae", "Caprifoliaceae
                'gray50'), 
        pch = 15, cex = 1.3, pt.cex = 2)
 
-plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', ylab = '', xlab = '% of surveys',
+plot(byTreeSpp$fracSurveys[(numspp/2 + 1):numspp], (numspp/2):1, yaxt = 'n', ylab = '', xlab = 'Percentage of surveys',
      cex.axis = 1.5, cex.lab = 2, pch = 16, col = byTreeSpp$color[(numspp/2 + 1):numspp], 
      xlim = c(0, 32), ylim = c(1, numspp/2),
      cex = 2*log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp])/max(log10(byTreeSpp$nSurveys[(numspp/2 + 1):numspp]), na.rm = T),
